@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DCE1FE48178910D60012478B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE47178910D60012478B /* UIKit.framework */; };
 		DCE1FE4A178910D60012478B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE49178910D60012478B /* Foundation.framework */; };
 		DCE1FE4C178910D60012478B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE4B178910D60012478B /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
+		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DCE1FE44178910D60012478B /* MyPlane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE1FE47178910D60012478B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DCE1FE49178910D60012478B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -145,6 +148,8 @@
 				DCE1FE6A178910D60012478B /* SecondViewController.m */,
 				DCE1FE6C178910D60012478B /* second.png */,
 				DCE1FE6E178910D60012478B /* second@2x.png */,
+				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
+				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
 			path = MyPlane;
@@ -238,6 +243,7 @@
 				DCE1FE58178910D60012478B /* AppDelegate.m in Sources */,
 				DCE1FE64178910D60012478B /* FirstViewController.m in Sources */,
 				DCE1FE6B178910D60012478B /* SecondViewController.m in Sources */,
+				DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +374,7 @@
 				DCE1FE74178910D60012478B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
