@@ -12,15 +12,17 @@
 
 @end
 
-@implementation FriendsViewController
+@implementation FriendsViewController {
+    NSArray *friendsArray;
+    NSMutableArray *fileArray;
+    PFFile *pictureFile;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pullToRefreshEnabled = YES;
-        self.paginationEnabled = YES;
-        self.objectsPerPage = 25;
+        
     }
     return self;
 }
@@ -28,12 +30,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"fCenterTabbarItemTapped"
                                                object:nil];
 
+    [self queryForTable];
 	// Do any additional setup after loading the view.
 }
 
@@ -53,27 +56,105 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (PFQuery *)queryForTable {
-    
-    PFQuery *query = [PFUser query];
-    
-    [query whereKey:@"objectId" containedIn:[[PFUser currentUser] objectForKey:@"friends"]];
-    [query whereKey:@"friends" equalTo:[PFUser currentUser].objectId];
+
+- (void)queryForTable {
 
     
+    PFQuery *userQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     
     
-    return query;
+    /*PFQuery *friendQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    [friendQuery whereKeyExists:@"friends"];
+    
+    PFQuery *query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:userQuery, friendQuery, nil]];*/
+    
+    [userQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *object in objects) {
+            friendsArray = [object objectForKey:@"friends"];
+            
+            
+        }
+        [userQuery orderByAscending:@"friend"];
+        [self gettingImages];
+    }];
+    
+    
+      
+    if (!pictureFile.isDataAvailable) {
+        
+        userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+-(void)gettingImages {
+    
+    
+    PFQuery *personQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    [personQuery whereKey:@"user" containedIn:friendsArray];
+    
+        
+            [personQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                NSMutableArray *arrayOfFiles = [[NSMutableArray alloc]init];
+                for (PFObject *object in objects) {
+                    PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+                    [arrayOfFiles addObject:theImage];
+                    pictureFile = theImage;
+                    //UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+                    
+                }
+                fileArray = arrayOfFiles;
+                [self.tableView reloadData];
+            }];
+            
+            
+        
+        
+
+    
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [friendsArray count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    cell.textLabel.text = [object objectForKey:@"title"];
+    UIImageView *picImage = (UIImageView *)[cell viewWithTag:2000];
+    UILabel *contactText = (UILabel *)[cell viewWithTag:2001];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:2002];
+    
+    NSString *values = [friendsArray objectAtIndex:indexPath.row];
+    
+    if (pictureFile.isDataAvailable) {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            PFFile *picture = [fileArray objectAtIndex:indexPath.row];
+            UIImage *fromUserImage = [[UIImage alloc] initWithData:picture.getData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+            picImage.image = fromUserImage;
+                contactText.text = values;
+                detailText.text = values;
+                 });
+        });
+        
+    } else {
+        NSLog(@"NO!");
+    }
+    
+    
+    //cell.textLabel.text = values;
+    
     
     
     

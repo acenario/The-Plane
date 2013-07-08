@@ -136,26 +136,49 @@
         <scene sceneID="Aax-zz-de6">
             <objects>
                 <tableViewController id="bo1-BX-yHR" customClass="FriendsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jaD-Tr-Rve">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="jaD-Tr-Rve">
                         <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="BR6-rk-50s" style="IBUITableViewCellStyleDefault" id="Agg-mS-Dx4">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="Agg-mS-Dx4">
+                                <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BR6-rk-50s">
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <imageView userInteractionEnabled="NO" tag="2000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63q-sL-lXM">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="NvG-Y8-qAY"/>
+                                                <constraint firstAttribute="height" constant="60" id="lKm-PW-ujk"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2001" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVh-SS-QPf">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2002" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtV-uQ-FiO">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="ytg-7L-VR0"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="TtV-uQ-FiO" firstAttribute="top" secondItem="rVh-SS-QPf" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="8nd-ld-wZt"/>
+                                    <constraint firstItem="TtV-uQ-FiO" firstAttribute="trailing" secondItem="rVh-SS-QPf" secondAttribute="trailing" type="default" id="NgJ-gf-dsH"/>
+                                    <constraint firstItem="rVh-SS-QPf" firstAttribute="leading" secondItem="63q-sL-lXM" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="PcT-gL-YLZ"/>
+                                    <constraint firstItem="63q-sL-lXM" firstAttribute="top" secondItem="Agg-mS-Dx4" secondAttribute="top" constant="-1" id="Ps2-CB-FMH"/>
+                                    <constraint firstItem="63q-sL-lXM" firstAttribute="leading" secondItem="Agg-mS-Dx4" secondAttribute="leading" type="default" id="if4-6r-Njg"/>
+                                    <constraint firstItem="TtV-uQ-FiO" firstAttribute="leading" secondItem="63q-sL-lXM" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="s9n-Hh-5nq"/>
+                                    <constraint firstItem="rVh-SS-QPf" firstAttribute="top" secondItem="Agg-mS-Dx4" secondAttribute="top" constant="5" id="weE-fv-4q1"/>
+                                </constraints>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -210,29 +233,6 @@
     <resources>
         <image name="first" width="16" height="16"/>
     </resources>
-    <classes>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOut:"/>
-            </relationships>
-        </class>
-        <class className="FriendsViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PFQueryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
-        </class>
-        <class className="PlaneTabViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
-        </class>
-        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

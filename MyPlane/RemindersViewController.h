@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import <Parse/Parse.h>
 
 @interface RemindersViewController : PFQueryTableViewController 
 

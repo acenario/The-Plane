@@ -67,7 +67,7 @@
 - (PFQuery *)queryForTable {
     
     
-    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"ProfilePictures"];
+    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
     [photosFromCurrentUserQuery whereKeyExists:@"user"];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
