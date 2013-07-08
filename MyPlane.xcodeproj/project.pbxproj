@@ -22,9 +22,6 @@
 		DCE1FE64178910D60012478B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE1FE63178910D60012478B /* FirstViewController.m */; };
 		DCE1FE66178910D60012478B /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE1FE65178910D60012478B /* first.png */; };
 		DCE1FE68178910D60012478B /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE1FE67178910D60012478B /* first@2x.png */; };
-		DCE1FE6B178910D60012478B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE1FE6A178910D60012478B /* SecondViewController.m */; };
-		DCE1FE6D178910D60012478B /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE1FE6C178910D60012478B /* second.png */; };
-		DCE1FE6F178910D60012478B /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE1FE6E178910D60012478B /* second@2x.png */; };
 		DCE1FE76178911C20012478B /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE75178911C20012478B /* Parse.framework */; };
 		DCE1FE89178912510012478B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE87178912400012478B /* SystemConfiguration.framework */; };
 		DCE1FE8A178912510012478B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE851789123A0012478B /* StoreKit.framework */; };
@@ -35,6 +32,14 @@
 		DCE1FE8F178912510012478B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE7B178912100012478B /* CoreLocation.framework */; };
 		DCE1FE90178912510012478B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE79178912020012478B /* CFNetwork.framework */; };
 		DCE1FE91178912510012478B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE77178911FA0012478B /* AudioToolbox.framework */; };
+		DCF891E4178A1E9000A89F6E /* tabbarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891E0178A1E9000A89F6E /* tabbarBackground.png */; };
+		DCF891E5178A1E9000A89F6E /* tabbarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891E1178A1E9000A89F6E /* tabbarBackground@2x.png */; };
+		DCF891E6178A1E9000A89F6E /* tabBarSelectionIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891E2178A1E9000A89F6E /* tabBarSelectionIndicator.png */; };
+		DCF891E7178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891E3178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png */; };
+		DCF891ED178A20EF00A89F6E /* buttonAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891EB178A20EF00A89F6E /* buttonAdd.png */; };
+		DCF891EE178A20EF00A89F6E /* buttonAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891EC178A20EF00A89F6E /* buttonAdd@2x.png */; };
+		DCF891F1178A348E00A89F6E /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF891F0178A348E00A89F6E /* FriendsViewController.m */; };
+		DCF891F3178B0B3A00A89F6E /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891F2178B0B3A00A89F6E /* blank.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,10 +65,6 @@
 		DCE1FE63178910D60012478B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		DCE1FE65178910D60012478B /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		DCE1FE67178910D60012478B /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		DCE1FE69178910D60012478B /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		DCE1FE6A178910D60012478B /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		DCE1FE6C178910D60012478B /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		DCE1FE6E178910D60012478B /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		DCE1FE75178911C20012478B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Downloads/Parse.framework; sourceTree = "<group>"; };
 		DCE1FE77178911FA0012478B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DCE1FE79178912020012478B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -74,6 +75,15 @@
 		DCE1FE83178912340012478B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DCE1FE851789123A0012478B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DCE1FE87178912400012478B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DCF891E0178A1E9000A89F6E /* tabbarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarBackground.png; sourceTree = "<group>"; };
+		DCF891E1178A1E9000A89F6E /* tabbarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarBackground@2x.png"; sourceTree = "<group>"; };
+		DCF891E2178A1E9000A89F6E /* tabBarSelectionIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabBarSelectionIndicator.png; sourceTree = "<group>"; };
+		DCF891E3178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarSelectionIndicator@2x.png"; sourceTree = "<group>"; };
+		DCF891EB178A20EF00A89F6E /* buttonAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonAdd.png; sourceTree = "<group>"; };
+		DCF891EC178A20EF00A89F6E /* buttonAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd@2x.png"; sourceTree = "<group>"; };
+		DCF891EF178A348E00A89F6E /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		DCF891F0178A348E00A89F6E /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		DCF891F2178B0B3A00A89F6E /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,21 +150,21 @@
 		DCE1FE4D178910D60012478B /* MyPlane */ = {
 			isa = PBXGroup;
 			children = (
+				DCF891DF178A1E7800A89F6E /* TabBarImages */,
+				DCE1FE5F178910D60012478B /* MainStoryboard.storyboard */,
 				DCE1FE56178910D60012478B /* AppDelegate.h */,
 				DCE1FE57178910D60012478B /* AppDelegate.m */,
-				DCE1FE5F178910D60012478B /* MainStoryboard.storyboard */,
-				DCE1FE62178910D60012478B /* FirstViewController.h */,
-				DCE1FE63178910D60012478B /* FirstViewController.m */,
-				DCE1FE65178910D60012478B /* first.png */,
-				DCE1FE67178910D60012478B /* first@2x.png */,
-				DCE1FE69178910D60012478B /* SecondViewController.h */,
-				DCE1FE6A178910D60012478B /* SecondViewController.m */,
-				DCE1FE6C178910D60012478B /* second.png */,
-				DCE1FE6E178910D60012478B /* second@2x.png */,
 				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
 				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
 				DCDF26591789B5F4005168BE /* RemindersViewController.h */,
 				DCDF265A1789B5F4005168BE /* RemindersViewController.m */,
+				DCF891EF178A348E00A89F6E /* FriendsViewController.h */,
+				DCF891F0178A348E00A89F6E /* FriendsViewController.m */,
+				DCE1FE62178910D60012478B /* FirstViewController.h */,
+				DCE1FE63178910D60012478B /* FirstViewController.m */,
+				DCE1FE65178910D60012478B /* first.png */,
+				DCE1FE67178910D60012478B /* first@2x.png */,
+				DCF891F2178B0B3A00A89F6E /* blank.png */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
 			path = MyPlane;
@@ -172,6 +182,19 @@
 				DCE1FE5D178910D60012478B /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
+			isa = PBXGroup;
+			children = (
+				DCF891E0178A1E9000A89F6E /* tabbarBackground.png */,
+				DCF891E1178A1E9000A89F6E /* tabbarBackground@2x.png */,
+				DCF891E2178A1E9000A89F6E /* tabBarSelectionIndicator.png */,
+				DCF891E3178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png */,
+				DCF891EB178A20EF00A89F6E /* buttonAdd.png */,
+				DCF891EC178A20EF00A89F6E /* buttonAdd@2x.png */,
+			);
+			name = TabBarImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,8 +255,13 @@
 				DCE1FE61178910D60012478B /* MainStoryboard.storyboard in Resources */,
 				DCE1FE66178910D60012478B /* first.png in Resources */,
 				DCE1FE68178910D60012478B /* first@2x.png in Resources */,
-				DCE1FE6D178910D60012478B /* second.png in Resources */,
-				DCE1FE6F178910D60012478B /* second@2x.png in Resources */,
+				DCF891E4178A1E9000A89F6E /* tabbarBackground.png in Resources */,
+				DCF891E5178A1E9000A89F6E /* tabbarBackground@2x.png in Resources */,
+				DCF891E6178A1E9000A89F6E /* tabBarSelectionIndicator.png in Resources */,
+				DCF891E7178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png in Resources */,
+				DCF891ED178A20EF00A89F6E /* buttonAdd.png in Resources */,
+				DCF891EE178A20EF00A89F6E /* buttonAdd@2x.png in Resources */,
+				DCF891F3178B0B3A00A89F6E /* blank.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,9 +275,9 @@
 				DCE1FE54178910D60012478B /* main.m in Sources */,
 				DCE1FE58178910D60012478B /* AppDelegate.m in Sources */,
 				DCE1FE64178910D60012478B /* FirstViewController.m in Sources */,
-				DCE1FE6B178910D60012478B /* SecondViewController.m in Sources */,
 				DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */,
 				DCDF265B1789B5F4005168BE /* RemindersViewController.m in Sources */,
+				DCF891F1178A348E00A89F6E /* FriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

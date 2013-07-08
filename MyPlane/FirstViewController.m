@@ -43,9 +43,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification2:)
+                                                 name:@"spCenterTabbarItemTapped"
+                                               object:nil];
     
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)receiveAddNotification2:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:@"spCenterTabbarItemTapped"])
+        NSLog (@"Successfully received the add notification for First!");
 }
 
 

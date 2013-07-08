@@ -23,6 +23,8 @@
         self.pullToRefreshEnabled = YES;
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
+        
+        
     }
     return self;
 }
@@ -30,7 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"mpCenterTabbarItemTapped"
+                                               object:nil];
+    
     
 	// Do any additional setup after loading the view.
 }
@@ -38,7 +45,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];    
     
-    NSLog(@"Hello!");
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,90 +53,98 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"])
+        NSLog (@"Successfully received the add notification for Reminders!");
+}
+
+
 - (PFQuery *)queryForTable {
-    PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationforKey:@"Reminders"];
     
-    PFQuery *query = [relation query];
     
-    PFQuery *userQuery = [PFUser query];
+    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"ProfilePictures"];
+    [photosFromCurrentUserQuery whereKeyExists:@"user"];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"fromFriend"];
+    
+    
+    
+    
+    
+                      
+    
+    [query orderByAscending:@"date"];
+    
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
     
-    [query orderByDescending:@"date"];
     
-    [userQuery whereKey:@"username" matchesKey:@"fromUser" inQuery:query];
-    [userQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-        
-        NSMutableArray *newProfilePicArray = [NSMutableArray array];
-        if (results.count > 0) {
-            for (PFObject *eachObject in results) {
-                [newProfilePicArray addObject:[eachObject objectForKey:@"profilePicture"]];
-            }
-            allImages = newProfilePicArray;
-            //[self setUpImages:allImages];
-        }
-        
-        //NSString *email = [results valueForKey:@"email"];
+    
+    
+    
+    
 
-        // results will contain users with a hometown team with a winning record
-    }];
-    
     
     
     return query;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        NSMutableArray *imageDataArray = [NSMutableArray array];
-        for (int i = 0; i < allImages.count; i++) {
-            PFFile *theImage = [allImages objectAtIndex:i];
-            NSData *imageData = [theImage getData];
-            UIImage *image = [UIImage imageWithData:imageData];
-            [imageDataArray addObject:image];
-        }
-        
-        
-        // Dispatch to main thread to update the UI
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            for (int i = 0; i < [imageDataArray count]; i++) {
-                UIImage *image = [imageDataArray objectAtIndex:i];
-                cell.imageView.image = image;
-            }
-            cell.textLabel.text = [object objectForKey:@"title"];
-            [self.tableView reloadData];
-        });
-    });
 
     
-    //PFFile *thumbnail = [object objectForKey:@"thumbnail"];
-    //cell.imageView.image = [UIImage imageNamed:@"placeholder.jpg"];
-    //cell.imageView.file = thumbnail;
     
-    //cell.imageView.file = profilePic;
+    UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
+    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
+    
+    reminderText.text = [object objectForKey:@"title"];
+    detailText.text = [object objectForKey:@"fromUser"];
+    
+    
+    //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
+    
+    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
+    NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+       dispatch_async(queue, ^{
+    for (PFObject *object in results) {
+        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        picImage.image = fromUserImage;
+            
+            });
+    }
+           
+    });
+    
+    
     
     
     return cell;
 }
 
-- (void)setUpImages:(NSArray *)images
-{
-    // Contains a list of all the BUTTONS
-    allImages = [images mutableCopy];
-    
-    // This method sets up the downloaded images and places them nicely in a grid
-    }
+
+
 
 
 @end

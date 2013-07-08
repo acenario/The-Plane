@@ -10,13 +10,27 @@
 
 @implementation AppDelegate
 
+
+- (void)customizeApp {
+    UITabBar *tabBarAppearance = [UITabBar appearance];
+    [tabBarAppearance setBackgroundImage:[UIImage imageNamed:@"tabbarBackground"]];
+    [tabBarAppearance setSelectionIndicatorImage:[UIImage imageNamed:@"tabBarSelectionIndicator"]];
+    
+    
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [self customizeApp];
 
     [Parse setApplicationId:@"eG1erDMSBskOUbLbiQJVCN9f8oWazzCWeQ2qg9Fb"
                   clientKey:@"nklHXrOh7SAgnhvfJYC0zjqjFLkkt9OVGQ8U7uyK"];
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    
     
     return YES;
 }

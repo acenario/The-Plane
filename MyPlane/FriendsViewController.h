@@ -1,5 +1,5 @@
 //
-//  RemindersViewController.h
+//  FriendsViewController.h
 //  MyPlane
 //
 //  Created by Arjun Bhatnagar on 7/7/13.
@@ -8,7 +8,6 @@
 
 #import <Parse/Parse.h>
 
-@interface RemindersViewController : PFQueryTableViewController 
-
+@interface FriendsViewController : PFQueryTableViewController
 
 @end
