@@ -8,12 +8,11 @@
 
 #import "AddFriendViewController.h"
 
-@interface AddFriendViewController () <UISearchDisplayDelegate, UISearchBarDelegate> {
-    
-}
+@interface AddFriendViewController ()
 
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UISearchDisplayController *searchController;
+- (IBAction)adjustButtonState:(id)sender;
+
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *searchResults;
 
 @end
@@ -22,36 +21,30 @@
 
 @end
 
-@implementation AddFriendViewController
+@implementation AddFriendViewController {
+    NSMutableArray *resultsArray;
+}
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:coder];
     if (self) {
+        self.pullToRefreshEnabled = YES;
+        self.paginationEnabled = YES;
+        self.objectsPerPage = 25;
+        self.parseClassName = @"UserInfo";
     }
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    
-    self.tableView.tableHeaderView = self.searchBar;
-    
-    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    
-    self.searchController.searchResultsDataSource = self;
-    self.searchController.searchResultsDelegate = self;
-    self.searchController.delegate = self;
-    
-    
-    CGPoint offset = CGPointMake(0, self.searchBar.frame.size.height);
-    self.tableView.contentOffset = offset;
     
     self.searchResults = [NSMutableArray array];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,55 +53,52 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (PFQuery *)queryForTable
-//{
-//    
-//    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+- (void)filterResults:(NSString *)searchTerm
+{
+    NSString *newTerm = [searchTerm lowercaseString];
+    
+    //[self.searchResults removeAllObjects];
+    
+    PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
 //    [query whereKeyExists:@"firstName"];
 //    [query whereKeyExists:@"lastName"];
 //    [query whereKeyExists:@"user"];  //this is based on whatever query you are trying to accomplish
-//    
-//    
-//    return query;
+    [query whereKey:@"user" containsString:newTerm];
+    
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyNetworkOnly;
+    }
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        [self.searchResults removeAllObjects];
+        NSLog(@"Number of rows after alledgly clearing %d", self.searchResults.count);
+        NSArray *results = [query findObjects];
+        [self.searchResults addObjectsFromArray:results];
+        [self loadObjects];
+    });
+    
+}
+
+//- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+//{
+//    NSLog(@"Did End Editing");
 //}
 
-- (void)filterResults:(NSString *)searchTerm
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    
-    [self.searchResults removeAllObjects];
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-    [query whereKeyExists:@"firstName"];
-    [query whereKeyExists:@"lastName"];
-    [query whereKeyExists:@"user"];  //this is based on whatever query you are trying to accomplish
-    [query whereKey:@"user" containsString:searchTerm];
-    
-    NSArray *results  = [query findObjects];
-    
-    NSLog(@"%@", results);
-    NSLog(@"%u", results.count);
-    
-    [self.searchResults addObjectsFromArray:results];
+    [self filterResults:searchBar.text];
+    [searchBar resignFirstResponder];
 }
 
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    [self filterResults:searchString];
-    return YES;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if (tableView == self.tableView) {
-        //if (tableView == self.searchDisplayController.searchResultsTableView) {
-        
-        return self.objects.count;
-        
+
+    NSLog(@"Rows upon NumberofRowsInSections %d", self.searchResults.count);
+    if (self.searchResults.count < 1) {
+        return 0;
     } else {
-        
         return self.searchResults.count;
-        
     }
     
 }
@@ -118,26 +108,52 @@
     static NSString *uniqueIdentifier = @"friendCell";
     
     PFTableViewCell *cell = (PFTableViewCell *) [self.tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
+
+    NSLog(@"Number of Rows within CellforRow %d", self.searchResults.count);
     
-    if (tableView != self.searchDisplayController.searchResultsTableView) {
-        NSString *first = [object objectForKey:@"firstName"];
-        NSString *last = [object objectForKey:@"lastName"];
-        //cell.textLabel.text = last;
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", first, last];
-        cell.detailTextLabel.text = [object objectForKey:@"user"];
-    }
-    
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+    if (self.searchResults.count > 0) {
+        UILabel *name = (UILabel *)[cell viewWithTag:2101];
+        UILabel *username = (UILabel *)[cell viewWithTag:2102];
+        PFImageView *picImage = (PFImageView *)[cell viewWithTag:2111];
+        [(UIButton *)[cell viewWithTag:2121] addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
         
-        PFUser *obj2 = [self.searchResults objectAtIndex:indexPath.row];
-        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-        PFObject *searchedUser = [query getObjectWithId:obj2.objectId];
+        PFObject *searchedUser = [self.searchResults objectAtIndex:indexPath.row];
         NSString *first = [searchedUser objectForKey:@"firstName"];
         NSString *last = [searchedUser objectForKey:@"lastName"];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", first, last];
-        cell.detailTextLabel.text = [searchedUser objectForKey:@"user"];
+        
+        NSLog(@"%@", first);
+        
+        name.text = [NSString stringWithFormat:@"%@ %@", first, last];
+        username.text = [searchedUser objectForKey:@"user"];
+        picImage.file = [searchedUser objectForKey:@"profilePicture"];
     }
+    
     return cell;
+}
+
+- (IBAction)adjustButtonState:(id)sender
+{
+    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    
+    
+    PFQuery *currentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *object in objects) {
+            PFObject *friendAdded = (PFObject *)[self.searchResults objectAtIndex:clickedButtonPath.row];
+            NSString* userName = [friendAdded objectForKey:@"user"];
+            NSLog(@"userName: %@", userName);
+            PFObject *userObject = (PFObject *)[objects objectAtIndex:0];
+            NSLog(@"%@", userObject);
+            [userObject addObject:userName forKey:@"friends"];
+            [userObject saveInBackground];
+        }
+    }];
+    
+    
+    UIButton *addFriendButton = (UIButton *)sender;
+    addFriendButton.enabled = NO;
     
 }
 

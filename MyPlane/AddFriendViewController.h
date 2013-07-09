@@ -13,7 +13,7 @@
 @protocol AddFriendViewControllerDelegate <NSObject>
 @end
 
-@interface AddFriendViewController : PFQueryTableViewController <UITableViewDelegate>
+@interface AddFriendViewController : PFQueryTableViewController <UISearchBarDelegate>
 
 @property (nonatomic, weak) id <AddFriendViewControllerDelegate> delegate;
 
