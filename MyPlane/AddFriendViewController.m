@@ -42,6 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.searchBar becomeFirstResponder];
     
     self.searchResults = [NSMutableArray array];
     
@@ -125,8 +126,15 @@
         
         name.text = [NSString stringWithFormat:@"%@ %@", first, last];
         username.text = [searchedUser objectForKey:@"user"];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
         PFFile *pictureFile = [searchedUser objectForKey:@"profilePicture"];
-        picImage.image = [[UIImage alloc] initWithData:pictureFile.getData];
+            UIImage *profilePic = [[UIImage alloc] initWithData:pictureFile.getData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                picImage.image = profilePic;
+            });
+        });
+        
     }
     
     return cell;
