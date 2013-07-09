@@ -76,7 +76,7 @@
     }
     
     else if (self.tabBar.selectedItem.tag == 300) {
-        NSLog(@"This is friends page with 300");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fCenterTabbarItemTapped" object:nil];
     }
     
     else if (self.tabBar.selectedItem.tag == 400) {

@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-@interface FriendsViewController : UITableViewController 
+#import "AddFriendViewController.h"
+
+@interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate>
 
 @end

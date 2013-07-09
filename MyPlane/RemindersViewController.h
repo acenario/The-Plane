@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
+#import "AddReminderViewController.h"
 
-@interface RemindersViewController : PFQueryTableViewController 
+@end
+@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate>
 
 
 @end

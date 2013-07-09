@@ -59,8 +59,10 @@
     // unless you use this method for observation of other notifications
     // as well.
     
-    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"])
+    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add notification for Reminders!");
+        [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+    }
 }
 
 
@@ -144,7 +146,13 @@
 }
 
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"AddReminder"]) {
+        AddReminderViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+    }
+}
 
 
 @end

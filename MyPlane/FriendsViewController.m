@@ -46,8 +46,10 @@
     // unless you use this method for observation of other notifications
     // as well.
     
-    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"])
-        NSLog (@"Successfully received the add notification for Reminders!");
+    if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
+        NSLog (@"Successfully received the add notification for friends!");
+        [self performSegueWithIdentifier:@"AddFriend" sender:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -151,15 +153,16 @@
     } else {
         NSLog(@"NO!");
     }
-    
-    
-    //cell.textLabel.text = values;
-    
-    
-    
-    
+
     return cell;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"AddFriend"]) {
+        AddFriendViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+    }
+}
 
 @end
