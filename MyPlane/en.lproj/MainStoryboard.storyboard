@@ -355,7 +355,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="2111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FDt-ZP-ozt" customClass="PFImageView">
+                                        <imageView userInteractionEnabled="NO" tag="2111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FDt-ZP-ozt">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="fOJ-c4-xfP"/>
                                             </constraints>

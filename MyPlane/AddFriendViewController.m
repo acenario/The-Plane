@@ -114,7 +114,7 @@
     if (self.searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:2101];
         UILabel *username = (UILabel *)[cell viewWithTag:2102];
-        PFImageView *picImage = (PFImageView *)[cell viewWithTag:2111];
+        UIImageView *picImage = (UIImageView *)[cell viewWithTag:2111];
         [(UIButton *)[cell viewWithTag:2121] addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
         
         PFObject *searchedUser = [self.searchResults objectAtIndex:indexPath.row];
@@ -125,7 +125,8 @@
         
         name.text = [NSString stringWithFormat:@"%@ %@", first, last];
         username.text = [searchedUser objectForKey:@"user"];
-        picImage.file = [searchedUser objectForKey:@"profilePicture"];
+        PFFile *pictureFile = [searchedUser objectForKey:@"profilePicture"];
+        picImage.image = [[UIImage alloc] initWithData:pictureFile.getData];
     }
     
     return cell;
