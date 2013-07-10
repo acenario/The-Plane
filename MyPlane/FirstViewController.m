@@ -100,6 +100,10 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
+    [currentInstallation saveInBackground];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -125,6 +129,10 @@
 #pragma mark - SignUpViewController Delegates
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
+    [currentInstallation saveInBackground];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

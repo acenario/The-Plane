@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "OurReminders": {
+            "applicationId": "eG1erDMSBskOUbLbiQJVCN9f8oWazzCWeQ2qg9Fb", 
+            "masterKey": "iBK4FEeM7cS0MVnVg4Q5izraxxUxNUMg4roqHd4L"
+        }, 
+        "_default": {
+            "link": "OurReminders"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.8"
+    }
+}

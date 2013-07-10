@@ -392,6 +392,8 @@
 		DCE1FE73178910D60012478B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Downloads\"",
@@ -401,6 +403,8 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -408,6 +412,8 @@
 		DCE1FE74178910D60012478B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Downloads\"",
@@ -417,6 +423,8 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

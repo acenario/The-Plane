@@ -43,11 +43,15 @@
 - (void)done:(id)sender
 {
     PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
+    
     [reminder setObject:[NSDate date] forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
     [reminder setObject:recievedObjectID forKey:@"fromFriend"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
+    
+    
+    
     [reminder saveInBackground];
     
     [self dismissViewControllerAnimated:YES completion:nil];
