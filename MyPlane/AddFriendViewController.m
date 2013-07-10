@@ -14,6 +14,8 @@
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *searchResults;
+- (IBAction)cancel:(id)sender;
+- (IBAction)done:(id)sender;
 
 @end
 
@@ -166,4 +168,12 @@
     
 }
 
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (IBAction)done:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

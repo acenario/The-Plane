@@ -413,19 +413,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="My Friends" id="eWT-fZ-ESa"/>
                     <connections>
-                        <segue destination="HaL-sO-baN" kind="modal" identifier="AddFriend" id="azN-Uw-T1Q"/>
+                        <segue destination="dgd-8a-PU9" kind="modal" identifier="AddFriend" id="azN-Uw-T1Q"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZi-nY-zvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1307" y="1434"/>
         </scene>
-        <!--Add Friend View Controller-->
+        <!--Add Friend View Controller - Add Friends-->
         <scene sceneID="In2-zx-V61">
             <objects>
                 <tableViewController id="HaL-sO-baN" customClass="AddFriendViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="hvj-fW-eO8">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="c4e-f9-bBp">
@@ -497,13 +497,25 @@
                             <outlet property="delegate" destination="HaL-sO-baN" id="gUc-IT-Iwn"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add Friends" id="iV3-Iy-eHt">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XmP-dl-74b">
+                            <connections>
+                                <action selector="cancel:" destination="HaL-sO-baN" id="iuX-Jn-qzk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="wrW-86-RLH">
+                            <connections>
+                                <action selector="done:" destination="HaL-sO-baN" id="3uK-HT-nPU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="c4e-f9-bBp" id="qI0-6e-igH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5S-mN-aK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1784" y="1438"/>
+            <point key="canvasLocation" x="2310" y="1438"/>
         </scene>
         <!--View Controller - Settings-->
         <scene sceneID="PyE-0r-pF4">
@@ -561,6 +573,24 @@
             </objects>
             <point key="canvasLocation" x="781" y="1434"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Dkf-Q1-1Pt">
+            <objects>
+                <navigationController id="dgd-8a-PU9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="J17-1P-V1Y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HaL-sO-baN" kind="relationship" relationship="rootViewController" id="buk-5W-9hs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l5f-9S-JRM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1784" y="1438"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="16" height="16"/>
@@ -570,6 +600,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
             <relationships>
                 <relationship kind="action" name="adjustButtonState:"/>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>

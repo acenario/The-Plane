@@ -75,7 +75,6 @@
         for (PFObject *object in objects) {
             friendsArray = [object objectForKey:@"friends"];
             
-            
         }
         [userQuery orderByAscending:@"friend"];
         [self gettingImages];
