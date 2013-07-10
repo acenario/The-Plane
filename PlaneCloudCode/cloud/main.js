@@ -7,27 +7,26 @@ Parse.Cloud.define("hello", function(request, response) {
 });
 
 Parse.Cloud.afterSave("Reminders", function(request) {
-                      // Our "Comment" class has a "text" key with the body of the comment itself
+                     
                       
                       var titleText = request.object.get('title');
                       var fromUserName = request.object.get('fromUser');
                       var forUserName = request.object.get('user');
+                      //Date reminderDate = request.object.get('reminderDate');
                       
-                      //var pushQuery = new Parse.Query(Parse.Installation);
-                      //pushQuery.equalTo('deviceType', 'ios');
                       var userQuery = new Parse.Query(Parse.Installation);
                       userQuery.equalTo('user', forUserName);
-                      
                       
                       Parse.Push.send({
                                       where: userQuery, // Set our Installation query
                                       data: {
-                                      alert: "New reminder: " + titleText,
-                                      badge: "Increment",
-                                      sound: "cheering.caf",
-                                      title: "Reminder from: " + fromUserName
+                                      alert: "New reminder: " + titleText + " " + "from: " + fromUserName,
+                                      badge: "Increment"
+                                      //reminder: titleText
+                                      //sound: "cheering.caf",
     
-                                      }
+                                      } //insert ,
+                                      //push_time: new Date(reminderDate)
                                       }, {
                                       success: function() {
                                       // Push was successful
