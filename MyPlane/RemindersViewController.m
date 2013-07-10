@@ -13,7 +13,7 @@
 @end
 
 
-@implementation RemindersViewController 
+@implementation RemindersViewController
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,13 +37,10 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"mpCenterTabbarItemTapped"
                                                object:nil];
-    
-    
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];    
+    [super viewDidAppear:animated];
     
 }
 
@@ -76,27 +73,12 @@
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
     
-    
-    
-    
-    
-                      
-    
     [query orderByAscending:@"date"];
     
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    
-    
-    
-    
-    
-    
-
-    
-    
     return query;
 }
 
@@ -108,7 +90,7 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-
+    
     
     
     UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
@@ -125,26 +107,27 @@
     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
     
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-       dispatch_async(queue, ^{
-    for (PFObject *object in results) {
-        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(queue, ^{
+        for (PFObject *object in results) {
+            PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+            UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
             
-        picImage.image = fromUserImage;
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                picImage.image = fromUserImage;
+                
             });
-    }
-           
+        }
+        
     });
-    
-    
-    
     
     return cell;
 }
 
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
+//{
+//    
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

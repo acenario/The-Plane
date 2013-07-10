@@ -23,6 +23,8 @@
 
 @implementation AddFriendViewController {
     NSMutableArray *resultsArray;
+    NSMutableArray *friendsArray;
+    PFQuery *currentUserQuery;
 }
 
 
@@ -34,6 +36,8 @@
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
         self.parseClassName = @"UserInfo";
+
+        
     }
     return self;
 }
@@ -45,6 +49,7 @@
     [self.searchBar becomeFirstResponder];
     
     self.searchResults = [NSMutableArray array];
+    [self currentUserQuery];
     
 }
 
@@ -52,6 +57,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)currentUserQuery
+{
+    currentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    
+    
+    [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *object in objects) {
+            friendsArray = [object objectForKey:@"friends"];
+        }
+    }];
 }
 
 - (void)filterResults:(NSString *)searchTerm
@@ -116,13 +134,25 @@
         UILabel *name = (UILabel *)[cell viewWithTag:2101];
         UILabel *username = (UILabel *)[cell viewWithTag:2102];
         UIImageView *picImage = (UIImageView *)[cell viewWithTag:2111];
-        [(UIButton *)[cell viewWithTag:2121] addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
+        UIButton *addButton = (UIButton *)[cell viewWithTag:2121];
         
         PFObject *searchedUser = [self.searchResults objectAtIndex:indexPath.row];
         NSString *first = [searchedUser objectForKey:@"firstName"];
         NSString *last = [searchedUser objectForKey:@"lastName"];
+        NSString *theirUsername = [searchedUser objectForKey:@"user"];
+        NSMutableArray *myFriendsArray = [[NSMutableArray alloc] init];
+        [myFriendsArray addObjectsFromArray:friendsArray];
         
-        NSLog(@"%@", first);
+        NSLog(@"Their Username $$$$$$$$$$ %@" , theirUsername);
+        
+        NSLog(@"%@", myFriendsArray);
+        
+        if ([myFriendsArray containsObject:theirUsername]) {
+            addButton.enabled = NO;
+        }
+        
+  
+        [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
         
         name.text = [NSString stringWithFormat:@"%@ %@", first, last];
         username.text = [searchedUser objectForKey:@"user"];
@@ -145,9 +175,6 @@
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     
-    
-    PFQuery *currentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
-    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFObject *object in objects) {
             PFObject *friendAdded = (PFObject *)[self.searchResults objectAtIndex:clickedButtonPath.row];
@@ -166,4 +193,12 @@
     
 }
 
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)done:(id)sender {
+    [self.delegate addFriendViewControllerDidFinishAddingFriends:self];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
