@@ -14,7 +14,10 @@
 
 @end
 
-@implementation AddReminderViewController
+@implementation AddReminderViewController {
+    NSString *nameOfUser;
+    PFObject *recievedObjectID;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,7 +45,8 @@
     PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
     [reminder setObject:[NSDate date] forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
-    [reminder setObject:@"abhijay" forKey:@"user"];
+    [reminder setObject:self.username.text forKey:@"user"];
+    [reminder setObject:recievedObjectID forKey:@"fromFriend"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
     [reminder saveInBackground];
     
@@ -53,5 +57,25 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username withName:(NSString *)name withProfilePicture:(UIImage *)image withObjectId:(PFObject *)objectID
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    self.name.text = name;
+    self.username.text = username;
+    self.userImage.image = image;
+    recievedObjectID = objectID;
+    self.doneBarItem.enabled = YES;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
+        FriendsForRemindersViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+    }
+}
+
+
 
 @end

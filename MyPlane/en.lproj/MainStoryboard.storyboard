@@ -138,9 +138,9 @@
                                             <action selector="cancel:" destination="0d1-kQ-2Gn" id="aiA-0O-ehz"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem key="rightBarButtonItem" systemItem="done" id="5Le-lK-yAQ">
+                                    <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="5Le-lK-yAQ">
                                         <connections>
-                                            <action selector="done:" destination="0d1-kQ-2Gn" id="p0e-2f-HPh"/>
+                                            <action selector="done:" destination="0d1-kQ-2Gn" id="fkZ-Qr-eC1"/>
                                         </connections>
                                     </barButtonItem>
                                 </navigationItem>
@@ -213,26 +213,47 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Contact" id="qBR-Ub-aXC">
                                 <cells>
-                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="vfK-4B-TZW" imageView="Z0p-Ov-Eae" rowHeight="89" style="IBUITableViewCellStyleDefault" id="aeS-63-gUa">
-                                        <rect key="frame" x="0.0" y="303" width="320" height="91"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="88" id="aeS-63-gUa">
+                                        <rect key="frame" x="0.0" y="303" width="320" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="88"/>
+                                            <rect key="frame" x="10" y="1" width="280" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Yourself" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vfK-4B-TZW">
-                                                    <rect key="frame" x="80" y="0.0" width="190" height="88"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Q1-LV-Ytr">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="blank.png" id="Z0p-Ov-Eae">
-                                                    <rect key="frame" x="10" y="14" width="60" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4lt-GZ-0eh">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="88" id="kPI-M4-dAH"/>
+                                                        <constraint firstAttribute="width" constant="88" id="yci-m6-3Er"/>
+                                                    </constraints>
                                                 </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOn-Kh-fns">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="uew-vh-Xsx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="6Q1-LV-Ytr" firstAttribute="leading" secondItem="4lt-GZ-0eh" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="54g-x6-ZnW"/>
+                                            <constraint firstItem="4lt-GZ-0eh" firstAttribute="centerY" secondItem="aeS-63-gUa" secondAttribute="centerY" type="default" id="Db7-up-akW"/>
+                                            <constraint firstItem="4lt-GZ-0eh" firstAttribute="leading" secondItem="aeS-63-gUa" secondAttribute="leading" constant="10" id="Dzw-PM-ooL"/>
+                                            <constraint firstItem="6Q1-LV-Ytr" firstAttribute="top" secondItem="aeS-63-gUa" secondAttribute="top" constant="21" id="Lps-VM-3zM"/>
+                                            <constraint firstItem="KOn-Kh-fns" firstAttribute="top" secondItem="6Q1-LV-Ytr" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="S5s-p3-HKE"/>
+                                            <constraint firstItem="KOn-Kh-fns" firstAttribute="leading" secondItem="4lt-GZ-0eh" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="UbT-Ar-b36"/>
+                                            <constraint firstItem="KOn-Kh-fns" firstAttribute="trailing" secondItem="6Q1-LV-Ytr" secondAttribute="trailing" type="default" id="gb8-Pp-lUk"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="Tmg-X9-bme" kind="modal" identifier="FriendsForReminders" id="z13-vb-7WB"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -244,14 +265,82 @@
                     </tableView>
                     <connections>
                         <outlet property="descriptionTextView" destination="ye2-tE-9hD" id="EKu-fL-7XP"/>
-                        <outlet property="name" destination="vfK-4B-TZW" id="f6G-oZ-o6D"/>
+                        <outlet property="doneBarItem" destination="5Le-lK-yAQ" id="LN5-oK-JeL"/>
+                        <outlet property="name" destination="6Q1-LV-Ytr" id="uCU-EW-MOC"/>
                         <outlet property="taskTextField" destination="oDa-4f-k0K" id="HIb-XG-sTI"/>
-                        <outlet property="userImage" destination="Z0p-Ov-Eae" id="OSZ-SY-hEB"/>
+                        <outlet property="userImage" destination="4lt-GZ-0eh" id="PtR-w5-iNg"/>
+                        <outlet property="username" destination="KOn-Kh-fns" id="ls6-f5-cMb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hB7-Ij-sHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1357" y="57"/>
+        </scene>
+        <!--Friends For Reminders View Controller-->
+        <scene sceneID="uAW-jN-2Bz">
+            <objects>
+                <tableViewController id="Tmg-X9-bme" customClass="FriendsForRemindersViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="fBg-9n-BBF">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="uEt-wN-HCu">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem title="My Friends" id="akA-BU-ACy"/>
+                            </items>
+                        </navigationBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="dHJ-X1-DsA">
+                                <rect key="frame" x="0.0" y="66" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="1111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdc-Fg-T2O">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="jV0-9z-7Bf"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1101" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3M-YB-ySq">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1102" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2di-ue-qXx">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="5ia-hb-Q5N"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="2di-ue-qXx" firstAttribute="trailing" secondItem="K3M-YB-ySq" secondAttribute="trailing" type="default" id="1IK-Ln-rA9"/>
+                                    <constraint firstAttribute="bottom" secondItem="2di-ue-qXx" secondAttribute="bottom" constant="9" id="2gT-rg-Twt"/>
+                                    <constraint firstItem="tdc-Fg-T2O" firstAttribute="leading" secondItem="dHJ-X1-DsA" secondAttribute="leading" type="default" id="Gop-iY-Zs5"/>
+                                    <constraint firstItem="tdc-Fg-T2O" firstAttribute="top" secondItem="dHJ-X1-DsA" secondAttribute="top" type="default" id="ODa-Xu-M2z"/>
+                                    <constraint firstItem="2di-ue-qXx" firstAttribute="leading" secondItem="tdc-Fg-T2O" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Tde-mw-DJ8"/>
+                                    <constraint firstItem="tdc-Fg-T2O" firstAttribute="bottom" secondItem="dHJ-X1-DsA" secondAttribute="bottom" type="default" id="sef-pl-qc1"/>
+                                    <constraint firstItem="K3M-YB-ySq" firstAttribute="top" secondItem="dHJ-X1-DsA" secondAttribute="top" constant="7" id="wIi-I0-ZLf"/>
+                                    <constraint firstItem="K3M-YB-ySq" firstAttribute="leading" secondItem="tdc-Fg-T2O" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="zUs-GW-qMV"/>
+                                </constraints>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Tmg-X9-bme" id="uav-Kr-TNg"/>
+                            <outlet property="delegate" destination="Tmg-X9-bme" id="Dao-Pq-xX0"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lvo-Hy-YSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1921" y="57"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fPh-z2-2De">
@@ -474,9 +563,54 @@
         </scene>
     </scenes>
     <resources>
-        <image name="blank.png" width="60" height="60"/>
         <image name="first" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="AddFriendViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="adjustButtonState:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="AddReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="username" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logOut:"/>
+            </relationships>
+        </class>
+        <class className="FriendsForRemindersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsForRemindersViewController.h"/>
+        </class>
+        <class className="FriendsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PFQueryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
+        </class>
+        <class className="PlaneTabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
+        </class>
+        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "FriendsForRemindersViewController.h"
 
 @class AddReminderViewController;
 
@@ -15,13 +16,15 @@
 @end
 
 
-@interface AddReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface AddReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, FriendsForRemindersDelegate>
 
 -(IBAction)done:(id)sender;
 -(IBAction)cancel:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarItem;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
-@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;
