@@ -104,6 +104,7 @@
             [arrayOfLastNames addObject:lastNameObject];
             //NSString *objectOfID = [object objectId];
             [arrayOfObjectIds addObject:object];
+            NSLog(@"firstName: %@", [object objectId]);
             
             //UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
             
