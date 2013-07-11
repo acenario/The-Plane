@@ -8,6 +8,7 @@
 
 #import "RemindersViewController.h"
 
+
 @interface RemindersViewController ()
 
 @end
@@ -107,8 +108,6 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-
-    
     
     //UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
     
@@ -133,6 +132,7 @@
     [picImage loadInBackground];
 
 
+    
    /*
     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
     

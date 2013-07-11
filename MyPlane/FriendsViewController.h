@@ -7,6 +7,8 @@
 //
 
 #import "AddFriendViewController.h"
+#import "UserInfo.h"
+
 
 @interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate>
 

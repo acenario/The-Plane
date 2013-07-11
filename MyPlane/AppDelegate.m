@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "UserInfo.h"
+
 
 @implementation AppDelegate
 
@@ -24,6 +26,8 @@
 {
     
     [self customizeApp];
+    
+    [UserInfo registerSubclass];
 
     [Parse setApplicationId:@"eG1erDMSBskOUbLbiQJVCN9f8oWazzCWeQ2qg9Fb"
                   clientKey:@"nklHXrOh7SAgnhvfJYC0zjqjFLkkt9OVGQ8U7uyK"];

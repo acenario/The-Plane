@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "UserInfo.h"
 
 @class FriendsForRemindersViewController;
 

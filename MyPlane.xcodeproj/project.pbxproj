@@ -11,6 +11,7 @@
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
+		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
 		DCDF265B1789B5F4005168BE /* RemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDF265A1789B5F4005168BE /* RemindersViewController.m */; };
 		DCE1FE48178910D60012478B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE47178910D60012478B /* UIKit.framework */; };
 		DCE1FE4A178910D60012478B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE49178910D60012478B /* Foundation.framework */; };
@@ -53,6 +54,8 @@
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
+		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		DC935CD9178F013700C316A3 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		DCDF26591789B5F4005168BE /* RemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersViewController.h; sourceTree = "<group>"; };
 		DCDF265A1789B5F4005168BE /* RemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersViewController.m; sourceTree = "<group>"; };
 		DCE1FE44178910D60012478B /* MyPlane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlane.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +196,8 @@
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE1FE65178910D60012478B /* first.png */,
 				DCE1FE67178910D60012478B /* first@2x.png */,
+				DC935CD8178F013700C316A3 /* UserInfo.h */,
+				DC935CD9178F013700C316A3 /* UserInfo.m */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
 			path = MyPlane;
@@ -308,6 +313,7 @@
 				AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */,
 				AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */,
 				AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */,
+				DC935CDA178F013800C316A3 /* UserInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
