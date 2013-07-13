@@ -13,7 +13,6 @@
 - (IBAction)adjustButtonState:(id)sender;
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSMutableArray *searchResults;
 
 @end
 
@@ -22,9 +21,16 @@
 @end
 
 @implementation AddFriendViewController {
-    NSMutableArray *resultsArray;
     NSMutableArray *friendsArray;
+//    NSMutableArray *friendsUNArray;
+    NSMutableArray *sentFriendRequestsArray;
+//    NSMutableArray *pendingFriendsUNArray;
+    NSMutableArray *searchResults;
+    NSMutableArray *friendsObjectId;
+    NSMutableArray *sentFriendRequestsObjectId;
     PFQuery *currentUserQuery;
+    PFQuery *friendQuery;
+    UserInfo *userObject;
 }
 
 
@@ -36,7 +42,7 @@
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
         self.parseClassName = @"UserInfo";
-
+        
         
     }
     return self;
@@ -48,7 +54,6 @@
     [super viewDidLoad];
     [self.searchBar becomeFirstResponder];
     
-    self.searchResults = [NSMutableArray array];
     [self currentUserQuery];
     
 }
@@ -61,48 +66,59 @@
 
 - (void)currentUserQuery
 {
-    currentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    //[currentUserQuery includeKey:@"friends"];
+    //[currentUserQuery includeKey:@"sentFriendRequests"];
     
     
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            friendsArray = [object objectForKey:@"friends"];
+        for (UserInfo *object in objects) {
+            userObject = object;
+            friendsArray = [[NSMutableArray alloc]initWithArray:object.friends];
+            sentFriendRequestsArray = [[NSMutableArray alloc]initWithArray: object.sentFriendRequests];
         }
+     [self getIDs];
     }];
+}
+
+-(void)getIDs {
+
+    friendsObjectId = [[NSMutableArray alloc]init];
+    sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
+    
+    for (PFObject *object in userObject.friends) {
+        [friendsObjectId addObject:[object objectId]];
+    }
+    for (PFObject *object in userObject.sentFriendRequests) {
+        [sentFriendRequestsObjectId addObject:[object objectId]];
+    }
+    
 }
 
 - (void)filterResults:(NSString *)searchTerm
 {
     NSString *newTerm = [searchTerm lowercaseString];
+
     
-    //[self.searchResults removeAllObjects];
-    
-    PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
-//    [query whereKeyExists:@"firstName"];
-//    [query whereKeyExists:@"lastName"];
-//    [query whereKeyExists:@"user"];  //this is based on whatever query you are trying to accomplish
-    [query whereKey:@"user" containsString:newTerm];
+    friendQuery = [UserInfo query];
+    [friendQuery whereKey:@"user" containsString:newTerm];
+    //[friendQuery includeKey:@"friends"];
+    //[friendQuery includeKey:@"sentFriendRequests"];
+    //[friendQuery includeKey:@"receivedFriendRequests"];
     
     if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyNetworkOnly;
+        friendQuery.cachePolicy = kPFCachePolicyNetworkOnly;
     }
     
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        [self.searchResults removeAllObjects];
-        NSLog(@"Number of rows after alledgly clearing %d", self.searchResults.count);
-        NSArray *results = [query findObjects];
-        [self.searchResults addObjectsFromArray:results];
+        [searchResults removeAllObjects];
+        searchResults = [[NSMutableArray alloc] initWithArray:[friendQuery findObjects]];
         [self loadObjects];
     });
     
 }
-
-//- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-//{
-//    NSLog(@"Did End Editing");
-//}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
@@ -112,13 +128,9 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    NSLog(@"Rows upon NumberofRowsInSections %d", self.searchResults.count);
-    if (self.searchResults.count < 1) {
-        return 0;
-    } else {
-        return self.searchResults.count;
-    }
+    
+    //NSLog(@"Rows upon NumberofRowsInSections %d", self.searchResults.count);
+    return searchResults.count;
     
 }
 
@@ -127,38 +139,36 @@
     static NSString *uniqueIdentifier = @"friendCell";
     
     PFTableViewCell *cell = (PFTableViewCell *) [self.tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
-
-    NSLog(@"Number of Rows within CellforRow %d", self.searchResults.count);
     
-    if (self.searchResults.count > 0) {
+    //NSLog(@"Number of Rows within CellforRow %d", self.searchResults.count);
+    
+    if (searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:2101];
         UILabel *username = (UILabel *)[cell viewWithTag:2102];
         UIImageView *picImage = (UIImageView *)[cell viewWithTag:2111];
         UIButton *addButton = (UIButton *)[cell viewWithTag:2121];
+        addButton.enabled = YES;
         
-        PFObject *searchedUser = [self.searchResults objectAtIndex:indexPath.row];
-        NSString *first = [searchedUser objectForKey:@"firstName"];
-        NSString *last = [searchedUser objectForKey:@"lastName"];
-        NSString *theirUsername = [searchedUser objectForKey:@"user"];
-        NSMutableArray *myFriendsArray = [[NSMutableArray alloc] init];
-        [myFriendsArray addObjectsFromArray:friendsArray];
+        UserInfo *searchedUser = [searchResults objectAtIndex:indexPath.row];
         
-        NSLog(@"Their Username $$$$$$$$$$ %@" , theirUsername);
+        name.text = [NSString stringWithFormat:@"%@ %@", searchedUser.firstName, searchedUser.lastName];
+        username.text = searchedUser.user;
         
-        NSLog(@"%@", myFriendsArray);
         
-        if ([myFriendsArray containsObject:theirUsername]) {
+        
+        if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId]) {
             addButton.enabled = NO;
         }
         
-  
+        //NSLog(@"FRIENDS ARRAY: %@", array);
+        //NSLog(@"SEARCHED USER: %@", searchedUser);
+        
+        
         [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
         
-        name.text = [NSString stringWithFormat:@"%@ %@", first, last];
-        username.text = [searchedUser objectForKey:@"user"];
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
-        PFFile *pictureFile = [searchedUser objectForKey:@"profilePicture"];
+            PFFile *pictureFile = searchedUser.profilePicture;
             UIImage *profilePic = [[UIImage alloc] initWithData:pictureFile.getData];
             dispatch_async(dispatch_get_main_queue(), ^{
                 picImage.image = profilePic;
@@ -174,22 +184,22 @@
 {
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    UserInfo *friendAdded = [searchResults objectAtIndex:clickedButtonPath.row];
     
-    [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            PFObject *friendAdded = (PFObject *)[self.searchResults objectAtIndex:clickedButtonPath.row];
-            NSString* userName = [friendAdded objectForKey:@"user"];
-            NSLog(@"userName: %@", userName);
-            PFObject *userObject = (PFObject *)[objects objectAtIndex:0];
-            NSLog(@"%@", userObject);
-            [userObject addObject:userName forKey:@"friends"];
-            [userObject saveInBackground];
-        }
-    }];
+    NSLog(@"%@", userObject);
+    NSLog(@"%@", friendAdded);
     
+    [sentFriendRequestsObjectId addObject:friendAdded.objectId];
+    [userObject addObject:friendAdded forKey:@"sentFriendRequests"];
+    [userObject saveInBackground];
+    
+    //[friendAdded addObject:userObject forKey:@"receivedFriendRequests"];
+    //NSLog(@"%@", friendAdded.receivedFriendRequests);
+    //[friendAdded saveInBackground];
     
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.enabled = NO;
+    
     
 }
 
@@ -199,6 +209,5 @@
 
 - (IBAction)done:(id)sender {
     [self.delegate addFriendViewControllerDidFinishAddingFriends:self];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

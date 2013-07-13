@@ -14,11 +14,10 @@
 
 @implementation FriendsViewController {
     NSArray *friendsArray;
+    NSMutableArray *receievedFriendRequestsArray;
     NSMutableArray *fileArray;
-    NSMutableArray *firstNameArray;
-    NSMutableArray *lastNameArray;
-    NSMutableArray *objectIdArray;
     PFFile *pictureFile;
+    UserInfo *currentUserObject;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,8 +36,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"fCenterTabbarItemTapped"
-                                               object:nil];
-    
+                                               object:nil];    
     [self queryForTable];
 	// Do any additional setup after loading the view.
 }
@@ -61,74 +59,46 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (void)queryForTable {
     
-    
-    PFQuery *userQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [userQuery includeKey:@"friends"];
     
-    
-    /*PFQuery *friendQuery = [PFQuery queryWithClassName:@"UserInfo"];
-     [friendQuery whereKeyExists:@"friends"];
-     
-     PFQuery *query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:userQuery, friendQuery, nil]];*/
-    
-    [userQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            friendsArray = [object objectForKey:@"friends"];
-        }
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        currentUserObject = (UserInfo *)object;
+        //receievedFriendRequestsArray = [object objectForKey:@"receivedFriendRequests"];
+        friendsArray = [object objectForKey:@"friends"];
         [userQuery orderByAscending:@"friend"];
-        [self gettingImages];
+        [self receivedFriendRequestsQuery];
+        [self.tableView reloadData];
     }];
-    
-    
     
     if (!pictureFile.isDataAvailable) {
-        
         userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    
 }
 
--(void)gettingImages {
+- (void)receivedFriendRequestsQuery
+{
+    NSArray *array = [[NSArray alloc] initWithObjects:currentUserObject, nil];
+    receievedFriendRequestsArray = [NSMutableArray array];
+    PFQuery *query = [UserInfo query];
+    [query whereKey:@"sentFriendRequests" containsAllObjectsInArray:array];
+    [query includeKey:@"receivedFriendsArray"];
     
-    
-    PFQuery *personQuery = [PFQuery queryWithClassName:@"UserInfo"];
-    [personQuery whereKey:@"user" containedIn:friendsArray];
-    
-    
-    [personQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSMutableArray *arrayOfFiles = [[NSMutableArray alloc]init];
-        NSMutableArray *arrayOfFirstNames = [[NSMutableArray alloc]init];
-        NSMutableArray *arrayOfLastNames = [[NSMutableArray alloc]init];
-        NSMutableArray *arrayOfObjectIds = [[NSMutableArray alloc]init];
-        for (PFObject *object in objects) {
-            PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-            [arrayOfFiles addObject:theImage];
-            pictureFile = theImage;
-            
-            NSString *firstNameObject = [object objectForKey:@"firstName"];
-            [arrayOfFirstNames addObject:firstNameObject];
-            NSString *lastNameObject = [object objectForKey:@"lastName"];
-            [arrayOfLastNames addObject:lastNameObject];
-            //NSString *objectOfID = [object objectId];
-            [arrayOfObjectIds addObject:object];
-            
-            //UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-            
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        //NSLog(@"%d", objects.count);
+        for (UserInfo *object in objects) {
+            [receievedFriendRequestsArray addObject:object];
+            NSLog(@"%@", receievedFriendRequestsArray);
         }
-        fileArray = arrayOfFiles;
-        firstNameArray = arrayOfFirstNames;
-        lastNameArray = arrayOfLastNames;
-        objectIdArray = arrayOfObjectIds;
-        [self.tableView reloadData];
         
+        NSLog(@"%@", self.navigationItem.rightBarButtonItem.title);
+        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", receievedFriendRequestsArray.count];
+        NSLog(@"%@", self.navigationItem.rightBarButtonItem.title);
     }];
-    
-    
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -139,8 +109,7 @@
 - (void)addFriendViewControllerDidFinishAddingFriends:(AddFriendViewController *)controller
 {
     [self queryForTable];
-    [self.tableView reloadData];
-    NSLog(@"did Reload");
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
@@ -150,30 +119,26 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    UIImageView *picImage = (UIImageView *)[cell viewWithTag:2000];
+    PFImageView *picImage = (PFImageView *)[cell viewWithTag:2000];
     UILabel *contactText = (UILabel *)[cell viewWithTag:2001];
     UILabel *detailText = (UILabel *)[cell viewWithTag:2002];
     
-    NSString *username = [friendsArray objectAtIndex:indexPath.row];
-    NSString *firstName = [firstNameArray objectAtIndex:indexPath.row];
-    NSString *lastName = [lastNameArray objectAtIndex:indexPath.row];
+    UserInfo *userObject = [friendsArray objectAtIndex:indexPath.row];
+    NSString *username = userObject.user;
+    NSString *firstName = userObject.firstName;
+    NSString *lastName = userObject.lastName;
     
-    if (pictureFile.isDataAvailable) {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-            PFFile *picture = [fileArray objectAtIndex:indexPath.row];
-            UIImage *fromUserImage = [[UIImage alloc] initWithData:picture.getData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                picImage.image = fromUserImage;
-                picImage.image = fromUserImage;
-                contactText.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-                detailText.text = username;
-            });
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        PFFile *picture = userObject.profilePicture;
+        UIImage *fromUserImage = [[UIImage alloc] initWithData:picture.getData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            picImage.image = fromUserImage;
+            contactText.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+            detailText.text = username;
         });
-        
-    } else {
-        NSLog(@"NO!");
-    }
+    });
+    
     
     return cell;
 }
@@ -184,6 +149,11 @@
         UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
         controller.delegate = self;
+        
+    } else if ([segue.identifier isEqualToString:@"ReceivedFriendRequests"]) {
+        ReceivedFriendRequestsViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        controller.receivedFriendRequestsArray = [NSMutableArray arrayWithArray:receievedFriendRequestsArray];
     }
 }
 

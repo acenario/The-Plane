@@ -17,6 +17,7 @@
 @implementation AddReminderViewController {
     NSString *nameOfUser;
     PFObject *recievedObjectID;
+    NSDateFormatter *mainFormatter;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,6 +33,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    mainFormatter = [[NSDateFormatter alloc] init];
+    [mainFormatter setDateStyle:NSDateFormatterShortStyle];
+    [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    self.dateDetail.text = [mainFormatter stringFromDate:[NSDate date]];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,7 +50,7 @@
 - (void)done:(id)sender
 {
     PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
-    [reminder setObject:[NSDate date] forKey:@"date"];
+    [reminder setObject:[mainFormatter dateFromString:self.dateDetail.text] forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
     [reminder setObject:recievedObjectID forKey:@"fromFriend"];
@@ -73,9 +80,24 @@
     if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
         FriendsForRemindersViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
+        ReminderDateViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        NSLog(@"$$$$ %@", self.dateDetail.text);
+        controller.displayDate = self.dateDetail.text;
     }
 }
 
+- (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
+{
+    //self.mainFormatter = dateFormatter;
+    self.dateDetail.text = [mainFormatter stringFromDate:date];
+    NSLog(@"%@", self.dateDetail.text);
+}
 
+- (void)reminderViewControllerDidCancel:(ReminderDateViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
