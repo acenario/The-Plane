@@ -17,6 +17,7 @@
     NSMutableArray *fileArray;
     PFFile *pictureFile;
     PFQuery *userQuery;
+    PFObject *personObject;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,7 +79,7 @@
     [userQuery includeKey:@"friends"];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        
+        personObject = object;
         friendsArray = [object objectForKey:@"friends"];
         [userQuery orderByAscending:@"friend"];
         [self.tableView reloadData];
@@ -96,6 +97,8 @@
     return [friendsArray count];
 }
 
+
+
 - (void)addFriendViewControllerDidFinishAddingFriends:(AddFriendViewController *)controller
 {
     [self queryForTable];
@@ -105,7 +108,7 @@
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        //cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:2000];
@@ -130,6 +133,48 @@
     
     
     return cell;
+}
+
+- (void)reQueryForTableWithIndexPath:(NSIndexPath *)indexPath {
+    
+    userQuery = [UserInfo query];
+    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [userQuery includeKey:@"friends"];
+    
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        personObject = object;
+        friendsArray = [object objectForKey:@"friends"];
+        [userQuery orderByAscending:@"friend"];
+        
+        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+        indexPaths = [NSArray arrayWithObject:indexPath];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self.tableView reloadData];
+        
+        
+    }];
+    
+    
+    if (!pictureFile.isDataAvailable) {
+        userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UserInfo *friendRemoved = [friendsArray objectAtIndex:indexPath.row];
+    
+    [personObject removeObject:friendRemoved forKey:@"friends"];
+    [personObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self reQueryForTableWithIndexPath:indexPath];
+        
+    }];
+    
+    
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

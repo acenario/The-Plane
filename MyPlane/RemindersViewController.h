@@ -12,5 +12,7 @@
 @end
 @interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate>
 
+@property (nonatomic, strong) PFObject *userObject;
+
 
 @end

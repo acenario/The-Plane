@@ -7,12 +7,18 @@
 //
 
 #import "PlaneTabViewController.h"
+#import "RemindersViewController.h"
 
 @interface PlaneTabViewController ()
+
 
 @end
 
 @implementation PlaneTabViewController
+
+@synthesize userInfoObject;
+@synthesize userInfoFriends;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +35,22 @@
     self.tabBar.clipsToBounds = NO;
     [self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
     
+    RemindersViewController *controller = [[self viewControllers] objectAtIndex:1];
+
+    PFQuery *userQuery = [UserInfo query];
+    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [userQuery includeKey:@"friends"];
+    
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        userInfoObject = object;
+        controller.userObject = userInfoObject;
+    }];
+  
+        userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    
+    
+    //UIColor *selectedColor = [UIColor darkGrayColor];
+    //self.tabBar.selectionIndicatorImage = [UIImage imageWithColor:selectedColor cornerRadius:6.0];
     
     
     

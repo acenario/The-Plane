@@ -14,7 +14,9 @@
 @end
 
 
-@implementation RemindersViewController 
+@implementation RemindersViewController
+
+@synthesize userObject = _userObject;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,6 +41,11 @@
                                                  name:@"mpCenterTabbarItemTapped"
                                                object:nil];
     
+    
+    //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    //self.tableView.backgroundColor = [UIColor alizarinColor];
+
+    //self.tableView.separatorColor = [UIColor blackColor];
     
 	// Do any additional setup after loading the view.
 }
@@ -100,16 +107,46 @@
     return query;
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIColor *color = [UIColor greenSeaColor];
+    UIColor *selectedColor = [UIColor redColor];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    cell.backgroundColor = color;
+
+    [cell setSelectedBackgroundView:bgView];
+    
+    
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    if ([cell respondsToSelector:@selector(detailTextLabel)])
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    
+    //Guess some good text colors
+    cell.textLabel.textColor = selectedColor;
+    cell.textLabel.highlightedTextColor = color;
+    if ([cell respondsToSelector:@selector(detailTextLabel)]) {
+        cell.detailTextLabel.textColor = selectedColor;
+        cell.detailTextLabel.highlightedTextColor = color;
+    }
+    
+    return cell;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+
     }
     
+
     
-    //UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
     
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
@@ -155,6 +192,11 @@
     
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

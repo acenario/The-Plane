@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "FirstViewController.h"
+#import "UserInfo.h"
 
-@interface PlaneTabViewController : UITabBarController 
+
+@interface PlaneTabViewController : UITabBarController
+
+@property (nonatomic, strong) PFObject *userInfoObject;
+@property (nonatomic, strong) PFObject *userInfoFriends;
+
 
 @end
