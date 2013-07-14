@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class ReminderObjectViewController;
+
+@protocol ReminderObjectViewControllerDelegate <NSObject>
+
+@end
+
 @interface ReminderObjectViewController : UITableViewController
+
+@property (nonatomic, strong) id <ReminderObjectViewControllerDelegate> delegate;
 
 @end

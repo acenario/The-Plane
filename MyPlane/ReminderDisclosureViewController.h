@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReminderObjectViewController.h"
 
-@interface ReminderDisclosureViewController : UITableViewController
+@class ReminderDisclosureViewController;
+
+@protocol ReminderDisclosureViewControllerDelegate <NSObject>
+
+@end
+
+@interface ReminderDisclosureViewController : UITableViewController <ReminderObjectViewControllerDelegate>
+
+@property (nonatomic, strong) id <ReminderDisclosureViewControllerDelegate> delegate;
 
 @end
