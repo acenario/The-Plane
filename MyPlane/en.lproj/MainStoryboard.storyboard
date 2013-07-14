@@ -57,6 +57,48 @@
             </objects>
             <point key="canvasLocation" x="781" y="-607"/>
         </scene>
+        <!--Reminder Disclosure View Controller - Reminder-->
+        <scene sceneID="dyd-UC-yqs">
+            <objects>
+                <tableViewController id="Z6j-VL-9Ve" customClass="ReminderDisclosureViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="evP-4e-wAG">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <containerView key="tableHeaderView" contentMode="scaleToFill" id="bo6-OO-Avm">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="294"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="jci-ZK-XT4" kind="embed" identifier="ReminderObject" id="l5N-tc-YZM"/>
+                            </connections>
+                        </containerView>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="Pzz-el-pnR">
+                                <rect key="frame" x="0.0" y="330" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Z6j-VL-9Ve" id="DHE-gj-kBJ"/>
+                            <outlet property="delegate" destination="Z6j-VL-9Ve" id="T7N-gq-dUl"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Reminder" id="X8p-l9-F0t">
+                        <barButtonItem key="backBarButtonItem" title="Reminder" id="FrS-ry-6ge"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UzZ-E9-0MQ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="kTg-nX-ljl"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BOU-Sv-UvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1883" y="-607"/>
+        </scene>
         <!--Reminders View Controller - My Plane-->
         <scene sceneID="KAL-IJ-IpD">
             <objects>
@@ -66,11 +108,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="k4a-sY-YsS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="k4a-sY-YsS">
                                 <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4z-Fc-eOh">
@@ -104,6 +146,9 @@
                                     <constraint firstItem="rY3-Kq-9f5" firstAttribute="leading" secondItem="n4z-Fc-eOh" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="poz-gk-Dd9"/>
                                     <constraint firstItem="r12-CN-mot" firstAttribute="top" secondItem="k4a-sY-YsS" secondAttribute="top" constant="9" id="rBy-7K-f8V"/>
                                 </constraints>
+                                <connections>
+                                    <segue destination="2Fg-4j-HPY" kind="modal" identifier="ReminderDisclosure" id="qsI-Be-Qgy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -803,76 +848,113 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="1916" y="726"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="BSL-qc-cJl">
+            <objects>
+                <tableViewController id="jci-ZK-XT4" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="YA7-Di-YeM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="294"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="wHe-I1-eiQ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="ep0-E7-wcW">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="61"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="2eA-h2-D5O">
+                                        <rect key="frame" x="0.0" y="71" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="90" id="XgX-sL-T4l">
+                                        <rect key="frame" x="0.0" y="131" width="320" height="91"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="jMe-hG-GgI">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="FGi-Sn-5qy">
+                                        <rect key="frame" x="0.0" y="242" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lbp-Ln-Bl0">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="302" id="LnA-jW-uj6"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Remind Again">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="Lbp-Ln-Bl0" firstAttribute="centerY" secondItem="FGi-Sn-5qy" secondAttribute="centerY" type="default" id="2We-tR-Me3"/>
+                                            <constraint firstItem="Lbp-Ln-Bl0" firstAttribute="bottom" secondItem="FGi-Sn-5qy" secondAttribute="bottom" type="default" id="WyP-jv-ljg"/>
+                                            <constraint firstItem="Lbp-Ln-Bl0" firstAttribute="centerX" secondItem="FGi-Sn-5qy" secondAttribute="centerX" type="default" id="lJu-G8-M8u"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="jci-ZK-XT4" id="kYT-R5-NI3"/>
+                            <outlet property="delegate" destination="jci-ZK-XT4" id="bT4-oR-xMK"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p01-Ry-m8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2442" y="-470"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Oq1-ZZ-Xpg">
+            <objects>
+                <navigationController id="2Fg-4j-HPY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="1G2-FO-pdw"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="H3q-wP-wTd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Z6j-VL-9Ve" kind="relationship" relationship="rootViewController" id="Xew-aQ-kUS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FmB-nK-ynE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1357" y="-607"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="16" height="16"/>
     </resources>
-    <classes>
-        <class className="AddFriendViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="adjustButtonState:"/>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="AddReminderViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddReminderViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="username" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOut:"/>
-            </relationships>
-        </class>
-        <class className="FriendsForRemindersViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsForRemindersViewController.h"/>
-        </class>
-        <class className="FriendsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PFImageView" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
-        </class>
-        <class className="PFQueryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
-        </class>
-        <class className="PlaneTabViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
-        </class>
-        <class className="ReceivedFriendRequestsViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReceivedFriendRequestsViewController.h"/>
-        </class>
-        <class className="ReminderDateViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDateViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="dateAction:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="pickerView" candidateClass="UIDatePicker"/>
-            </relationships>
-        </class>
-        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

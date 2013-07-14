@@ -67,7 +67,7 @@
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
-        //receievedFriendRequestsArray = [object objectForKey:@"receivedFriendRequests"];
+        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", currentUserObject.receivedFriendRequests.count];
         friendsArray = [object objectForKey:@"friends"];
         [userQuery orderByAscending:@"friends"];
         [self.tableView reloadData];
@@ -128,6 +128,11 @@
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
         controller.delegate = self;
     }
+}
+
+- (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller
+{
+    [self.tableView reloadData];
 }
 
 @end

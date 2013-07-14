@@ -12,6 +12,8 @@
 @class ReceivedFriendRequestsViewController;
 
 @protocol RecievedFriendRequestsDelegate <NSObject>
+
+- (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller;
 @end
 
 @interface ReceivedFriendRequestsViewController : UITableViewController
