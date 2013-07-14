@@ -35,7 +35,9 @@
     self.tabBar.clipsToBounds = NO;
     [self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
     
-    RemindersViewController *controller = [[self viewControllers] objectAtIndex:1];
+    RemindersViewController *remindersController = [[self viewControllers] objectAtIndex:1];
+
+
 
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -43,10 +45,10 @@
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userInfoObject = object;
-        controller.userObject = userInfoObject;
+        remindersController.userObject = userInfoObject;
     }];
   
-        userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     
     
     //UIColor *selectedColor = [UIColor darkGrayColor];
