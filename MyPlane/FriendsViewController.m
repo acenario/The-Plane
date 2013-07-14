@@ -69,7 +69,7 @@
         currentUserObject = (UserInfo *)object;
         //receievedFriendRequestsArray = [object objectForKey:@"receivedFriendRequests"];
         friendsArray = [object objectForKey:@"friends"];
-        [userQuery orderByAscending:@"friend"];
+        [userQuery orderByAscending:@"friends"];
         [self.tableView reloadData];
     }];
     
