@@ -167,13 +167,23 @@
     
     UserInfo *friendRemoved = [friendsArray objectAtIndex:indexPath.row];
     
+    NSString *friendRemovedName = friendRemoved.user;
+    NSString *userName = [personObject objectForKey:@"user"];
+    
+    if (![friendRemovedName isEqualToString:userName]) {
+    
     [personObject removeObject:friendRemoved forKey:@"friends"];
+    [friendRemoved removeObject:personObject forKey:@"friends"];
+        
     [personObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [friendRemoved saveInBackground];
         [self reQueryForTableWithIndexPath:indexPath];
         
     }];
     
-    
+    } else {
+        NSLog(@"CANT DELETE SELF");
+    }
     
 }
 

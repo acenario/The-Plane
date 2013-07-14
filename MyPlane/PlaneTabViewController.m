@@ -34,6 +34,9 @@
     [super viewDidLoad];
     self.tabBar.clipsToBounds = NO;
     [self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
+    [self registerDefaults];
+    
+    
     
     RemindersViewController *remindersController = [[self viewControllers] objectAtIndex:1];
 
@@ -46,9 +49,19 @@
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userInfoObject = object;
         remindersController.userObject = userInfoObject;
+        
+        BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+        if (firstTime) {
+            NSLog(@"FIRST TIME BABY!");
+        }
+        
+        
     }];
   
     userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    
+    
+    
     
     
     //UIColor *selectedColor = [UIColor darkGrayColor];
@@ -59,7 +72,13 @@
 	// Do any additional setup after loading the view.
 }
 
-
+- (void)registerDefaults
+{
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithBool:YES], @"FirstTime",
+                                nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+}
 
 - (void)didReceiveMemoryWarning
 {

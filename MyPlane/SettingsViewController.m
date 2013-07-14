@@ -32,19 +32,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.editButton.enabled = NO;
+    [self getUserInfo];
+    
+}
 
+-(void)getUserInfo {
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         
-        [self updateLabels];
+        [self updateLabelsForObject:object];
+        
+        
     }];
     
     userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
 }
 
--(void)updateLabels {
+-(void)updateLabelsForObject:(PFObject *)object {
+    PFUser *user = [PFUser currentUser];
+    self.firstNameField.text = [object objectForKey:@"firstName"];
+    self.lastNameField.text = [object objectForKey:@"lastName"];
+    self.usernameField.text = [object objectForKey:@"user"];
+    self.emailField.text = [user email];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        PFFile *pictureFile = [object objectForKey:@"profilePicture"];
+        UIImage *fromUserImage = [[UIImage alloc] initWithData:pictureFile.getData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.profilePicture.image = fromUserImage;
+            self.editButton.enabled = YES;
+
+        });
+    });
     
 }
 
@@ -55,9 +78,23 @@
 }
 
 - (void)updateUserInfo:(EditSettingsViewController *)controller {
-
-    
+    [self getUserInfo];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"editInfo"]) {
+        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+        EditSettingsViewController *controller = (EditSettingsViewController *)navController.topViewController;
+        controller.delegate = self;
+        
+        controller.firstname = self.firstNameField.text;
+        controller.lastname = self.lastNameField.text;
+        controller.email = self.emailField.text;
+        controller.profilePicture = self.profilePicture.image;
+    }
+}
+
 
 
 

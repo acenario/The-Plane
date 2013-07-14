@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserInfo.h"
 
 @class EditSettingsViewController;
 
@@ -18,12 +19,26 @@
 
 @end
 
-@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate,UITextFieldDelegate, UINavigationControllerDelegate>
 
 - (IBAction)doneButton:(id)sender;
+- (IBAction)cancelButton:(id)sender;
 
 - (IBAction)imagePicker:(id)sender;
+
 @property (nonatomic, weak) id <EditSettingsViewControllerDelegate> delegate;
+
+@property (nonatomic, strong) NSString *firstname;
+@property (nonatomic, strong) NSString *lastname;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) UIImage *profilePicture;
+
+
+
+
+
+
+
 
 
 @end

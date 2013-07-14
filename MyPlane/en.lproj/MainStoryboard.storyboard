@@ -524,7 +524,7 @@
             </objects>
             <point key="canvasLocation" x="2310" y="1438"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings View Controller - My Profile-->
         <scene sceneID="Vjq-k0-IAt">
             <objects>
                 <tableViewController id="viF-zF-QRg" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -605,6 +605,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="anamazingworld@comcast.net" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xKA-2s-3Bw">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="211" id="dwK-zf-d3v"/>
+                                                        <constraint firstAttribute="height" constant="21" id="obM-8X-StD"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -613,9 +614,9 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="xKA-2s-3Bw" firstAttribute="top" secondItem="8pc-9Y-V8f" secondAttribute="top" type="default" id="27R-jc-Idw"/>
                                             <constraint firstItem="8pc-9Y-V8f" firstAttribute="leading" secondItem="Ut3-Xd-VVo" secondAttribute="leading" constant="30" id="XDy-gk-aNf"/>
-                                            <constraint firstItem="xKA-2s-3Bw" firstAttribute="bottom" secondItem="8pc-9Y-V8f" secondAttribute="bottom" type="default" id="aY8-Cc-eri"/>
+                                            <constraint firstItem="xKA-2s-3Bw" firstAttribute="centerY" secondItem="Ut3-Xd-VVo" secondAttribute="centerY" type="default" id="hGf-84-V2d"/>
+                                            <constraint firstItem="xKA-2s-3Bw" firstAttribute="baseline" secondItem="8pc-9Y-V8f" secondAttribute="baseline" type="default" id="hYR-CC-AtS"/>
                                             <constraint firstItem="8pc-9Y-V8f" firstAttribute="top" secondItem="Ut3-Xd-VVo" secondAttribute="top" constant="12" id="jip-2a-zcH"/>
                                             <constraint firstItem="xKA-2s-3Bw" firstAttribute="leading" secondItem="8pc-9Y-V8f" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="v3Z-tw-MPb"/>
                                         </constraints>
@@ -628,13 +629,21 @@
                             <outlet property="delegate" destination="viF-zF-QRg" id="HMg-eS-WS0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="8ne-md-GuM">
+                    <navigationItem key="navigationItem" title="My Profile" id="8ne-md-GuM">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hF5-bi-qKu">
                             <connections>
                                 <segue destination="av0-qR-ZCU" kind="modal" identifier="editInfo" modalTransitionStyle="crossDissolve" id="kFX-g7-V6N"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="hF5-bi-qKu" id="tcR-jI-uaV"/>
+                        <outlet property="emailField" destination="xKA-2s-3Bw" id="1oo-iw-SLB"/>
+                        <outlet property="firstNameField" destination="0lG-wE-rSg" id="rQP-4w-4gK"/>
+                        <outlet property="lastNameField" destination="buk-6b-NAi" id="db8-7L-eqo"/>
+                        <outlet property="profilePicture" destination="0kl-KD-IHn" id="u3a-OO-r71"/>
+                        <outlet property="usernameField" destination="J4y-2M-NFX" id="MGV-fB-EEB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8EP-2F-cre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -699,7 +708,7 @@
             </objects>
             <point key="canvasLocation" x="1784" y="1438"/>
         </scene>
-        <!--Edit Settings View Controller-->
+        <!--Edit Settings View Controller - Edit My Info-->
         <scene sceneID="TOK-AJ-qUg">
             <objects>
                 <tableViewController id="m8n-OA-TAG" customClass="EditSettingsViewController" sceneMemberID="viewController">
@@ -761,20 +770,31 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9hc-UK-cnW">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Change First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9hc-UK-cnW">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43" id="S3Q-6s-PVj"/>
-                                                        <constraint firstAttribute="width" constant="260" id="e4w-c8-Nzj"/>
+                                                        <constraint firstAttribute="width" constant="177" id="cKR-yf-1nw"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="first name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XjT-CJ-W4Q">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Qyu-CK-iTi"/>
+                                                        <constraint firstAttribute="width" constant="75" id="um4-8I-5d8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="9hc-UK-cnW" firstAttribute="centerX" secondItem="0LF-PB-K86" secondAttribute="centerX" type="default" id="Hww-vg-Oqq"/>
-                                            <constraint firstItem="9hc-UK-cnW" firstAttribute="centerY" secondItem="0LF-PB-K86" secondAttribute="centerY" type="default" id="dRH-D4-JbX"/>
+                                            <constraint firstItem="XjT-CJ-W4Q" firstAttribute="centerY" secondItem="9hc-UK-cnW" secondAttribute="centerY" type="default" id="3i1-dW-2mL"/>
+                                            <constraint firstItem="9hc-UK-cnW" firstAttribute="centerY" secondItem="0LF-PB-K86" secondAttribute="centerY" type="default" id="Vq8-Ar-jFf"/>
+                                            <constraint firstItem="XjT-CJ-W4Q" firstAttribute="leading" secondItem="0LF-PB-K86" secondAttribute="leading" constant="30" id="dU8-jh-YRf"/>
+                                            <constraint firstItem="9hc-UK-cnW" firstAttribute="leading" secondItem="XjT-CJ-W4Q" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="v7V-0b-P5N"/>
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vPM-09-sEW">
@@ -784,20 +804,31 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zAC-Xe-DIE">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Change Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zAC-Xe-DIE">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="260" id="Hox-FI-stk"/>
+                                                        <constraint firstAttribute="width" constant="177" id="HhV-fn-4FD"/>
                                                         <constraint firstAttribute="height" constant="43" id="n2g-Dr-gCH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="last name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3z-1b-7rq">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="75" id="EkW-w0-OjU"/>
+                                                        <constraint firstAttribute="height" constant="21" id="F8C-nV-YTG"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="zAC-Xe-DIE" firstAttribute="top" secondItem="vPM-09-sEW" secondAttribute="top" type="default" id="5CO-w1-gW8"/>
-                                            <constraint firstItem="zAC-Xe-DIE" firstAttribute="centerX" secondItem="vPM-09-sEW" secondAttribute="centerX" type="default" id="6p5-Vd-yp5"/>
+                                            <constraint firstItem="p3z-1b-7rq" firstAttribute="centerY" secondItem="zAC-Xe-DIE" secondAttribute="centerY" type="default" id="Vu2-LE-0KE"/>
+                                            <constraint firstItem="zAC-Xe-DIE" firstAttribute="leading" secondItem="p3z-1b-7rq" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="X3b-Vu-u44"/>
+                                            <constraint firstItem="p3z-1b-7rq" firstAttribute="leading" secondItem="vPM-09-sEW" secondAttribute="leading" constant="30" id="yY1-fy-YuZ"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -816,13 +847,13 @@
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="anamazingworld@comcast.net" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NwU-9K-Hza">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email@example.com" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NwU-9K-Hza">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="211" id="Zlp-my-dIv"/>
                                                         <constraint firstAttribute="height" constant="43" id="v9t-fR-bes"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -852,7 +883,7 @@
                                                         <constraint firstAttribute="width" constant="260" id="UeU-eg-Wrj"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -875,7 +906,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="hxk-Zy-UQS"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -893,7 +924,12 @@
                             <outlet property="delegate" destination="m8n-OA-TAG" id="8dH-4K-KLm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ViW-54-PpK">
+                    <navigationItem key="navigationItem" title="Edit My Info" id="ViW-54-PpK">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="SK6-yr-G4r">
+                            <connections>
+                                <action selector="cancelButton:" destination="m8n-OA-TAG" id="4HM-IM-8n2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="C9R-3N-YWS">
                             <connections>
                                 <action selector="doneButton:" destination="m8n-OA-TAG" id="Fmr-Bw-nJc"/>
@@ -901,6 +937,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emailField" destination="NwU-9K-Hza" id="vT6-IB-5XC"/>
+                        <outlet property="firstNameField" destination="9hc-UK-cnW" id="ahP-TB-8zs"/>
+                        <outlet property="lastNameField" destination="zAC-Xe-DIE" id="gB1-s8-14S"/>
+                        <outlet property="passwordField" destination="FYq-gw-z93" id="w4z-Vm-FPA"/>
+                        <outlet property="passwordReEnter" destination="dx1-lx-Z0h" id="Aq9-f7-AfC"/>
                         <outlet property="profilePictureSet" destination="dOQ-hY-Y9d" id="TcI-5R-7rH"/>
                     </connections>
                 </tableViewController>
