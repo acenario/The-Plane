@@ -611,43 +611,39 @@
             </objects>
             <point key="canvasLocation" x="781" y="1434"/>
         </scene>
-        <!--Table View Controller - Friend Request-->
+        <!--Received Friend Requests View Controller - Friend Request-->
         <scene sceneID="K03-ef-aKL">
             <objects>
-                <tableViewController id="CtC-aQ-Cb2" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gyE-Xs-zAB">
+                <tableViewController id="CtC-aQ-Cb2" customClass="ReceivedFriendRequestsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="gyE-Xs-zAB">
                         <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="ltf-PY-xk5">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="WKe-6a-Kax">
                                 <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="2211" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WuC-tC-f5q">
+                                        <imageView userInteractionEnabled="NO" tag="2211" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57f-KE-jRJ" customClass="PFImageView">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="60" id="wwu-90-IrL"/>
+                                                <constraint firstAttribute="width" constant="60" id="chm-LQ-T7z"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2201" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RH4-fG-6OJ">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2201" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edc-V1-ZHK">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2202" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXZ-uD-JMt">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="6JD-e5-Ox4"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2202" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpI-N8-p2g">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <button opaque="NO" tag="2222" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3w-lQ-SA5">
+                                        <button opaque="NO" tag="2221" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0y-wI-rDN">
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <size key="titleShadowOffset" width="32" height="0.0"/>
                                             <state key="normal">
                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -660,16 +656,15 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="WuC-tC-f5q" firstAttribute="top" secondItem="ltf-PY-xk5" secondAttribute="top" type="default" id="IHb-y9-KlP"/>
-                                    <constraint firstItem="WuC-tC-f5q" firstAttribute="leading" secondItem="ltf-PY-xk5" secondAttribute="leading" type="default" id="NOo-Gf-bNZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="wXZ-uD-JMt" secondAttribute="bottom" constant="6" id="Qh9-8U-qB8"/>
-                                    <constraint firstItem="WuC-tC-f5q" firstAttribute="bottom" secondItem="ltf-PY-xk5" secondAttribute="bottom" type="default" id="U4p-uD-WzC"/>
-                                    <constraint firstAttribute="bottom" secondItem="S3w-lQ-SA5" secondAttribute="bottom" constant="20" type="default" id="URU-Re-0o8"/>
-                                    <constraint firstItem="wXZ-uD-JMt" firstAttribute="leading" secondItem="WuC-tC-f5q" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="ZnV-Ig-Q3x"/>
-                                    <constraint firstItem="RH4-fG-6OJ" firstAttribute="leading" secondItem="WuC-tC-f5q" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="g7G-eS-WrN"/>
-                                    <constraint firstAttribute="trailing" secondItem="S3w-lQ-SA5" secondAttribute="trailing" constant="20" type="default" id="jZA-d0-Lgo"/>
-                                    <constraint firstItem="RH4-fG-6OJ" firstAttribute="trailing" secondItem="wXZ-uD-JMt" secondAttribute="trailing" type="default" id="txy-0W-v2i"/>
-                                    <constraint firstItem="RH4-fG-6OJ" firstAttribute="top" secondItem="ltf-PY-xk5" secondAttribute="top" constant="10" id="wOK-uH-iPr"/>
+                                    <constraint firstItem="Edc-V1-ZHK" firstAttribute="top" secondItem="WKe-6a-Kax" secondAttribute="top" constant="8" id="1hk-ol-XKN"/>
+                                    <constraint firstItem="57f-KE-jRJ" firstAttribute="bottom" secondItem="WKe-6a-Kax" secondAttribute="bottom" type="default" id="GFO-eU-0Ud"/>
+                                    <constraint firstAttribute="bottom" secondItem="fpI-N8-p2g" secondAttribute="bottom" constant="8" id="NBh-AE-rMt"/>
+                                    <constraint firstItem="57f-KE-jRJ" firstAttribute="top" secondItem="WKe-6a-Kax" secondAttribute="top" type="default" id="Ob0-BO-Rnf"/>
+                                    <constraint firstItem="c0y-wI-rDN" firstAttribute="top" secondItem="WKe-6a-Kax" secondAttribute="top" constant="18" id="SvW-m3-oL9"/>
+                                    <constraint firstItem="fpI-N8-p2g" firstAttribute="leading" secondItem="57f-KE-jRJ" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="bC1-Bj-wqr"/>
+                                    <constraint firstItem="57f-KE-jRJ" firstAttribute="leading" secondItem="WKe-6a-Kax" secondAttribute="leading" type="default" id="e4z-zH-PNY"/>
+                                    <constraint firstAttribute="trailing" secondItem="c0y-wI-rDN" secondAttribute="trailing" constant="20" type="default" id="uvi-Sm-Jni"/>
+                                    <constraint firstItem="Edc-V1-ZHK" firstAttribute="leading" secondItem="57f-KE-jRJ" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="web-9Y-7Bg"/>
                                 </constraints>
                             </tableViewCell>
                         </prototypes>
@@ -780,7 +775,7 @@
                         <!--2012-12-14 19:06:28 +0000-->
                     </date>
                     <timeZone key="timeZone" name="America/Los_Angeles">
-                        <mutableData key="data">
+                        <data key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -798,7 +793,7 @@ f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
-</mutableData>
+</data>
                     </timeZone>
                     <connections>
                         <action selector="dateAction:" destination="atz-ab-rWu" eventType="valueChanged" id="ffV-nS-XlE"/>
@@ -812,6 +807,72 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <resources>
         <image name="first" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="AddFriendViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="adjustButtonState:"/>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="AddReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="username" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logOut:"/>
+            </relationships>
+        </class>
+        <class className="FriendsForRemindersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsForRemindersViewController.h"/>
+        </class>
+        <class className="FriendsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PFImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
+        </class>
+        <class className="PFQueryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
+        </class>
+        <class className="PlaneTabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
+        </class>
+        <class className="ReceivedFriendRequestsViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReceivedFriendRequestsViewController.h"/>
+        </class>
+        <class className="ReminderDateViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDateViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="dateAction:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIDatePicker"/>
+            </relationships>
+        </class>
+        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

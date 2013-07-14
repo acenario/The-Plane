@@ -70,34 +70,12 @@
         //receievedFriendRequestsArray = [object objectForKey:@"receivedFriendRequests"];
         friendsArray = [object objectForKey:@"friends"];
         [userQuery orderByAscending:@"friend"];
-        [self receivedFriendRequestsQuery];
         [self.tableView reloadData];
     }];
     
     if (!pictureFile.isDataAvailable) {
         userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-}
-
-- (void)receivedFriendRequestsQuery
-{
-    NSArray *array = [[NSArray alloc] initWithObjects:currentUserObject, nil];
-    receievedFriendRequestsArray = [NSMutableArray array];
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"sentFriendRequests" containsAllObjectsInArray:array];
-    [query includeKey:@"receivedFriendsArray"];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        //NSLog(@"%d", objects.count);
-        for (UserInfo *object in objects) {
-            [receievedFriendRequestsArray addObject:object];
-            NSLog(@"%@", receievedFriendRequestsArray);
-        }
-        
-        NSLog(@"%@", self.navigationItem.rightBarButtonItem.title);
-        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", receievedFriendRequestsArray.count];
-        NSLog(@"%@", self.navigationItem.rightBarButtonItem.title);
-    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -149,11 +127,6 @@
         UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
         controller.delegate = self;
-        
-    } else if ([segue.identifier isEqualToString:@"ReceivedFriendRequests"]) {
-        ReceivedFriendRequestsViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
-        controller.receivedFriendRequestsArray = [NSMutableArray arrayWithArray:receievedFriendRequestsArray];
     }
 }
 

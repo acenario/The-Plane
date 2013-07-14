@@ -191,11 +191,11 @@
     
     [sentFriendRequestsObjectId addObject:friendAdded.objectId];
     [userObject addObject:friendAdded forKey:@"sentFriendRequests"];
-    [userObject saveInBackground];
-    
-    //[friendAdded addObject:userObject forKey:@"receivedFriendRequests"];
-    //NSLog(@"%@", friendAdded.receivedFriendRequests);
-    //[friendAdded saveInBackground];
+    [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [friendAdded addObject:userObject forKey:@"receivedFriendRequests"];
+        NSLog(@"%@", friendAdded.receivedFriendRequests);
+        [friendAdded saveInBackground];
+    }];
     
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.enabled = NO;

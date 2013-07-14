@@ -14,9 +14,7 @@
 @protocol RecievedFriendRequestsDelegate <NSObject>
 @end
 
-@interface ReceivedFriendRequestsViewController : UITableViewController
+@interface ReceivedFriendRequestsViewController : PFQueryTableViewController
 
 @property (nonatomic, weak) id <RecievedFriendRequestsDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray *receivedFriendRequestsArray;
-
 @end
