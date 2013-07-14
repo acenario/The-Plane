@@ -13,6 +13,8 @@
 		AE8EF8A6179059D800F83EE7 /* ReceivedFriendRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8EF8A5179059D800F83EE7 /* ReceivedFriendRequestsViewController.m */; };
 		AE8EF8AB1790B19000F83EE7 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8EF8AA1790B19000F83EE7 /* ReminderDateViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
+		DC11E3B01793037000DE9F4E /* ReminderObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC11E3AF1793037000DE9F4E /* ReminderObjectViewController.m */; };
+		DC11E3B31793038F00DE9F4E /* ReminderDisclosureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC11E3B21793038F00DE9F4E /* ReminderDisclosureViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DCDF265B1789B5F4005168BE /* RemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDF265A1789B5F4005168BE /* RemindersViewController.m */; };
 		DCE1FE48178910D60012478B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE47178910D60012478B /* UIKit.framework */; };
@@ -61,6 +63,10 @@
 		AE8EF8AA1790B19000F83EE7 /* ReminderDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDateViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
+		DC11E3AE1793037000DE9F4E /* ReminderObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderObjectViewController.h; sourceTree = "<group>"; };
+		DC11E3AF1793037000DE9F4E /* ReminderObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderObjectViewController.m; sourceTree = "<group>"; };
+		DC11E3B11793038F00DE9F4E /* ReminderDisclosureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDisclosureViewController.h; sourceTree = "<group>"; };
+		DC11E3B21793038F00DE9F4E /* ReminderDisclosureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDisclosureViewController.m; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DCDF26591789B5F4005168BE /* RemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersViewController.h; sourceTree = "<group>"; };
@@ -139,6 +145,10 @@
 				AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */,
 				AE8EF8A91790B19000F83EE7 /* ReminderDateViewController.h */,
 				AE8EF8AA1790B19000F83EE7 /* ReminderDateViewController.m */,
+				DC11E3AE1793037000DE9F4E /* ReminderObjectViewController.h */,
+				DC11E3AF1793037000DE9F4E /* ReminderObjectViewController.m */,
+				DC11E3B11793038F00DE9F4E /* ReminderDisclosureViewController.h */,
+				DC11E3B21793038F00DE9F4E /* ReminderDisclosureViewController.m */,
 			);
 			name = Reminders;
 			sourceTree = "<group>";
@@ -330,6 +340,8 @@
 				AE8EF8A3178E1B2200F83EE7 /* UserInfo.m in Sources */,
 				AE8EF8A6179059D800F83EE7 /* ReceivedFriendRequestsViewController.m in Sources */,
 				AE8EF8AB1790B19000F83EE7 /* ReminderDateViewController.m in Sources */,
+				DC11E3B01793037000DE9F4E /* ReminderObjectViewController.m in Sources */,
+				DC11E3B31793038F00DE9F4E /* ReminderDisclosureViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
