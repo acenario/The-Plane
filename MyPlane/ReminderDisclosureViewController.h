@@ -1,22 +1,23 @@
 //
-//  ReminderDisclosureViewController.h
+//  AddReminderViewController.h
 //  MyPlane
 //
-//  Created by Arjun Bhatnagar on 7/14/13.
+//  Created by Abhijay Bhatnagar on 7/8/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "ReminderObjectViewController.h"
+
 
 @class ReminderDisclosureViewController;
 
-@protocol ReminderDisclosureViewControllerDelegate <NSObject>
+@protocol ReminderDisclosureViewControllerDelegate
 
 @end
 
-@interface ReminderDisclosureViewController : UITableViewController <ReminderObjectViewControllerDelegate>
 
-@property (nonatomic, strong) id <ReminderDisclosureViewControllerDelegate> delegate;
+@interface ReminderDisclosureViewController : UITableViewController 
+
+@property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
 
 @end

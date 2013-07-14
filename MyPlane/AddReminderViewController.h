@@ -30,3 +30,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (strong, nonatomic) IBOutlet UILabel *dateDetail;
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;
+
+@end

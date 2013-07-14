@@ -7,10 +7,9 @@
 //
 
 #import "AddReminderViewController.h"
-//#import "ReminderDisclosureViewController.h"
+#import "ReminderDisclosureViewController.h"
 
-@end
-@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate>
+@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, ReminderDisclosureViewControllerDelegate>
 
 
 @end
