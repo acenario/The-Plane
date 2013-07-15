@@ -16,8 +16,7 @@
 
 @implementation PlaneTabViewController
 
-@synthesize userInfoObject;
-@synthesize userInfoFriends;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,11 +36,11 @@
     [self registerDefaults];
     
     
-    
+    /*
     RemindersViewController *remindersController = [[self viewControllers] objectAtIndex:1];
 
 
-
+    
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [userQuery includeKey:@"friends"];
@@ -53,6 +52,7 @@
         BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
         if (firstTime) {
             NSLog(@"FIRST TIME BABY!");
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
         }
         
         
@@ -60,8 +60,20 @@
   
     userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     
+     
+     - (void)getUserandSetObjects {
+     PFQuery *queryUser = [UserInfo query];
+     [queryUser whereKey:@"user" equalTo:[PFUser currentUser].username];
+     [queryUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+     [object addObject:object forKey:@"friends"];
+     [object saveInBackground];
+     
+     }];
+     
+     
+     }
     
-    
+    */
     
     
     //UIColor *selectedColor = [UIColor darkGrayColor];

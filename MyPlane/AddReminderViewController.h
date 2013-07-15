@@ -28,3 +28,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;
+
+@end

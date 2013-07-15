@@ -7,13 +7,20 @@
 //
 
 #import "FirstViewController.h"
+//Login Code
+#import "MyLoginViewController.h"
+#import "MySignUpViewController.h"
 
 
 @interface FirstViewController ()
 
 @end
 
-@implementation FirstViewController
+@implementation FirstViewController {
+    NSString *displayName;
+    NSString *theUsername;
+    UIImage *defaultPic;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -21,11 +28,11 @@
     
     if (![PFUser currentUser]) { // No user logged in
         // Create the log in view controller
-        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
+        PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
         logInViewController.delegate = self; // Set ourselves as the delegate
         
         // Create the sign up view controller
-        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
+        PFSignUpViewController *signUpViewController = [[MySignUpViewController alloc] init];
         signUpViewController.delegate = self; // Set ourselves as the delegate
         signUpViewController.fields = PFSignUpFieldsUsernameAndPassword
         | PFSignUpFieldsSignUpButton
@@ -126,13 +133,25 @@
     return NO; // Interrupt login process
 }
 
+
 #pragma mark - SignUpViewController Delegates
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    defaultPic = [UIImage imageNamed:@"first"];
+    UserInfo *userObject = [UserInfo object];
+    NSData *data = UIImagePNGRepresentation(defaultPic);
+    PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
+    [userObject setObject:displayName forKey:@"user"];
+    [userObject setObject:displayName forKey:@"displayName"];
+    [userObject setObject:imageupload forKey:@"profilePicture"];
+    [userObject saveInBackground];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
+    
     [currentInstallation saveInBackground];
+    
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -143,6 +162,12 @@
 - (BOOL)signUpViewController:(PFSignUpViewController *)signUpController
            shouldBeginSignUp:(NSDictionary *)info {
     NSString *password = [info objectForKey:@"password"];
+    NSString *username = [info objectForKey:@"username"];
+    displayName = username;
+    
+//    NSString *lowercaseUsername = [username lowercaseString];
+//    theUsername = lowercaseUsername;
+    
     return (BOOL)(password.length >= 8);
     
 }

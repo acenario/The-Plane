@@ -1,28 +1,25 @@
 //
-//  EditSettingsViewController.m
+//  firstTimeSettingsViewController.m
 //  MyPlane
 //
-//  Created by Arjun Bhatnagar on 7/13/13.
+//  Created by Arjun Bhatnagar on 7/14/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import "EditSettingsViewController.h"
+#import "firstTimeSettingsViewController.h"
 
-@interface EditSettingsViewController ()
-
+@interface firstTimeSettingsViewController ()
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
-@property (strong, nonatomic) IBOutlet UIImageView *profilePictureSet;
-@property (strong, nonatomic) IBOutlet UITextField *firstNameField;
-@property (strong, nonatomic) IBOutlet UITextField *lastNameField;
-@property (strong, nonatomic) IBOutlet UITextField *emailField;
-@property (strong, nonatomic) IBOutlet UITextField *passwordField;
-@property (strong, nonatomic) IBOutlet UITextField *passwordReEnter;
 
 
 @end
 
-@implementation EditSettingsViewController 
+@implementation firstTimeSettingsViewController {
+    BOOL checkFirstName;
+    BOOL checkLastName;
+    NSArray *friendsArray;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,14 +30,27 @@
     return self;
 }
 
+- (void)getUserandSetObjects {
+    PFQuery *queryUser = [PFQuery queryWithClassName:@"UserInfo"];
+    [queryUser whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [queryUser includeKey:@"friends"];
+    
+    [queryUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        NSString *objectID = [object objectId];
+        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
+        
+        [object addObject:userFriendObject forKey:@"friends"];
+        [object saveInBackground];
+        
+    }];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.firstNameField.placeholder = self.firstname;
-    self.lastNameField.placeholder = self.lastname;
-    self.emailField.placeholder = self.email;
-    self.profilePictureSet.image = self.profilePicture;
+    
+    [self getUserandSetObjects];
     
 }
 
@@ -77,10 +87,22 @@
 }
 
 - (void)updateAlltheMethods {
-    PFUser *user = [PFUser currentUser];
     PFQuery *personQuery = [UserInfo query];
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+    [personQuery includeKey:@"friends"];
+    
+    
+    
+    [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {                
+        //Add Self Friend
+        
+        NSString *objectID = [object objectId];
+        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
+        
+        [object addObject:userFriendObject forKey:@"friends"];
+        [object saveInBackground];
+
+        
         
         //PROFILE PICTURE
         
@@ -102,6 +124,7 @@
                 if (isValid) {
                     [object setObject:self.firstNameField.text forKey:@"firstName"];
                     [object saveInBackground];
+                    checkFirstName = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
@@ -111,7 +134,7 @@
             }
             
         } else {
-            NSLog(@"EMPTY!");
+            [self showAlertwithString:@"You must enter a first name!"];
         }
         
         //LAST NAME
@@ -122,6 +145,7 @@
                 if (isValid) {
                     [object setObject:self.lastNameField.text forKey:@"lastName"];
                     [object saveInBackground];
+                    checkLastName = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
@@ -131,112 +155,49 @@
             }
             
         } else {
-            NSLog(@"EMPTY!");
+            [self showAlertwithString:@"You must enter a last name!"];
         }
         
-        //EMAIL
         
-        if (![self.emailField.text isEqualToString:@""]) {
+        
+        if ((checkLastName == YES) && (checkLastName == YES)) {
             
-            BOOL isValid = [self NSStringIsValidEmail:self.emailField.text];
-            if (isValid) {
-                [user setEmail:self.emailField.text];
-                [user saveInBackground];
-                NSLog(@"SUCCESS!");
-            } else {
-                NSLog(@"NOT VALID EMAIL");
-                [self showAlertwithString:@"You have entered an invalid email!"];
-            }
+            [self dismissViewControllerAnimated:YES completion:nil];
             
-        } else {
-            NSLog(@"EMPTY!");
         }
-        
-        //PASSWORD
-        
-        if (![self.passwordField.text isEqualToString:@""] && ![self.passwordReEnter.text isEqualToString:@""]) {
-            
-            if (([self.passwordField.text length] >= 8) && ([self.passwordReEnter.text length] >= 8)) {
-                
-                if (([self.passwordField.text length] <=32) && ([self.passwordReEnter.text length] <=32)) {
-                    
-                    BOOL isValid = [self NSStringIsPasswordValid:self.passwordReEnter.text];
-                    if (isValid) {
-                        [user setPassword:self.passwordReEnter.text];
-                        [user saveInBackground];
-                        NSLog(@"SUCCESS!");
-                    } else {
-                        [self showAlertwithString:@"Your passwords do not match"];
-                    }
-                    
-                } else {
-                    [self showAlertwithString:@"Your password must be less than 32 characters!"];
-                }
-                
-            } else {
-                [self showAlertwithString:@"Your password must be 8 character or more!"];
-            }
-
-        } else {
-            NSLog(@"EMPTY!");
-        }
-        
         
     }];
     
     
     
-        
     
 }
 
--(BOOL) NSStringIsPasswordValid:(NSString *)checkString
-{
-    if ([checkString isEqualToString:self.passwordField.text]) {
-        return YES;
-        
-    } else {
-        return NO;
-    }
-    
-}
 
 -(BOOL) NSStringIsNameValid:(NSString *)checkString
 {
     NSString *myRegex = @"[A-Za-z]*";
     NSPredicate *myTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", myRegex];
-
+    
     return [myTest evaluateWithObject:checkString];
-
+    
 }
 
 
--(BOOL) NSStringIsValidEmail:(NSString *)checkString
-{
-    BOOL stricterFilter = YES; 
-    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSString *laxString = @".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
-    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:checkString];
-}
+
 
 
 - (IBAction)doneButton:(id)sender {
     
     
     [self updateAlltheMethods];
-    [self.delegate updateUserInfo:self];
-    [self dismissViewControllerAnimated:YES completion:nil];
-        
-
-
-}
-
-- (IBAction)cancelButton:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
     
 }
+
+
+
+
 
 - (IBAction)imagePicker:(id)sender {
     
@@ -270,7 +231,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     
-
+    
     
     
 }
@@ -282,6 +243,7 @@
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
 
 
 @end

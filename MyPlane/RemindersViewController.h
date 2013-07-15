@@ -7,12 +7,11 @@
 //
 
 #import "AddReminderViewController.h"
+#import "firstTimeSettingsViewController.h"
 
 
-@end
-@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate>
+@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate>
 
-@property (nonatomic, strong) PFObject *userObject;
 
 
 @end

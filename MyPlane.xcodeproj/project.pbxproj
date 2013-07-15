@@ -10,6 +10,9 @@
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
+		DC38B1F01793195400304619 /* MyLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1EF1793195400304619 /* MyLoginViewController.m */; };
+		DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F21793196400304619 /* MySignUpViewController.m */; };
+		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
 		DCDA42B7179048BA00E14D50 /* FUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4294179048BA00E14D50 /* FUIAlertView.m */; };
@@ -83,6 +86,12 @@
 		AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
+		DC38B1EE1793195400304619 /* MyLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLoginViewController.h; sourceTree = "<group>"; };
+		DC38B1EF1793195400304619 /* MyLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLoginViewController.m; sourceTree = "<group>"; };
+		DC38B1F11793196400304619 /* MySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySignUpViewController.h; sourceTree = "<group>"; };
+		DC38B1F21793196400304619 /* MySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySignUpViewController.m; sourceTree = "<group>"; };
+		DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firstTimeSettingsViewController.h; sourceTree = "<group>"; };
+		DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstTimeSettingsViewController.m; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -228,6 +237,17 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
+		DC38B1ED1793192600304619 /* LoginandSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				DC38B1EE1793195400304619 /* MyLoginViewController.h */,
+				DC38B1EF1793195400304619 /* MyLoginViewController.m */,
+				DC38B1F11793196400304619 /* MySignUpViewController.h */,
+				DC38B1F21793196400304619 /* MySignUpViewController.m */,
+			);
+			name = LoginandSignUp;
+			sourceTree = "<group>";
+		};
 		DCDA4291179048A600E14D50 /* FlatUIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,8 +350,11 @@
 				DCE1FE57178910D60012478B /* AppDelegate.m */,
 				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
 				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
+				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
+				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
+				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE1FE65178910D60012478B /* first.png */,
@@ -488,6 +511,9 @@
 				DCDA42C8179048BA00E14D50 /* UIToolbar+FlatUI.m in Sources */,
 				DCE3B08F17921DD500A73714 /* SettingsViewController.m in Sources */,
 				DCE3B09217921DF700A73714 /* EditSettingsViewController.m in Sources */,
+				DC38B1F01793195400304619 /* MyLoginViewController.m in Sources */,
+				DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */,
+				DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

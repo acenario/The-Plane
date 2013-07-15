@@ -16,7 +16,6 @@
 
 @implementation RemindersViewController
 
-@synthesize userObject = _userObject;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,6 +39,12 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"mpCenterTabbarItemTapped"
                                                object:nil];
+    
+    BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+    if (firstTime) {
+        [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
+    }
     
     
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -206,7 +211,17 @@
         AddReminderViewController *controller = [segue destinationViewController];
         controller.delegate = self;
     }
+    
+    if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {
+        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+        firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)navController.topViewController;
+        controller.delegate = self;
+        
+        
+    }
 }
+
+
 
 
 @end

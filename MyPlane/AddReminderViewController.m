@@ -8,8 +8,6 @@
 
 #import "AddReminderViewController.h"
 
-@end
-
 @interface AddReminderViewController ()
 
 @end
