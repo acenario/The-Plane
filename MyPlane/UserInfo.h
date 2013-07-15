@@ -15,6 +15,8 @@
 @property (retain) NSString *lastName;
 @property (retain) NSString *user;
 @property (retain) NSArray *friends;
+@property (retain) NSArray *sentFriendRequests;
+@property (retain) NSArray *receivedFriendRequests;
 @property (retain) PFFile *profilePicture;
 
 @end

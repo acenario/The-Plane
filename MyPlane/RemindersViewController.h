@@ -8,9 +8,10 @@
 
 #import "AddReminderViewController.h"
 #import "firstTimeSettingsViewController.h"
+#import "ReminderDisclosureViewController.h"
 
 
-@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate>
+@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate, ReminderDisclosureViewControllerDelegate>
 
 
 

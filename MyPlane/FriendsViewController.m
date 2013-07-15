@@ -14,10 +14,12 @@
 
 @implementation FriendsViewController {
     NSArray *friendsArray;
+    NSMutableArray *receievedFriendRequestsArray;
     NSMutableArray *fileArray;
     PFFile *pictureFile;
     PFQuery *userQuery;
     PFObject *personObject;
+    UserInfo *currentUserObject;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -60,17 +62,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-//        UserInfo *friendRemoved = (UserInfo *)[friendsArray objectAtIndex:indexPath.row];
-//        [object removeObject:friendRemoved forKey:@"friends"];
-//        NSLog(@"%@", friendRemoved.user);
-//        [object saveInBackground];
-////        NSLog(@"%@", object);
-//        [self queryForTable];
-//    }];
-//}
 
 - (void)queryForTable {
     
@@ -79,9 +70,12 @@
     [userQuery includeKey:@"friends"];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        currentUserObject = (UserInfo *)object;
+        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", currentUserObject.receivedFriendRequests.count];
+        //SOMETHING NEEDED - ADD A BADGE
         personObject = object;
         friendsArray = [object objectForKey:@"friends"];
-        [userQuery orderByAscending:@"friend"];
+        [userQuery orderByAscending:@"friends"];
         [self.tableView reloadData];
     }];
     
@@ -102,6 +96,7 @@
 - (void)addFriendViewControllerDidFinishAddingFriends:(AddFriendViewController *)controller
 {
     [self queryForTable];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
@@ -131,6 +126,7 @@
         });
     });
     
+    //SOMETHING NEEDED - CONVERT TO PFFILE
     
     return cell;
 }
@@ -194,6 +190,11 @@
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
         controller.delegate = self;
     }
+}
+
+- (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller
+{
+    [self.tableView reloadData];
 }
 
 @end

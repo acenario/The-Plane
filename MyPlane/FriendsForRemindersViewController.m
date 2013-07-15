@@ -82,14 +82,16 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    UIImageView *picImage = (UIImageView *)[cell viewWithTag:1111];
-    UILabel *contactText = (UILabel *)[cell viewWithTag:1101];
-    UILabel *detailText = (UILabel *)[cell viewWithTag:1102];
+    UIImageView *picImage = (UIImageView *)[cell viewWithTag:2000];
+    UILabel *contactText = (UILabel *)[cell viewWithTag:2001];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:2002];
     
     UserInfo *userObject = [friendsArray objectAtIndex:indexPath.row];
     NSString *username = userObject.user;
     NSString *firstName = userObject.firstName;
     NSString *lastName = userObject.lastName;
+    
+    
     
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
@@ -102,7 +104,7 @@
         });
     });
     
-    
+    //SOMETHING NEEDED - CONVERT TO PFFILE
     return cell;
 }
 
@@ -115,6 +117,10 @@
     UILabel *detailText = (UILabel *)[cell viewWithTag:1102];
     
     [self.delegate friendsForReminders:self didFinishSelectingContactWithUsername:detailText.text withName:contactText.text withProfilePicture:picImage.image withObjectId:fromFriend];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

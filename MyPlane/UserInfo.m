@@ -17,6 +17,8 @@
 @dynamic lastName;
 @dynamic user;
 @dynamic friends;
+@dynamic sentFriendRequests;
+@dynamic receivedFriendRequests;
 @dynamic profilePicture;
 
 - (UIImage *)pffileToUIImage:(PFFile *)file

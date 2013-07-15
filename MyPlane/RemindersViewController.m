@@ -14,7 +14,9 @@
 @end
 
 
-@implementation RemindersViewController
+@implementation RemindersViewController {
+    PFObject *selectedReminderObject;
+}
 
 
 
@@ -202,6 +204,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
+
 }
 
 
@@ -212,14 +217,24 @@
         controller.delegate = self;
     }
     
-    if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {
+    else if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {
         UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
         firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)navController.topViewController;
         controller.delegate = self;
         
         
     }
+    
+    //SOMETHING NEEDED - SEGUE NEEDED
+    else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
+        UINavigationController *nvc = (UINavigationController *)[segue destinationViewController];
+        ReminderDisclosureViewController *controller = (ReminderDisclosureViewController *)nvc.topViewController;
+        controller.delegate = self;
+        controller.reminderObject = sender;
+    }
+
 }
+
 
 
 
