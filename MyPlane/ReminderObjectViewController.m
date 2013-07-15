@@ -44,6 +44,17 @@
 }
 
 - (IBAction)remindAgain:(id)sender {
+    // Create our Installation query
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" equalTo:self.userUsername];
+    
+    // Send push notification to query
+    PFPush *push = [[PFPush alloc] init];
+    [push setQuery:pushQuery]; // Set our Installation query
+    [push setMessage:self.taskText];
+    [push sendPushInBackground];
+    
+    
     NSLog(@"Arjun implement a notification here in \"remindAgain\"");
 }
 

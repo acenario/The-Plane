@@ -82,9 +82,9 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    UIImageView *picImage = (UIImageView *)[cell viewWithTag:2000];
-    UILabel *contactText = (UILabel *)[cell viewWithTag:2001];
-    UILabel *detailText = (UILabel *)[cell viewWithTag:2002];
+    UIImageView *picImage = (UIImageView *)[cell viewWithTag:1111];
+    UILabel *contactText = (UILabel *)[cell viewWithTag:1101];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:1102];
     
     UserInfo *userObject = [friendsArray objectAtIndex:indexPath.row];
     NSString *username = userObject.user;

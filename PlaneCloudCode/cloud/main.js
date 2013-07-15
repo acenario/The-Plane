@@ -12,13 +12,14 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                       var titleText = request.object.get('title');
                       var fromUserName = request.object.get('fromUser');
                       var forUserName = request.object.get('user');
-                      //Date reminderDate = request.object.get('reminderDate');
+                      var reminderDate = request.object.get('date');
                       
                       var userQuery = new Parse.Query(Parse.Installation);
                       userQuery.equalTo('user', forUserName);
                       
                       Parse.Push.send({
                                       where: userQuery, // Set our Installation query
+                                      push_time: reminderDate,
                                       data: {
                                       alert: "New reminder: " + titleText + " " + "from: " + fromUserName,
                                       badge: "Increment"

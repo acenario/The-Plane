@@ -50,7 +50,6 @@
 {
     [super viewDidLoad];
     
-    [self getUserandSetObjects];
     
 }
 
