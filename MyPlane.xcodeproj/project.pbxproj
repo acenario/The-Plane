@@ -152,6 +152,8 @@
 				DCAC68B0179311290032D6BA /* ReminderDisclosureViewController.m */,
 				DCAC68B1179311290032D6BA /* ReminderObjectViewController.h */,
 				DCAC68B2179311290032D6BA /* ReminderObjectViewController.m */,
+				AE1AA9D8179333BD00B7DABD /* MySentRemindersViewController.h */,
+				AE1AA9D9179333BE00B7DABD /* MySentRemindersViewController.m */,
 			);
 			name = Reminders;
 			sourceTree = "<group>";
@@ -225,8 +227,6 @@
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 				AE8EF8A1178E1B2200F83EE7 /* UserInfo.h */,
 				AE8EF8A2178E1B2200F83EE7 /* UserInfo.m */,
-				AE1AA9D8179333BD00B7DABD /* MySentRemindersViewController.h */,
-				AE1AA9D9179333BE00B7DABD /* MySentRemindersViewController.m */,
 			);
 			path = MyPlane;
 			sourceTree = "<group>";

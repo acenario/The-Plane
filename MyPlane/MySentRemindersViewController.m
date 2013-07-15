@@ -14,6 +14,7 @@
 
 @implementation MySentRemindersViewController {
     PFObject *selectedReminderObject;
+    UIImage *userProfilePicture;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -28,20 +29,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self getUserPicture];
 	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    
     // Dispose of any resources that can be recreated.
+}
+
+-(void)getUserPicture {
+    PFQuery *query = [UserInfo query];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+        userProfilePicture = fromUserImage;
+        });
+        
+    }];
+    
 }
 
 - (PFQuery *)queryForTable {
     
-    
-//    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
-//    [photosFromCurrentUserQuery whereKeyExists:@"user"];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     [query whereKey:@"fromUser" equalTo:[PFUser currentUser].username];
@@ -64,7 +80,17 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-    UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
+    if (userProfilePicture != nil) {
+        NSLog(@"SUCESS!");
+        cell.imageView.image = userProfilePicture;
+    } else {
+        NSLog(@"FAIL!");
+    }
+    NSLog(@"for user: %@", [object objectForKey:@"user"]);
+    NSLog(@"title: %@", [object objectForKey:@"title"]);
+
+    
+    /*UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
     
@@ -89,8 +115,8 @@
                 
             });
         }
-        
-    });
+     
+    });*/
     
     return cell;
 }

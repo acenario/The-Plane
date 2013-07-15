@@ -8,8 +8,10 @@
 
 #import <Parse/Parse.h>
 #import "ReminderDisclosureViewController.h"
+#import "UserInfo.h"
 
 
 @interface MySentRemindersViewController : PFQueryTableViewController <ReminderDisclosureViewControllerDelegate>
+
 
 @end
