@@ -7,7 +7,7 @@
 //
 
 #import "ReminderObjectViewController.h"
-
+#import "UserInfo.h"
 
 @class ReminderDisclosureViewController;
 
@@ -16,8 +16,18 @@
 @end
 
 
-@interface ReminderDisclosureViewController : UITableViewController 
+@interface ReminderDisclosureViewController : UITableViewController <ReminderObjectViewController>
 
 @property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
+
+@property (nonatomic, strong) PFObject *reminderObject;
+- (IBAction)cancel:(id)sender;
+- (IBAction)done:(id)sender;
+
+//@property (strong, nonatomic) NSString *userName;
+//@property (strong, nonatomic) NSString *userUsername;
+//@property (strong, nonatomic) NSString *taskText;
+//@property (strong, nonatomic) NSString *descriptionText;
+//@property (strong, nonatomic) UIImage *userUserImage;
 
 @end

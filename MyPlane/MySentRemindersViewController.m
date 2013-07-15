@@ -1,32 +1,26 @@
 //
-//  RemindersViewController.m
+//  MySentReminderViewController.m
 //  MyPlane
 //
-//  Created by Arjun Bhatnagar on 7/7/13.
+//  Created by Abhijay Bhatnagar on 7/14/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import "RemindersViewController.h"
+#import "MySentRemindersViewController.h"
 
-@interface RemindersViewController ()
+@interface MySentRemindersViewController ()
 
 @end
 
-
-@implementation RemindersViewController {
+@implementation MySentRemindersViewController {
     PFObject *selectedReminderObject;
 }
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pullToRefreshEnabled = YES;
-        self.paginationEnabled = YES;
-        self.objectsPerPage = 25;
-        
-        
+        // Custom initialization
     }
     return self;
 }
@@ -34,16 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveAddNotification:)
-                                                 name:@"mpCenterTabbarItemTapped"
-                                               object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
+	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,27 +37,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)receiveAddNotification:(NSNotification *) notification
-{
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
-    
-    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
-        NSLog (@"Successfully received the add notification for Reminders!");
-        [self performSegueWithIdentifier:@"AddReminder" sender:nil];
-    }
-}
-
-
 - (PFQuery *)queryForTable {
     
     
-    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
-    [photosFromCurrentUserQuery whereKeyExists:@"user"];
+//    PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
+//    [photosFromCurrentUserQuery whereKeyExists:@"user"];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query whereKey:@"fromUser" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
     
     [query orderByAscending:@"date"];
@@ -97,7 +69,7 @@
     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
     
     reminderText.text = [object objectForKey:@"title"];
-    detailText.text = [object objectForKey:@"fromUser"];
+    detailText.text = [object objectForKey:@"user"];
     
     
     //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
@@ -132,16 +104,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"AddReminder"]) {
-        AddReminderViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
+    if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
         UINavigationController *nvc = (UINavigationController *)[segue destinationViewController];
         ReminderDisclosureViewController *controller = (ReminderDisclosureViewController *)nvc.topViewController;
         controller.delegate = self;
         controller.reminderObject = sender;
     }
 }
-
 
 @end

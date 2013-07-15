@@ -15,7 +15,8 @@
 
 @implementation AddReminderViewController {
     NSString *nameOfUser;
-    PFObject *recievedObjectID;
+    NSString *descriptionPlaceholderText;
+    PFObject *receivedObjectID;
     NSDateFormatter *mainFormatter;
 }
 
@@ -38,6 +39,10 @@
     
     self.dateDetail.text = [mainFormatter stringFromDate:[NSDate date]];
     
+    descriptionPlaceholderText = @"Enter a longer description if the space provided in Task does not fit your needs.";
+    self.descriptionTextView.text = descriptionPlaceholderText;
+    self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,14 +57,19 @@
     [reminder setObject:[mainFormatter dateFromString:self.dateDetail.text] forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
-    [reminder setObject:recievedObjectID forKey:@"fromFriend"];
+    [reminder setObject:receivedObjectID forKey:@"fromFriend"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
+    if (self.descriptionTextView.text != descriptionPlaceholderText) {
+        [reminder setObject:self.descriptionTextView.text forKey:@"description"];
+    } else {
+        [reminder setObject:@"No description available." forKey:@"description"];
+    }
     [reminder saveInBackground];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)cancel:(id)sender
+- (void)cancel:(id)senderf
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -70,7 +80,7 @@
     self.name.text = name;
     self.username.text = username;
     self.userImage.image = image;
-    recievedObjectID = objectID;
+    receivedObjectID = objectID;
     self.doneBarItem.enabled = YES;
 }
 
@@ -84,6 +94,26 @@
         controller.delegate = self;
         NSLog(@"$$$$ %@", self.dateDetail.text);
         controller.displayDate = self.dateDetail.text;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ((indexPath.section == 0) && (indexPath.row == 0)) {
+        [self.taskTextField becomeFirstResponder];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    } else if ((indexPath.section == 0) && (indexPath.row == 1)) {
+        if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+            self.descriptionTextView.text = @"";
+            self.descriptionTextView.textColor = [UIColor blackColor];
+        }
+        
+        self.descriptionTextView.userInteractionEnabled = YES;
+        [self.descriptionTextView becomeFirstResponder];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 

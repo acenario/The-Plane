@@ -116,4 +116,8 @@
     [self.delegate friendsForReminders:self didFinishSelectingContactWithUsername:detailText.text withName:contactText.text withProfilePicture:picImage.image withObjectId:userObject];
 }
 
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

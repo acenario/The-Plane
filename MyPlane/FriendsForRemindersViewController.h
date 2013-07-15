@@ -23,5 +23,6 @@
 @interface FriendsForRemindersViewController : UITableViewController
 
 @property (nonatomic, strong) id <FriendsForRemindersDelegate> delegate;
+- (IBAction)cancel:(id)sender;
 
 @end
