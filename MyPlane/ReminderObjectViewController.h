@@ -33,6 +33,4 @@
 
 - (IBAction)remindAgain:(id)sender;
 
-//SOMETHING NEEDED - CONNECTIONS
-
 @end

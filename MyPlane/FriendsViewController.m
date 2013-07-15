@@ -40,8 +40,19 @@
                                                  name:@"fCenterTabbarItemTapped"
                                                object:nil];
     
+    
     [self queryForTable];
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"reloadFriends"
+                                               object:nil];
+    //[self queryForTable];
 }
 
 - (void)receiveAddNotification:(NSNotification *) notification
@@ -53,6 +64,11 @@
     if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add notification for friends!");
         [self performSegueWithIdentifier:@"AddFriend" sender:nil];
+    }
+    
+    else if ([[notification name] isEqualToString:@"reloadFriends"]) {
+        NSLog (@"Successfully received the reload command!");
+        [self queryForTable];
     }
 }
 

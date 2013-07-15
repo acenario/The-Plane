@@ -33,9 +33,36 @@
 {
     [super viewDidLoad];
     self.editButton.enabled = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"reloadFriends"
+                                               object:nil];
     [self getUserInfo];
     
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"reloadProfile"
+                                               object:nil];
+
+    
+}
+
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+     if ([[notification name] isEqualToString:@"reloadProfile"]) {
+        NSLog (@"Successfully received the reload command!");
+        [self getUserInfo];
+    }
+}
+
 
 -(void)getUserInfo {
     PFQuery *userQuery = [UserInfo query];

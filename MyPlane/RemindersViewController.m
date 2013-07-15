@@ -7,6 +7,10 @@
 //
 
 #import "RemindersViewController.h"
+#import "MyLoginViewController.h"
+#import "MySignUpViewController.h"
+#import "FriendsViewController.h"
+#import "SettingsViewController.h"
 
 
 @interface RemindersViewController ()
@@ -16,6 +20,10 @@
 
 @implementation RemindersViewController {
     PFObject *selectedReminderObject;
+    NSString *displayName;
+    NSString *theUsername;
+    UIImage *defaultPic;
+    
 }
 
 
@@ -58,8 +66,28 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];    
+    [super viewDidAppear:animated];
     
+    if (![PFUser currentUser]) { // No user logged in
+        // Create the log in view controller
+        PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
+        logInViewController.delegate = self; // Set ourselves as the delegate
+        
+        // Create the sign up view controller
+        PFSignUpViewController *signUpViewController = [[MySignUpViewController alloc] init];
+        signUpViewController.delegate = self; // Set ourselves as the delegate
+        signUpViewController.fields = PFSignUpFieldsUsernameAndPassword
+        | PFSignUpFieldsSignUpButton
+        | PFSignUpFieldsEmail
+        | PFSignUpFieldsDismissButton;
+        
+        // Assign our sign up controller to be displayed from the login controller
+        [logInViewController setSignUpController:signUpViewController];
+        
+        // Present the log in view controller
+        [self presentViewController:logInViewController animated:YES completion:nil];
+    }
+    [self loadObjects];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,9 +119,6 @@
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
     
-    
-    
-    
                       
     
     [query orderByAscending:@"date"];
@@ -103,12 +128,6 @@
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
     
-    
-    
-    
-    
-    
-
     
     
     return query;
@@ -225,7 +244,6 @@
         
     }
     
-    //SOMETHING NEEDED - SEGUE NEEDED
     else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
         UINavigationController *nvc = (UINavigationController *)[segue destinationViewController];
         ReminderDisclosureViewController *controller = (ReminderDisclosureViewController *)nvc.topViewController;
@@ -233,6 +251,111 @@
         controller.reminderObject = sender;
     }
 
+}
+
+#pragma mark - LoginViewController Delegates
+
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error
+{
+    NSLog(@"Failed to log in...");
+}
+
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
+{
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
+    [currentInstallation saveInBackground];
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFriends" object:nil];
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
+    
+        /*[[NSNotificationCenter defaultCenter] postNotificationName:@"fCenterTabbarItemTapped" object:nil];*/
+    
+    
+    [self loadObjects];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
+{
+    
+}
+
+- (BOOL)logInViewController:(PFLogInViewController *)logInController shouldBeginLogInWithUsername:(NSString *)username password:(NSString *)password {
+    // Check if both fields are completed
+    if (username && password && username.length != 0 && password.length != 0) {
+        return YES; // Begin login process
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:@"Missing Information"
+                                message:@"Make sure you fill out all of the information!"
+                               delegate:nil
+                      cancelButtonTitle:@"ok"
+                      otherButtonTitles:nil] show];
+    return NO; // Interrupt login process
+}
+
+
+
+#pragma mark - SignUpViewController Delegates
+
+-(void)addSelfToFriends {
+    PFQuery *personQuery = [UserInfo query];
+    [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [personQuery includeKey:@"friends"];
+    
+    
+    [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        //Add Self Friend
+        
+        NSString *objectID = [object objectId];
+        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
+        
+        [object addObject:userFriendObject forKey:@"friends"];
+        [object saveInBackground];
+    }];
+}
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    defaultPic = [UIImage imageNamed:@"first"];
+    UserInfo *userObject = [UserInfo object];
+    NSData *data = UIImagePNGRepresentation(defaultPic);
+    PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
+    [userObject setObject:displayName forKey:@"user"];
+    [userObject setObject:displayName forKey:@"displayName"];
+    [userObject setObject:imageupload forKey:@"profilePicture"];
+    [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self addSelfToFriends];
+    }];
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
+    
+    [currentInstallation saveInBackground];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFriends" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)signUpViewController:(PFSignUpViewController *)signUpController
+           shouldBeginSignUp:(NSDictionary *)info {
+    NSString *password = [info objectForKey:@"password"];
+    NSString *username = [info objectForKey:@"username"];
+    displayName = username;
+    
+    //    NSString *lowercaseUsername = [username lowercaseString];
+    //    theUsername = lowercaseUsername;
+    
+    return (BOOL)(password.length >= 8);
+    
 }
 
 

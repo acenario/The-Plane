@@ -58,7 +58,6 @@
     NSLog(@"Arjun implement a notification here in \"remindAgain\"");
 }
 
-//SOMETHING NEEDED - CLOUD CODE
 
 
 @end

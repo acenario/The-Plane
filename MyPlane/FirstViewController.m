@@ -111,6 +111,13 @@
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
     [currentInstallation saveInBackground];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFriends" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
+    
+    
+    
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -133,6 +140,23 @@
     return NO; // Interrupt login process
 }
 
+-(void)addSelfToFriends {
+    PFQuery *personQuery = [UserInfo query];
+    [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [personQuery includeKey:@"friends"];
+    
+    
+    [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        //Add Self Friend
+        
+        NSString *objectID = [object objectId];
+        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
+        
+        [object addObject:userFriendObject forKey:@"friends"];
+        [object saveInBackground];
+    }];
+}
+
 
 #pragma mark - SignUpViewController Delegates
 
@@ -144,13 +168,18 @@
     [userObject setObject:displayName forKey:@"user"];
     [userObject setObject:displayName forKey:@"displayName"];
     [userObject setObject:imageupload forKey:@"profilePicture"];
-    [userObject saveInBackground];
+    [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self addSelfToFriends];
+    }];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
     
     [currentInstallation saveInBackground];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFriends" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

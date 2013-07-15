@@ -58,7 +58,6 @@
 
 - (PFQuery *)queryForTable {
     
-    
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     [query whereKey:@"fromUser" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
@@ -83,12 +82,13 @@
     if (userProfilePicture != nil) {
         NSLog(@"SUCESS!");
         cell.imageView.image = userProfilePicture;
+        cell.textLabel.text = [object objectForKey:@"user"];
+        cell.detailTextLabel.text = [object objectForKey:@"title"];
     } else {
         NSLog(@"FAIL!");
     }
-    NSLog(@"for user: %@", [object objectForKey:@"user"]);
-    NSLog(@"title: %@", [object objectForKey:@"title"]);
-
+    
+    
     
     /*UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];

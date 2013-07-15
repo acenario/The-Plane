@@ -93,13 +93,13 @@
     
     
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {                
-        //Add Self Friend
-        
-        NSString *objectID = [object objectId];
-        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
-        
-        [object addObject:userFriendObject forKey:@"friends"];
-        [object saveInBackground];
+//        //Add Self Friend
+//        
+//        NSString *objectID = [object objectId];
+//        PFObject *userFriendObject = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:objectID];
+//        
+//        [object addObject:userFriendObject forKey:@"friends"];
+//        [object saveInBackground];
 
         
         
