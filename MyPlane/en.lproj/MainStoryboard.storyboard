@@ -383,10 +383,10 @@
             </objects>
             <point key="canvasLocation" x="2100" y="-2143"/>
         </scene>
-        <!--Reminder Inclosure View Controller - Reminder-->
+        <!--Reminder Disclosure View Controller - Reminder-->
         <scene sceneID="M0A-GH-NFN">
             <objects>
-                <tableViewController id="Dcc-nQ-kd2" customClass="ReminderInclosureViewController" sceneMemberID="viewController">
+                <tableViewController id="Dcc-nQ-kd2" customClass="ReminderDisclosureViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="58" sectionHeaderHeight="10" sectionFooterHeight="10" id="1Sb-Ds-KwH">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1829,13 +1829,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pickerView" candidateClass="UIDatePicker"/>
-            </relationships>
-        </class>
-        <class className="ReminderInclosureViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderInclosureViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
             </relationships>
         </class>
         <class className="ReminderObjectViewController" superclassName="UITableViewController">

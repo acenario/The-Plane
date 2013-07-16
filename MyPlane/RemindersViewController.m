@@ -246,7 +246,7 @@
     
     else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
         UINavigationController *nvc = (UINavigationController *)[segue destinationViewController];
-        ReminderInclosureViewController *controller = (ReminderInclosureViewController *)nvc.topViewController;
+        ReminderDisclosureViewController *controller = (ReminderDisclosureViewController *)nvc.topViewController;
         controller.delegate = self;
         controller.reminderObject = sender;
     }

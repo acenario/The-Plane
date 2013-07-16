@@ -1,8 +1,8 @@
 //
-//  ReminderDisclosureViewController.m
+//  ReminderInclosureViewController.m
 //  MyPlane
 //
-//  Created by Arjun Bhatnagar on 7/14/13.
+//  Created by Abhijay Bhatnagar on 7/15/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
@@ -12,14 +12,17 @@
 
 @end
 
-
 @implementation ReminderDisclosureViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.pullToRefreshEnabled = YES;
+        self.paginationEnabled = YES;
+        self.objectsPerPage = 25;
+        
+        
     }
     return self;
 }
@@ -27,12 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,27 +39,51 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+- (PFQuery *)queryForTable
+{
+    PFQuery *query = [Comments query];
+    [query whereKey:@"reminder" equalTo:self.reminderObject];
+    [query includeKey:@"user"];
+    
+    [query orderByDescending:@"createdDate"];
+    
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
+    return query;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return ([self.objects count]);
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *CellIdentifier = @"Cell";
+        PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
+    UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
+    PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
     
-    return cell;
+        Comments *comment = (Comments *)object;
+
+        UserInfo *userObject = (UserInfo *)comment.user;
+    nameLabel.text = userObject.firstName;
+    commentLabel.text = comment.text;
+    userImage.file = userObject.profilePicture;
+    
+    [userImage loadInBackground];
+        return cell;
+//    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -69,6 +91,7 @@
     if ([segue.identifier isEqualToString:@"ReminderObject"]) {
         ReminderObjectViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+        controller.reminderObject = self.reminderObject;
         controller.taskText = [self.reminderObject objectForKey:@"title"];
         controller.descriptionText = [self.reminderObject objectForKey:@"description"];
         UserInfo *object = [self.reminderObject objectForKey:@"fromFriend"];
@@ -78,6 +101,12 @@
     }
 }
 
+-(void)reminderObjectViewControllerDidAddComment:(ReminderObjectViewController *)controller
+{
+    [self.tableView reloadData];
+    [self loadObjects];
+}
+
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -85,4 +114,5 @@
 - (IBAction)done:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

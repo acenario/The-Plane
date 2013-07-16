@@ -1,13 +1,15 @@
 //
-//  AddReminderViewController.h
+//  ReminderInclosureViewController.h
 //  MyPlane
 //
-//  Created by Abhijay Bhatnagar on 7/8/13.
+//  Created by Abhijay Bhatnagar on 7/15/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "ReminderObjectViewController.h"
 #import "UserInfo.h"
+#import "Comments.h"
 
 @class ReminderDisclosureViewController;
 
@@ -16,7 +18,7 @@
 @end
 
 
-@interface ReminderDisclosureViewController : UITableViewController <ReminderObjectViewController>
+@interface ReminderDisclosureViewController : PFQueryTableViewController <ReminderObjectViewController, UITextFieldDelegate>
 
 @property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
 
