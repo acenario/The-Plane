@@ -54,6 +54,9 @@
 {
     [super viewDidLoad];
     [self.searchBar becomeFirstResponder];
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    [[UISearchBar appearance] setBackgroundColor:barColor];
+    
     
     //self.searchResults = [NSMutableArray array];
     //friendsUNArray = [NSMutableArray array];

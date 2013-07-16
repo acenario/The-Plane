@@ -182,6 +182,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
 }
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {

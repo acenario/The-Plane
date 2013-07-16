@@ -46,6 +46,10 @@
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
+		DCD415E717959250003F9E55 /* buttonAdd-F.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E517959250003F9E55 /* buttonAdd-F.png */; };
+		DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */; };
+		DCD415EB1795926B003F9E55 /* buttonAdd-FlatUI-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E91795926B003F9E55 /* buttonAdd-FlatUI-Selected.png */; };
+		DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415EA1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png */; };
 		DCDA42B7179048BA00E14D50 /* FUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4294179048BA00E14D50 /* FUIAlertView.m */; };
 		DCDA42B8179048BA00E14D50 /* FUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4296179048BA00E14D50 /* FUIButton.m */; };
 		DCDA42B9179048BA00E14D50 /* FUICellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4298179048BA00E14D50 /* FUICellBackgroundView.m */; };
@@ -163,6 +167,10 @@
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		DC935CD9178F013700C316A3 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		DCD415E517959250003F9E55 /* buttonAdd-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F.png"; sourceTree = "<group>"; };
+		DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F@2x.png"; sourceTree = "<group>"; };
+		DCD415E91795926B003F9E55 /* buttonAdd-FlatUI-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-FlatUI-Selected.png"; sourceTree = "<group>"; };
+		DCD415EA1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-FlatUI@2x-Selected.png"; sourceTree = "<group>"; };
 		DCDA4292179048BA00E14D50 /* FlatUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatUIKit.h; sourceTree = "<group>"; };
 		DCDA4293179048BA00E14D50 /* FUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIAlertView.h; sourceTree = "<group>"; };
 		DCDA4294179048BA00E14D50 /* FUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIAlertView.m; sourceTree = "<group>"; };
@@ -496,6 +504,10 @@
 				DC11C206179481270059FC27 /* 117-todo@2x.png */,
 				DC11C207179481270059FC27 /* 123-id-card.png */,
 				DC11C208179481270059FC27 /* 123-id-card@2x.png */,
+				DCD415E517959250003F9E55 /* buttonAdd-F.png */,
+				DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */,
+				DCD415E91795926B003F9E55 /* buttonAdd-FlatUI-Selected.png */,
+				DCD415EA1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png */,
 			);
 			name = TabBarImages;
 			sourceTree = "<group>";
@@ -600,6 +612,10 @@
 				DC11C210179481270059FC27 /* 117-todo@2x.png in Resources */,
 				DC11C211179481270059FC27 /* 123-id-card.png in Resources */,
 				DC11C212179481270059FC27 /* 123-id-card@2x.png in Resources */,
+				DCD415E717959250003F9E55 /* buttonAdd-F.png in Resources */,
+				DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */,
+				DCD415EB1795926B003F9E55 /* buttonAdd-FlatUI-Selected.png in Resources */,
+				DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

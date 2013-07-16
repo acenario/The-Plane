@@ -52,11 +52,11 @@
                                                  name:@"mpCenterTabbarItemTapped"
                                                object:nil];
     
-    BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+    /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
     if (firstTime) {
         [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
-    }
+    }*/
     
     self.tableView.rowHeight = 70;
     
@@ -396,6 +396,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
 }
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {

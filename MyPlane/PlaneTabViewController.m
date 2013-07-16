@@ -36,7 +36,7 @@
     //[self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
     [self addCenterButtonWithOptions:@{
      @"buttonImage": @"buttonAdd-Flat.png",
-     @"highlightImage": @"buttonAdd-Flat-Selected.png"
+     @"highlightImage": @"buttonAdd-F.png"
      }];
     [self registerDefaults];
     
