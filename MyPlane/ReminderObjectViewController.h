@@ -31,6 +31,8 @@
 @property (strong, nonatomic) NSString *descriptionText;
 @property (strong, nonatomic) PFFile *userUserImage;
 
+@property (strong, nonatomic) IBOutlet FUIButton *remindInstant;
+
 - (IBAction)remindAgain:(id)sender;
 
 @end

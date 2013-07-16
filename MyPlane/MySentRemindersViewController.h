@@ -13,5 +13,6 @@
 
 @interface MySentRemindersViewController : PFQueryTableViewController <ReminderDisclosureViewControllerDelegate>
 
+- (IBAction)doneButton:(id)sender;
 
 @end

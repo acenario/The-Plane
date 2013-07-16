@@ -10,15 +10,34 @@
 #import "UserInfo.h"
 
 
+
 @implementation AppDelegate
 
 
 - (void)customizeApp {
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    //UIColor *tintColor = [UIColor colorFromHexCode:@"FF7140"];
+    UIColor *barButtonColor = [UIColor colorFromHexCode:@"A62A00"];
+    //UIColor *barButtonSelectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    UIColor *barButtonSelectedColor = [UIColor colorFromHexCode:@"FF9773"];
+
+
+    
     UITabBar *tabBarAppearance = [UITabBar appearance];
     [tabBarAppearance setBackgroundImage:[UIImage imageNamed:@"tabbarBackground"]];
     [tabBarAppearance setSelectionIndicatorImage:[UIImage imageNamed:@"tabBarSelectionIndicator"]];
+    //[tabBarAppearance setTintColor:barColor];
+    [tabBarAppearance setSelectedImageTintColor:barColor];
+    //UIImage *barImage = [UIImage imageNamed:@"navbar2"];
+     //[[UISearchBar appearance] setBackgroundImage:barImage];
+    [[UINavigationBar appearance] configureFlatNavigationBarWithColor:barColor];
+    //[[UISearchBar appearance] setBackgroundColor:barColor];
+
     
-    
+    [UIBarButtonItem configureFlatButtonsWithColor:barButtonSelectedColor
+                                  highlightedColor:barButtonColor
+                                      cornerRadius:3
+                                   whenContainedIn:[UINavigationBar class], nil];
     
 }
 
@@ -27,6 +46,8 @@
 {
     
     [self customizeApp];
+    //[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+
     
     [UserInfo registerSubclass];
 

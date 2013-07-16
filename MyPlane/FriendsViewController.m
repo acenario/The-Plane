@@ -7,6 +7,7 @@
 //
 
 #import "FriendsViewController.h"
+#import "QuartzCore/CALayer.h"
 
 @interface FriendsViewController ()
 
@@ -40,6 +41,16 @@
                                                  name:@"fCenterTabbarItemTapped"
                                                object:nil];
     
+    //CUSTOMIZE
+    self.tableView.rowHeight = 70;
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
     
     [self queryForTable];
 	// Do any additional setup after loading the view.
@@ -115,6 +126,62 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:original];
+    
+    // Begin a new image that will be the new image with the rounded corners
+    // (here with the size of an UIImageView)
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+                                cornerRadius:cornerRadius] addClip];
+    // Draw your image
+    [original drawInRect:imageView.bounds];
+    
+    // Get the image, here setting the UIImageView image
+    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // Lets forget about that we were drawing
+    UIGraphicsEndImageContext();
+    
+    return imageView.image;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    
+    /*cell.textLabel.backgroundColor = [UIColor clearColor];
+     if ([cell respondsToSelector:@selector(detailTextLabel)])
+     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+     
+     //Guess some good text colors
+     cell.textLabel.textColor = selectedColor;
+     cell.textLabel.highlightedTextColor = color;
+     if ([cell respondsToSelector:@selector(detailTextLabel)]) {
+     cell.detailTextLabel.textColor = selectedColor;
+     cell.detailTextLabel.highlightedTextColor = color;
+     }*/
+    
+    return cell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -135,6 +202,7 @@
     dispatch_async(queue, ^{
         PFFile *picture = userObject.profilePicture;
         UIImage *fromUserImage = [[UIImage alloc] initWithData:picture.getData];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             picImage.image = fromUserImage;
             contactText.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
@@ -145,6 +213,11 @@
     //SOMETHING NEEDED - CONVERT TO PFFILE
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)reQueryForTableWithIndexPath:(NSIndexPath *)indexPath {

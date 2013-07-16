@@ -39,7 +39,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        self.pullToRefreshEnabled = YES;
+        self.pullToRefreshEnabled = NO;
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
         self.parseClassName = @"UserInfo";
