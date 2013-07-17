@@ -62,7 +62,7 @@
     [reminder setObject:self.username.text forKey:@"user"];
     [reminder setObject:recievedObjectID forKey:@"fromFriend"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
-    if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+    if (self.descriptionTextView.text != descriptionPlaceholderText) {
         [reminder setObject:self.descriptionTextView.text forKey:@"description"];
     } else {
         [reminder setObject:@"No description available." forKey:@"description"];

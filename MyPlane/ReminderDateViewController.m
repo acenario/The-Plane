@@ -47,7 +47,7 @@
 - (void)datePicker
 {
 	self.pickerView.date = [self.dateFormatter dateFromString:self.dateDetail.text];
-	
+	self.pickerView.minimumDate = [NSDate date];
     
         CGRect startFrame = self.pickerView.frame;
         CGRect endFrame = self.pickerView.frame;

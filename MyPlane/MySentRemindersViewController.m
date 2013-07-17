@@ -85,7 +85,7 @@
         cell.textLabel.text = [object objectForKey:@"user"];
         cell.detailTextLabel.text = [object objectForKey:@"title"];
     } else {
-        NSLog(@"FAIL!");
+        //NSLog(@"FAIL!");
     }
     
     
@@ -123,7 +123,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", [self.objects objectAtIndex:indexPath.row]);
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
 }
@@ -138,4 +138,8 @@
     }
 }
 
+- (IBAction)doneButton:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

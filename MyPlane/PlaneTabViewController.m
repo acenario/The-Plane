@@ -32,48 +32,40 @@
 {
     [super viewDidLoad];
     self.tabBar.clipsToBounds = NO;
-    [self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
+    //buttonAdd-FlatUI@2x
+    //[self addCenterButtonWithOptions:@{@"buttonImage": @"buttonAdd.png"}];
+    [self addCenterButtonWithOptions:@{
+     @"buttonImage": @"buttonAdd-Flat.png",
+     @"highlightImage": @"buttonAdd-Flat-Selected.png"
+     }];
     [self registerDefaults];
     
     
-    /*
-    RemindersViewController *remindersController = [[self viewControllers] objectAtIndex:1];
+    
+    //RemindersViewController *remindersController = [[self viewControllers] objectAtIndex:0];
 
 
     
-    PFQuery *userQuery = [UserInfo query];
+    /*PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [userQuery includeKey:@"friends"];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userInfoObject = object;
-        remindersController.userObject = userInfoObject;
+        self.tabBarUserObject = (UserInfo *)object;
+        remindersController.userObjectFromTabBar = self.tabBarUserObject;
         
-        BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
-        if (firstTime) {
-            NSLog(@"FIRST TIME BABY!");
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
-        }
         
         
     }];
   
-    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;*/
     
-     
-     - (void)getUserandSetObjects {
-     PFQuery *queryUser = [UserInfo query];
-     [queryUser whereKey:@"user" equalTo:[PFUser currentUser].username];
-     [queryUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-     [object addObject:object forKey:@"friends"];
-     [object saveInBackground];
-     
-     }];
-     
-     
-     }
-    
-    */
+        
+    /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+     if (firstTime) {
+     NSLog(@"FIRST TIME BABY!");
+     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
+     }*/
     
     
     //UIColor *selectedColor = [UIColor darkGrayColor];

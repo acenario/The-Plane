@@ -18,5 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
+@property (strong, nonatomic) IBOutlet UITableViewCell *emailCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *infoCell;
 
 @end

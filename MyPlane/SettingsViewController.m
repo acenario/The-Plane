@@ -39,6 +39,15 @@
                                                object:nil];
     [self getUserInfo];
     
+    /*self.infoCell = [UITableViewCell configureFlatCellWithColor:[UIColor greenSeaColor]
+                                         selectedColor:[UIColor cloudsColor]
+                                                 style:UITableViewCellStyleDefault
+                                       reuseIdentifier:@"Cell"];
+    
+    self.infoCell.cornerRadius = 5.0f;
+
+    self.infoCell.separatorHeight = 2.0f; // optional*/
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

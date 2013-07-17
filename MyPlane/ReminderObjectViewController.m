@@ -12,9 +12,7 @@
 
 @end
 
-@implementation ReminderObjectViewController {
-    UserInfo *userObject;
-}
+@implementation ReminderObjectViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -37,14 +35,7 @@
     
     [self.userImage loadInBackground];
     
-    self.commentTextField.delegate = self;
     
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userObject = (UserInfo *)object;
-    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,64 +57,6 @@
     
     
     NSLog(@"Arjun implement a notification here in \"remindAgain\"");
-}
-
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    NSString *string = textField.text;
-//
-//    if ([string isEqualToString:@""]) {
-//        self.addCommentButton.enabled = NO;
-//    } else {
-//        self.addCommentButton.enabled = YES;
-//    }
-//
-//}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *textFieldText = [NSString stringWithFormat:@"%@%@", textField.text, string];
-    
-    if ([string isEqualToString:@""]) {
-        if ((textFieldText.length - 1) > 0) {
-            self.addCommentButton.enabled = YES;
-        } else {
-            self.addCommentButton.enabled = NO;
-        }
-    } else {
-        if (textFieldText.length > 0) {
-            self.addCommentButton.enabled = YES;
-        } else {
-            self.addCommentButton.enabled = NO;
-        }
-    }
-    
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self.tableView reloadInputViews];
-    
-    return YES;
-}
-
-- (IBAction)addComment:(id)sender {
-    Comments *comment = [Comments object];
-    
-    [comment setObject:self.reminderObject forKey:@"reminder"];
-    [comment setObject:userObject forKey:@"user"];
-    [comment setObject:self.commentTextField.text forKey:@"text"];
-    
-    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        self.commentTextField.text = @"";
-        self.addCommentButton.enabled = NO;
-        [self.commentTextField resignFirstResponder];
-        [self.tableView reloadData];
-        [self.delegate reminderObjectViewControllerDidAddComment:self];
-    }];
 }
 
 @end

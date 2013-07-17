@@ -1,8 +1,8 @@
 //
-//  Comment.h
+//  Comments.h
 //  MyPlane
 //
-//  Created by Abhijay Bhatnagar on 7/15/13.
+//  Created by Abhijay Bhatnagar on 7/16/13.
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 

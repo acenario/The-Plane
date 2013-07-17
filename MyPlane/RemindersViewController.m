@@ -11,6 +11,8 @@
 #import "MySignUpViewController.h"
 #import "FriendsViewController.h"
 #import "SettingsViewController.h"
+#import "QuartzCore/CALayer.h"
+#import "PlaneTabViewController.h"
 
 
 @interface RemindersViewController ()
@@ -56,6 +58,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
     }
     
+    self.tableView.rowHeight = 70;
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
     
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //self.tableView.backgroundColor = [UIColor alizarinColor];
@@ -134,20 +145,24 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
     
+    cell.backgroundView = av;
     
-    UIColor *color = [UIColor greenSeaColor];
-    UIColor *selectedColor = [UIColor redColor];
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = selectedColor;
     
-    cell.backgroundColor = color;
 
     [cell setSelectedBackgroundView:bgView];
     
     
-    cell.textLabel.backgroundColor = [UIColor clearColor];
+    /*cell.textLabel.backgroundColor = [UIColor clearColor];
     if ([cell respondsToSelector:@selector(detailTextLabel)])
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
@@ -157,9 +172,33 @@
     if ([cell respondsToSelector:@selector(detailTextLabel)]) {
         cell.detailTextLabel.textColor = selectedColor;
         cell.detailTextLabel.highlightedTextColor = color;
-    }
+    }*/
     
     return cell;
+}
+
+
+- (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:original];
+    
+    // Begin a new image that will be the new image with the rounded corners
+    // (here with the size of an UIImageView)
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+                                cornerRadius:cornerRadius] addClip];
+    // Draw your image
+    [original drawInRect:imageView.bounds];
+    
+    // Get the image, here setting the UIImageView image
+    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // Lets forget about that we were drawing
+    UIGraphicsEndImageContext();
+    
+    return imageView.image;
 }
 
 
@@ -178,6 +217,8 @@
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
     
+
+    
     reminderText.text = [object objectForKey:@"title"];
     detailText.text = [object objectForKey:@"fromUser"];
     
@@ -188,6 +229,8 @@
     
     
     //picImage.image = [UIImage imageNamed:@"buttonAdd"]; // placeholder image
+    
+    
     picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
     
     
@@ -252,6 +295,20 @@
     }
 
 }
+
+/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UserInfo *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    NSMutableArray *array = [[NSMutableArray alloc]initWithArray:self.objects];
+    [array removeObject:deleteReminder];
+    
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    
+    [self loadObjects];
+}*/
 
 #pragma mark - LoginViewController Delegates
 

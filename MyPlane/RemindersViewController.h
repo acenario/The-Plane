@@ -13,6 +13,8 @@
 
 @interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate, ReminderDisclosureViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sentReminders;
+
 
 
 @end

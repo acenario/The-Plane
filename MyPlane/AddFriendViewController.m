@@ -39,7 +39,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        self.pullToRefreshEnabled = YES;
+        self.pullToRefreshEnabled = NO;
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
         self.parseClassName = @"UserInfo";
@@ -209,17 +209,6 @@
         [friendAdded addObject:userObjectID forKey:@"receivedFriendRequests"];
         [friendAdded saveInBackground];
     }];
-    
-    
-    /*[currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            PFObject *friendAdded = (PFObject *)[self.searchResults objectAtIndex:clickedButtonPath.row];
-            PFObject *userObject = (PFObject *)[objects objectAtIndex:0];
-            [userObject addObject:friendAdded forKey:@"friends"];
-            [userObject saveInBackground];
-        }
-    }];*/
-    
     
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.enabled = NO;
