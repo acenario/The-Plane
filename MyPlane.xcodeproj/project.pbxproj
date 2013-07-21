@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE1581E417983A9000CDCC83 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581E317983A9000CDCC83 /* SocialViewController.m */; };
+		AE1581E717988D2300CDCC83 /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581E617988D2300CDCC83 /* SocialPosts.m */; };
+		AE1581EB17988E4D00CDCC83 /* AddSocialPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581EA17988E4D00CDCC83 /* AddSocialPostViewController.m */; };
+		AE1581EE179890F400CDCC83 /* Circles.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581ED179890F400CDCC83 /* Circles.m */; };
+		AE1581F217997EA300CDCC83 /* SocialPostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581F117997EA300CDCC83 /* SocialPostDetailViewController.m */; };
+		AE1581F51799AF0100CDCC83 /* PickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581F41799AF0100CDCC83 /* PickCircleViewController.m */; };
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
@@ -14,7 +20,6 @@
 		AED2F486179443DF00708368 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED2F485179443DF00708368 /* Comments.m */; };
 		DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */; };
 		DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */; };
-		DC2FE9FD17939C1E009EACD0 /* ReminderObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F917939C1E009EACD0 /* ReminderObjectViewController.m */; };
 		DC2FEA001793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9FF1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m */; };
 		DC38B1F01793195400304619 /* MyLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1EF1793195400304619 /* MyLoginViewController.m */; };
 		DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F21793196400304619 /* MySignUpViewController.m */; };
@@ -86,6 +91,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE1581E217983A9000CDCC83 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
+		AE1581E317983A9000CDCC83 /* SocialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialViewController.m; sourceTree = "<group>"; };
+		AE1581E517988D2300CDCC83 /* SocialPosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPosts.h; sourceTree = "<group>"; };
+		AE1581E617988D2300CDCC83 /* SocialPosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPosts.m; sourceTree = "<group>"; };
+		AE1581E917988E4D00CDCC83 /* AddSocialPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSocialPostViewController.h; sourceTree = "<group>"; };
+		AE1581EA17988E4D00CDCC83 /* AddSocialPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSocialPostViewController.m; sourceTree = "<group>"; };
+		AE1581EC179890F400CDCC83 /* Circles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circles.h; sourceTree = "<group>"; };
+		AE1581ED179890F400CDCC83 /* Circles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circles.m; sourceTree = "<group>"; };
+		AE1581F017997EA300CDCC83 /* SocialPostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPostDetailViewController.h; sourceTree = "<group>"; };
+		AE1581F117997EA300CDCC83 /* SocialPostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPostDetailViewController.m; sourceTree = "<group>"; };
+		AE1581F31799AF0100CDCC83 /* PickCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickCircleViewController.h; sourceTree = "<group>"; };
+		AE1581F41799AF0100CDCC83 /* PickCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickCircleViewController.m; sourceTree = "<group>"; };
 		AE46DEA4178B73390080CB0A /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		AE46DEA5178B73390080CB0A /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
@@ -100,8 +117,6 @@
 		DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySentRemindersViewController.m; sourceTree = "<group>"; };
 		DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDateViewController.h; sourceTree = "<group>"; };
 		DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDateViewController.m; sourceTree = "<group>"; };
-		DC2FE9F817939C1E009EACD0 /* ReminderObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderObjectViewController.h; sourceTree = "<group>"; };
-		DC2FE9F917939C1E009EACD0 /* ReminderObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderObjectViewController.m; sourceTree = "<group>"; };
 		DC2FE9FE1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivedFriendRequestsViewController.h; sourceTree = "<group>"; };
 		DC2FE9FF1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivedFriendRequestsViewController.m; sourceTree = "<group>"; };
 		DC38B1EE1793195400304619 /* MyLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLoginViewController.h; sourceTree = "<group>"; };
@@ -231,6 +246,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE1581E817988E2200CDCC83 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				AE1581E217983A9000CDCC83 /* SocialViewController.h */,
+				AE1581E317983A9000CDCC83 /* SocialViewController.m */,
+				AE1581E917988E4D00CDCC83 /* AddSocialPostViewController.h */,
+				AE1581EA17988E4D00CDCC83 /* AddSocialPostViewController.m */,
+				AE1581F31799AF0100CDCC83 /* PickCircleViewController.h */,
+				AE1581F41799AF0100CDCC83 /* PickCircleViewController.m */,
+				AE1581F017997EA300CDCC83 /* SocialPostDetailViewController.h */,
+				AE1581F117997EA300CDCC83 /* SocialPostDetailViewController.m */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
+		AE1581EF179891F500CDCC83 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				DC935CD8178F013700C316A3 /* UserInfo.h */,
+				DC935CD9178F013700C316A3 /* UserInfo.m */,
+				AED2F484179443DF00708368 /* Comments.h */,
+				AED2F485179443DF00708368 /* Comments.m */,
+				AE1581E517988D2300CDCC83 /* SocialPosts.h */,
+				AE1581E617988D2300CDCC83 /* SocialPosts.m */,
+				AE1581EC179890F400CDCC83 /* Circles.h */,
+				AE1581ED179890F400CDCC83 /* Circles.m */,
+			);
+			name = Subclasses;
+			sourceTree = "<group>";
+		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,8 +289,6 @@
 				DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */,
 				AED2F481179441CB00708368 /* ReminderDisclosureViewController.h */,
 				AED2F482179441CB00708368 /* ReminderDisclosureViewController.m */,
-				DC2FE9F817939C1E009EACD0 /* ReminderObjectViewController.h */,
-				DC2FE9F917939C1E009EACD0 /* ReminderObjectViewController.m */,
 				DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */,
 				DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */,
 			);
@@ -382,6 +425,7 @@
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
+				AE1581E817988E2200CDCC83 /* Social */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
@@ -391,10 +435,7 @@
 				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
-				DC935CD8178F013700C316A3 /* UserInfo.h */,
-				DC935CD9178F013700C316A3 /* UserInfo.m */,
-				AED2F484179443DF00708368 /* Comments.h */,
-				AED2F485179443DF00708368 /* Comments.m */,
+				AE1581EF179891F500CDCC83 /* Subclasses */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
 			path = MyPlane;
@@ -546,10 +587,15 @@
 				DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */,
 				DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */,
 				DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */,
-				DC2FE9FD17939C1E009EACD0 /* ReminderObjectViewController.m in Sources */,
 				DC2FEA001793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m in Sources */,
 				AED2F483179441CB00708368 /* ReminderDisclosureViewController.m in Sources */,
 				AED2F486179443DF00708368 /* Comments.m in Sources */,
+				AE1581E417983A9000CDCC83 /* SocialViewController.m in Sources */,
+				AE1581E717988D2300CDCC83 /* SocialPosts.m in Sources */,
+				AE1581EB17988E4D00CDCC83 /* AddSocialPostViewController.m in Sources */,
+				AE1581EE179890F400CDCC83 /* Circles.m in Sources */,
+				AE1581F217997EA300CDCC83 /* SocialPostDetailViewController.m in Sources */,
+				AE1581F51799AF0100CDCC83 /* PickCircleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

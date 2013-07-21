@@ -18,7 +18,8 @@
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
-
+    BOOL textCheck;
+    BOOL friendCheck;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,6 +44,11 @@
     descriptionPlaceholderText = @"Enter more information about the reminder.";
     self.descriptionTextView.text = descriptionPlaceholderText;
     self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    
+    self.taskTextField.delegate = self;
+    
+    textCheck = NO;
+    friendCheck = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -79,6 +85,30 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)textValidation:(id)sender {
+    if ([self.taskTextField.text length] > 0) {
+        textCheck = YES;
+    } else {
+        textCheck = NO;
+    }
+    [self configureDoneButton];
+}
+
+- (void)configureDoneButton
+{
+    if ((textCheck) && (friendCheck)) {
+        self.doneBarItem.enabled = YES;
+    } else {
+        self.doneBarItem.enabled = NO;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 -(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username withName:(NSString *)name withProfilePicture:(UIImage *)image withObjectId:(PFObject *)objectID
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -86,7 +116,8 @@
     self.username.text = username;
     self.userImage.image = image;
     recievedObjectID = objectID;
-    self.doneBarItem.enabled = YES;
+    friendCheck = YES;
+    [self configureDoneButton];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

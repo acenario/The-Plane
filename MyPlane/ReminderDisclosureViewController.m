@@ -79,18 +79,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 4;
+    if (self.objects.count == 0) {
+        NSLog(@"Objects Count: %d", self.objects.count);
+        return 3;
+    } else{
+        NSLog(@"Objects Count: %d", self.objects.count);
+        return 4;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
         return 3;
-    } if (section == 1) {
+    } else if (section == 1) {
         return 1;
     }else if (section == 2) {
-        return ([self.objects count]);
+        if (self.objects.count > 0) {
+            return ([self.objects count]);
+        } else {
+            return 1;
+        }
     } else {
         return 1;
     }
@@ -132,29 +141,44 @@
             
         }
         
-    } if (indexPath.section == 1) {
+    } else if (indexPath.section == 1) {
         static NSString *CellIdentifier = @"RemindAgainCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
         return cell;
     } else if (indexPath.section == 2) {
-        
-        static NSString *CellIdentifier = @"Cell";
-        PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        
-        UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
-        UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
-        PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
-        
-        Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
-        
-        UserInfo *userObject = (UserInfo *)comment.user;
-        nameLabel.text = userObject.firstName;
-        commentLabel.text = comment.text;
-        userImage.file = userObject.profilePicture;
-        
-        [userImage loadInBackground];
-        return cell;
+        if (self.objects.count > 0) {
+            static NSString *CellIdentifier = @"Cell";
+            PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
+            UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
+            PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
+            
+            Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
+            
+            UserInfo *userObject = (UserInfo *)comment.user;
+            nameLabel.text = userObject.firstName;
+            commentLabel.text = comment.text;
+            userImage.file = userObject.profilePicture;
+            
+            [userImage loadInBackground];
+            return cell;
+        } else {
+            static NSString *CellIdentifier = @"CommentCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            UITextField *commentTextField = (UITextField *)[cell viewWithTag:1341];
+            UIButton *addCommentButton = (UIButton *)[cell viewWithTag:1331];
+            
+            self.commentTextField = commentTextField;
+            self.addCommentButton = addCommentButton;
+            
+            commentTextField.delegate = self;
+            [commentTextField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+            
+            return cell;
+        }
     } else {
         static NSString *CellIdentifier = @"CommentCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -194,27 +218,17 @@
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if ((self.objects.count > 0) && (section == 2)) {
+        return @"Comments";
+    } else {
+        return nil;
+    }
+}
+
 
 #pragma mark - Text Field Methods
-
-//- (IBAction)textFieldDidBeginEditingCustom:(id)sender
-//{
-//    //NSLog(@"The x-coordinate is: %f and the y-coordinate is %f", originalCenter.x, originalCenter.y);
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.25];
-//    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-//
-//
-//
-//    if (IS_IPHONE5) {
-//        //NSLog(@"iPhone 5");
-//        self.view.center = CGPointMake(originalCenter.x, 90);
-//    } else {
-//        //NSLog(@"iphone 4s or lower");
-//        self.view.center = CGPointMake(originalCenter.x, 45);
-//    }
-//    [UIView commitAnimations];
-//}
 
 - (IBAction)checkTextField:(id)sender
 {
@@ -250,6 +264,8 @@
 - (IBAction)addComment:(id)sender {
     Comments *comment = [Comments object];
     
+    PFObject *object = [PFObject objectWithoutDataWithClassName:@"Reminders" objectId:self.reminderObject.objectId];
+    
     [comment setObject:self.reminderObject forKey:@"reminder"];
     [comment setObject:currentUserObject forKey:@"user"];
     [comment setObject:self.commentTextField.text forKey:@"text"];
@@ -258,6 +274,8 @@
         self.commentTextField.text = @"";
         self.addCommentButton.enabled = NO;
         [self.commentTextField resignFirstResponder];
+        [self.reminderObject addObject:object forKey:@"comments"];
+        [self.reminderObject saveInBackground];
         [self loadObjects];
     }];
 }

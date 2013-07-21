@@ -216,12 +216,12 @@
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
-    
+    UILabel *counterLabel = (UILabel *)[cell viewWithTag:21101];
 
     
     reminderText.text = [object objectForKey:@"title"];
     detailText.text = [object objectForKey:@"fromUser"];
-    
+    counterLabel.text = [NSString stringWithFormat:@"%d", [[object objectForKey:@"comments"] count]];
     
     //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
     
