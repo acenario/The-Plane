@@ -22,6 +22,20 @@
     UIImage *defaultPic;
 }
 
+- (NSString *)documentsDirectory
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
+- (NSString *)dataFilePath
+{
+    return [[self documentsDirectory] stringByAppendingPathComponent:
+            @"UserProfile.plist"];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -77,6 +91,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)registerUserID:(NSString *)objectID {
+    NSMutableDictionary *userDict = [[NSMutableDictionary alloc]init];
+    [userDict setValue:objectID forKey:@"objectID"];
+    [userDict writeToFile:[self dataFilePath] atomically:YES];
+    
+}
+
 - (IBAction)logOut:(id)sender {
     [PFUser logOut];  
     PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
@@ -107,6 +128,7 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
+    NSString *username = user.username;
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
     [currentInstallation saveInBackground];
@@ -116,9 +138,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
     
+    PFQuery *objectIdQuery = [UserInfo query];
+    [objectIdQuery whereKey:@"user" equalTo:username];
+    [objectIdQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        [self registerUserID:[object objectId]];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+
     
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
@@ -154,6 +182,7 @@
         
         [object addObject:userFriendObject forKey:@"friends"];
         [object saveInBackground];
+        [self registerUserID:objectID];
     }];
 }
 
@@ -170,6 +199,7 @@
     [userObject setObject:imageupload forKey:@"profilePicture"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
+        
     }];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

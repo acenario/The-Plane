@@ -7,6 +7,7 @@
 //
 
 #import "EditSettingsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface EditSettingsViewController ()
 
@@ -22,7 +23,9 @@
 
 @end
 
-@implementation EditSettingsViewController 
+@implementation EditSettingsViewController {
+    BOOL check;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +44,33 @@
     self.lastNameField.placeholder = self.lastname;
     self.emailField.placeholder = self.email;
     self.profilePictureSet.image = self.profilePicture;
+    [self configureTable];
+    
+    check = YES;
+    
+}
+
+-(void)configureTable {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+    UIColor *regColor = [UIColor colorFromHexCode:@"FF7140"];
+    UIColor *selColor = [UIColor colorFromHexCode:@"FF9773"];
+    
+    self.setPic.buttonColor = regColor;
+    self.setPic.shadowColor = selColor;
+    self.setPic.shadowHeight = 3.0f;
+    self.setPic.cornerRadius = 6.0f;
+    self.setPic.titleLabel.font = [UIFont boldFlatFontOfSize:22];
+    
+    
+    [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
 }
 
@@ -52,10 +82,9 @@
 
 -(void)showAlertwithString:(NSString *)message {
     
-    NSInteger red   = 178;
-    NSInteger green = 8;
-    NSInteger blue  = 56;
+    check = NO;
     
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
     
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Error!"
                                                           message:message
@@ -66,7 +95,7 @@
     alertView.messageLabel.textColor = [UIColor cloudsColor];
     alertView.messageLabel.font = [UIFont flatFontOfSize:14];
     alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
-    alertView.alertContainer.backgroundColor = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:1.0];
+    alertView.alertContainer.backgroundColor = barColor;
     alertView.defaultButtonColor = [UIColor cloudsColor];
     alertView.defaultButtonShadowColor = [UIColor asbestosColor];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
@@ -74,6 +103,7 @@
     
     
     [alertView show];
+    
 }
 
 - (void)updateAlltheMethods {
@@ -81,6 +111,7 @@
     PFQuery *personQuery = [UserInfo query];
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+    
         
         //PROFILE PICTURE
         
@@ -90,6 +121,7 @@
             [object setObject:imageupload forKey:@"profilePicture"];
             [object saveInBackground];
             NSLog(@"SUCCESS!");
+            check = YES;
         } else {
             NSLog(@"EMPTY!");
         }
@@ -102,6 +134,7 @@
                 if (isValid) {
                     [object setObject:self.firstNameField.text forKey:@"firstName"];
                     [object saveInBackground];
+                    check = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
@@ -118,10 +151,11 @@
         
         if (![self.lastNameField.text isEqualToString:@""]) {
             if ([self.lastNameField.text length] > 1) {
-                BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
+                BOOL isValid = [self NSStringIsNameValid:self.lastNameField.text];
                 if (isValid) {
                     [object setObject:self.lastNameField.text forKey:@"lastName"];
                     [object saveInBackground];
+                    check = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
@@ -142,6 +176,7 @@
             if (isValid) {
                 [user setEmail:self.emailField.text];
                 [user saveInBackground];
+                check = YES;
                 NSLog(@"SUCCESS!");
             } else {
                 NSLog(@"NOT VALID EMAIL");
@@ -164,6 +199,7 @@
                     if (isValid) {
                         [user setPassword:self.passwordReEnter.text];
                         [user saveInBackground];
+                        check = YES;
                         NSLog(@"SUCCESS!");
                     } else {
                         [self showAlertwithString:@"Your passwords do not match"];
@@ -181,6 +217,11 @@
             NSLog(@"EMPTY!");
         }
         
+        if (check == YES) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            NSLog(@"NO!");
+        }
         
     }];
     
@@ -227,11 +268,13 @@
     
     [self updateAlltheMethods];
     [self.delegate updateUserInfo:self];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //[self dismissViewControllerAnimated:YES completion:nil];
         
 
 
 }
+
 
 - (IBAction)cancelButton:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -256,21 +299,21 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    CGSize newSize = CGSizeMake(120, 120);
+    
+    /*CGSize newSize = CGSizeMake(120, 120);
     UIGraphicsBeginImageContext(newSize);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    */
     
-    
-    self.profilePictureSet.image = newImage;
+    self.profilePictureSet.image = image;
     
     self.imagePickerController = nil;
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
     
-
     
     
 }
@@ -282,6 +325,28 @@
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UIColor *color = [UIColor colorFromHexCode:@"FF9773"];
+    UIColor *color = [UIColor whiteColor];
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    
+    UIImage *background = [UIImage imageWithColor:color cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+
+    
+
+    
+    return cell;
+    
+}
+
 
 
 @end

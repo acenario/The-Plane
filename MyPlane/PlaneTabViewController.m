@@ -38,7 +38,7 @@
      @"buttonImage": @"buttonAdd-Flat.png",
      @"highlightImage": @"buttonAdd-F.png"
      }];
-    [self registerDefaults];
+    //[self registerDefaults];
     
     
     
@@ -76,13 +76,13 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)registerDefaults
+/*- (void)registerDefaults
 {
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithBool:YES], @"FirstTime",
                                 nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-}
+}*/
 
 - (void)didReceiveMemoryWarning
 {

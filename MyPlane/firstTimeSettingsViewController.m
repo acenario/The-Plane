@@ -216,14 +216,16 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    CGSize newSize = CGSizeMake(88, 88);
+    
+    
+    /*CGSize newSize = CGSizeMake(88, 88);
     UIGraphicsBeginImageContext(newSize);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIGraphicsEndImageContext();*/
     
     
-    self.profilePictureSet.image = newImage;
+    self.profilePictureSet.image = image;
     
     self.imagePickerController = nil;
     

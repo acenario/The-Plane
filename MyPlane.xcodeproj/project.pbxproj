@@ -50,6 +50,9 @@
 		DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */; };
 		DCD415EB1795926B003F9E55 /* buttonAdd-FlatUI-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E91795926B003F9E55 /* buttonAdd-FlatUI-Selected.png */; };
 		DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415EA1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png */; };
+		DCD4AE521796E5DD00F6C3FA /* FriendsQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD4AE511796E5DD00F6C3FA /* FriendsQueryViewController.m */; };
+		DCD4AE57179AA74100F6C3FA /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DCD4AE54179AA74100F6C3FA /* SVProgressHUD.bundle */; };
+		DCD4AE58179AA74100F6C3FA /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD4AE56179AA74100F6C3FA /* SVProgressHUD.m */; };
 		DCDA42B7179048BA00E14D50 /* FUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4294179048BA00E14D50 /* FUIAlertView.m */; };
 		DCDA42B8179048BA00E14D50 /* FUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4296179048BA00E14D50 /* FUIButton.m */; };
 		DCDA42B9179048BA00E14D50 /* FUICellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDA4298179048BA00E14D50 /* FUICellBackgroundView.m */; };
@@ -171,6 +174,11 @@
 		DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F@2x.png"; sourceTree = "<group>"; };
 		DCD415E91795926B003F9E55 /* buttonAdd-FlatUI-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-FlatUI-Selected.png"; sourceTree = "<group>"; };
 		DCD415EA1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-FlatUI@2x-Selected.png"; sourceTree = "<group>"; };
+		DCD4AE501796E5DD00F6C3FA /* FriendsQueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsQueryViewController.h; sourceTree = "<group>"; };
+		DCD4AE511796E5DD00F6C3FA /* FriendsQueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsQueryViewController.m; sourceTree = "<group>"; };
+		DCD4AE54179AA74100F6C3FA /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		DCD4AE55179AA74100F6C3FA /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		DCD4AE56179AA74100F6C3FA /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		DCDA4292179048BA00E14D50 /* FlatUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatUIKit.h; sourceTree = "<group>"; };
 		DCDA4293179048BA00E14D50 /* FUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIAlertView.h; sourceTree = "<group>"; };
 		DCDA4294179048BA00E14D50 /* FUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIAlertView.m; sourceTree = "<group>"; };
@@ -314,6 +322,8 @@
 			children = (
 				DCF891EF178A348E00A89F6E /* FriendsViewController.h */,
 				DCF891F0178A348E00A89F6E /* FriendsViewController.m */,
+				DCD4AE501796E5DD00F6C3FA /* FriendsQueryViewController.h */,
+				DCD4AE511796E5DD00F6C3FA /* FriendsQueryViewController.m */,
 				AE46DEA4178B73390080CB0A /* AddFriendViewController.h */,
 				AE46DEA5178B73390080CB0A /* AddFriendViewController.m */,
 				DC2FE9FE1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.h */,
@@ -331,6 +341,16 @@
 				DC38B1F21793196400304619 /* MySignUpViewController.m */,
 			);
 			name = LoginandSignUp;
+			sourceTree = "<group>";
+		};
+		DCD4AE53179AA74000F6C3FA /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				DCD4AE54179AA74100F6C3FA /* SVProgressHUD.bundle */,
+				DCD4AE55179AA74100F6C3FA /* SVProgressHUD.h */,
+				DCD4AE56179AA74100F6C3FA /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		DCDA4291179048A600E14D50 /* FlatUIKit */ = {
@@ -428,6 +448,7 @@
 		DCE1FE4D178910D60012478B /* MyPlane */ = {
 			isa = PBXGroup;
 			children = (
+				DCD4AE53179AA74000F6C3FA /* SVProgressHUD */,
 				DCDA4291179048A600E14D50 /* FlatUIKit */,
 				DCF891DF178A1E7800A89F6E /* TabBarImages */,
 				DCE1FE5F178910D60012478B /* MainStoryboard.storyboard */,
@@ -616,6 +637,7 @@
 				DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */,
 				DCD415EB1795926B003F9E55 /* buttonAdd-FlatUI-Selected.png in Resources */,
 				DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */,
+				DCD4AE57179AA74100F6C3FA /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,6 +686,8 @@
 				DC2FE9FC17939C1E009EACD0 /* ReminderDisclosureViewController.m in Sources */,
 				DC2FE9FD17939C1E009EACD0 /* ReminderObjectViewController.m in Sources */,
 				DC2FEA001793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m in Sources */,
+				DCD4AE521796E5DD00F6C3FA /* FriendsQueryViewController.m in Sources */,
+				DCD4AE58179AA74100F6C3FA /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -69,7 +69,10 @@
     }
 
     
-    [reminder saveInBackground];
+    [reminder saveEventually:^(BOOL succeeded, NSError *error) {
+        [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
+       
+    }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

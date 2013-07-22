@@ -32,7 +32,8 @@
 @property (nonatomic, strong) NSString *lastname;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) UIImage *profilePicture;
-
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *done;
+@property (strong, nonatomic) IBOutlet FUIButton *setPic;
 
 
 

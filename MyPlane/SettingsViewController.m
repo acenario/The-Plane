@@ -32,6 +32,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    [self configureFlatUI];
+    
     self.editButton.enabled = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
@@ -57,6 +67,28 @@
                                                  name:@"reloadProfile"
                                                object:nil];
 
+    
+}
+
+-(void)configureFlatUI {
+    UIFont *myFont = [UIFont flatFontOfSize:16];
+    UIColor *myColor = [UIColor colorFromHexCode:@"FF9773"];
+    UIColor *unColor = [UIColor colorFromHexCode:@"A62A00"];
+
+    
+    self.firstNameField.font = myFont;
+    self.firstNameField.textColor = myColor;
+    
+    self.lastNameField.font = myFont;
+    self.lastNameField.textColor = myColor;
+    
+    self.emailField.font = myFont;
+    self.emailField.textColor = myColor;
+    
+    self.usernameField.font = myFont;
+    self.usernameField.textColor = unColor;
+    
+    
     
 }
 
@@ -98,6 +130,7 @@
     dispatch_async(queue, ^{
         PFFile *pictureFile = [object objectForKey:@"profilePicture"];
         UIImage *fromUserImage = [[UIImage alloc] initWithData:pictureFile.getData];
+        //UIImage *roundedImage = [self imageWithRoundedCornersSize:5.0f usingImage:fromUserImage];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.profilePicture.image = fromUserImage;
             self.editButton.enabled = YES;
@@ -130,6 +163,56 @@
         controller.profilePicture = self.profilePicture.image;
     }
 }
+
+- (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:original];
+    
+    // Begin a new image that will be the new image with the rounded corners
+    // (here with the size of an UIImageView)
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+                                cornerRadius:cornerRadius] addClip];
+    // Draw your image
+    [original drawInRect:imageView.bounds];
+    
+    // Get the image, here setting the UIImageView image
+    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // Lets forget about that we were drawing
+    UIGraphicsEndImageContext();
+    
+    return imageView.image;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:5.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    
+
+    
+    return cell;
+
+}
+
 
 
 

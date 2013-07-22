@@ -198,6 +198,7 @@
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     UserInfo *friendAdded = [searchResults objectAtIndex:clickedButtonPath.row];
+    NSString *friendAddedName = userObject.user;
     NSString *friendObjectID = friendAdded.objectId;
     NSString *userID = userObject.objectId;
     
@@ -211,6 +212,21 @@
         //[friendAdded addObject:userObject forKey:@"receivedFriendRequests"];
         [friendAdded addObject:userObjectID forKey:@"receivedFriendRequests"];
         [friendAdded saveInBackground];
+        
+        NSDictionary *data = @{
+                               @"f": @"add" // Photo's object id
+                               };
+        
+        PFQuery *pushQuery = [PFInstallation query];
+        [pushQuery whereKey:@"user" equalTo:friendAddedName];
+        
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery];
+        [push setData:data];
+        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSLog(@"success!");
+        }];
+        
     }];
     
     

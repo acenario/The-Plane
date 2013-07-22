@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "UserInfo.h"
+#import "PlaneTabViewController.h"
 
 
 
@@ -66,6 +67,16 @@
         currentInstallation.badge = 0;
         [currentInstallation saveEventually];
     }
+    
+    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    NSString *friendOpen = [notificationPayload objectForKey:@"f"];
+    
+    if ([friendOpen isEqualToString:@"add"]) {
+        NSLog(@"hello");
+    
+    };
+
     
 //    PFQuery *pushQuery = [PFInstallation query];
 //    [pushQuery whereKey:@"deviceType" equalTo:@"ios"];

@@ -25,7 +25,8 @@
     NSString *displayName;
     NSString *theUsername;
     UIImage *defaultPic;
-    
+    NSString *tempUsername;
+    PFObject *meObject;
 }
 
 
@@ -41,6 +42,20 @@
         
     }
     return self;
+}
+
+- (NSString *)documentsDirectory
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
+- (NSString *)dataFilePath
+{
+    return [[self documentsDirectory] stringByAppendingPathComponent:
+            @"UserProfile.plist"];
+    
 }
 
 - (void)viewDidLoad
@@ -68,12 +83,26 @@
     
     self.tableView.backgroundView = av;
     
+    [self getUserInfo];
+    
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //self.tableView.backgroundColor = [UIColor alizarinColor];
 
     //self.tableView.separatorColor = [UIColor blackColor];
     
 	// Do any additional setup after loading the view.
+}
+
+-(void)getUserInfo {
+    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"friends"];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        meObject = object;
+        NSString *username = [object objectForKey:@"user"];
+        tempUsername = username;
+    }];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -145,6 +174,8 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -296,19 +327,48 @@
 
 }
 
-/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UserInfo *deleteReminder = [self.objects objectAtIndex:indexPath.row];
-    NSMutableArray *array = [[NSMutableArray alloc]initWithArray:self.objects];
-    [array removeObject:deleteReminder];
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:[self dataFilePath]];
+//    
+//    NSString *myObjectID = [dict objectForKey:@"objectID"];
+        
+    PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
+        
+        [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+
+                [self loadObjects];
+                NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
+                
+                PFQuery *pushQuery = [PFInstallation query];
+                [pushQuery whereKey:@"user" equalTo:deleteName];
+               
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery]; 
+                [push setMessage:message];
+                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    
+                }];
+                
+            }
+        }];
     
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     
-    [self loadObjects];
-}*/
+    
+    
+}
+
+-(void)registerUserID:(NSString *)objectID {
+    NSDictionary *userDict = [[NSDictionary alloc]init];
+    [userDict setValue:objectID forKey:@"objectID"];
+    [userDict writeToFile:[self dataFilePath] atomically:YES];
+
+}
+
+
 
 #pragma mark - LoginViewController Delegates
 
@@ -319,6 +379,8 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
+    NSString *username = user.username;
+    
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
     [currentInstallation saveInBackground];
@@ -327,11 +389,18 @@
     
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
-        /*[[NSNotificationCenter defaultCenter] postNotificationName:@"fCenterTabbarItemTapped" object:nil];*/
+    
+    PFQuery *objectIdQuery = [UserInfo query];
+    [objectIdQuery whereKey:@"user" equalTo:username];
+    [objectIdQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        [self registerUserID:[object objectId]];
+        [self loadObjects];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
     
     
-    [self loadObjects];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 }
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
@@ -371,6 +440,8 @@
         
         [object addObject:userFriendObject forKey:@"friends"];
         [object saveInBackground];
+        [self registerUserID:objectID];
+        
     }];
 }
 

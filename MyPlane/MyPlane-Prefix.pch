@@ -27,5 +27,5 @@
     #import "UITableViewCell+FlatUI.h"
     #import "UIImage+FlatUI.h"
     #import "UITableViewCell+FlatUI.h"
-
+    #import "SVProgressHUD.h"
 #endif
