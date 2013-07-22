@@ -379,7 +379,7 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
-    NSString *username = user.username;
+    //NSString *username = user.username;
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setObject:[PFUser currentUser].username forKey:@"user"];
@@ -390,15 +390,15 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
     
-    PFQuery *objectIdQuery = [UserInfo query];
+    /*PFQuery *objectIdQuery = [UserInfo query];
     [objectIdQuery whereKey:@"user" equalTo:username];
     [objectIdQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         [self registerUserID:[object objectId]];
         [self loadObjects];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+        
+    }];*/
     
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     
 }
@@ -440,7 +440,7 @@
         
         [object addObject:userFriendObject forKey:@"friends"];
         [object saveInBackground];
-        [self registerUserID:objectID];
+        //[self registerUserID:objectID];
         
     }];
 }
