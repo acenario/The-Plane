@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "UserInfo.h"
-#import "PlaneTabViewController.h"
-
+#import "RemindersViewController.h"
 
 
 @implementation AppDelegate
@@ -70,12 +69,18 @@
     
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     
-    NSString *friendOpen = [notificationPayload objectForKey:@"f"];
+    NSString *friendAdd = [notificationPayload objectForKey:@"f"];
+    NSString *reminderAdd = [notificationPayload objectForKey:@"r"];
     
-    if ([friendOpen isEqualToString:@"add"]) {
-        NSLog(@"hello");
+    if ([friendAdd isEqualToString:@"add"]) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
     
-    };
+    }
+    
+    if ([reminderAdd isEqualToString:@"n"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
+        
+    }
 
     
 //    PFQuery *pushQuery = [PFInstallation query];
@@ -99,10 +104,32 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     [currentInstallation saveInBackground];
 }
 
+
+
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
-
+    
+    
+    NSString *friendAdd = [userInfo objectForKey:@"f"];
+    NSString *reminderAdd = [userInfo objectForKey:@"r"];
+    
+    if ([friendAdd isEqualToString:@"add"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
+        
+        
+        NSLog(@"Friend Added! Time to Reload!");
+        
+    }
+    
+    if ([reminderAdd isEqualToString:@"n"]) {
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        if (currentInstallation.badge != 0) {
+            currentInstallation.badge = 0;
+            [currentInstallation saveEventually];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
+    }
 }
 
 

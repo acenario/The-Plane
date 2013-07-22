@@ -12,6 +12,7 @@
 #import "FriendsViewController.h"
 #import "SettingsViewController.h"
 #import "QuartzCore/CALayer.h"
+#import <QuartzCore/QuartzCore.h>
 #import "PlaneTabViewController.h"
 
 
@@ -66,6 +67,11 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"mpCenterTabbarItemTapped"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"reloadObjects"
+                                               object:nil];
+
     
     /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
     if (firstTime) {
@@ -127,6 +133,7 @@
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:nil];
     }
+    
     [self loadObjects];
 }
 
@@ -138,13 +145,17 @@
 
 - (void)receiveAddNotification:(NSNotification *) notification
 {
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
+    
     
     if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add notification for Reminders!");
         [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+    }
+    
+    else if ([[notification name] isEqualToString:@"reloadObjects"]) {
+        NSLog (@"Successfully received the reload notification!");
+        [self loadObjects];
+        //[SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
     }
 }
 
@@ -333,14 +344,26 @@
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:[self dataFilePath]];
 //    
 //    NSString *myObjectID = [dict objectForKey:@"objectID"];
-        
+    
+    
     PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
     NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
         
         [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
+                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                indexPaths = [NSArray arrayWithObject:indexPath];
+                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction begin];
+                
+                [CATransaction setCompletionBlock:^{
+                
+                    [self loadObjects];
 
-                [self loadObjects];
+                }];
+                
+                [CATransaction commit];
+                
                 NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
                 
                 PFQuery *pushQuery = [PFInstallation query];
@@ -350,7 +373,7 @@
                 [push setQuery:pushQuery]; 
                 [push setMessage:message];
                 [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    
+                    NSLog(@"Reminder Deleted!");
                 }];
                 
             }

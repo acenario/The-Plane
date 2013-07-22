@@ -198,7 +198,7 @@
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     UserInfo *friendAdded = [searchResults objectAtIndex:clickedButtonPath.row];
-    NSString *friendAddedName = userObject.user;
+    NSString *friendAddedName = friendAdded.user;
     NSString *friendObjectID = friendAdded.objectId;
     NSString *userID = userObject.objectId;
     
@@ -214,7 +214,7 @@
         [friendAdded saveInBackground];
         
         NSDictionary *data = @{
-                               @"f": @"add" // Photo's object id
+                               @"f": @"add"
                                };
         
         PFQuery *pushQuery = [PFInstallation query];

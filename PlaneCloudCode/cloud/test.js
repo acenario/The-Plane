@@ -22,8 +22,7 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                                       push_time: reminderDate,
                                       data: {
                                       alert: "New reminder: " + titleText + " " + "from: " + fromUserName,
-                                      badge: "Increment",
-                                      r: "n"
+                                      badge: "Increment"
                                       //reminder: titleText
                                       //sound: "cheering.caf",
     
@@ -38,3 +37,20 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                                       }
                                       });
                       });
+
+Parse.Cloud.define("getUserObject", function(request, response) {
+                   var query = new Parse.Query("UserInfo");
+                   query.equalTo("user", request.params.user);
+                   query.find({
+                              success: function(results) {
+                              var sum = 0;
+                              for (var i = 0; i < results.length; ++i) {
+                              sum += results[i].get("stars");
+                              }
+                              response.success(sum / results.length);
+                              },
+                              error: function() {
+                              response.error("movie lookup failed");
+                              }
+                              });
+                   });

@@ -7,6 +7,8 @@
 //
 
 #import "FriendsQueryViewController.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface FriendsQueryViewController ()
 
@@ -80,6 +82,11 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"reloadFriends"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"increaseFriend"
+                                               object:nil];
+    [self loadObjects];
 }
 
 - (void)receiveAddNotification:(NSNotification *) notification
@@ -95,6 +102,10 @@
     
     else if ([[notification name] isEqualToString:@"reloadFriends"]) {
         [self loadObjects];
+    }
+    
+    else if ([[notification name] isEqualToString:@"increaseFriend"]) {
+        [self checkFriendRequests];
     }
 }
 
@@ -144,7 +155,7 @@
         NSArray *array = [object objectForKey:@"receivedFriendRequests"];
         int count = array.count;
         NSLog(@"count: %d", count);
-        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", count];
+        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d Pending", count];
     }];
 }
 
@@ -255,7 +266,19 @@
             
             [meObject removeObject:friendRemovedData forKey:@"friends"];
             [meObject saveInBackground];
-            [self loadObjects];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            indexPaths = [NSArray arrayWithObject:indexPath];
+            
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction begin];
+            
+            [CATransaction setCompletionBlock:^{
+                [self loadObjects];
+                
+                
+            }];
+            
+            [CATransaction commit];
         }];
         
         
@@ -301,7 +324,10 @@
 
 - (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller
 {
+    NSLog(@"is this even being called?");
     [self loadObjects];
+    [self checkFriendRequests];
+    
 }
 
 
