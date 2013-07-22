@@ -64,6 +64,7 @@
         static NSString *identifier = @"PostCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         UserInfo *userObject = (UserInfo *)self.socialPost.user;
+        
         UILabel *name = (UILabel *)[cell viewWithTag:5201];
         UILabel *text = (UILabel *)[cell viewWithTag:5202];
         UILabel *circle = (UILabel *)[cell viewWithTag:5203];
@@ -95,13 +96,25 @@
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         Comments *comment = [comments objectAtIndex:indexPath.row - 1];
-        UserInfo *commentUser = (UserInfo *)comment.user;
+        __block UserInfo *commentUser;
+        __block NSString *commentTextReceived;
+        [comment fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            commentUser = (UserInfo *)[object objectForKey:@"user"];
+            commentTextReceived = [object objectForKey:@"text"];
+        }];
+        //UserInfo *commentUser = (UserInfo *)comment.user;
+        
+        __block PFFile *profilePic;
+        [commentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            profilePic = [object objectForKey:@"profilePicture"];
+        }];
         
         UILabel *commentText = (UILabel *)[cell viewWithTag:5204];
         PFImageView *commentUserImage = (PFImageView *)[cell viewWithTag:5212];
         
-        commentUserImage.file = commentUser.profilePicture;
-        commentText.text = [comment objectForKey:@"text"];
+        //commentUserImage.file = commentUser.profilePicture;
+        commentUserImage.file = profilePic;
+        commentText.text = commentTextReceived;
         
         [commentUserImage loadInBackground];
         
@@ -148,7 +161,7 @@
     
     [comment setObject:currentUserObject forKey:@"user"];
     [comment setObject:self.commentTextField.text forKey:@"text"];
-    NSLog(@"%@", comment);
+
     [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         self.commentTextField.text = @"";
         self.addCommentButton.enabled = NO;
@@ -157,6 +170,8 @@
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //            NSLog(@"%@", self.socialPost);
             [self.delegate socialPostDetailRefreshData:self];
+            [self.tableView reloadData];
+            
         }];
     }];
 }
