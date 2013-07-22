@@ -51,6 +51,19 @@
                                     <segue destination="uEl-Cd-yjj" kind="modal" id="2Nc-IQ-ce4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0U-a9-gjw">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="eKf-2l-wEH" kind="modal" id="kBC-P7-2na"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -59,8 +72,10 @@
                             <constraint firstAttribute="trailing" secondItem="21" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="QBg-X6-fBV"/>
                             <constraint firstAttribute="trailing" secondItem="20" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Qxj-1L-2Yh"/>
                             <constraint firstItem="20" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Ty9-wx-CyI"/>
+                            <constraint firstAttribute="bottom" secondItem="O0U-a9-gjw" secondAttribute="bottom" constant="134" id="UiA-wQ-0k8"/>
                             <constraint firstAttribute="trailing" secondItem="8lG-bH-8HE" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="WnN-Ih-x9b"/>
                             <constraint firstItem="21" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Zmm-k2-2L7"/>
+                            <constraint firstItem="O0U-a9-gjw" firstAttribute="centerX" secondItem="21" secondAttribute="centerX" type="default" id="hMI-th-6Bf"/>
                             <constraint firstItem="21" firstAttribute="top" secondItem="20" secondAttribute="bottom" constant="40" type="user" id="jX0-Wi-kmb"/>
                             <constraint firstAttribute="bottom" secondItem="8lG-bH-8HE" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="nHB-RZ-0t4"/>
                             <constraint firstAttribute="centerY" secondItem="21" secondAttribute="centerY" type="user" id="yWk-L2-m9F"/>
@@ -278,7 +293,7 @@
                                                         <constraint firstAttribute="width" constant="260" id="3IF-v7-Qui"/>
                                                         <constraint firstAttribute="height" constant="71" id="8TE-Fl-xLM"/>
                                                     </constraints>
-                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -353,24 +368,12 @@
                             </items>
                         </navigationBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CircleCell" textLabel="Ibf-6P-uFL" detailTextLabel="i1g-sp-uEU" style="IBUITableViewCellStyleSubtitle" id="LhM-Cv-JIM">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Frd-aE-OTq">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibf-6P-uFL">
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1g-sp-uEU">
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -380,8 +383,19 @@
                             <outlet property="delegate" destination="trJ-Du-JKx" id="OLx-40-89c"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="9mn-sb-fXX" id="zHc-d5-FGI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9G-Jg-yxl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="9mn-sb-fXX">
+                    <connections>
+                        <outlet property="delegate" destination="trJ-Du-JKx" id="asf-9I-8a1"/>
+                        <outlet property="searchContentsController" destination="trJ-Du-JKx" id="6cf-EK-eQj"/>
+                        <outlet property="searchResultsDataSource" destination="trJ-Du-JKx" id="hqS-PE-rrI"/>
+                        <outlet property="searchResultsDelegate" destination="trJ-Du-JKx" id="Uy9-bp-1jq"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2735" y="3774"/>
         </scene>
@@ -601,7 +615,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9L-Ru-aTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987" y="-775"/>
+            <point key="canvasLocation" x="1019" y="-2410"/>
         </scene>
         <!--Add Reminder View Controller-->
         <scene sceneID="up8-yj-gdL">
@@ -785,7 +799,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hB7-Ij-sHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="-1439"/>
+            <point key="canvasLocation" x="1568" y="-3074"/>
         </scene>
         <!--Friends For Reminders View Controller-->
         <scene sceneID="uAW-jN-2Bz">
@@ -858,7 +872,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvo-Hy-YSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2100" y="-2143"/>
+            <point key="canvasLocation" x="2132" y="-3778"/>
         </scene>
         <!--Reminder Disclosure View Controller - Reminder-->
         <scene sceneID="M0A-GH-NFN">
@@ -1080,7 +1094,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hjo-Ly-1zc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="-770"/>
+            <point key="canvasLocation" x="2118" y="-2405"/>
         </scene>
         <!--Reminder Date View Controller-->
         <scene sceneID="bia-1d-A81">
@@ -1179,7 +1193,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="2086" y="-1439"/>
+            <point key="canvasLocation" x="2118" y="-3074"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fPh-z2-2De">
@@ -1194,9 +1208,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SaJ-2b-zjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="188"/>
+            <point key="canvasLocation" x="815" y="-1447"/>
         </scene>
-        <!--Friends View Controller - My Friends-->
+        <!--Friends View Controller - Friends-->
         <scene sceneID="Aax-zz-de6">
             <objects>
                 <tableViewController id="bo1-BX-yHR" customClass="FriendsViewController" sceneMemberID="viewController">
@@ -1261,7 +1275,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="bo1-BX-yHR" id="ogz-nW-Obg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Friends" id="eWT-fZ-ESa">
+                    <navigationItem key="navigationItem" title="Friends" id="eWT-fZ-ESa">
                         <barButtonItem key="rightBarButtonItem" title="0" id="cCh-YL-9qv">
                             <connections>
                                 <segue destination="wuP-pG-1CI" kind="push" identifier="ReceivedFriendRequests" id="OZn-dI-azV"/>
@@ -1533,11 +1547,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-120" y="188"/>
+            <point key="canvasLocation" x="-208" y="1466"/>
         </scene>
         <!--Navigation Controller - Friends-->
         <scene sceneID="a5f-i5-uvZ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-BT-o7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="SWZ-Sp-Rbs" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="300" title="Friends" image="112-group.png" id="0hq-ER-Kf7"/>
                     <toolbarItems/>
@@ -1550,9 +1565,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <segue destination="bo1-BX-yHR" kind="relationship" relationship="rootViewController" id="yUg-mG-kE9"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-BT-o7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="1466"/>
+            <point key="canvasLocation" x="777" y="1466"/>
         </scene>
         <!--My Sent Reminders View Controller - My Sent Reminders-->
         <scene sceneID="fIW-oB-RvU">
@@ -1603,7 +1617,159 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-YH-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2092" y="612"/>
+            <point key="canvasLocation" x="2124" y="-1023"/>
+        </scene>
+        <!--Circles View Controller-->
+        <scene sceneID="uxm-aL-qA8">
+            <objects>
+                <tableViewController id="eKf-2l-wEH" customClass="CirclesViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="kR9-v3-kcT">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="7dq-jP-8So">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem title="Circles" id="cDr-25-2el">
+                                    <barButtonItem key="rightBarButtonItem" systemItem="add" id="QO9-bR-sy0">
+                                        <connections>
+                                            <segue destination="dM7-iw-Vcg" kind="modal" id="CnY-qT-bIZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="FBB-Iv-96h" detailTextLabel="2q0-38-X6b" style="IBUITableViewCellStyleSubtitle" id="SG7-7W-ClU">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBB-Iv-96h">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2q0-38-X6b">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eKf-2l-wEH" id="MmG-kM-qXY"/>
+                            <outlet property="delegate" destination="eKf-2l-wEH" id="K38-lK-lxL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="aAK-p7-lT4">
+                        <nil key="title"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Lp-Vz-UVd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1263" y="5262"/>
+        </scene>
+        <!--Table View Controller - Add Circle-->
+        <scene sceneID="tSU-ZW-1K1">
+            <objects>
+                <tableViewController id="Gui-Wd-Ige" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sfY-YW-VQM">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="gXZ-Fg-W4n">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="r8J-0L-eZC">
+                                <rect key="frame" x="0.0" y="66" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="6111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKk-Vc-TY4" customClass="PFImageView">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="0fn-cg-oc7"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6101" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-Iq-OYw">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Z8A-B3-lee"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6102" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6j-kJ-PmD">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Qeb-Ra-6ce"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <button opaque="NO" tag="6131" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ab-AO-KCR">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="23" id="Z2T-Ue-hGX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <state key="normal">
+                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="AKk-Vc-TY4" firstAttribute="top" secondItem="r8J-0L-eZC" secondAttribute="top" type="default" id="0am-jr-D8N"/>
+                                    <constraint firstItem="AKk-Vc-TY4" firstAttribute="bottom" secondItem="r8J-0L-eZC" secondAttribute="bottom" type="default" id="2t7-vW-6RI"/>
+                                    <constraint firstItem="Mcq-Iq-OYw" firstAttribute="leading" secondItem="AKk-Vc-TY4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="AVB-KG-tVO"/>
+                                    <constraint firstAttribute="bottom" secondItem="t6j-kJ-PmD" secondAttribute="bottom" constant="8" id="Frh-1q-9SN"/>
+                                    <constraint firstItem="7ab-AO-KCR" firstAttribute="leading" secondItem="t6j-kJ-PmD" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="PGa-cf-G0b"/>
+                                    <constraint firstItem="AKk-Vc-TY4" firstAttribute="leading" secondItem="r8J-0L-eZC" secondAttribute="leading" type="default" id="Und-Ik-3DB"/>
+                                    <constraint firstItem="Mcq-Iq-OYw" firstAttribute="top" secondItem="r8J-0L-eZC" secondAttribute="top" constant="8" id="gF6-7d-Stg"/>
+                                    <constraint firstAttribute="trailing" secondItem="7ab-AO-KCR" secondAttribute="trailing" constant="20" type="default" id="lYy-a3-eD5"/>
+                                    <constraint firstItem="7ab-AO-KCR" firstAttribute="top" secondItem="r8J-0L-eZC" secondAttribute="top" constant="18" id="oZ4-hp-kfn"/>
+                                    <constraint firstItem="7ab-AO-KCR" firstAttribute="leading" secondItem="Mcq-Iq-OYw" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="uub-Da-KwM"/>
+                                    <constraint firstItem="t6j-kJ-PmD" firstAttribute="leading" secondItem="AKk-Vc-TY4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="yIT-4N-Ias"/>
+                                </constraints>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Gui-Wd-Ige" id="8r9-Ek-1oo"/>
+                            <outlet property="delegate" destination="Gui-Wd-Ige" id="ygf-si-Zmy"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Circle" id="2vS-6M-ZQD"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="yqv-hN-OWU" id="tJP-gS-0W4"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BdB-Tv-tJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="yqv-hN-OWU">
+                    <connections>
+                        <outlet property="delegate" destination="Gui-Wd-Ige" id="fAm-jc-UK7"/>
+                        <outlet property="searchContentsController" destination="Gui-Wd-Ige" id="U5H-lz-QUi"/>
+                        <outlet property="searchResultsDataSource" destination="Gui-Wd-Ige" id="gl5-av-ifN"/>
+                        <outlet property="searchResultsDelegate" destination="Gui-Wd-Ige" id="8WK-Dl-U0R"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="2271" y="5263"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dkf-Q1-1Pt">
@@ -2122,7 +2288,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kRU-tl-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2432" y="-76"/>
+            <point key="canvasLocation" x="2464" y="-1711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e1A-DB-s9i">
@@ -2140,7 +2306,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5g-ZW-OVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="-76"/>
+            <point key="canvasLocation" x="1568" y="-1711"/>
         </scene>
         <!--Navigation Controller - My Plane-->
         <scene sceneID="3rS-Fk-0Jo">
@@ -2159,7 +2325,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twc-lW-S48" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="533" y="-791"/>
+            <point key="canvasLocation" x="565" y="-2426"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xum-96-akH">
@@ -2177,7 +2343,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iju-LB-sl0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1541" y="642"/>
+            <point key="canvasLocation" x="1573" y="-993"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="W92-KV-xqV">
@@ -2195,7 +2361,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOP-53-CGv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1511" y="-775"/>
+            <point key="canvasLocation" x="1543" y="-2410"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5bQ-Vu-6wf">
@@ -2215,6 +2381,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="1271" y="3774"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Loo-2E-HoD">
+            <objects>
+                <navigationController id="dM7-iw-Vcg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S9u-qX-aja">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gui-Wd-Ige" kind="relationship" relationship="rootViewController" id="EVW-ev-ude"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AWT-5a-R1F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1745" y="5263"/>
+        </scene>
     </scenes>
     <resources>
         <image name="112-group.png" width="32" height="21"/>
@@ -2225,160 +2409,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="first" width="16" height="16"/>
         <image name="user-frame.png" width="154" height="117"/>
     </resources>
-    <classes>
-        <class className="AddFriendViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="adjustButtonState:"/>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="AddReminderViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddReminderViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="textValidation:"/>
-                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="username" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddSocialPostViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddSocialPostViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="circleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="postTextField" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="EditSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelButton:"/>
-                <relationship kind="action" name="doneButton:"/>
-                <relationship kind="action" name="imagePicker:"/>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordReEnter" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profilePictureSet" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="FUIButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FUIButton.h"/>
-        </class>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOut:"/>
-            </relationships>
-        </class>
-        <class className="FriendsForRemindersViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsForRemindersViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-            </relationships>
-        </class>
-        <class className="FriendsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
-        </class>
-        <class className="MySentRemindersViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MySentRemindersViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButton:"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PFImageView" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
-        </class>
-        <class className="PFQueryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
-        </class>
-        <class className="PickCircleViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PickCircleViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-            </relationships>
-        </class>
-        <class className="PlaneTabViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
-        </class>
-        <class className="ReceivedFriendRequestsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReceivedFriendRequestsViewController.h"/>
-        </class>
-        <class className="ReminderDateViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDateViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="dateAction:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="pickerView" candidateClass="UIDatePicker"/>
-            </relationships>
-        </class>
-        <class className="ReminderDisclosureViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDisclosureViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addComment:"/>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-            </relationships>
-        </class>
-        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="sentReminders" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="emailCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="infoCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="SocialPostDetailViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SocialPostDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addComment:"/>
-            </relationships>
-        </class>
-        <class className="SocialViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SocialViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addComment:"/>
-            </relationships>
-        </class>
-        <class className="firstTimeSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButton:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profilePictureSet" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

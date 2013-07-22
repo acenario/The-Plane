@@ -52,6 +52,8 @@
     
     self.tableView.backgroundView = av;
     
+//    self.segmentedControl.selectedSegmentIndex = 0;
+    
     [self queryForTable];
 	// Do any additional setup after loading the view.
 }
@@ -279,11 +281,25 @@
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
         controller.delegate = self;
     }
+//    } else if ([segue.identifier isEqualToString:@"Circles"]) {
+//        UINavigationController *nvc = (UINavigationController *)segue.destinationViewController;
+//        CirclesViewController *controller = (CirclesViewController *)nvc.topViewController;
+//        controller.delegate = self;
+//        controller.count = currentUserObject.receivedFriendRequests.count;
+//    }
 }
 
 - (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller
 {
     [self.tableView reloadData];
 }
+//
+//- (IBAction)segmentedSwitch:(id)sender {
+//    if ([sender selectedSegmentIndex] == 1) {
+//        [self performSegueWithIdentifier:@"Circles" sender:nil];
+//        self.segmentedControl.selectedSegmentIndex = 0;
+//    }
+//}
+
 
 @end

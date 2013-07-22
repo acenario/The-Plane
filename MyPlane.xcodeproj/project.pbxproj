@@ -18,6 +18,7 @@
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED2F483179441CB00708368 /* ReminderDisclosureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED2F482179441CB00708368 /* ReminderDisclosureViewController.m */; };
 		AED2F486179443DF00708368 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED2F485179443DF00708368 /* Comments.m */; };
+		AEF0ED99179B7AC100E6EC23 /* CirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */; };
 		DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */; };
 		DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */; };
 		DC2FEA001793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9FF1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m */; };
@@ -113,6 +114,8 @@
 		AED2F482179441CB00708368 /* ReminderDisclosureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDisclosureViewController.m; sourceTree = "<group>"; };
 		AED2F484179443DF00708368 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
 		AED2F485179443DF00708368 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
+		AEF0ED97179B7AC100E6EC23 /* CirclesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CirclesViewController.h; sourceTree = "<group>"; };
+		AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CirclesViewController.m; sourceTree = "<group>"; };
 		DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySentRemindersViewController.h; sourceTree = "<group>"; };
 		DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySentRemindersViewController.m; sourceTree = "<group>"; };
 		DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDateViewController.h; sourceTree = "<group>"; };
@@ -308,6 +311,15 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
+		AEF0ED96179B7AAA00E6EC23 /* Circles */ = {
+			isa = PBXGroup;
+			children = (
+				AEF0ED97179B7AC100E6EC23 /* CirclesViewController.h */,
+				AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */,
+			);
+			name = Circles;
+			sourceTree = "<group>";
+		};
 		DC38B1ED1793192600304619 /* LoginandSignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +437,7 @@
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
+				AEF0ED96179B7AAA00E6EC23 /* Circles */,
 				AE1581E817988E2200CDCC83 /* Social */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
@@ -596,6 +609,7 @@
 				AE1581EE179890F400CDCC83 /* Circles.m in Sources */,
 				AE1581F217997EA300CDCC83 /* SocialPostDetailViewController.m in Sources */,
 				AE1581F51799AF0100CDCC83 /* PickCircleViewController.m in Sources */,
+				AEF0ED99179B7AC100E6EC23 /* CirclesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

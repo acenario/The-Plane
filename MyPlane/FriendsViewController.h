@@ -7,10 +7,13 @@
 //
 
 #import "AddFriendViewController.h"
+//#import "CirclesViewController.h"
 #import "UserInfo.h"
 #import "ReceivedFriendRequestsViewController.h"
 
 
 @interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+//- (IBAction)segmentedSwitch:(id)sender;
 
 @end
