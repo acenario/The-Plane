@@ -12,4 +12,5 @@
 
 @interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 
+
 @end

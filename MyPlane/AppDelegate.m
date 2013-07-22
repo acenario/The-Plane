@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "UserInfo.h"
 #import "RemindersViewController.h"
-
+#import "FriendsQueryViewController.h"
 
 @implementation AppDelegate
 
@@ -74,6 +74,7 @@
     
     if ([friendAdd isEqualToString:@"add"]) {
          [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
+        
     
     }
     

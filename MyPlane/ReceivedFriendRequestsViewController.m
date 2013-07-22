@@ -7,6 +7,7 @@
 //
 
 #import "ReceivedFriendRequestsViewController.h"
+#import "FriendsQueryViewController.h"
 
 @interface ReceivedFriendRequestsViewController ()
 
@@ -185,6 +186,9 @@
         [friendAdded saveInBackground];
         [self.tableView reloadData];
         [self.delegate receivedFriendRequests:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
+        
+
     }];
     
     UIButton *addFriendButton = (UIButton *)sender;
@@ -192,5 +196,8 @@
     
     
 }
+
+
+
 
 @end

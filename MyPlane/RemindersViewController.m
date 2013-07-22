@@ -353,16 +353,25 @@
             if (succeeded) {
                 NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
                 indexPaths = [NSArray arrayWithObject:indexPath];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-                [CATransaction begin];
+                [self loadObjects];
+                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                
+                
+                /*[CATransaction begin];
+                
+                
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                [self.tableView endUpdates];
+                
                 
                 [CATransaction setCompletionBlock:^{
-                
+                    
                     [self loadObjects];
-
+                    
                 }];
                 
-                [CATransaction commit];
+                [CATransaction commit];*/
                 
                 NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
                 

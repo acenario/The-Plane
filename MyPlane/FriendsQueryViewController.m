@@ -49,6 +49,7 @@
                                                  name:@"fCenterTabbarItemTapped"
                                                object:nil];
     
+   
     //CUSTOMIZE
     self.tableView.rowHeight = 70;
     
@@ -71,6 +72,7 @@
     [query includeKey:@"friends"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         meObject = object;
+        NSLog(@"complete");
     }];
     
 }
@@ -86,6 +88,7 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"increaseFriend"
                                                object:nil];
+    
     [self loadObjects];
 }
 
@@ -259,28 +262,43 @@
     NSString *friendRemoveName = [friendRemoved objectForKey:@"user"];
     
     if (![friendRemoveName isEqualToString:username]) {
+        NSLog(@"friendRemove: %@", [friendRemoved objectForKey:@"user"]);
     
-        
         [friendRemoved removeObject:meObject forKey:@"friends"];
         [friendRemoved saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            
             
             [meObject removeObject:friendRemovedData forKey:@"friends"];
             [meObject saveInBackground];
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
             indexPaths = [NSArray arrayWithObject:indexPath];
+            [self loadObjects];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+
             
-            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction begin];
+            /*[CATransaction begin];
+            
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [self loadObjects];
+            [self.tableView endUpdates];
+            
+            //[self loadObjects];
             
             [CATransaction setCompletionBlock:^{
-                [self loadObjects];
                 
+                //[self loadObjects];
                 
             }];
             
-            [CATransaction commit];
+            [CATransaction commit];*/
+            
+            
+            //[self loadObjects];
+            
+            
         }];
-        
         
     } else {
         NSLog(@"CANT DELETE SELF!");
@@ -322,13 +340,15 @@
     }
 }
 
+
 - (void)receivedFriendRequests:(ReceivedFriendRequestsViewController *)controller
 {
     NSLog(@"is this even being called?");
-    [self loadObjects];
-    [self checkFriendRequests];
+    //[self loadObjects];
+    //[self checkFriendRequests];
     
 }
+
 
 
 
