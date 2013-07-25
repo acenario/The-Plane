@@ -614,7 +614,7 @@
                                             <action selector="cancel:" destination="M1V-vV-Liq" id="kQ5-nf-1lh"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem key="rightBarButtonItem" systemItem="done" id="hb7-aE-kcz">
+                                    <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="hb7-aE-kcz">
                                         <connections>
                                             <action selector="done:" destination="M1V-vV-Liq" id="wgM-ui-uxF"/>
                                         </connections>
@@ -910,7 +910,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <sections>
                             <tableViewSection id="3Tz-13-yUV">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="97" id="DfB-iv-xlR">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="97" id="DfB-iv-xlR">
                                         <rect key="frame" x="0.0" y="10" width="320" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -923,13 +923,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="height" constant="91" id="lJ3-NU-pQs"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="0kl-KD-IHn">
+                                                <imageView userInteractionEnabled="NO" tag="5000" contentMode="scaleToFill" image="Placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="0kl-KD-IHn">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="83" id="Dgk-yj-7Nz"/>
                                                         <constraint firstAttribute="width" constant="83" id="kKU-Fv-uRo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="0lG-wE-rSg">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5001" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="0lG-wE-rSg">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="176" id="PN8-Qh-nPE"/>
                                                         <constraint firstAttribute="height" constant="25" id="v8M-Kb-F5k"/>
@@ -937,14 +937,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="buk-6b-NAi">
+                                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="buk-6b-NAi">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="QI5-lg-XiH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="J4y-2M-NFX">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5003" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="J4y-2M-NFX">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="jBG-OB-me4"/>
                                                     </constraints>
@@ -958,14 +958,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <constraint firstItem="uic-Nv-a7H" firstAttribute="leading" secondItem="DfB-iv-xlR" secondAttribute="leading" constant="15" id="0Zg-5c-lex"/>
                                             <constraint firstItem="0kl-KD-IHn" firstAttribute="centerY" secondItem="uic-Nv-a7H" secondAttribute="centerY" type="default" id="13B-qn-jND"/>
                                             <constraint firstItem="0kl-KD-IHn" firstAttribute="centerX" secondItem="uic-Nv-a7H" secondAttribute="centerX" type="default" id="2KN-fn-Q6X"/>
-                                            <constraint firstItem="0kl-KD-IHn" firstAttribute="centerY" secondItem="buk-6b-NAi" secondAttribute="centerY" type="default" id="35j-mH-ggf"/>
-                                            <constraint firstItem="buk-6b-NAi" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="4Cz-l6-hYl"/>
+                                            <constraint firstItem="buk-6b-NAi" firstAttribute="trailing" secondItem="J4y-2M-NFX" secondAttribute="trailing" type="default" id="7Mh-vZ-uYp"/>
+                                            <constraint firstItem="buk-6b-NAi" firstAttribute="top" secondItem="J4y-2M-NFX" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="GG1-jS-J2g"/>
                                             <constraint firstItem="J4y-2M-NFX" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="H5p-nS-FOX"/>
-                                            <constraint firstItem="J4y-2M-NFX" firstAttribute="trailing" secondItem="buk-6b-NAi" secondAttribute="trailing" type="default" id="LRX-bW-CVb"/>
+                                            <constraint firstItem="J4y-2M-NFX" firstAttribute="trailing" secondItem="0lG-wE-rSg" secondAttribute="trailing" type="default" id="KeD-Qs-tsV"/>
                                             <constraint firstItem="uic-Nv-a7H" firstAttribute="top" secondItem="DfB-iv-xlR" secondAttribute="top" constant="3" id="OP4-DR-NdV"/>
-                                            <constraint firstAttribute="bottom" secondItem="J4y-2M-NFX" secondAttribute="bottom" constant="4" id="Rpm-we-TMX"/>
-                                            <constraint firstItem="buk-6b-NAi" firstAttribute="trailing" secondItem="0lG-wE-rSg" secondAttribute="trailing" type="default" id="WPy-jq-IMm"/>
                                             <constraint firstItem="0lG-wE-rSg" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="afE-wW-1Pb"/>
+                                            <constraint firstItem="buk-6b-NAi" firstAttribute="bottom" secondItem="0kl-KD-IHn" secondAttribute="bottom" type="default" id="eQr-W6-5bI"/>
+                                            <constraint firstItem="buk-6b-NAi" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="u1L-wq-Q04"/>
                                             <constraint firstItem="0lG-wE-rSg" firstAttribute="top" secondItem="DfB-iv-xlR" secondAttribute="top" constant="4" id="vGv-8P-ITf"/>
                                         </constraints>
                                     </tableViewCell>
@@ -973,7 +973,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             </tableViewSection>
                             <tableViewSection id="tfv-Hv-rPv">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Email" id="Ut3-Xd-VVo">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Email" id="Ut3-Xd-VVo">
                                         <rect key="frame" x="0.0" y="129" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -985,7 +985,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@example.com" placeholder="anamazingworld@comcast.net" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xKA-2s-3Bw">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5004" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@example.com" placeholder="anamazingworld@comcast.net" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xKA-2s-3Bw">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="211" id="dwK-zf-d3v"/>
                                                         <constraint firstAttribute="height" constant="21" id="obM-8X-StD"/>
@@ -1021,10 +1021,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="hF5-bi-qKu" id="tcR-jI-uaV"/>
-                        <outlet property="emailCell" destination="Ut3-Xd-VVo" id="STA-Yq-APJ"/>
                         <outlet property="emailField" destination="xKA-2s-3Bw" id="1oo-iw-SLB"/>
                         <outlet property="firstNameField" destination="0lG-wE-rSg" id="rQP-4w-4gK"/>
-                        <outlet property="infoCell" destination="DfB-iv-xlR" id="FBa-48-FLq"/>
                         <outlet property="lastNameField" destination="buk-6b-NAi" id="db8-7L-eqo"/>
                         <outlet property="profilePicture" destination="0kl-KD-IHn" id="u3a-OO-r71"/>
                         <outlet property="usernameField" destination="J4y-2M-NFX" id="MGV-fB-EEB"/>
@@ -1867,10 +1865,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="emailCell" candidateClass="UITableViewCell"/>
                 <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="infoCell" candidateClass="UITableViewCell"/>
                 <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
@@ -1880,6 +1876,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doneButton:"/>
+                <relationship kind="action" name="imagePicker:"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>

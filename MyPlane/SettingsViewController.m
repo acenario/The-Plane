@@ -121,8 +121,7 @@
 
 -(void)updateLabelsForObject:(PFObject *)object {
     PFUser *user = [PFUser currentUser];
-    self.firstNameField.text = [object objectForKey:@"firstName"];
-    self.lastNameField.text = [object objectForKey:@"lastName"];
+    self.firstNameField.text = [NSString stringWithFormat:@"%@ %@", [object objectForKey:@"firstName"], [object objectForKey:@"lastName"]];
     self.usernameField.text = [object objectForKey:@"user"];
     self.emailField.text = [user email];
     

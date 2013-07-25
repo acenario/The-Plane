@@ -75,6 +75,10 @@
         NSLog(@"complete");
     }];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -109,6 +109,10 @@
         tempUsername = username;
     }];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -155,7 +159,7 @@
     else if ([[notification name] isEqualToString:@"reloadObjects"]) {
         NSLog (@"Successfully received the reload notification!");
         [self loadObjects];
-        //[SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
+        [SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
     }
 }
 
@@ -166,11 +170,16 @@
     //PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
     //[photosFromCurrentUserQuery whereKeyExists:@"user"];
     
+    //NSString *username = [PFUser currentUser].username;
+    
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
+
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
+    //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
     
-                      
     
     [query orderByAscending:@"date"];
     
@@ -180,9 +189,10 @@
     }
     
     
-    
     return query;
 }
+
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -220,27 +230,26 @@
 }
 
 
-- (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
+- (void)checkDateforCell:(UITableViewCell *)cell withReminder:(PFObject *)reminder
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:original];
     
-    // Begin a new image that will be the new image with the rounded corners
-    // (here with the size of an UIImageView)
-    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
+    NSLog(@"reminder: %@ from: %@", [reminder objectForKey:@"title"], [reminder objectForKey:@"fromUser"]);
     
-    // Add a clip before drawing anything, in the shape of an rounded rect
-    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
-                                cornerRadius:cornerRadius] addClip];
-    // Draw your image
-    [original drawInRect:imageView.bounds];
+    [SVProgressHUD showWithStatus:@"Cleanup..."];
     
-    // Get the image, here setting the UIImageView image
-    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [SVProgressHUD dismiss];
+            [SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
+        } else {
+            NSLog(@"There was an error deleting an old reminder!");
+            [SVProgressHUD dismiss];
+        }
+        
+    }];
     
-    // Lets forget about that we were drawing
-    UIGraphicsEndImageContext();
     
-    return imageView.image;
+    
 }
 
 
@@ -252,7 +261,19 @@
 
     }
     
+    PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
+    
+    NSDate *currentDate = [NSDate date];
+    NSComparisonResult result;
+    
+    result = [currentDate compare:[object objectForKey:@"date"]];
+    
+    if (result == NSOrderedDescending) {
+        [self checkDateforCell:cell withReminder:reminder];
 
+    }
+    
+        
     
     
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
@@ -265,12 +286,10 @@
     detailText.text = [object objectForKey:@"fromUser"];
     
     
-    //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
     
     PFObject *fromFriend = [object objectForKey:@"fromFriend"];
     
     
-    //picImage.image = [UIImage imageNamed:@"buttonAdd"]; // placeholder image
     
     
     picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
@@ -355,23 +374,8 @@
                 indexPaths = [NSArray arrayWithObject:indexPath];
                 [self loadObjects];
                 [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
                 
-                
-                /*[CATransaction begin];
-                
-                
-                [self.tableView beginUpdates];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
-                [self.tableView endUpdates];
-                
-                
-                [CATransaction setCompletionBlock:^{
-                    
-                    [self loadObjects];
-                    
-                }];
-                
-                [CATransaction commit];*/
                 
                 NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
                 
