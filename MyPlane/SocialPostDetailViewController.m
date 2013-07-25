@@ -156,9 +156,11 @@
         [self.socialPost addObject:comment forKey:@"comments"];
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //            NSLog(@"%@", self.socialPost);
-            [self.delegate socialPostDetailRefreshData:self];
+//            [self.delegate socialPostDetailRefreshData:self];
         }];
     }];
 }
+
+
 
 @end

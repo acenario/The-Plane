@@ -85,20 +85,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    SocialPosts *postObject = [self.objects objectAtIndex:section];
-    NSArray *comments = postObject.comments;
+//    SocialPosts *postObject = [self.objects objectAtIndex:section];
+//    NSArray *comments = postObject.comments;
     
-    if (comments.count >= 3) {
-        return 6;
-    } else {
-        return comments.count + 3;
-    }
+//    if (comments.count >= 3) {
+//        return 6;
+//    } else {
+//        return comments.count + 3;
+//    }
+    
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
-    NSArray *comments = object.comments;
+//    NSArray *comments = object.comments;
 
     if (indexPath.row == 0) {
         static NSString *identifier = @"PostCell";
@@ -116,58 +118,60 @@
         [ownerImage loadInBackground];
         
         return cell;
-    } if (indexPath.row == 1) {
+    } else {
         static NSString *identifier = @"ShowMoreCommentsCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         return cell;
-    } else if (((comments.count >= 3) && (indexPath.row == 5)) || ((comments.count < 3) && (indexPath.row == comments.count + 2))) {
-        static NSString *identifier = @"CommentPostCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        
-        UITextField *commentTextfield = (UITextField *)[cell viewWithTag:5141];
-        UIButton *addCommentButton = (UIButton *)[cell viewWithTag:5131];
-        
-        self.commentTextField = commentTextfield;
-        self.addCommentButton = addCommentButton;
-        
-        commentTextfield.delegate = self;
-        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
-        
-        return cell;
-    } else {
-        static NSString *identifier = @"CommentCell";
-        PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        
-        Comments *comment = [comments objectAtIndex:indexPath.row - 2];
-        UserInfo *commentUser = (UserInfo *)comment.user;
-        
-        UILabel *commentText = (UILabel *)[cell viewWithTag:5103];
-        PFImageView *commentUserImage = (PFImageView *)[cell viewWithTag:5112];
-        
-        commentUserImage.file = commentUser.profilePicture;
-        commentText.text = [comment objectForKey:@"text"];
-        
-        [commentUserImage loadInBackground];
-        
-        return cell;
     }
+//    } else if (((comments.count >= 3) && (indexPath.row == 5)) || ((comments.count < 3) && (indexPath.row == comments.count + 2))) {
+//        static NSString *identifier = @"CommentPostCell";
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//        
+//        UITextField *commentTextfield = (UITextField *)[cell viewWithTag:5141];
+//        UIButton *addCommentButton = (UIButton *)[cell viewWithTag:5131];
+//        
+//        self.commentTextField = commentTextfield;
+//        self.addCommentButton = addCommentButton;
+//        
+//        commentTextfield.delegate = self;
+//        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+//        
+//        return cell;
+//    } else {
+//        static NSString *identifier = @"CommentCell";
+//        PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//        
+//        Comments *comment = [comments objectAtIndex:indexPath.row - 2];
+//        UserInfo *commentUser = (UserInfo *)comment.user;
+//        
+//        UILabel *commentText = (UILabel *)[cell viewWithTag:5103];
+//        PFImageView *commentUserImage = (PFImageView *)[cell viewWithTag:5112];
+//        
+//        commentUserImage.file = commentUser.profilePicture;
+//        commentText.text = [comment objectForKey:@"text"];
+//        
+//        [commentUserImage loadInBackground];
+//        
+//        return cell;
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
-    NSArray *comments = object.comments;
+//    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
+//    NSArray *comments = object.comments;
     
     if (indexPath.row == 0) {
         return 90;
-    } if (indexPath.row == 1) {
-        return 33;
-    } else if (((comments.count >= 3) && (indexPath.row == 5)) || ((comments.count < 3) && (indexPath.row == comments.count + 2))) {
-        return 44;
     } else {
-        return 60;
+        return 33;
     }
+//    } else if (((comments.count >= 3) && (indexPath.row == 5)) || ((comments.count < 3) && (indexPath.row == comments.count + 2))) {
+//        return 44;
+//    } else {
+//        return 60;
+//    }
 }
 
 - (IBAction)checkTextField:(id)sender
@@ -233,12 +237,12 @@
     [self loadObjects];
 }
 
-- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller
-{
-    [self loadObjects];
-    controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
-    NSLog(@"%@", controller.socialPost);
-//    [controller.tableView reloadData];
-}
+//- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller
+//{
+//    [self loadObjects];
+//    controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
+//    NSLog(@"%@", controller.socialPost);
+////    [controller.tableView reloadData];
+//}
 
 @end

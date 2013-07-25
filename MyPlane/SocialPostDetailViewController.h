@@ -15,7 +15,7 @@
 
 @protocol SocialPostDetailViewControllerDelegate <NSObject>
 
-- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller;
+//- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller;
 
 @end
 

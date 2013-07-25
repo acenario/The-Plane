@@ -11,6 +11,9 @@
 #import "Comments.h"
 #import "SocialPosts.h"
 #import "Circles.h"
+#import "JoinCircleViewController.h"
+#import "CircleRequestsViewController.h"
+#import "CircleDetailViewController.h"
 
 @class CirclesViewController;
 
@@ -18,9 +21,10 @@
 
 @end
 
-@interface CirclesViewController : PFQueryTableViewController
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate>
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
+
 //@property NSInteger count;
 //- (IBAction)segmentedSwitch:(id)sender;
 

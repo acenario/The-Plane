@@ -47,27 +47,27 @@
 - (void)datePicker
 {
 	self.pickerView.date = [self.dateFormatter dateFromString:self.dateDetail.text];
-	self.pickerView.minimumDate = [NSDate date];
+	
     
-        CGRect startFrame = self.pickerView.frame;
-        CGRect endFrame = self.pickerView.frame;
-        
-        // the start position is below the bottom of the visible frame
-        startFrame.origin.y = self.view.frame.size.height;
-        
-        // the end position is slid up by the height of the view
-        endFrame.origin.y = startFrame.origin.y - endFrame.size.height;
-        
-        self.pickerView.frame = startFrame;
-        
-        [self.view addSubview:self.pickerView];
-        
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:kPickerAnimationDuration];
-        self.pickerView.frame = endFrame;
-        [UIView commitAnimations];
-        
-        // add the "Done" button to the nav bar
+    CGRect startFrame = self.pickerView.frame;
+    CGRect endFrame = self.pickerView.frame;
+    
+    // the start position is below the bottom of the visible frame
+    startFrame.origin.y = self.view.frame.size.height;
+    
+    // the end position is slid up by the height of the view
+    endFrame.origin.y = startFrame.origin.y - endFrame.size.height;
+    
+    self.pickerView.frame = startFrame;
+    
+    [self.view addSubview:self.pickerView];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:kPickerAnimationDuration];
+    self.pickerView.frame = endFrame;
+    [UIView commitAnimations];
+    
+    // add the "Done" button to the nav bar
     
 }
 
@@ -78,7 +78,7 @@
     self.dateDetail.text = [self.dateFormatter stringFromDate:self.pickerView.date];
     self.dateIvar = [self.dateFormatter dateFromString:self.dateDetail.text];
     self.doneButton.enabled = YES;
-
+    
 }
 
 - (void)slideDownDidStop

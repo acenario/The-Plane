@@ -63,6 +63,12 @@
     [post setObject:userObject forKey:@"user"];
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        Circles *newCircle = [Circles objectWithoutDataWithObjectId:circleObject.objectId];
+        [newCircle addObject:post forKey:@"posts"];
+        [newCircle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            nil;
+        }];
+        [self.delegate addSocialDidFinishAdding:self];
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }
@@ -82,7 +88,7 @@
 
 - (void)pickCircleViewController:(PickCircleViewController *)controller didSelectCircle:(Circles *)circle
 {
-    self.circleLabel.text = circle.name;
+    self.circleLabel.text = circle.searchName;
     circleObject = circle;
 }
 

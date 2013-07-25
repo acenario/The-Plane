@@ -15,9 +15,13 @@
 }
 
 @dynamic user;
+@dynamic searchName;
 @dynamic name;
 @dynamic members;
+@dynamic pendingMembers;
 @dynamic posts;
 @dynamic owner;
+@dynamic reminders;
+@dynamic public;
 
 @end

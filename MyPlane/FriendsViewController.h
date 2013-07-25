@@ -13,7 +13,6 @@
 
 
 @interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 //- (IBAction)segmentedSwitch:(id)sender;
 
 @end

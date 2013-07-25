@@ -20,10 +20,6 @@
 @dynamic sentFriendRequests;
 @dynamic receivedFriendRequests;
 @dynamic profilePicture;
-
-- (UIImage *)pffileToUIImage:(PFFile *)file
-{
-    return nil;
-}
+@dynamic circleRequests;
 
 @end

@@ -12,9 +12,13 @@
 + (NSString *)parseClassName;
 
 @property (retain) NSString *user;
+@property (retain) NSString *searchName;
 @property (retain) NSString *name;
 @property (retain) PFObject *owner;
 @property (retain) NSArray *members;
-@property (readonly) NSArray *posts;
+@property (retain) NSArray *pendingMembers;
+@property (retain) NSArray *posts;
+@property (retain) NSArray *reminders;
+@property BOOL public;
 
 @end

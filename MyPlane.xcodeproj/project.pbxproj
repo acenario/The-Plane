@@ -15,9 +15,16 @@
 		AE1581F51799AF0100CDCC83 /* PickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1581F41799AF0100CDCC83 /* PickCircleViewController.m */; };
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
+		AE6AEC1917A1C277003225E0 /* CircleMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6AEC1817A1C276003225E0 /* CircleMembersViewController.m */; };
+		AE6AEC1C17A1C5F9003225E0 /* CirclePostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6AEC1B17A1C5F8003225E0 /* CirclePostsViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED2F483179441CB00708368 /* ReminderDisclosureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED2F482179441CB00708368 /* ReminderDisclosureViewController.m */; };
 		AED2F486179443DF00708368 /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED2F485179443DF00708368 /* Comments.m */; };
+		AEDA350D179DEECD003DCC94 /* JoinCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDA350C179DEECD003DCC94 /* JoinCircleViewController.m */; };
+		AEDA3510179E1288003DCC94 /* CreateCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDA350F179E1288003DCC94 /* CreateCircleViewController.m */; };
+		AEDA3513179EDB0C003DCC94 /* InviteMembersToCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDA3512179EDB0C003DCC94 /* InviteMembersToCircleViewController.m */; };
+		AEDA3517179F3C76003DCC94 /* CircleRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDA3516179F3C76003DCC94 /* CircleRequestsViewController.m */; };
+		AEDA351A179F4E18003DCC94 /* CircleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDA3519179F4E17003DCC94 /* CircleDetailViewController.m */; };
 		AEF0ED99179B7AC100E6EC23 /* CirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */; };
 		DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */; };
 		DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */; };
@@ -108,12 +115,27 @@
 		AE46DEA5178B73390080CB0A /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
 		AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewController.m; sourceTree = "<group>"; };
+		AE6AEC1717A1C276003225E0 /* CircleMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleMembersViewController.h; sourceTree = "<group>"; };
+		AE6AEC1817A1C276003225E0 /* CircleMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleMembersViewController.m; sourceTree = "<group>"; };
+		AE6AEC1A17A1C5F8003225E0 /* CirclePostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CirclePostsViewController.h; sourceTree = "<group>"; };
+		AE6AEC1B17A1C5F8003225E0 /* CirclePostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CirclePostsViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
 		AED2F481179441CB00708368 /* ReminderDisclosureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDisclosureViewController.h; sourceTree = "<group>"; };
 		AED2F482179441CB00708368 /* ReminderDisclosureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDisclosureViewController.m; sourceTree = "<group>"; };
 		AED2F484179443DF00708368 /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
 		AED2F485179443DF00708368 /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
+		AEDA350B179DEECD003DCC94 /* JoinCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinCircleViewController.h; sourceTree = "<group>"; };
+		AEDA350C179DEECD003DCC94 /* JoinCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinCircleViewController.m; sourceTree = "<group>"; };
+		AEDA350E179E1288003DCC94 /* CreateCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCircleViewController.h; sourceTree = "<group>"; };
+		AEDA350F179E1288003DCC94 /* CreateCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCircleViewController.m; sourceTree = "<group>"; };
+		AEDA3511179EDB0C003DCC94 /* InviteMembersToCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteMembersToCircleViewController.h; sourceTree = "<group>"; };
+		AEDA3512179EDB0C003DCC94 /* InviteMembersToCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteMembersToCircleViewController.m; sourceTree = "<group>"; };
+		AEDA3514179EDD3A003DCC94 /* SubclassHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubclassHeader.h; sourceTree = "<group>"; };
+		AEDA3515179F3C76003DCC94 /* CircleRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleRequestsViewController.h; sourceTree = "<group>"; };
+		AEDA3516179F3C76003DCC94 /* CircleRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleRequestsViewController.m; sourceTree = "<group>"; };
+		AEDA3518179F4E17003DCC94 /* CircleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleDetailViewController.h; sourceTree = "<group>"; };
+		AEDA3519179F4E17003DCC94 /* CircleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleDetailViewController.m; sourceTree = "<group>"; };
 		AEF0ED97179B7AC100E6EC23 /* CirclesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CirclesViewController.h; sourceTree = "<group>"; };
 		AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CirclesViewController.m; sourceTree = "<group>"; };
 		DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySentRemindersViewController.h; sourceTree = "<group>"; };
@@ -275,6 +297,7 @@
 				AE1581E617988D2300CDCC83 /* SocialPosts.m */,
 				AE1581EC179890F400CDCC83 /* Circles.h */,
 				AE1581ED179890F400CDCC83 /* Circles.m */,
+				AEDA3514179EDD3A003DCC94 /* SubclassHeader.h */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -316,6 +339,20 @@
 			children = (
 				AEF0ED97179B7AC100E6EC23 /* CirclesViewController.h */,
 				AEF0ED98179B7AC100E6EC23 /* CirclesViewController.m */,
+				AEDA350B179DEECD003DCC94 /* JoinCircleViewController.h */,
+				AEDA350C179DEECD003DCC94 /* JoinCircleViewController.m */,
+				AEDA350E179E1288003DCC94 /* CreateCircleViewController.h */,
+				AEDA350F179E1288003DCC94 /* CreateCircleViewController.m */,
+				AEDA3511179EDB0C003DCC94 /* InviteMembersToCircleViewController.h */,
+				AEDA3512179EDB0C003DCC94 /* InviteMembersToCircleViewController.m */,
+				AEDA3515179F3C76003DCC94 /* CircleRequestsViewController.h */,
+				AEDA3516179F3C76003DCC94 /* CircleRequestsViewController.m */,
+				AEDA3518179F4E17003DCC94 /* CircleDetailViewController.h */,
+				AEDA3519179F4E17003DCC94 /* CircleDetailViewController.m */,
+				AE6AEC1717A1C276003225E0 /* CircleMembersViewController.h */,
+				AE6AEC1817A1C276003225E0 /* CircleMembersViewController.m */,
+				AE6AEC1A17A1C5F8003225E0 /* CirclePostsViewController.h */,
+				AE6AEC1B17A1C5F8003225E0 /* CirclePostsViewController.m */,
 			);
 			name = Circles;
 			sourceTree = "<group>";
@@ -610,6 +647,13 @@
 				AE1581F217997EA300CDCC83 /* SocialPostDetailViewController.m in Sources */,
 				AE1581F51799AF0100CDCC83 /* PickCircleViewController.m in Sources */,
 				AEF0ED99179B7AC100E6EC23 /* CirclesViewController.m in Sources */,
+				AEDA350D179DEECD003DCC94 /* JoinCircleViewController.m in Sources */,
+				AEDA3510179E1288003DCC94 /* CreateCircleViewController.m in Sources */,
+				AEDA3513179EDB0C003DCC94 /* InviteMembersToCircleViewController.m in Sources */,
+				AEDA3517179F3C76003DCC94 /* CircleRequestsViewController.m in Sources */,
+				AEDA351A179F4E18003DCC94 /* CircleDetailViewController.m in Sources */,
+				AE6AEC1917A1C277003225E0 /* CircleMembersViewController.m in Sources */,
+				AE6AEC1C17A1C5F9003225E0 /* CirclePostsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
