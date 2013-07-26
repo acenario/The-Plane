@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import "ReminderObjectViewController.h"
-#import "UserInfo.h"
+#import "SubclassHeader.h"
 
 @class ReminderDisclosureViewController;
 
@@ -15,21 +14,15 @@
 
 @end
 
-
-@interface ReminderDisclosureViewController : UITableViewController <ReminderObjectViewController>
+@interface ReminderDisclosureViewController : PFQueryTableViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) PFObject *reminderObject;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
+- (IBAction)addComment:(id)sender;
 
-//SOMETHING NEED - CONNECTIONS
 
-//@property (strong, nonatomic) NSString *userName;
-//@property (strong, nonatomic) NSString *userUsername;
-//@property (strong, nonatomic) NSString *taskText;
-//@property (strong, nonatomic) NSString *descriptionText;
-//@property (strong, nonatomic) UIImage *userUserImage;
 
 @end

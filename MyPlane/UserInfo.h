@@ -17,6 +17,7 @@
 @property (retain) NSArray *friends;
 @property (retain) NSArray *sentFriendRequests;
 @property (retain) NSArray *receivedFriendRequests;
+@property (retain) NSArray *circleRequests;
 @property (retain) PFFile *profilePicture;
 
 @end

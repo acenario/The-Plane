@@ -21,6 +21,7 @@
 
 -(IBAction)done:(id)sender;
 -(IBAction)cancel:(id)sender;
+- (IBAction)textValidation:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarItem;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;

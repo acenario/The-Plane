@@ -54,6 +54,7 @@
 {
     [super viewDidLoad];
     [self.searchBar becomeFirstResponder];
+    self.searchBar.delegate = self;
     UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
     [[UISearchBar appearance] setBackgroundColor:barColor];
     
@@ -162,13 +163,16 @@
     if (searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:2101];
         UILabel *username = (UILabel *)[cell viewWithTag:2102];
-        UIImageView *picImage = (UIImageView *)[cell viewWithTag:2111];
+        PFImageView *picImage = (PFImageView *)[cell viewWithTag:2111];
         UIButton *addButton = (UIButton *)[cell viewWithTag:2121];
         addButton.enabled = YES;
         
         UserInfo *searchedUser = [searchResults objectAtIndex:indexPath.row];
         name.text = [NSString stringWithFormat:@"%@ %@", searchedUser.firstName, searchedUser.lastName];
         username.text = searchedUser.user;
+        picImage.file = searchedUser.profilePicture;
+        
+        [picImage loadInBackground];
         
         if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId]) {
             addButton.enabled = NO;
@@ -176,15 +180,6 @@
         
         
         [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
-        
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-            PFFile *pictureFile = searchedUser.profilePicture;
-            UIImage *profilePic = [[UIImage alloc] initWithData:pictureFile.getData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                picImage.image = profilePic;
-            });
-        });
         
     }
     
