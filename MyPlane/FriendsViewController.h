@@ -14,3 +14,4 @@
 @interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 
 @end
+ 

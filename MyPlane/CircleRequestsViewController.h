@@ -22,3 +22,4 @@
 @property (nonatomic, weak) id <CircleRequestsViewControllerDelegate> delegate;
 
 @end
+ 

@@ -21,3 +21,4 @@
 
 @property (nonatomic, weak) id <RecievedFriendRequestsDelegate> delegate;
 @end
+ 

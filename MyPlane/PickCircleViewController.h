@@ -18,7 +18,7 @@
 - (void)pickCircleViewController:(PickCircleViewController *)controller didSelectCircle:(Circles *)circle;
 
 @end
-
+ 
 @interface PickCircleViewController : PFQueryTableViewController
 - (IBAction)cancel:(id)sender;
 @property (nonatomic, weak) id <PickCircleViewControllerDelegate> delegate;

@@ -25,7 +25,7 @@
     }
     return self;
 }
-
+ 
 - (PFQuery *)queryForTable
 {
     PFQuery *query = [Circles query];

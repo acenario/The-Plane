@@ -17,7 +17,7 @@
 @protocol AddSocialPostViewControllerDelegate <NSObject>
 
 - (void)addSocialDidFinishAdding:(AddSocialPostViewController *)controller;
-
+ 
 @end
 
 @interface AddSocialPostViewController : UITableViewController <PickCircleViewControllerDelegate>

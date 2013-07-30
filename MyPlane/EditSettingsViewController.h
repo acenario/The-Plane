@@ -27,7 +27,7 @@
 - (IBAction)imagePicker:(id)sender;
 
 @property (nonatomic, weak) id <EditSettingsViewControllerDelegate> delegate;
-
+ 
 @property (nonatomic, strong) NSString *firstname;
 @property (nonatomic, strong) NSString *lastname;
 @property (nonatomic, strong) NSString *email;

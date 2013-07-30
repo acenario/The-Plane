@@ -160,7 +160,7 @@
     
     return cell;
 }
-
+ 
 - (IBAction)adjustButtonState:(id)sender
 {
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];

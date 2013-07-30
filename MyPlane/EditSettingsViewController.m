@@ -26,7 +26,7 @@
 @implementation EditSettingsViewController {
     BOOL check;
 }
-
+ 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

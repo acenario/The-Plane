@@ -28,7 +28,7 @@
     }
     return self;
 }
-
+ 
 - (PFQuery *)queryForTable
 {
     userQuery = [UserInfo query];

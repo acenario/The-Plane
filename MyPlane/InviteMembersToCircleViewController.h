@@ -26,3 +26,4 @@
 @property (nonatomic, strong) NSMutableArray *invitedUsernames;
 
 @end
+ 

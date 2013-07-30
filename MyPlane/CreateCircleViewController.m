@@ -218,7 +218,7 @@
             [circle addObject:user forKey:@"pendingMembers"];
         }
     }
-    
+     
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         for (UserInfo *user in invitedMembers) {
 //            NSLog(@"%@", user.circleRequests);
