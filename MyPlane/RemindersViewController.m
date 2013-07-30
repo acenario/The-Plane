@@ -28,6 +28,7 @@
     UIImage *defaultPic;
     NSString *tempUsername;
     PFObject *meObject;
+    NSDateFormatter *dateFormatter;
 }
 
 
@@ -89,6 +90,10 @@
     
     self.tableView.backgroundView = av;
     
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     [self getUserInfo];
     
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -97,22 +102,6 @@
     //self.tableView.separatorColor = [UIColor blackColor];
     
 	// Do any additional setup after loading the view.
-}
-
--(void)getUserInfo {
-    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [query includeKey:@"friends"];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        meObject = object;
-        NSString *username = [object objectForKey:@"user"];
-        tempUsername = username;
-    }];
-    
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyNetworkElseCache;
-    }
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -147,22 +136,156 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)receiveAddNotification:(NSNotification *) notification
-{
+#pragma mark - Table View Methods
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
-        NSLog (@"Successfully received the add notification for Reminders!");
-        [self performSegueWithIdentifier:@"AddReminder" sender:nil];
-    }
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
     
-    else if ([[notification name] isEqualToString:@"reloadObjects"]) {
-        NSLog (@"Successfully received the reload notification!");
-        [self loadObjects];
-        [SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
-    }
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    
+    /*cell.textLabel.backgroundColor = [UIColor clearColor];
+     if ([cell respondsToSelector:@selector(detailTextLabel)])
+     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+     
+     //Guess some good text colors
+     cell.textLabel.textColor = selectedColor;
+     cell.textLabel.highlightedTextColor = color;
+     if ([cell respondsToSelector:@selector(detailTextLabel)]) {
+     cell.detailTextLabel.textColor = selectedColor;
+     cell.detailTextLabel.highlightedTextColor = color;
+     }*/
+    
+    return cell;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+    static NSString *identifier = @"Cell";
+    PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        
+    }
+    
+    PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
+    
+    NSDate *currentDate = [NSDate date];
+    NSComparisonResult result;
+    
+    result = [currentDate compare:[object objectForKey:@"date"]];
+    
+    if (result == NSOrderedDescending) {
+        [self checkDateforCell:cell withReminder:reminder];
+        
+    }
+    
+    
+    
+    
+    PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
+    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1003];
+    
+    
+    reminderText.text = [object objectForKey:@"title"];
+    detailText.text = [object objectForKey:@"fromUser"];
+    dateLabel.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
+    
+    
+    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
+    
+    picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
+    
+    [picImage loadInBackground];
+    
+    /*
+     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
+     
+     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+     dispatch_async(queue, ^{
+     for (PFObject *object in results) {
+     PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+     UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+     
+     dispatch_async(dispatch_get_main_queue(), ^{
+     
+     picImage.image = fromUserImage;
+     
+     });
+     }
+     
+     });
+     */
+    
+    
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:[self dataFilePath]];
+    //
+    //    NSString *myObjectID = [dict objectForKey:@"objectID"];
+    
+    
+    PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
+    
+    [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            indexPaths = [NSArray arrayWithObject:indexPath];
+            [self loadObjects];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
+            
+            
+            NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
+            
+            PFQuery *pushQuery = [PFInstallation query];
+            [pushQuery whereKey:@"user" equalTo:deleteName];
+            
+            PFPush *push = [[PFPush alloc] init];
+            [push setQuery:pushQuery];
+            [push setMessage:message];
+            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSLog(@"Reminder Deleted!");
+            }];
+            
+        }
+    }];
+    
+    
+    
+    
+}
+
+#pragma mark - Query Methods
 
 - (PFQuery *)queryForTable {
     
@@ -173,7 +296,7 @@
     //NSString *username = [PFUser currentUser].username;
     
     //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
-
+    
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
@@ -193,41 +316,41 @@
 }
 
 
-
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)getUserInfo {
+    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"friends"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        meObject = object;
+        NSString *username = [object objectForKey:@"user"];
+        tempUsername = username;
+    }];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    }
     
-    UIImageView *av = [[UIImageView alloc] init];
-    av.backgroundColor = [UIColor clearColor];
-    av.opaque = NO;
-    UIImage *background = [UIImage imageNamed:@"list-item"];
-    av.image = background;
-    
-    cell.backgroundView = av;
-    
-    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
-    
-    UIView *bgView = [[UIView alloc]init];
-    bgView.backgroundColor = selectedColor;
-    
-
-    [cell setSelectedBackgroundView:bgView];
-    
-    
-    /*cell.textLabel.backgroundColor = [UIColor clearColor];
-    if ([cell respondsToSelector:@selector(detailTextLabel)])
-        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    
-    //Guess some good text colors
-    cell.textLabel.textColor = selectedColor;
-    cell.textLabel.highlightedTextColor = color;
-    if ([cell respondsToSelector:@selector(detailTextLabel)]) {
-        cell.detailTextLabel.textColor = selectedColor;
-        cell.detailTextLabel.highlightedTextColor = color;
-    }*/
-    
-    return cell;
 }
+
+#pragma mark - Custom Methods
+
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    
+    
+    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
+        NSLog (@"Successfully received the add notification for Reminders!");
+        [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+    }
+    
+    else if ([[notification name] isEqualToString:@"reloadObjects"]) {
+        NSLog (@"Successfully received the reload notification!");
+        [self loadObjects];
+        [SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
+    }
+}
+
 
 
 - (void)checkDateforCell:(UITableViewCell *)cell withReminder:(PFObject *)reminder
@@ -247,91 +370,7 @@
         }
         
     }];
-    
-    
-    
 }
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
-    static NSString *identifier = @"Cell";
-    PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-
-    }
-    
-    PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
-    
-    NSDate *currentDate = [NSDate date];
-    NSComparisonResult result;
-    
-    result = [currentDate compare:[object objectForKey:@"date"]];
-    
-    if (result == NSOrderedDescending) {
-        [self checkDateforCell:cell withReminder:reminder];
-
-    }
-    
-        
-    
-    
-    PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
-    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
-    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
-    
-
-    
-    reminderText.text = [object objectForKey:@"title"];
-    detailText.text = [object objectForKey:@"fromUser"];
-    
-    
-    
-    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
-    
-    
-    
-    
-    picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
-    
-    
-    
-    [picImage loadInBackground];
-
-
-    
-   /*
-    NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-       dispatch_async(queue, ^{
-    for (PFObject *object in results) {
-        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        picImage.image = fromUserImage;
-            
-            });
-    }
-           
-    });
-    */
-    
-    
-    
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
-
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -357,45 +396,6 @@
 
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:[self dataFilePath]];
-//    
-//    NSString *myObjectID = [dict objectForKey:@"objectID"];
-    
-    
-    PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
-    NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
-        
-        [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-                indexPaths = [NSArray arrayWithObject:indexPath];
-                [self loadObjects];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
-                [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
-                
-                
-                NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
-                
-                PFQuery *pushQuery = [PFInstallation query];
-                [pushQuery whereKey:@"user" equalTo:deleteName];
-               
-                PFPush *push = [[PFPush alloc] init];
-                [push setQuery:pushQuery]; 
-                [push setMessage:message];
-                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    NSLog(@"Reminder Deleted!");
-                }];
-                
-            }
-        }];
-    
-    
-    
-    
-}
 
 -(void)registerUserID:(NSString *)objectID {
     NSDictionary *userDict = [[NSDictionary alloc]init];

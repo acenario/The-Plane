@@ -126,7 +126,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         
         
         NSLog(@"Friend Added! Time to Reload!");
-        
+         
     }
     
     if ([reminderAdd isEqualToString:@"n"]) {

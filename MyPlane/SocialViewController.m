@@ -21,6 +21,7 @@
     Circles *currentCircleObject;
     SocialPosts *currentSocialObject;
     PFQuery *userQuery;
+    NSDateFormatter *dateFormatter;
 //    PFQuery *postQuery;
 }
 
@@ -41,6 +42,10 @@
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
     }];
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
 }
 
@@ -108,6 +113,7 @@
         UserInfo *userObject = (UserInfo *)object.user;
         UILabel *name = (UILabel *)[cell viewWithTag:5101];
         UILabel *text = (UILabel *)[cell viewWithTag:5102];
+        UILabel *date = (UILabel *)[cell viewWithTag:1];
         UILabel *circle = (UILabel *)[cell viewWithTag:5104];
         PFImageView *ownerImage = (PFImageView *)[cell viewWithTag:5111];
         
@@ -115,6 +121,7 @@
         text.text = object.text;
         circle.text = [object.circle objectForKey:@"name"];
         ownerImage.file = userObject.profilePicture;
+        date.text = [dateFormatter stringFromDate:object.createdAt];
         [ownerImage loadInBackground];
         
         return cell;
@@ -156,7 +163,7 @@
 //        return cell;
 //    }
 }
-
+ 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
@@ -241,8 +248,7 @@
 //{
 //    [self loadObjects];
 //    controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
-//    NSLog(@"%@", controller.socialPost);
-////    [controller.tableView reloadData];
+//    NSLog(@"%@")
 //}
 
 @end

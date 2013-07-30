@@ -140,7 +140,7 @@
     //        return cell;
     //    }
 }
-
+ 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
@@ -161,7 +161,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     SocialPostDetailViewController *controller = [segue destinationViewController];
-    controller.delegate = self;
+//    controller.delegate = self;
     controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
 }
 

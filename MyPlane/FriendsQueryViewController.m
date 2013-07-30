@@ -334,12 +334,15 @@
     }*/
     
 }
-
+ 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"AddFriend"]) {
         UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
         AddFriendViewController *controller = (AddFriendViewController *)navController.topViewController;
+        controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"ReceivedFriendRequests"]){
+        ReceivedFriendRequestsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
     }
 }

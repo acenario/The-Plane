@@ -18,6 +18,9 @@
 @implementation ReminderDisclosureViewController {
     UserInfo *currentUserObject;
     CGPoint originalCenter;
+    NSDateFormatter *dateFormatter;
+    NSDateFormatter *dateFormatter2;
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,6 +53,14 @@
     
     originalCenter = CGPointMake(self.view.center.x, self.view.center.y);
     
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    
+    dateFormatter2 = [[NSDateFormatter alloc] init];
+    [dateFormatter2 setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatter2 setTimeStyle:NSDateFormatterShortStyle];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,10 +91,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (self.objects.count == 0) {
-        NSLog(@"Objects Count: %d", self.objects.count);
         return 3;
     } else{
-        NSLog(@"Objects Count: %d", self.objects.count);
         return 4;
     }
 }
@@ -91,7 +100,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 3;
+        return 4;
     } else if (section == 1) {
         return 1;
     }else if (section == 2) {
@@ -132,13 +141,19 @@
             cell.detailTextLabel.text = [self.reminderObject objectForKey:@"title"];
             return cell;
             
-        } else {
+        } else if (indexPath.row == 2) {
             static NSString *CellIdentifier = @"DescriptionCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
             cell.detailTextLabel.text = [self.reminderObject objectForKey:@"description"];
             return cell;
             
+        } else {
+            static NSString *CellIdentifier = @"DateCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            cell.detailTextLabel.text = [dateFormatter stringFromDate:[self.reminderObject objectForKey:@"date"]];
+            return cell;
         }
         
     } else if (indexPath.section == 1) {
@@ -147,24 +162,26 @@
         
         return cell;
     } else if (indexPath.section == 2) {
-        if (self.objects.count > 0) {
+        if (self.objects.count > 0) {    // This is the Comment Cell
             static NSString *CellIdentifier = @"Cell";
             PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
             UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
+            UILabel *date = (UILabel *)[cell viewWithTag:1];
             PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
             
             Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
-            
+             
             UserInfo *userObject = (UserInfo *)comment.user;
             nameLabel.text = userObject.firstName;
+            date.text = [dateFormatter2 stringFromDate:[self.reminderObject objectForKey:@"date"]];
             commentLabel.text = comment.text;
             userImage.file = userObject.profilePicture;
             
             [userImage loadInBackground];
             return cell;
-        } else {
+        } else { // This is the comment text input cell
             static NSString *CellIdentifier = @"CommentCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
@@ -179,7 +196,7 @@
             
             return cell;
         }
-    } else {
+    } else { // Same as above
         static NSString *CellIdentifier = @"CommentCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
@@ -211,6 +228,8 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 2) {
             return 90;
+        } else if (indexPath.row == 3) {
+            return 44;
         } else {
             return 60;
         }

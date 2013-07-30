@@ -19,6 +19,7 @@
     UserInfo *currentUserObject;
     SocialPosts *currentSocialObject;
     PFQuery *userQuery;
+    NSDateFormatter *dateFormatter;
     
 }
 
@@ -41,6 +42,10 @@
         currentUserObject = (UserInfo *)object;
     }];
     
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     NSLog(@"%@", self.socialPost);
 }
 
@@ -56,14 +61,16 @@
     
     return comments.count + 2;
 }
-
+ 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *comments = self.socialPost.comments;
+    
     if (indexPath.row == 0) {
         static NSString *identifier = @"PostCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         UserInfo *userObject = (UserInfo *)self.socialPost.user;
+        
         UILabel *name = (UILabel *)[cell viewWithTag:5201];
         UILabel *text = (UILabel *)[cell viewWithTag:5202];
         UILabel *circle = (UILabel *)[cell viewWithTag:5203];
@@ -87,7 +94,7 @@
         self.addCommentButton = addCommentButton;
         
         commentTextfield.delegate = self;
-        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+//        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
         
         return cell;
     } else {
@@ -95,13 +102,30 @@
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         Comments *comment = [comments objectAtIndex:indexPath.row - 1];
-        UserInfo *commentUser = (UserInfo *)comment.user;
+        __block UserInfo *commentUser;
+        __block NSString *commentTextReceived;
+        __block NSString *dateCreated;
+        [comment fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            commentUser = (UserInfo *)[object objectForKey:@"user"];
+            commentTextReceived = [object objectForKey:@"text"];
+            dateCreated = [dateFormatter stringFromDate:[object createdAt]];
+            NSLog(@"%@", dateCreated);
+        }];
+        //UserInfo *commentUser = (UserInfo *)comment.user;
+        
+        __block PFFile *profilePic;
+        [commentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            profilePic = [object objectForKey:@"profilePicture"];
+        }];
         
         UILabel *commentText = (UILabel *)[cell viewWithTag:5204];
+        UILabel *date = (UILabel *)[cell viewWithTag:1];
         PFImageView *commentUserImage = (PFImageView *)[cell viewWithTag:5212];
         
-        commentUserImage.file = commentUser.profilePicture;
-        commentText.text = [comment objectForKey:@"text"];
+        //commentUserImage.file = commentUser.profilePicture;
+        commentUserImage.file = profilePic;
+        commentText.text = commentTextReceived;
+        date.text = dateCreated;
         
         [commentUserImage loadInBackground];
         
@@ -125,9 +149,8 @@
 - (IBAction)checkTextField:(id)sender
 {
     UITextField *textField = (UITextField *)sender;
-    //NSLog(@"%@", textField.text);
-    NSString *textFieldText = [NSString stringWithFormat:@"%@", textField.text];
-    if (textFieldText.length > 0) {
+    
+    if (textField.text.length > 0) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
@@ -148,7 +171,7 @@
     
     [comment setObject:currentUserObject forKey:@"user"];
     [comment setObject:self.commentTextField.text forKey:@"text"];
-    NSLog(@"%@", comment);
+    
     [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         self.commentTextField.text = @"";
         self.addCommentButton.enabled = NO;
@@ -157,10 +180,9 @@
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //            NSLog(@"%@", self.socialPost);
 //            [self.delegate socialPostDetailRefreshData:self];
+//            [self.tableView reloadData];
         }];
     }];
 }
-
-
 
 @end

@@ -45,7 +45,7 @@
     [self currentUserQuery];
     
 }
-
+ 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -71,7 +71,7 @@
     circleQuery = [Circles query];
     [circleQuery whereKey:@"name" containsString:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
-//    [circleQuery includeKey:@"members"];
+    [circleQuery includeKey:@"members"];
     
     if (self.objects.count == 0) {
         circleQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -123,8 +123,14 @@
         
 //        NSLog(@"%@", searchedCircle.members);
         
-        if ([searchedCircle.members containsObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId]]) {
-            NSLog(@"YES");
+//        UserInfo *objID = [UserInfo objectWithoutDataWithObjectId:userObject.objectId];
+        NSMutableArray *mArray = [[NSMutableArray alloc] init];
+        for (UserInfo *user in searchedCircle.members) {
+            [mArray addObject:user.user];
+        }
+        
+        if (![mArray containsObject:userObject.user]) {
+            addButton.hidden = NO;
         }
         
         

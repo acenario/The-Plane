@@ -25,6 +25,7 @@
 //@property (nonatomic, strong) PFQuery *postQuery;
 @property (nonatomic, weak) id <SocialPostDetailViewControllerDelegate> delegate;
 - (IBAction)addComment:(id)sender;
+- (IBAction)checkTextField:(id)sender;
 
-
+ 
 @end

@@ -28,7 +28,7 @@
         // Custom initialization
     }
     return self;
-}
+} 
 
 - (void)getUserandSetObjects {
     PFQuery *queryUser = [PFQuery queryWithClassName:@"UserInfo"];

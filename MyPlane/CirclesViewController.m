@@ -63,7 +63,7 @@
 {
     return self.objects.count;
 }
-
+ 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     static NSString *identifier = @"Cell";
@@ -71,7 +71,7 @@
     
     Circles *circleObject = (Circles *)object;
     
-    cell.textLabel.text = circleObject.name;
+    cell.textLabel.text = circleObject.searchName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d member(s)", [circleObject.members count]];
     
     return cell;

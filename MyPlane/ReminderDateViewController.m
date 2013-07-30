@@ -32,7 +32,6 @@
     [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     self.pickerView.datePickerMode = UIDatePickerModeDateAndTime;
-    NSLog(@"### %@", self.displayDate);
     self.dateDetail.text = self.displayDate;
     
     [self datePicker];

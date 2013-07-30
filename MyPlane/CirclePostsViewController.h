@@ -16,10 +16,11 @@
 
 @end
 
-@interface CirclePostsViewController : PFQueryTableViewController <SocialPostDetailViewControllerDelegate>
+@interface CirclePostsViewController : PFQueryTableViewController
 
 @property (nonatomic, weak) id <CirclePostsViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) Circles *circle;
 
 @end
+ 

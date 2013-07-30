@@ -402,6 +402,8 @@
 		AEF4583117A1F69E00AFF8D6 /* Circle */ = {
 			isa = PBXGroup;
 			children = (
+				AEF4583A17A1F6DF00AFF8D6 /* CirclesViewController.h */,
+				AEF4583B17A1F6DF00AFF8D6 /* CirclesViewController.m */,
 				AEF4583217A1F6DF00AFF8D6 /* CircleDetailViewController.h */,
 				AEF4583317A1F6DF00AFF8D6 /* CircleDetailViewController.m */,
 				AEF4583417A1F6DF00AFF8D6 /* CircleMembersViewController.h */,
@@ -410,8 +412,6 @@
 				AEF4583717A1F6DF00AFF8D6 /* CirclePostsViewController.m */,
 				AEF4583817A1F6DF00AFF8D6 /* CircleRequestsViewController.h */,
 				AEF4583917A1F6DF00AFF8D6 /* CircleRequestsViewController.m */,
-				AEF4583A17A1F6DF00AFF8D6 /* CirclesViewController.h */,
-				AEF4583B17A1F6DF00AFF8D6 /* CirclesViewController.m */,
 				AEF4583C17A1F6DF00AFF8D6 /* CreateCircleViewController.h */,
 				AEF4583D17A1F6DF00AFF8D6 /* CreateCircleViewController.m */,
 				AEF4583E17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.h */,
@@ -575,10 +575,10 @@
 				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
 				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
+				DCE1FE62178910D60012478B /* FirstViewController.h */,
+				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
-				DC38B1ED1793192600304619 /* LoginandSignUp */,
-				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				AEF4583117A1F69E00AFF8D6 /* Circle */,
 				AEF4582417A1F62400AFF8D6 /* Social */,
 				DCE1FE63178910D60012478B /* FirstViewController.m */,

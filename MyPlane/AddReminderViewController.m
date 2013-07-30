@@ -15,6 +15,7 @@
 @implementation AddReminderViewController {
     NSString *nameOfUser;
     PFObject *recievedObjectID;
+    UserInfo *recipient;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
@@ -38,7 +39,11 @@
     [mainFormatter setDateStyle:NSDateFormatterShortStyle];
     [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    reminderDate = [[NSDate date] dateByAddingTimeInterval:300];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
+    [components setSecond:0];
+    
+    reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
     self.dateDetail.text = [mainFormatter stringFromDate:reminderDate];
     
     descriptionPlaceholderText = @"Enter more information about the reminder.";
@@ -68,14 +73,15 @@
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
     [reminder setObject:recievedObjectID forKey:@"fromFriend"];
+    [reminder setObject:recipient forKey:@"recipient"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
-    if (self.descriptionTextView.text != descriptionPlaceholderText) {
+    if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
         [reminder setObject:self.descriptionTextView.text forKey:@"description"];
     } else {
         [reminder setObject:@"No description available." forKey:@"description"];
     }
 
-    
+     
     [reminder saveEventually:^(BOOL succeeded, NSError *error) {
         [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
        
@@ -121,6 +127,7 @@
     self.userImage.image = image;
     recievedObjectID = objectID;
     friendCheck = YES;
+    recipient = [UserInfo objectWithoutDataWithObjectId:recievedObjectID.objectId];
     [self configureDoneButton];
 }
 

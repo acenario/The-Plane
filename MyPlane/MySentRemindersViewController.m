@@ -15,6 +15,7 @@
 @implementation MySentRemindersViewController {
     PFObject *selectedReminderObject;
     UIImage *userProfilePicture;
+    NSDateFormatter *dateFormatter;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,8 +30,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self getUserPicture];
+    //    [self getUserPicture];
 	// Do any additional setup after loading the view.
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,26 +46,27 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)getUserPicture {
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-        userProfilePicture = fromUserImage;
-        });
-        
-    }];
-    
-}
+//-(void)getUserPicture {
+//    PFQuery *query = [UserInfo query];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//        dispatch_async(queue, ^{
+//        PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+//        UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+//        userProfilePicture = fromUserImage;
+//        });
+//
+//    }];
+//
+//}
 
 - (PFQuery *)queryForTable {
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     [query whereKey:@"fromUser" equalTo:[PFUser currentUser].username];
     [query includeKey:@"fromFriend"];
+    [query includeKey:@"recipient"];
     
     [query orderByAscending:@"date"];
     
@@ -79,44 +85,47 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-    if (userProfilePicture != nil) {
-        NSLog(@"SUCESS!");
-        cell.imageView.image = userProfilePicture;
-        cell.textLabel.text = [object objectForKey:@"user"];
-        cell.detailTextLabel.text = [object objectForKey:@"title"];
-    } else {
-        //NSLog(@"FAIL!");
-    }
+    UserInfo *recipient = (UserInfo *)[object objectForKey:@"recipient"];
+    UILabel *title = (UILabel *)[cell viewWithTag:1];
+    UILabel *name = (UILabel *)[cell viewWithTag:2];
+    UILabel *date = (UILabel *)[cell viewWithTag:3];
+    PFImageView *image = (PFImageView *)[cell viewWithTag:11];
+    
+    image.file = recipient.profilePicture;
+    name.text = [object objectForKey:@"user"];
+    title.text = [object objectForKey:@"title"];
+    date.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
+    [image loadInBackground];
     
     
     
     /*UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
-    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
-    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
-    
-    reminderText.text = [object objectForKey:@"title"];
-    detailText.text = [object objectForKey:@"user"];
-    
-    
-    //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
-    
-    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
-    NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        for (PFObject *object in results) {
-            PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-            UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                picImage.image = fromUserImage;
-                
-            });
-        }
+     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
+     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
      
-    });*/
+     reminderText.text = [object objectForKey:@"title"];
+     detailText.text = [object objectForKey:@"user"];
+     
+     
+     //cell.imageView.image = [UIImage imageNamed:@"buttonAdd"];
+     
+     PFObject *fromFriend = [object objectForKey:@"fromFriend"];
+     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
+     
+     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+     dispatch_async(queue, ^{
+     for (PFObject *object in results) {
+     PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+     UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+     
+     dispatch_async(dispatch_get_main_queue(), ^{
+     
+     picImage.image = fromUserImage;
+     
+     });
+     }
+     
+     });*/
     
     return cell;
 }
@@ -137,7 +146,7 @@
         controller.reminderObject = sender;
     }
 }
-
+ 
 - (IBAction)doneButton:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
