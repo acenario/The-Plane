@@ -19,7 +19,7 @@
 
 @end
 
-@interface SocialPostDetailViewController : UITableViewController <UITextFieldDelegate>
+@interface SocialPostDetailViewController : PFQueryTableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) SocialPosts *socialPost;
 //@property (nonatomic, strong) PFQuery *postQuery;

@@ -35,6 +35,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"%@", self.objects);
+    
 	// Do any additional setup after loading the view.
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -46,7 +49,6 @@
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    NSLog(@"%@", self.socialPost);
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,18 +57,45 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (PFQuery *)queryForTable
+{
+    PFQuery *query = [SocialPosts query];
+    [query whereKey:@"objectId" equalTo:[self.socialPost objectId]];
+    
+    return query;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (self.socialPost.comments.count > 0) {
+        return 3;
+    } else {
+        return 2;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *comments = self.socialPost.comments;
-    
-    return comments.count + 2;
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+            
+        case 1:
+            return 1;
+            break;
+            
+        default:
+            return self.socialPost.comments.count;
+            break;
+    }
 }
- 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *comments = self.socialPost.comments;
     
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         static NSString *identifier = @"PostCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         UserInfo *userObject = (UserInfo *)self.socialPost.user;
@@ -83,7 +112,7 @@
         [ownerImage loadInBackground];
         
         return cell;
-    } else if ((((comments.count >= 3) && (indexPath.row == comments.count + 1)) || ((comments.count < 3) && (indexPath.row == comments.count + 1)))) {
+    } else if (indexPath.section == 1) {
         static NSString *identifier = @"CommentPostCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
@@ -94,14 +123,14 @@
         self.addCommentButton = addCommentButton;
         
         commentTextfield.delegate = self;
-//        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+        //        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
         
         return cell;
     } else {
         static NSString *identifier = @"CommentCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
-        Comments *comment = [comments objectAtIndex:indexPath.row - 1];
+        Comments *comment = [comments objectAtIndex:indexPath.row];
         __block UserInfo *commentUser;
         __block NSString *commentTextReceived;
         __block NSString *dateCreated;
@@ -134,15 +163,19 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray *comments = self.socialPost.comments;
-    
-    if (indexPath.row == 0) {
-        return 90;
-    } else if ((((comments.count >= 3) && (indexPath.row == comments.count + 1)) || ((comments.count < 3) && (indexPath.row == comments.count + 1)))) {
-        return 44;
-    } else {
-        return 60;
+{    
+    switch (indexPath.section) {
+        case 0:
+            return 90;
+            break;
+            
+        case 1:
+            return 44;
+            break;
+            
+        default:
+            return 60;
+            break;
     }
 }
 
@@ -178,9 +211,9 @@
         [self.commentTextField resignFirstResponder];
         [self.socialPost addObject:comment forKey:@"comments"];
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            NSLog(@"%@", self.socialPost);
-//            [self.delegate socialPostDetailRefreshData:self];
-//            [self.tableView reloadData];
+            //            NSLog(@"%@", self.socialPost);
+            //            [self.delegate socialPostDetailRefreshData:self];
+            //            [self.tableView reloadData];
         }];
     }];
 }

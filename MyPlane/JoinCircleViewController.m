@@ -71,7 +71,7 @@
     circleQuery = [Circles query];
     [circleQuery whereKey:@"name" containsString:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
-    [circleQuery includeKey:@"members"];
+//    [circleQuery includeKey:@"members"];
     
     if (self.objects.count == 0) {
         circleQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -110,26 +110,21 @@
     
     if (searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:6101];
-        UILabel *memebersLabel = (UILabel *)[cell viewWithTag:6102];
+        UILabel *membersLabel = (UILabel *)[cell viewWithTag:6102];
         UIButton *addButton = (UIButton *)[cell viewWithTag:6131];
         addButton.hidden = YES;
         
         Circles *searchedCircle = [searchResults objectAtIndex:indexPath.row];
         name.text = searchedCircle.searchName;
-        memebersLabel.text = [NSString stringWithFormat:@"%d members", searchedCircle.members.count];
+        membersLabel.text = [NSString stringWithFormat:@"%d members", searchedCircle.members.count];
         
+        NSMutableArray *objIds = [[NSMutableArray alloc] init];
         
-//        NSLog(@"%@", [UserInfo objectWithoutDataWithObjectId:userObject.objectId]);
-        
-//        NSLog(@"%@", searchedCircle.members);
-        
-//        UserInfo *objID = [UserInfo objectWithoutDataWithObjectId:userObject.objectId];
-        NSMutableArray *mArray = [[NSMutableArray alloc] init];
-        for (UserInfo *user in searchedCircle.members) {
-            [mArray addObject:user.user];
+        for (UserInfo *object in searchedCircle.members) {
+            [objIds addObject:[object objectId]];
         }
         
-        if (![mArray containsObject:userObject.user]) {
+        if (![objIds containsObject:userObject.objectId]) {
             addButton.hidden = NO;
         }
         

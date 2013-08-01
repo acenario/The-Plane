@@ -208,6 +208,8 @@
         [friendAdded addObject:userObjectID forKey:@"receivedFriendRequests"];
         [friendAdded saveInBackground];
         
+        [SVProgressHUD showSuccessWithStatus:@"Friend Request Sent"];
+        
         NSDictionary *data = @{
                                @"f": @"add"
                                };
