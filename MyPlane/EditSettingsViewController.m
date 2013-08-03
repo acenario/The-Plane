@@ -110,6 +110,7 @@
     PFUser *user = [PFUser currentUser];
     PFQuery *personQuery = [UserInfo query];
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    personQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
     
         

@@ -35,12 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSLog(@"%@", self.objects);
-    
+        
 	// Do any additional setup after loading the view.
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
     }];
@@ -59,8 +58,24 @@
 
 - (PFQuery *)queryForTable
 {
-    PFQuery *query = [SocialPosts query];
+    PFQuery *query = [PFQuery queryWithClassName:@"SocialPosts"];
     [query whereKey:@"objectId" equalTo:[self.socialPost objectId]];
+    [query includeKey:@"comments"];
+    
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
+//    PFQuery *commentsQuery = [SocialPosts query];
+//    [commentsQuery whereKey:@"comments" matchesQuery:query];
+//    
+//        
+//    
+//    if (self.objects.count == 0) {
+//        commentsQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    }
+    
+    
     
     return query;
 }
@@ -73,6 +88,7 @@
         return 2;
     }
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -89,10 +105,12 @@
             return self.socialPost.comments.count;
             break;
     }
+    
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+
     NSArray *comments = self.socialPost.comments;
     
     if (indexPath.section == 0) {
@@ -130,15 +148,17 @@
         static NSString *identifier = @"CommentCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
+                
         Comments *comment = [comments objectAtIndex:indexPath.row];
         __block UserInfo *commentUser;
         __block NSString *commentTextReceived;
         __block NSString *dateCreated;
+        
+        
         [comment fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             commentUser = (UserInfo *)[object objectForKey:@"user"];
             commentTextReceived = [object objectForKey:@"text"];
             dateCreated = [dateFormatter stringFromDate:[object createdAt]];
-            NSLog(@"%@", dateCreated);
         }];
         //UserInfo *commentUser = (UserInfo *)comment.user;
         
@@ -160,6 +180,7 @@
         
         return cell;
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

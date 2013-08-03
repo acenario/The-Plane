@@ -108,7 +108,7 @@
 -(void)getUserInfo {
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
+    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         
         [self updateLabelsForObject:object];
