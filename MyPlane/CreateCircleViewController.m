@@ -17,6 +17,7 @@
 
 @implementation CreateCircleViewController {
     BOOL public;
+    NSString *privacy;
     NSMutableArray *invitedMembers;
     NSMutableArray *invitedUsernames;
     NSString *circleName;
@@ -99,9 +100,14 @@
             static NSString *CellIdentifier = @"BoolCell";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
-            UISwitch *boolSwitch = (UISwitch *)[cell viewWithTag:6251];
+            UISegmentedControl *privacySegmentedController = (UISegmentedControl *)[cell viewWithTag:6251];
+            UIButton *infoButton = (UIButton *)[cell viewWithTag:6261];
             
-            [boolSwitch addTarget:self action:@selector(publicBoolSwitch:) forControlEvents:UIControlEventValueChanged];
+            privacySegmentedController.selectedSegmentIndex = 1;
+            privacy = [privacySegmentedController titleForSegmentAtIndex:1];
+            
+            [privacySegmentedController addTarget:self action:@selector(publicBoolSwitch:) forControlEvents:UIControlEventValueChanged];
+            [infoButton addTarget:self action:@selector(infoButton:) forControlEvents:UIControlEventTouchUpInside];
         }
         
     } else if (indexPath.section == 1){ // Invite Members (Segue) Cell
@@ -138,8 +144,56 @@
 #pragma mark - Other Methods
 
 - (void)publicBoolSwitch:(id)sender {
-    UISwitch *boolSwitch = (UISwitch *)sender;
-    public = boolSwitch.on;
+    UISegmentedControl *privacySegmentedControl = (UISegmentedControl *)sender;
+    
+    switch (privacySegmentedControl.selectedSegmentIndex) {
+        case 0:
+            public = NO;
+            break;
+        case 1:
+        case 2:
+            public = YES;
+            break;
+            
+        default:
+            break;
+    }
+    
+    privacy = [[privacySegmentedControl titleForSegmentAtIndex:privacySegmentedControl.selectedSegmentIndex] lowercaseString];
+}
+
+- (void)infoButton:(id)sender
+{
+    NSString *message;
+    if ([privacy isEqualToString:@"private"]) {
+        message = @"Private circles are not searchable. In order to join you must be invited by a current member. Private Circles are also managed by Administrators.";
+    } else if ([privacy isEqualToString:@"closed"]) {
+        message = @"Closed Circles are searchable. You can join by either requesting, or receiving an invite from a current member. Closed Circles are also managed by Administrators";
+    } else if ([privacy isEqualToString:@"open"]) {
+        message = @"Open Circles are searchable. You can join within the search menu, and can receive a request to join. Open Circles are not managed by any single entity.";
+    }
+    
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    
+    FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Privacy Description"
+                                                          message:message
+                                                          delegate:nil
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil];
+    
+    alertView.titleLabel.textColor = [UIColor cloudsColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+    alertView.messageLabel.textColor = [UIColor cloudsColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.alertContainer.backgroundColor = barColor;
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    
+    
+    [alertView show];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -211,6 +265,8 @@
     circle.user = [PFUser currentUser].username;
     circle.owner = currentUser;
     circle.public = public;
+    circle.privacy = privacy;
+    [circle addObject:[UserInfo objectWithoutDataWithObjectId:currentUser.objectId] forKey:@"admins"];
     [circle addObject:currentUser forKey:@"members"];
     
     if (invitedMembers.count > 0) {
@@ -218,10 +274,9 @@
             [circle addObject:user forKey:@"pendingMembers"];
         }
     }
-     
+    
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         for (UserInfo *user in invitedMembers) {
-//            NSLog(@"%@", user.circleRequests);
             [user addObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 nil;

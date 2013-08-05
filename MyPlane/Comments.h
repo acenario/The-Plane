@@ -14,5 +14,7 @@
 @property (retain) NSString *text;
 @property (retain) PFObject *reminder;
 @property (retain) PFObject *user;
+@property (retain) PFObject *post;
+
 
 @end

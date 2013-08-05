@@ -17,5 +17,6 @@
 @dynamic text;
 @dynamic reminder;
 @dynamic user;
+@dynamic post;
 
 @end

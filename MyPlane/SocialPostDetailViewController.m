@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
 	// Do any additional setup after loading the view.
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -58,35 +58,21 @@
 
 - (PFQuery *)queryForTable
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"SocialPosts"];
-    [query whereKey:@"objectId" equalTo:[self.socialPost objectId]];
-    [query includeKey:@"comments"];
+    PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
+    [query whereKey:@"post" equalTo:self.socialPost];
+    [query includeKey:@"user"];
+    [query orderByDescending:@"createdAt"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    
-//    PFQuery *commentsQuery = [SocialPosts query];
-//    [commentsQuery whereKey:@"comments" matchesQuery:query];
-//    
-//        
-//    
-//    if (self.objects.count == 0) {
-//        commentsQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-//    }
-    
-    
     
     return query;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.socialPost.comments.count > 0) {
-        return 3;
-    } else {
-        return 2;
-    }
+    return 3;
 }
 
 
@@ -102,17 +88,14 @@
             break;
             
         default:
-            return self.socialPost.comments.count;
+            return self.objects.count;
             break;
     }
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-
-    NSArray *comments = self.socialPost.comments;
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (indexPath.section == 0) {
         static NSString *identifier = @"PostCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -148,33 +131,35 @@
         static NSString *identifier = @"CommentCell";
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
-                
-        Comments *comment = [comments objectAtIndex:indexPath.row];
-        __block UserInfo *commentUser;
-        __block NSString *commentTextReceived;
-        __block NSString *dateCreated;
         
+        Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
         
-        [comment fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            commentUser = (UserInfo *)[object objectForKey:@"user"];
-            commentTextReceived = [object objectForKey:@"text"];
-            dateCreated = [dateFormatter stringFromDate:[object createdAt]];
-        }];
-        //UserInfo *commentUser = (UserInfo *)comment.user;
-        
-        __block PFFile *profilePic;
-        [commentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            profilePic = [object objectForKey:@"profilePicture"];
-        }];
+        //        __block UserInfo *commentUser;
+        //        __block NSString *commentTextReceived;
+        //        __block NSString *dateCreated;
+        //
+        //
+        //        [comment fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        //            commentUser = (UserInfo *)[object objectForKey:@"user"];
+        //            commentTextReceived = [object objectForKey:@"text"];
+        //            dateCreated = [dateFormatter stringFromDate:[object createdAt]];
+        //        }];
+        //        //UserInfo *commentUser = (UserInfo *)comment.user;
+        //
+        //        __block PFFile *profilePic;
+        //        [commentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        //            profilePic = [object objectForKey:@"profilePicture"];
+        //        }];
         
         UILabel *commentText = (UILabel *)[cell viewWithTag:5204];
         UILabel *date = (UILabel *)[cell viewWithTag:1];
         PFImageView *commentUserImage = (PFImageView *)[cell viewWithTag:5212];
         
         //commentUserImage.file = commentUser.profilePicture;
-        commentUserImage.file = profilePic;
-        commentText.text = commentTextReceived;
-        date.text = dateCreated;
+        
+        commentUserImage.file = [comment.user objectForKey:@"profilePicture"];
+        commentText.text = comment.text;
+        date.text = [dateFormatter stringFromDate:comment.createdAt];
         
         [commentUserImage loadInBackground];
         
@@ -184,7 +169,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     switch (indexPath.section) {
         case 0:
             return 90;
@@ -223,18 +208,19 @@
 - (IBAction)addComment:(id)sender {
     Comments *comment = [Comments object];
     
-    [comment setObject:currentUserObject forKey:@"user"];
-    [comment setObject:self.commentTextField.text forKey:@"text"];
+    [comment setUser:currentUserObject];
+    [comment setText:self.commentTextField.text];
+    [comment setPost:[SocialPosts objectWithoutDataWithObjectId:self.socialPost.objectId]];
     
     [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         self.commentTextField.text = @"";
         self.addCommentButton.enabled = NO;
         [self.commentTextField resignFirstResponder];
+        
+        [self loadObjects];
+        
         [self.socialPost addObject:comment forKey:@"comments"];
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            //            NSLog(@"%@", self.socialPost);
-            //            [self.delegate socialPostDetailRefreshData:self];
-            //            [self.tableView reloadData];
         }];
     }];
 }

@@ -34,9 +34,14 @@
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     
-    PFQuery *query = [Circles query];
-    [query whereKey:@"pendingMembers" matchesQuery:userQuery];
-    [query includeKey:@"owner"];
+    PFQuery *circleQuery = [Circles query];
+    [circleQuery whereKey:@"members" matchesQuery:userQuery];
+    [circleQuery includeKey:@"owner"];
+    
+    PFQuery *query = [Requests query];
+    [query whereKey:@"circle" matchesQuery:circleQuery];
+    [query includeKey:@"circle"];
+    [query includeKey:@"requester"];
     
     return query;
 }
@@ -71,8 +76,10 @@
     static NSString *CellIdentifier = @"Cell";
     PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    Circles *circle = (Circles *)object;
-    UserInfo *owner = (UserInfo *)circle.owner;
+    Requests *request = (Requests *)object;
+    
+    Circles *circle = (Circles *)request.circle;
+    UserInfo *owner = (UserInfo *)request.requester;
     
     UILabel *name = (UILabel *)[cell viewWithTag:6001];
     UILabel *creator = (UILabel *)[cell viewWithTag:6002];

@@ -18,7 +18,10 @@
 @property (retain) NSArray *members;
 @property (retain) NSArray *pendingMembers;
 @property (retain) NSArray *posts;
+@property (retain) NSString *privacy;
 @property (retain) NSArray *reminders;
+@property (retain) NSArray *requests;
+@property (retain) NSArray *admins;
 @property BOOL public;
 
 @end

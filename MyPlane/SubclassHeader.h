@@ -13,5 +13,6 @@
 #import "Comments.h"
 #import "SocialPosts.h"
 #import "Circles.h"
+#import "Requests.h"
 
 #endif

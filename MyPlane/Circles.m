@@ -23,5 +23,8 @@
 @dynamic owner;
 @dynamic reminders;
 @dynamic public;
+@dynamic requests;
+@dynamic privacy;
+@dynamic admins;
 
 @end

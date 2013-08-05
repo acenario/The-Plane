@@ -71,6 +71,7 @@
     circleQuery = [Circles query];
     [circleQuery whereKey:@"name" containsString:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
+    [circleQuery includeKey:@"requests"];
 //    [circleQuery includeKey:@"members"];
     
     if (self.objects.count == 0) {
@@ -119,17 +120,26 @@
         membersLabel.text = [NSString stringWithFormat:@"%d members", searchedCircle.members.count];
         
         NSMutableArray *objIds = [[NSMutableArray alloc] init];
+        NSMutableArray *names = [[NSMutableArray alloc ] init];
         
         for (UserInfo *object in searchedCircle.members) {
             [objIds addObject:[object objectId]];
         }
         
-        if (![objIds containsObject:userObject.objectId]) {
+        for (Requests *object in searchedCircle.requests) {
+            [names addObject:object.requesterUsername];
+        }
+        
+        if ((![objIds containsObject:userObject.objectId]) && (![names containsObject:userObject.user]) ) {
             addButton.hidden = NO;
         }
         
-        
-        [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
+        if ([searchedCircle.privacy isEqualToString:@"closed"]) {
+            [addButton.titleLabel setText:@"Request" ];
+            [addButton addTarget:self action:@selector(requestToJoin:) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
     return cell;
 }
@@ -140,7 +150,7 @@
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     Circles *circle = [searchResults objectAtIndex:clickedButtonPath.row];
     UIButton *addFriendButton = (UIButton *)sender;
-    addFriendButton.hidden = NO;
+    addFriendButton.hidden = YES;
     
     [circle addObject:userObject forKey:@"members"];
     
@@ -154,6 +164,29 @@
         }];
     }];
     
+}
+
+- (void)requestToJoin:(id)sender
+{
+    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    Circles *circle = [searchResults objectAtIndex:clickedButtonPath.row];
+    UIButton *addFriendButton = (UIButton *)sender;
+    addFriendButton.hidden = YES;
+    
+    
+    Requests *request = [Requests object];
+    
+    request.requester = userObject;
+    request.requesterUsername = userObject.user;
+    request.circle = circle;
+    
+    [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requests"];
+        [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [SVProgressHUD showSuccessWithStatus:@"Request Sent"];
+        }];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
