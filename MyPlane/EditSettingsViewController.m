@@ -51,6 +51,10 @@
     
 //    check = YES;
     
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 -(void)configureTable {
@@ -341,6 +345,15 @@
 
 }
 
+- (void)hideKeyboard
+{
+    [self.firstNameField resignFirstResponder];
+    [self.lastNameField resignFirstResponder];
+    [self.emailField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+    [self.passwordReEnter resignFirstResponder];
+}
+
 -(void)textFieldValidate:(id)sender {
     UITextField *textField = (UITextField *)sender;
     NSLog(@"hhh");
@@ -353,7 +366,7 @@
 //work on
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super touchesBegan:touches withEvent:event];
+//    [super touchesBegan:touches withEvent:event];
     
     [self.firstNameField resignFirstResponder];  
 }
