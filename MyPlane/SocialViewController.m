@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UITextField *commentTextField;
 @property (nonatomic, strong) UIButton *addCommentButton;
-
+@property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
 
 @end
 
@@ -39,6 +39,26 @@
 {
     [super viewDidLoad];
     
+    
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Circles" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+        NSLog(@"Item: %@", item);
+        [self performSegueWithIdentifier:@"showSocialCircles" sender:nil];
+    }];
+    item0.tag = 0;
+    
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        NSLog(@"Item: %@", item);
+    }];
+    item0.tag = 1;
+    
+    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+        NSLog(@"Item: %@", item);
+    }];
+    item0.tag = 2;
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1,item2]];
+    [self.view addSubview:self.uzysSMenu];
+    
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
     }];
@@ -47,6 +67,10 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
+}
+
+-(IBAction)socialMenu:(id)sender {
+    [self.uzysSMenu toggleMenu];
 }
 
 - (void)didReceiveMemoryWarning

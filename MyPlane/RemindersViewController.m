@@ -125,9 +125,11 @@
         
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:nil];
-    }
+    } else {
     
     [self loadObjects];
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -301,7 +303,10 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    if([PFUser currentUser]) {
+        [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    }
+    
     [query includeKey:@"fromFriend"];
     
     
@@ -502,8 +507,10 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
+    }];
+    
 }
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
