@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EditSettingsViewController.h"
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate>
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
@@ -18,5 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
+
+-(IBAction)logOut;
 
 @end

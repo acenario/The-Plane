@@ -161,7 +161,9 @@
         
         if ((checkFirstName) && (checkLastName)) {
             
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
+            }];
             
         }
         

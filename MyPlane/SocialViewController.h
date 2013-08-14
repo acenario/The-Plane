@@ -13,9 +13,11 @@
 #import "Comments.h"
 #import "SocialPosts.h"
 #import "Circles.h"
+#import "UzysSlideMenu.h"
 
 @interface SocialViewController : PFQueryTableViewController <UITextFieldDelegate, SocialPostDetailViewControllerDelegate, AddSocialPostViewControllerDelegate>
 - (IBAction)addComment:(id)sender;
+-(IBAction)socialMenu:(id)sender;
 
 @end
  

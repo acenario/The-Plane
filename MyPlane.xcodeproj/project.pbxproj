@@ -60,6 +60,13 @@
 		DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F21793196400304619 /* MySignUpViewController.m */; };
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
+		DC73AEE817BB4EAB0049AF50 /* UzysSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */; };
+		DC73AEE917BB4EAB0049AF50 /* UzysSMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE417BB4EAB0049AF50 /* UzysSMMenuItem.m */; };
+		DC73AEEA17BB4EAB0049AF50 /* UzysSMMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE617BB4EAB0049AF50 /* UzysSMMenuItemView.m */; };
+		DC73AEEB17BB4EAB0049AF50 /* UzysSMMenuItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEE717BB4EAB0049AF50 /* UzysSMMenuItemView.xib */; };
+		DC73AEEF17BB4F500049AF50 /* a0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEEC17BB4F500049AF50 /* a0@2x.png */; };
+		DC73AEF017BB4F500049AF50 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEED17BB4F500049AF50 /* a1@2x.png */; };
+		DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEEE17BB4F500049AF50 /* a2@2x.png */; };
 		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
 		DCD415E717959250003F9E55 /* buttonAdd-F.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E517959250003F9E55 /* buttonAdd-F.png */; };
 		DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */; };
@@ -215,6 +222,17 @@
 		DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstTimeSettingsViewController.m; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
+		DC73AEE017BB4EAB0049AF50 /* ARCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCHelper.h; sourceTree = "<group>"; };
+		DC73AEE117BB4EAB0049AF50 /* UzysSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysSlideMenu.h; sourceTree = "<group>"; };
+		DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysSlideMenu.m; sourceTree = "<group>"; };
+		DC73AEE317BB4EAB0049AF50 /* UzysSMMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysSMMenuItem.h; sourceTree = "<group>"; };
+		DC73AEE417BB4EAB0049AF50 /* UzysSMMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysSMMenuItem.m; sourceTree = "<group>"; };
+		DC73AEE517BB4EAB0049AF50 /* UzysSMMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysSMMenuItemView.h; sourceTree = "<group>"; };
+		DC73AEE617BB4EAB0049AF50 /* UzysSMMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysSMMenuItemView.m; sourceTree = "<group>"; };
+		DC73AEE717BB4EAB0049AF50 /* UzysSMMenuItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UzysSMMenuItemView.xib; sourceTree = "<group>"; };
+		DC73AEEC17BB4F500049AF50 /* a0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a0@2x.png"; sourceTree = "<group>"; };
+		DC73AEED17BB4F500049AF50 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
+		DC73AEEE17BB4F500049AF50 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
 		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		DC935CD9178F013700C316A3 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		DCD415E517959250003F9E55 /* buttonAdd-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F.png"; sourceTree = "<group>"; };
@@ -463,6 +481,25 @@
 			name = LoginandSignUp;
 			sourceTree = "<group>";
 		};
+		DC73AEDF17BB4EAB0049AF50 /* UzysSlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				DC73AEEC17BB4F500049AF50 /* a0@2x.png */,
+				DC73AEED17BB4F500049AF50 /* a1@2x.png */,
+				DC73AEEE17BB4F500049AF50 /* a2@2x.png */,
+				DC73AEE017BB4EAB0049AF50 /* ARCHelper.h */,
+				DC73AEE117BB4EAB0049AF50 /* UzysSlideMenu.h */,
+				DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */,
+				DC73AEE317BB4EAB0049AF50 /* UzysSMMenuItem.h */,
+				DC73AEE417BB4EAB0049AF50 /* UzysSMMenuItem.m */,
+				DC73AEE517BB4EAB0049AF50 /* UzysSMMenuItemView.h */,
+				DC73AEE617BB4EAB0049AF50 /* UzysSMMenuItemView.m */,
+				DC73AEE717BB4EAB0049AF50 /* UzysSMMenuItemView.xib */,
+			);
+			name = UzysSlideMenu;
+			path = Library;
+			sourceTree = "<group>";
+		};
 		DCD4AE53179AA74000F6C3FA /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +605,7 @@
 		DCE1FE4D178910D60012478B /* MyPlane */ = {
 			isa = PBXGroup;
 			children = (
+				DC73AEDF17BB4EAB0049AF50 /* UzysSlideMenu */,
 				DCD4AE53179AA74000F6C3FA /* SVProgressHUD */,
 				DCDA4291179048A600E14D50 /* FlatUIKit */,
 				DCF891DF178A1E7800A89F6E /* TabBarImages */,
@@ -580,19 +618,19 @@
 				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
 				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
-				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
 				AEF4583117A1F69E00AFF8D6 /* Circle */,
 				AEF4582417A1F62400AFF8D6 /* Social */,
-				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE1FE65178910D60012478B /* first.png */,
 				DCE1FE67178910D60012478B /* first@2x.png */,
 				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
 				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
 				DCECC6C1179F07E600D084D0 /* ProfileEditViewController.h */,
 				DCECC6C2179F07E600D084D0 /* ProfileEditViewController.m */,
+				DCE1FE62178910D60012478B /* FirstViewController.h */,
+				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
 				DCECC6BE179DB26D00D084D0 /* ProfileQueryViewController.h */,
@@ -763,6 +801,10 @@
 				DCD415EB1795926B003F9E55 /* buttonAdd-FlatUI-Selected.png in Resources */,
 				DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */,
 				DCD4AE57179AA74100F6C3FA /* SVProgressHUD.bundle in Resources */,
+				DC73AEEB17BB4EAB0049AF50 /* UzysSMMenuItemView.xib in Resources */,
+				DC73AEEF17BB4F500049AF50 /* a0@2x.png in Resources */,
+				DC73AEF017BB4F500049AF50 /* a1@2x.png in Resources */,
+				DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +872,9 @@
 				AEF4584817A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.m in Sources */,
 				AEF4584917A1F6DF00AFF8D6 /* JoinCircleViewController.m in Sources */,
 				AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */,
+				DC73AEE817BB4EAB0049AF50 /* UzysSlideMenu.m in Sources */,
+				DC73AEE917BB4EAB0049AF50 /* UzysSMMenuItem.m in Sources */,
+				DC73AEEA17BB4EAB0049AF50 /* UzysSMMenuItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
