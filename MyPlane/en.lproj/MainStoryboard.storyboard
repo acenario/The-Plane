@@ -1016,10 +1016,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="width" constant="83" id="kKU-Fv-uRo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5001" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="0lG-wE-rSg">
+                                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5001" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="0lG-wE-rSg">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="176" id="PN8-Qh-nPE"/>
-                                                        <constraint firstAttribute="height" constant="25" id="v8M-Kb-F5k"/>
+                                                        <constraint firstAttribute="height" constant="25" id="j6A-aT-IG5"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5001" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="jst-5h-mgu">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="176" id="Dfy-gC-FsP"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -1042,18 +1048,22 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="uic-Nv-a7H" firstAttribute="leading" secondItem="DfB-iv-xlR" secondAttribute="leading" constant="15" id="0Zg-5c-lex"/>
                                             <constraint firstItem="0kl-KD-IHn" firstAttribute="centerY" secondItem="uic-Nv-a7H" secondAttribute="centerY" type="default" id="13B-qn-jND"/>
                                             <constraint firstItem="0kl-KD-IHn" firstAttribute="centerX" secondItem="uic-Nv-a7H" secondAttribute="centerX" type="default" id="2KN-fn-Q6X"/>
                                             <constraint firstItem="buk-6b-NAi" firstAttribute="trailing" secondItem="J4y-2M-NFX" secondAttribute="trailing" type="default" id="7Mh-vZ-uYp"/>
                                             <constraint firstItem="buk-6b-NAi" firstAttribute="top" secondItem="J4y-2M-NFX" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="GG1-jS-J2g"/>
                                             <constraint firstItem="J4y-2M-NFX" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="H5p-nS-FOX"/>
-                                            <constraint firstItem="J4y-2M-NFX" firstAttribute="trailing" secondItem="0lG-wE-rSg" secondAttribute="trailing" type="default" id="KeD-Qs-tsV"/>
                                             <constraint firstItem="uic-Nv-a7H" firstAttribute="top" secondItem="DfB-iv-xlR" secondAttribute="top" constant="3" id="OP4-DR-NdV"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="top" secondItem="uic-Nv-a7H" secondAttribute="top" type="default" id="P6P-u6-uUX"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="bottom" secondItem="0lG-wE-rSg" secondAttribute="bottom" type="default" id="Xhg-oa-2zr"/>
                                             <constraint firstItem="0lG-wE-rSg" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="afE-wW-1Pb"/>
                                             <constraint firstItem="buk-6b-NAi" firstAttribute="bottom" secondItem="0kl-KD-IHn" secondAttribute="bottom" type="default" id="eQr-W6-5bI"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="trailing" secondItem="0lG-wE-rSg" secondAttribute="trailing" type="default" id="hgK-iT-nRa"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="j4S-UV-xNH"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="trailing" secondItem="J4y-2M-NFX" secondAttribute="trailing" type="default" id="muc-Jn-EIW"/>
                                             <constraint firstItem="buk-6b-NAi" firstAttribute="leading" secondItem="uic-Nv-a7H" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="u1L-wq-Q04"/>
-                                            <constraint firstItem="0lG-wE-rSg" firstAttribute="top" secondItem="DfB-iv-xlR" secondAttribute="top" constant="4" id="vGv-8P-ITf"/>
+                                            <constraint firstItem="uic-Nv-a7H" firstAttribute="leading" secondItem="DfB-iv-xlR" secondAttribute="leading" constant="15" id="zgL-b8-hy8"/>
+                                            <constraint firstItem="jst-5h-mgu" firstAttribute="top" secondItem="0lG-wE-rSg" secondAttribute="top" type="default" id="zzm-br-edE"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -1110,6 +1120,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="editButton" destination="hF5-bi-qKu" id="tcR-jI-uaV"/>
                         <outlet property="emailField" destination="xKA-2s-3Bw" id="1oo-iw-SLB"/>
                         <outlet property="firstNameField" destination="0lG-wE-rSg" id="rQP-4w-4gK"/>
+                        <outlet property="fullNameField" destination="jst-5h-mgu" id="rvh-3O-amz"/>
                         <outlet property="lastNameField" destination="buk-6b-NAi" id="db8-7L-eqo"/>
                         <outlet property="profilePicture" destination="0kl-KD-IHn" id="u3a-OO-r71"/>
                         <outlet property="usernameField" destination="J4y-2M-NFX" id="MGV-fB-EEB"/>
@@ -1133,8 +1144,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <segue destination="M9F-Yv-c7R" kind="relationship" relationship="viewControllers" id="J07-G2-0JO"/>
                         <segue destination="SWZ-Sp-Rbs" kind="relationship" relationship="viewControllers" id="qxv-1u-dlm"/>
                         <segue destination="e0w-rQ-A0A" kind="relationship" relationship="viewControllers" id="zNK-xy-qqW"/>
-                        <segue destination="B5Q-ba-fOa" kind="relationship" relationship="viewControllers" id="GzY-dD-vpq"/>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="26"/>
+                        <segue destination="B5Q-ba-fOa" kind="relationship" relationship="viewControllers" id="GzY-dD-vpq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
@@ -1910,7 +1921,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2205" y="3826"/>
         </scene>
-        <!--Social Post Detail View Controller-->
+        <!--Social Post Detail View Controller - Social Post Detail-->
         <scene sceneID="TFW-UX-G1c">
             <objects>
                 <tableViewController id="UAg-mc-Kmn" customClass="SocialPostDetailViewController" sceneMemberID="viewController">
@@ -2045,7 +2056,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="UAg-mc-Kmn" id="YxP-Dj-Ngv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="qkQ-Pc-5Dn"/>
+                    <navigationItem key="navigationItem" title="Social Post Detail" id="qkQ-Pc-5Dn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4C-un-bEf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3220,8 +3231,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="1cS-jb-Zdb"/>
-        <segue reference="clu-AU-b0I"/>
         <segue reference="xq7-7e-SmO"/>
+        <segue reference="UXi-26-ep6"/>
+        <segue reference="1cS-jb-Zdb"/>
     </inferredMetricsTieBreakers>
 </document>

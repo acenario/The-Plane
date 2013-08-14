@@ -26,8 +26,8 @@
     NSString *displayName;
     NSString *theUsername;
     UIImage *defaultPic;
-    NSString *tempUsername;
-    PFObject *meObject;
+    //NSString *tempUsername;
+    //PFObject *meObject;
     NSDateFormatter *dateFormatter;
 }
 
@@ -94,7 +94,7 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    [self getUserInfo];
+    //[self getUserInfo];
     
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //self.tableView.backgroundColor = [UIColor alizarinColor];
@@ -255,6 +255,7 @@
     
     PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
     NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
+    NSString *tempName = [deleteReminder objectForKey:@"user"];
     
     [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
@@ -265,7 +266,7 @@
             [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
             
             
-            NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempUsername];
+            NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
             
             PFQuery *pushQuery = [PFInstallation query];
             [pushQuery whereKey:@"user" equalTo:deleteName];
@@ -308,30 +309,29 @@
     
     
     if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        query.cachePolicy = kPFCachePolicyNetworkElseCache;
     }
     
     
     return query;
 }
 
-
--(void)getUserInfo {
-    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [query includeKey:@"friends"];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        meObject = object;
-        NSString *username = [object objectForKey:@"user"];
-        tempUsername = username;
-    }];
-    
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyNetworkElseCache;
-    }
-    
-}
+//-(void)getUserInfo {
+//    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+//    [query includeKey:@"friends"];
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        meObject = object;
+//        NSString *username = [object objectForKey:@"user"];
+//        tempUsername = username;
+//    }];
+//    
+//    if (self.objects.count == 0) {
+//        query.cachePolicy = kPFCachePolicyNetworkElseCache;
+//    }
+//    
+//}
 
 #pragma mark - Custom Methods
 

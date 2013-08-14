@@ -76,8 +76,8 @@
     UIColor *unColor = [UIColor colorFromHexCode:@"A62A00"];
 
     
-    self.firstNameField.font = myFont;
-    self.firstNameField.textColor = myColor;
+    self.fullNameField.font = myFont;
+    self.fullNameField.textColor = myColor;
     
     self.lastNameField.font = myFont;
     self.lastNameField.textColor = myColor;
@@ -100,7 +100,7 @@
     
      if ([[notification name] isEqualToString:@"reloadProfile"]) {
         NSLog (@"Successfully received the reload command!");
-        [self getUserInfo];
+         [self reloadInfo];
     }
 }
 
@@ -113,15 +113,39 @@
         
         [self updateLabelsForObject:object];
         
+        if (error) {
+            NSLog(@"There was an error in GetUserInfo of Settings: %@", error);
+        }
+        
         
     }];
     
-    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
 }
 
+-(void)reloadInfo {
+    PFQuery *reloadUserQuery = [UserInfo query];
+    [reloadUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    reloadUserQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+    [reloadUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        
+        [self updateLabelsForObject:object];
+        
+        if (error) {
+            NSLog(@"There was an error in GetUserInfo of Settings: %@", error);
+        }
+        
+        
+    }];
+    
+}
+
+
 -(void)updateLabelsForObject:(PFObject *)object {
+    NSLog(@"firstname : %@", [object objectForKey:@"firstName"]);
     PFUser *user = [PFUser currentUser];
-    self.firstNameField.text = [NSString stringWithFormat:@"%@ %@", [object objectForKey:@"firstName"], [object objectForKey:@"lastName"]];
+    self.fullNameField.text = [NSString stringWithFormat:@"%@ %@", [object objectForKey:@"firstName"], [object objectForKey:@"lastName"]];
+    self.firstNameField.text = [object objectForKey:@"firstName"];
+    self.lastNameField.text = [object objectForKey:@"lastName"];
     self.usernameField.text = [object objectForKey:@"user"];
     self.emailField.text = [user email];
     
@@ -135,6 +159,7 @@
             self.editButton.enabled = YES;
 
         });
+        
     });
     
 }
@@ -146,7 +171,8 @@
 }
 
 - (void)updateUserInfo:(EditSettingsViewController *)controller {
-    [self getUserInfo];
+    [self reloadInfo];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

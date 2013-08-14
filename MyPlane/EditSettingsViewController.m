@@ -39,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.firstNameField.delegate = self;
 
     self.firstNameField.placeholder = self.firstname;
     self.lastNameField.placeholder = self.lastname;
@@ -110,7 +112,7 @@
     PFUser *user = [PFUser currentUser];
     PFQuery *personQuery = [UserInfo query];
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    personQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    //personQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
     
         
@@ -120,9 +122,10 @@
             NSData *data = UIImagePNGRepresentation(self.profilePictureSet.image);
             PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
             [object setObject:imageupload forKey:@"profilePicture"];
-            [object saveInBackground];
-            NSLog(@"SUCCESS!");
-            check = YES;
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSLog(@"SUCCESS!");
+                check = YES;
+            }];
         } else {
             NSLog(@"EMPTY!");
         }
@@ -134,9 +137,11 @@
                 BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
                 if (isValid) {
                     [object setObject:self.firstNameField.text forKey:@"firstName"];
-                    [object saveInBackground];
-                    check = YES;
-                    NSLog(@"SUCCESS!");
+                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        check = YES;
+                        NSLog(@"SUCCESS!");
+                    }];
+                    
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
                 }
@@ -218,8 +223,8 @@
             NSLog(@"EMPTY!");
         }
         
-        if (check == YES) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+        if (check) {
+            [self.delegate updateUserInfo:self];
         } else {
             NSLog(@"NO!");
         }
@@ -268,12 +273,28 @@
     
     
     [self updateAlltheMethods];
-    [self.delegate updateUserInfo:self];
+    
     
     //[self dismissViewControllerAnimated:YES completion:nil];
         
 
 
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSLog(@"hhh");
+    if ([textField.text length] > 0) {
+        NSLog(@"enable done");
+    }
+    
+}
+
+//work on
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    
+    [self.firstNameField resignFirstResponder];  
 }
 
 

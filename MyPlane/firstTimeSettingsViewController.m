@@ -159,7 +159,7 @@
         
         
         
-        if ((checkLastName == YES) && (checkLastName == YES)) {
+        if ((checkFirstName) && (checkLastName)) {
             
             [self dismissViewControllerAnimated:YES completion:nil];
             
