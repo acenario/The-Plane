@@ -141,7 +141,7 @@
 
 
 -(void)updateLabelsForObject:(PFObject *)object {
-    NSLog(@"firstname : %@", [object objectForKey:@"firstName"]);
+    NSLog(@"firstname : %@", [object objectForKey:@"lastName"]);
     PFUser *user = [PFUser currentUser];
     self.fullNameField.text = [NSString stringWithFormat:@"%@ %@", [object objectForKey:@"firstName"], [object objectForKey:@"lastName"]];
     self.firstNameField.text = [object objectForKey:@"firstName"];
@@ -161,7 +161,7 @@
         });
         
     });
-    
+    NSLog(@"firstname : %@", [object objectForKey:@"firstName"]);
 }
 
 - (void)didReceiveMemoryWarning

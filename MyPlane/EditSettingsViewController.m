@@ -41,6 +41,7 @@
     [super viewDidLoad];
     
     self.firstNameField.delegate = self;
+//    [self.firstNameField addTarget:self action:@selector(textFieldValidate:) forControlEvents:UIControlEventEditingChanged];
 
     self.firstNameField.placeholder = self.firstname;
     self.lastNameField.placeholder = self.lastname;
@@ -48,7 +49,7 @@
     self.profilePictureSet.image = self.profilePicture;
     [self configureTable];
     
-    check = YES;
+//    check = YES;
     
 }
 
@@ -114,20 +115,30 @@
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     //personQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-    
+        check = NO;
+        
+//        UserInfo *userObject = (UserInfo *)object;
+        
+        NSString *firstName = nil;
+        NSString *lastName = nil;
+        NSString *email = nil;
+        NSString *password = nil;
+        PFFile *imageFile = nil;
         
         //PROFILE PICTURE
         
-        if (self.profilePictureSet.image != nil) {
+        if (self.profilePictureSet.image != nil && self.profilePictureSet.image != self.profilePicture) {
             NSData *data = UIImagePNGRepresentation(self.profilePictureSet.image);
             PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
-            [object setObject:imageupload forKey:@"profilePicture"];
-            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                NSLog(@"SUCCESS!");
-                check = YES;
-            }];
+//            [object setObject:imageupload forKey:@"profilePicture"];
+//            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+////                NSLog(@"SUCCESS!");
+//                check = NO;
+//            }];
+            imageFile = imageupload;
+            check = YES;
         } else {
-            NSLog(@"EMPTY!");
+//            NSLog(@"EMPTY!");
         }
         
         //FIRST NAME
@@ -136,11 +147,16 @@
             if ([self.firstNameField.text length] > 1) {
                 BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
                 if (isValid) {
-                    [object setObject:self.firstNameField.text forKey:@"firstName"];
-                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        check = YES;
-                        NSLog(@"SUCCESS!");
-                    }];
+//                    [object setObject:self.firstNameField.text forKey:@"firstName"];
+//                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                        if (succeeded) {
+//                            check = YES;
+//                            NSLog(@"%@", [object objectForKey:@"firstName"]);
+//                        }
+//                        
+//                    }];
+                    firstName = self.firstNameField.text;
+                    check = YES;
                     
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
@@ -150,7 +166,7 @@
             }
             
         } else {
-            NSLog(@"EMPTY!");
+//            NSLog(@"EMPTY!");
         }
         
         //LAST NAME
@@ -159,10 +175,11 @@
             if ([self.lastNameField.text length] > 1) {
                 BOOL isValid = [self NSStringIsNameValid:self.lastNameField.text];
                 if (isValid) {
-                    [object setObject:self.lastNameField.text forKey:@"lastName"];
-                    [object saveInBackground];
+//                    [object setObject:self.lastNameField.text forKey:@"lastName"];
+//                    [object saveInBackground];
+                    lastName = self.lastNameField.text;
                     check = YES;
-                    NSLog(@"SUCCESS!");
+//                    NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
                 }
@@ -171,42 +188,42 @@
             }
             
         } else {
-            NSLog(@"EMPTY!");
+//            NSLog(@"EMPTY!");
         }
         
         //EMAIL
         
         if (![self.emailField.text isEqualToString:@""]) {
-            
             BOOL isValid = [self NSStringIsValidEmail:self.emailField.text];
             if (isValid) {
-                [user setEmail:self.emailField.text];
-                [user saveInBackground];
+//                [user setEmail:self.emailField.text];
+//                [user saveInBackground];
+                email = self.emailField.text;
                 check = YES;
-                NSLog(@"SUCCESS!");
+//                NSLog(@"SUCCESS!");
             } else {
                 NSLog(@"NOT VALID EMAIL");
                 [self showAlertwithString:@"You have entered an invalid email!"];
             }
             
         } else {
-            NSLog(@"EMPTY!");
+//            NSLog(@"EMPTY!");
         }
         
         //PASSWORD
         
         if (![self.passwordField.text isEqualToString:@""] && ![self.passwordReEnter.text isEqualToString:@""]) {
-            
             if (([self.passwordField.text length] >= 8) && ([self.passwordReEnter.text length] >= 8)) {
                 
                 if (([self.passwordField.text length] <=32) && ([self.passwordReEnter.text length] <=32)) {
                     
                     BOOL isValid = [self NSStringIsPasswordValid:self.passwordReEnter.text];
                     if (isValid) {
-                        [user setPassword:self.passwordReEnter.text];
-                        [user saveInBackground];
+//                        [user setPassword:self.passwordReEnter.text];
+//                        [user saveInBackground];
+                        password = self.passwordField.text;
                         check = YES;
-                        NSLog(@"SUCCESS!");
+//                        NSLog(@"SUCCESS!");
                     } else {
                         [self showAlertwithString:@"Your passwords do not match"];
                     }
@@ -220,21 +237,64 @@
             }
 
         } else {
-            NSLog(@"EMPTY!");
+//            NSLog(@"EMPTY!");
         }
         
+        
         if (check) {
-            [self.delegate updateUserInfo:self];
+            [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user];
         } else {
-            NSLog(@"NO!");
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     }];
+}
+
+- (void)saveAllFieldswithObject:(PFObject *)object withFirstName:(NSString *)firstName withLastName:(NSString *)lastName withEmail:(NSString *)email withPassword:(NSString *)password withImageFile:(PFFile *)imageFile withUser:(PFUser *)user
+{
+    BOOL usersave = NO;
+    BOOL objectsave = NO;
     
+    if (firstName != nil) {
+        objectsave = YES;
+        [object setObject:firstName forKey:@"firstName"];
+    }
     
+    if (lastName != nil) {
+        objectsave = YES;
+        [object setObject:lastName forKey:@"lastName"];
+    }
     
-        
+    if (email != nil) {
+        usersave = YES;
+        [user setEmail:email];
+    }
     
+    if (password != nil) {
+        usersave = YES;
+        [user setPassword:password];
+    }
+    
+    if (imageFile != nil) {
+        objectsave = YES;
+        [object setObject:imageFile forKey:@"profilePicture"];
+    }
+    
+    if ((usersave) && (objectsave)) {
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [self.delegate updateUserInfo:self];
+            }];
+        }];
+    } else if (usersave) {
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self.delegate updateUserInfo:self];
+        }];
+    } else {
+        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self.delegate updateUserInfo:self];
+        }];
+    }
 }
 
 -(BOOL) NSStringIsPasswordValid:(NSString *)checkString
@@ -281,7 +341,8 @@
 
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField {
+-(void)textFieldValidate:(id)sender {
+    UITextField *textField = (UITextField *)sender;
     NSLog(@"hhh");
     if ([textField.text length] > 0) {
         NSLog(@"enable done");
