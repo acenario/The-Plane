@@ -10,11 +10,14 @@
 
 @interface CircleRequestsViewController ()
 
+@property (nonatomic, strong) NSString *segmentName;
+@property (nonatomic, strong) NSMutableArray *invites;
+@property (nonatomic, strong) NSMutableArray *requests;
+
 @end
 
 @implementation CircleRequestsViewController {
     PFQuery *userQuery;
-    UserInfo *userObject;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -28,20 +31,22 @@
     }
     return self;
 }
- 
+
 - (PFQuery *)queryForTable
 {
-    userQuery = [UserInfo query];
-    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
-    PFQuery *circleQuery = [Circles query];
-    [circleQuery whereKey:@"members" matchesQuery:userQuery];
-    [circleQuery includeKey:@"owner"];
+    //    userQuery = [UserInfo query];
+    //    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    //
+    //    PFQuery *circleQuery = [Circles query];
+    //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
+    //    [circleQuery includeKey:@"owner"];
     
     PFQuery *query = [Requests query];
-    [query whereKey:@"circle" matchesQuery:circleQuery];
+    [query whereKey:@"circle" containedIn:self.circles];
     [query includeKey:@"circle"];
     [query includeKey:@"requester"];
+    [query includeKey:@"invited"];
+    [query includeKey:@"invitedBy"];
     
     return query;
 }
@@ -49,10 +54,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userObject = (UserInfo *)object;
-    }];
+    
+    self.segmentName = @"invites";
+    
+    self.invites = [[NSMutableArray alloc] init];
+    self.requests = [[NSMutableArray alloc] init];
+    
+    for (Requests *request in self.objects) {
+        if (request.invited != nil) {
+            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
+                [self.invites addObject:request];
+            }
+        } else {
+            [self.requests addObject:request];
+        }
+    }
     
     self.tableView.rowHeight = 60;
 }
@@ -67,33 +83,61 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return self.objects.count;
+    if ([self.segmentName isEqualToString:@"invites"]) {
+        return self.invites.count;
+    } else {
+        return self.requests.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
-    static NSString *CellIdentifier = @"Cell";
-    PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    Requests *request = (Requests *)object;
-    
-    Circles *circle = (Circles *)request.circle;
-    UserInfo *owner = (UserInfo *)request.requester;
-    
-    UILabel *name = (UILabel *)[cell viewWithTag:6001];
-    UILabel *creator = (UILabel *)[cell viewWithTag:6002];
-    PFImageView *creatorImage = (PFImageView *)[cell viewWithTag:6011];
-    UIButton *accept = (UIButton *)[cell viewWithTag:6041];
-    
-    name.text = circle.searchName;
-    creator.text = [NSString stringWithFormat:@"Created by %@ %@", owner.firstName, owner.lastName];
-    creatorImage.file = owner.profilePicture;
-    [creatorImage loadInBackground];
-    
-    [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
+    if ([self.segmentName isEqualToString:@"invites"]) {
+        static NSString *CellIdentifier = @"InviteCell";
+        PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        Requests *request = (Requests *)object;
+        
+        Circles *circle = (Circles *)request.circle;
+        UserInfo *owner = (UserInfo *)request.requester;
+        
+        UITextView *name = (UITextView *)[cell viewWithTag:6001];
+        UITextView *creator = (UITextView *)[cell viewWithTag:6002];
+        PFImageView *creatorImage = (PFImageView *)[cell viewWithTag:6011];
+        UIButton *accept = (UIButton *)[cell viewWithTag:6041];
+        
+        name.text = circle.searchName;
+        creator.text = [NSString stringWithFormat:@"Created by %@ %@", owner.firstName, owner.lastName];
+        creatorImage.file = owner.profilePicture;
+        [creatorImage loadInBackground];
+        
+        [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+        
+    } else {
+        static NSString *CellIdentifier = @"Cell";
+        PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        Requests *request = (Requests *)object;
+        
+        Circles *circle = (Circles *)request.circle;
+        UserInfo *owner = (UserInfo *)request.requester;
+        
+        UITextView *name = (UITextView *)[cell viewWithTag:6003];
+        UITextView *creator = (UITextView *)[cell viewWithTag:6004];
+        PFImageView *creatorImage = (PFImageView *)[cell viewWithTag:6012];
+        UIButton *accept = (UIButton *)[cell viewWithTag:6042];
+        
+        name.text = circle.searchName;
+        creator.text = [NSString stringWithFormat:@"Created by %@ %@", owner.firstName, owner.lastName];
+        creatorImage.file = owner.profilePicture;
+        [creatorImage loadInBackground];
+        
+        [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+    }
 }
 
 
@@ -109,15 +153,20 @@
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     Circles *circle = [self.objects objectAtIndex:clickedButtonPath.row];
-    UserInfo *object = [UserInfo objectWithoutDataWithObjectId:userObject.objectId];
+    UserInfo *object = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
     
-    [circle addObject:userObject forKey:@"members"];
+    [circle addObject:self.currentUser forKey:@"members"];
     [circle removeObject:object forKey:@"pendingMembers"];
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [userObject removeObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
-        [userObject saveInBackground];
+        [self.currentUser removeObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
+        [self.currentUser saveInBackground];
         [self loadObjects];
     }];
+}
+
+- (IBAction)segmentedChange:(id)sender {
+    self.segmentName = [[self.segmentedControl titleForSegmentAtIndex:self.segmentedControl.selectedSegmentIndex] lowercaseString];
+    [self.tableView reloadData];
 }
 
 @end

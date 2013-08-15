@@ -10,9 +10,14 @@
 
 @interface CircleMembersViewController ()
 
+@property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+
 @end
 
-@implementation CircleMembersViewController
+@implementation CircleMembersViewController {
+    UserInfo *userObject;
+    NSMutableArray *selectedUsers;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,7 +30,7 @@
     }
     return self;
 }
- 
+
 - (PFQuery *)queryForTable
 {
     PFQuery *query = [Circles query];
@@ -35,12 +40,46 @@
     return query;
 }
 
+- (void)userQuery
+{
+    PFQuery *query = [UserInfo query];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"members"];
+    
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        userObject = (UserInfo *)object;
+        if ([self.circle.admins containsObject:userObject.user]) {
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Admin Options" style:UIBarButtonItemStyleBordered target:self action:@selector(adminPanel:)];
+            NSLog(@"Done");
+        }
+    }];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    }];
+    item0.tag = 0;
+    
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    }];
+    item0.tag = 1;
+    
+    //    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+    //        NSLog(@"Item: %@", item);
+    //    }];
+    //    item0.tag = 2;
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
+    [self.view addSubview:self.uzysSMenu];
+
+    
+    selectedUsers = [[NSMutableArray alloc] initWithCapacity:5];
     self.tableView.rowHeight = 60;
+    NSLog(@"Done2");
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +112,51 @@
     [image loadInBackground];
     
     return cell;
+}
+
+- (void)adminPanel:(id)sender {
+    [self.uzysSMenu toggleMenu];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UserInfo *user = [self.objects objectAtIndex:indexPath.row];
+    //    UserInfo *user2 = [UserInfo objectWithoutDataWithObjectId:user.objectId];
+    
+    NSUInteger index = [self.objects indexOfObject:user];
+    
+    if ([self.circle.admins containsObject:userObject.user]) {
+        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            if (![self.circle.admins containsObject:user.user]) {
+                [selectedUsers removeObjectAtIndex:index];
+            }
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            if (![self.circle.admins containsObject:user.user]) {
+                [selectedUsers addObject:user];
+            }
+        }
+    } else {
+        nil;
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)kickSelectedUsers
+{
+    [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
+    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %lu Members", (unsigned long)selectedUsers.count]];
+    [self.circle saveInBackground];
+}
+
+- (void)promoteSelectedUsers
+{
+    [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
+    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %lu Members", (unsigned long)selectedUsers.count]];
+    [self.circle saveInBackground];
 }
 
 @end

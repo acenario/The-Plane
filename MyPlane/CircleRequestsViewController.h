@@ -20,6 +20,10 @@
 @interface CircleRequestsViewController : PFQueryTableViewController
 
 @property (nonatomic, weak) id <CircleRequestsViewControllerDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+- (IBAction)segmentedChange:(id)sender;
+@property (nonatomic, strong) UserInfo *currentUser;
+@property (nonatomic, strong) NSArray *circles;
 
 @end
  

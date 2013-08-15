@@ -14,6 +14,7 @@
 
 @implementation CircleDetailViewController {
     UserInfo *owner;
+    UserInfo *userObject;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -23,6 +24,18 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)currentUserQuery
+{
+    PFQuery * currentUserQuery = [UserInfo query];
+    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    
+    [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (UserInfo *object in objects) {
+            userObject = object;
+        }
+    }];
 }
 
 - (void)viewDidLoad
@@ -35,7 +48,8 @@
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
     self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
     self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
-
+    
+    [self currentUserQuery];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,12 +73,27 @@
         CirclePostsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
         controller.circle = self.circle;
+    } else if ([segue.identifier isEqualToString:@"InviteMembers"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        IndependentInviteMenuViewController *controller = (IndependentInviteMenuViewController *)nav.topViewController;
+        controller.delegate = self;
+        controller.circle = self.circle;
+        controller.currentUser = userObject;
     }
-//    } else if ([segue.identifier isEqualToString:@"Reminders"]) {
-//        controller.segue = @"Reminders";
-//    }
-        
 }
 
+#pragma mark - Other Methods
+
+- (IBAction)leaveCircle:(id)sender {
+    [userObject removeObject:self.circle forKey:@"circles"];
+    [self.circle removeObject:userObject forKey:@"members"];
+    
+    [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self.circle saveInBackground];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.searchName]];
+        }];
+    }];
+}
 
 @end

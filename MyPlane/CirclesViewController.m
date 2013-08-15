@@ -10,6 +10,8 @@
 
 @interface CirclesViewController ()
 
+@property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+
 @end
 
 @implementation CirclesViewController {
@@ -34,6 +36,24 @@
 	// Do any additional setup after loading the view.
 //    self.segmentedControl.selectedSegmentIndex = 1;
 //    self.navigationController.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", self.count];
+    
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Join a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+        [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
+    }];
+    item0.tag = 0;
+    
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Create a Circle" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        [self performSegueWithIdentifier:@"CreateCircle" sender:nil];
+    }];
+    item0.tag = 1;
+    
+    //    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+    //        NSLog(@"Item: %@", item);
+    //    }];
+    //    item0.tag = 2;
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
+    [self.view addSubview:self.uzysSMenu];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
@@ -93,6 +113,8 @@
     if ([segue.identifier isEqualToString:@"CircleRequests"]) {
         CircleRequestsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+        controller.currentUser = userObject;
+        controller.circles = self.objects;
     } else if ([segue.identifier isEqualToString:@"CircleDetail"]) {
         CircleDetailViewController *controller = [segue destinationViewController];
         Circles *circle = (Circles *)sender;
@@ -110,6 +132,10 @@
 {
     Circles *circle = [self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"CircleDetail" sender:circle];
+}
+
+- (IBAction)circleMenu:(id)sender {
+    [self.uzysSMenu toggleMenu];
 }
 
 @end

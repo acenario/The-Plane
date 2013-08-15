@@ -14,6 +14,9 @@
 #import "JoinCircleViewController.h"
 #import "CircleRequestsViewController.h"
 #import "CircleDetailViewController.h"
+#import "JoinCircleViewController.h"
+#import "CreateCircleViewController.h"
+#import "UzysSlideMenu.h"
 
 @class CirclesViewController;
 
@@ -24,6 +27,7 @@
 @interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate>
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
+- (IBAction)circleMenu:(id)sender;
 
 //@property NSInteger count;
 //- (IBAction)segmentedSwitch:(id)sender;

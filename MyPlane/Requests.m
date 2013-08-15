@@ -16,8 +16,10 @@
 
 @dynamic circle;
 @dynamic invitedBy;
+@dynamic invited;
 @dynamic requester;
 @dynamic requesterUsername;
 @dynamic inviterUsername;
+@dynamic invitedUsername;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Parse/Parse.h>
 #import "SubclassHeader.h"
+#import "UzysSlideMenu.h"
 
 @class CircleMembersViewController;
 

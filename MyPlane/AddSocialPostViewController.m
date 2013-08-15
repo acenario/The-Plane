@@ -36,6 +36,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    NSString *placeholderText = @"Write a post here...";
+    
+    self.postTextField.text = placeholderText;
+    self.postTextField.textColor = [UIColor grayColor];
+    
     [self.userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
     }];
@@ -52,7 +57,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    nil;
+    if (indexPath.row == 0) {
+        self.postTextField.textColor = [UIColor blackColor];
+        self.postTextField.text = @"";
+        self.postTextField.userInteractionEnabled = YES;
+        [self.postTextField becomeFirstResponder];
+    } else {
+        nil;
+    }
 }
  
 - (IBAction)done:(id)sender {

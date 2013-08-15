@@ -13,8 +13,11 @@
 
 @property (retain) PFObject *circle;
 @property (retain) PFObject *invitedBy;
+@property (retain) PFObject *invited;
 @property (retain) PFObject *requester;
 @property (retain) NSString *requesterUsername;
 @property (retain) NSString *inviterUsername;
+@property (retain) NSString *invitedUsername;
+
 
 @end

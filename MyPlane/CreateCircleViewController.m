@@ -104,7 +104,7 @@
             UIButton *infoButton = (UIButton *)[cell viewWithTag:6261];
             
             privacySegmentedController.selectedSegmentIndex = 1;
-            privacy = [privacySegmentedController titleForSegmentAtIndex:1];
+            privacy = [[privacySegmentedController titleForSegmentAtIndex:1] lowercaseString];
             
             [privacySegmentedController addTarget:self action:@selector(publicBoolSwitch:) forControlEvents:UIControlEventValueChanged];
             [infoButton addTarget:self action:@selector(infoButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -177,9 +177,9 @@
     
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Privacy Description"
                                                           message:message
-                                                          delegate:nil
-                                                          cancelButtonTitle:@"Close"
-                                                          otherButtonTitles:nil];
+                                                         delegate:nil
+                                                cancelButtonTitle:@"Close"
+                                                otherButtonTitles:nil];
     
     alertView.titleLabel.textColor = [UIColor cloudsColor];
     alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
@@ -266,7 +266,9 @@
     circle.owner = currentUser;
     circle.public = public;
     circle.privacy = privacy;
-    [circle addObject:[UserInfo objectWithoutDataWithObjectId:currentUser.objectId] forKey:@"admins"];
+    if (![privacy isEqualToString:@"open"]) {
+        [circle addObject:currentUser.user forKey:@"admins"];
+    }
     [circle addObject:currentUser forKey:@"members"];
     
     if (invitedMembers.count > 0) {
@@ -279,12 +281,22 @@
         for (UserInfo *user in invitedMembers) {
             [user addObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                nil;
+                Requests *request = [Requests object];
+                
+                [request setCircle:circle];
+                [request setInvitedBy:currentUser];
+                [request setInvitedUsername:currentUser.user];
+                [request setInvited:user];
+                [request setInvitedUsername:user.user];
+                
+                [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    nil;
+                }];
             }];
-        }
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
         [self dismissViewControllerAnimated:YES completion:nil];
+    };
     }];
-    
 }
 
 @end

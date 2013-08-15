@@ -183,6 +183,7 @@
     
     [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requests"];
+        [circle addObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId] forKey:@"pendingMembers"];
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [SVProgressHUD showSuccessWithStatus:@"Request Sent"];
         }];

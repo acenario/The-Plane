@@ -78,7 +78,7 @@
                     [subarray removeObject:obj];
                 }
             }
-            NSLog(@"%@", [subarray objectAtIndex:0]);
+//            NSLog(@"%@", [subarray objectAtIndex:0]);
             searchResults = [[NSMutableArray alloc] initWithArray:subarray];
             [self loadObjects];
         }
@@ -156,7 +156,7 @@
         
         if ([self.invitedUsernames containsObject:searchedUser.user]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            NSLog(@"yES");
+//            NSLog(@"yES");
         }
         
     }
@@ -177,10 +177,10 @@
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         [self.currentlyInvitedMembers removeObjectAtIndex:index];
-        NSLog(@"%@", user);
-        NSLog(@"%@", self.currentlyInvitedMembers);
+//        NSLog(@"%@", user);
+//        NSLog(@"%@", self.currentlyInvitedMembers);
         [self.invitedUsernames removeObject:user.user];
-        NSLog(@"%@", self.invitedUsernames);
+//        NSLog(@"%@", self.invitedUsernames);
     } else {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         [self.currentlyInvitedMembers addObject:user];

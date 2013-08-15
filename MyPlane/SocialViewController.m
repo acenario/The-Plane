@@ -268,6 +268,15 @@
     [self loadObjects];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (self.objects.count == 0) {
+        return @"Join a circle...";
+    } else {
+        return nil;
+    }
+}
+
 //- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller
 //{
 //    [self loadObjects];
