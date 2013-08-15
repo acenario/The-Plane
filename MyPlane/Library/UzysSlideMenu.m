@@ -145,7 +145,7 @@
             
             if(idx ==0)
             {
-                itemView.alpha = 1;
+                itemView.alpha = 0;
                 itemView.label.alpha = 0;
                 itemView.backgroundView.alpha = 0;
                 itemView.seperatorView.alpha = 0;
