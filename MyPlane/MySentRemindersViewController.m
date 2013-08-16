@@ -33,6 +33,16 @@
     //    [self getUserPicture];
 	// Do any additional setup after loading the view.
     
+    self.tableView.rowHeight = 70;
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -129,6 +139,42 @@
     
     return cell;
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    
+    /*cell.textLabel.backgroundColor = [UIColor clearColor];
+     if ([cell respondsToSelector:@selector(detailTextLabel)])
+     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+     
+     //Guess some good text colors
+     cell.textLabel.textColor = selectedColor;
+     cell.textLabel.highlightedTextColor = color;
+     if ([cell respondsToSelector:@selector(detailTextLabel)]) {
+     cell.detailTextLabel.textColor = selectedColor;
+     cell.detailTextLabel.highlightedTextColor = color;
+     }*/
+    
+    return cell;
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
