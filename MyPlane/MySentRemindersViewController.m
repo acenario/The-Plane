@@ -68,7 +68,7 @@
     [query includeKey:@"fromFriend"];
     [query includeKey:@"recipient"];
     
-    [query orderByAscending:@"date"];
+    [query orderByDescending:@"date"];
     
     
     if (self.objects.count == 0) {

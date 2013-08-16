@@ -68,6 +68,11 @@
 		DC73AEEF17BB4F500049AF50 /* a0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEEC17BB4F500049AF50 /* a0@2x.png */; };
 		DC73AEF017BB4F500049AF50 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEED17BB4F500049AF50 /* a1@2x.png */; };
 		DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AEEE17BB4F500049AF50 /* a2@2x.png */; };
+		DC73AEF717BD7F100049AF50 /* MZFormSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEF417BD7F100049AF50 /* MZFormSheetController.m */; };
+		DC73AEF817BD7F100049AF50 /* MZFormSheetSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEF617BD7F100049AF50 /* MZFormSheetSegue.m */; };
+		DC73AEFB17BD85590049AF50 /* CommonTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */; };
+		DC73AEFE17BD857E0049AF50 /* AddCommonTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */; };
+		DC73AF0117BD85920049AF50 /* EditCommonTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */; };
 		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
 		DCD415E717959250003F9E55 /* buttonAdd-F.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E517959250003F9E55 /* buttonAdd-F.png */; };
 		DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */; };
@@ -236,6 +241,16 @@
 		DC73AEEC17BB4F500049AF50 /* a0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a0@2x.png"; sourceTree = "<group>"; };
 		DC73AEED17BB4F500049AF50 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		DC73AEEE17BB4F500049AF50 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
+		DC73AEF317BD7F100049AF50 /* MZFormSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetController.h; sourceTree = "<group>"; };
+		DC73AEF417BD7F100049AF50 /* MZFormSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetController.m; sourceTree = "<group>"; };
+		DC73AEF517BD7F100049AF50 /* MZFormSheetSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetSegue.h; sourceTree = "<group>"; };
+		DC73AEF617BD7F100049AF50 /* MZFormSheetSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetSegue.m; sourceTree = "<group>"; };
+		DC73AEF917BD85590049AF50 /* CommonTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonTasksViewController.h; sourceTree = "<group>"; };
+		DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonTasksViewController.m; sourceTree = "<group>"; };
+		DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommonTaskViewController.h; sourceTree = "<group>"; };
+		DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommonTaskViewController.m; sourceTree = "<group>"; };
+		DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCommonTaskViewController.h; sourceTree = "<group>"; };
+		DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCommonTaskViewController.m; sourceTree = "<group>"; };
 		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		DC935CD9178F013700C316A3 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		DCD415E517959250003F9E55 /* buttonAdd-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F.png"; sourceTree = "<group>"; };
@@ -459,6 +474,12 @@
 				DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */,
 				AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */,
 				AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */,
+				DC73AEF917BD85590049AF50 /* CommonTasksViewController.h */,
+				DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */,
+				DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */,
+				DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */,
+				DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */,
+				DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */,
 				AEF4584B17A31B2100AFF8D6 /* AddRemindersDelegation */,
 			);
 			name = RemindersVCDelegation;
@@ -503,6 +524,17 @@
 			);
 			name = UzysSlideMenu;
 			path = Library;
+			sourceTree = "<group>";
+		};
+		DC73AEF217BD7F0F0049AF50 /* MZFormSheetController */ = {
+			isa = PBXGroup;
+			children = (
+				DC73AEF317BD7F100049AF50 /* MZFormSheetController.h */,
+				DC73AEF417BD7F100049AF50 /* MZFormSheetController.m */,
+				DC73AEF517BD7F100049AF50 /* MZFormSheetSegue.h */,
+				DC73AEF617BD7F100049AF50 /* MZFormSheetSegue.m */,
+			);
+			path = MZFormSheetController;
 			sourceTree = "<group>";
 		};
 		DCD4AE53179AA74000F6C3FA /* SVProgressHUD */ = {
@@ -610,6 +642,7 @@
 		DCE1FE4D178910D60012478B /* MyPlane */ = {
 			isa = PBXGroup;
 			children = (
+				DC73AEF217BD7F0F0049AF50 /* MZFormSheetController */,
 				DC73AEDF17BB4EAB0049AF50 /* UzysSlideMenu */,
 				DCD4AE53179AA74000F6C3FA /* SVProgressHUD */,
 				DCDA4291179048A600E14D50 /* FlatUIKit */,
@@ -881,6 +914,11 @@
 				DC73AEE917BB4EAB0049AF50 /* UzysSMMenuItem.m in Sources */,
 				DC73AEEA17BB4EAB0049AF50 /* UzysSMMenuItemView.m in Sources */,
 				AEF7165217BC290400AC82B9 /* IndependentInviteMenuViewController.m in Sources */,
+				DC73AEF717BD7F100049AF50 /* MZFormSheetController.m in Sources */,
+				DC73AEF817BD7F100049AF50 /* MZFormSheetSegue.m in Sources */,
+				DC73AEFB17BD85590049AF50 /* CommonTasksViewController.m in Sources */,
+				DC73AEFE17BD857E0049AF50 /* AddCommonTaskViewController.m in Sources */,
+				DC73AF0117BD85920049AF50 /* EditCommonTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

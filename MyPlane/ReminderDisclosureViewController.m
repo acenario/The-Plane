@@ -23,13 +23,11 @@
 
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:coder];
     if (self) {
-        self.pullToRefreshEnabled = YES;
-        self.paginationEnabled = YES;
-        self.objectsPerPage = 25;
+        self.pullToRefreshEnabled = NO;
         
         
     }
@@ -76,6 +74,7 @@
     PFQuery *query = [Comments query];
     [query whereKey:@"reminder" equalTo:self.reminderObject];
     [query includeKey:@"user"];
+    [query includeKey:@"recipient"];
     
     [query orderByAscending:@"createdDate"];
     
@@ -180,6 +179,8 @@
             userImage.file = userObject.profilePicture;
             
             [userImage loadInBackground];
+            
+            
             return cell;
         } else { // This is the comment text input cell
             static NSString *CellIdentifier = @"CommentCell";
@@ -217,6 +218,7 @@
 {
     if (indexPath.section == 1) {
         [self remindAgain:nil];
+       
     } else {
         nil;
     }
@@ -310,6 +312,9 @@
 }
 
 - (void)remindAgain:(id)sender {
+    
+    if (![[PFUser currentUser].username isEqualToString:currentUserObject.user]) {
+    
     // Create our Installation query
     PFQuery *pushQuery = [PFInstallation query];
     [pushQuery whereKey:@"user" equalTo:currentUserObject.user];
@@ -322,6 +327,44 @@
     
     
     NSLog(@"Arjun implement a notification here in \"remindAgain\"");
+    } else {
+        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+        PFQuery *pushQuery = [PFInstallation query];
+        [pushQuery whereKey:@"user" equalTo:recipient.user];
+        
+        // Send push notification to query
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery]; // Set our Installation query
+        [push setMessage:[self.reminderObject objectForKey:@"title"]];
+        [push sendPushInBackground];
+        NSLog(@"Arjun implement a notification here in \"remindAgain\"");
+    }
+}
+
+-(void)showAlert:(NSString *)message title:(NSString *)title {
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF9773"];
+    
+    FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:title
+                                                          message:message
+                                                         delegate:nil
+                                                cancelButtonTitle:@"Okay"
+                                                otherButtonTitles:nil];
+    
+    alertView.titleLabel.textColor = [UIColor cloudsColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:18];
+    alertView.messageLabel.textColor = [UIColor cloudsColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:16];
+    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.alertContainer.backgroundColor = barColor;
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    
+    
+    [alertView show];
+
+
 }
 
 @end

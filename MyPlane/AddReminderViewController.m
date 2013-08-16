@@ -7,6 +7,7 @@
 //
 
 #import "AddReminderViewController.h"
+#import "MZFormSheetController.h"
 
 @interface AddReminderViewController ()
 
@@ -174,6 +175,28 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(IBAction)showCommon:(id)sender {
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+    
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    formSheet.cornerRadius = 9.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    
+    
+    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    };
+    
+    
+    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+        
+    }];
+    
+}
 
 
 @end
