@@ -41,8 +41,9 @@
     //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
     //    [circleQuery includeKey:@"owner"];
     
-    PFQuery *query = [Requests query];
-    [query whereKey:@"circle" containedIn:self.circles];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"circle IN %@ OR invitedUsername = '%@'", self.circles, self.currentUser.user];
+    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
+//    [query whereKey:@"circle" containedIn:self.circles];
     [query includeKey:@"circle"];
     [query includeKey:@"requester"];
     [query includeKey:@"invited"];
@@ -62,9 +63,9 @@
     
     for (Requests *request in self.objects) {
         if (request.invited != nil) {
-            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
+//            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
                 [self.invites addObject:request];
-            }
+//            }
         } else {
             [self.requests addObject:request];
         }
@@ -93,6 +94,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
+        
         static NSString *CellIdentifier = @"InviteCell";
         PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
@@ -116,7 +118,7 @@
         return cell;
         
     } else {
-        static NSString *CellIdentifier = @"Cell";
+        static NSString *CellIdentifier = @"RequestCell";
         PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         Requests *request = (Requests *)object;
