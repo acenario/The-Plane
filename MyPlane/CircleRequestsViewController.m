@@ -91,27 +91,27 @@
     }
 }
 //
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
         
         static NSString *CellIdentifier = @"InviteCell";
         PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        Requests *request = (Requests *)object;
+        Requests *request = (Requests *)[self.invites objectAtIndex:indexPath.row];
         
         Circles *circle = (Circles *)request.circle;
-        UserInfo *owner = (UserInfo *)request.requester;
+        UserInfo *inviter = (UserInfo *)request.invitedBy;
         
-        UITextView *name = (UITextView *)[cell viewWithTag:6001];
-        UITextView *creator = (UITextView *)[cell viewWithTag:6002];
-        PFImageView *creatorImage = (PFImageView *)[cell viewWithTag:6011];
+        UITextView *inviterName = (UITextView *)[cell viewWithTag:6001];
+        UITextView *circleName = (UITextView *)[cell viewWithTag:6002];
+        PFImageView *inviterImage = (PFImageView *)[cell viewWithTag:6011];
         UIButton *accept = (UIButton *)[cell viewWithTag:6041];
         
-        name.text = circle.searchName;
-        creator.text = [NSString stringWithFormat:@"Created by %@ %@", owner.firstName, owner.lastName];
-        creatorImage.file = owner.profilePicture;
-        [creatorImage loadInBackground];
+        inviterName.text = [NSString stringWithFormat:@"%@ %@ invites you to join", inviter.firstName, [inviter.lastName substringToIndex:1]];
+        circleName.text = circle.searchName;
+        inviterImage.file = inviter.profilePicture;
+        [inviterImage loadInBackground];
         
         [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -121,20 +121,20 @@
         static NSString *CellIdentifier = @"RequestCell";
         PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        Requests *request = (Requests *)object;
+        Requests *request = (Requests *)[self.requests objectAtIndex:indexPath.row];
         
         Circles *circle = (Circles *)request.circle;
-        UserInfo *owner = (UserInfo *)request.requester;
+        UserInfo *requester = (UserInfo *)request.requester;
         
         UITextView *name = (UITextView *)[cell viewWithTag:6003];
-        UITextView *creator = (UITextView *)[cell viewWithTag:6004];
-        PFImageView *creatorImage = (PFImageView *)[cell viewWithTag:6012];
+        UITextView *requesterName = (UITextView *)[cell viewWithTag:6004];
+        PFImageView *requesterImage = (PFImageView *)[cell viewWithTag:6012];
         UIButton *accept = (UIButton *)[cell viewWithTag:6042];
         
         name.text = circle.searchName;
-        creator.text = [NSString stringWithFormat:@"Created by %@ %@", owner.firstName, owner.lastName];
-        creatorImage.file = owner.profilePicture;
-        [creatorImage loadInBackground];
+        requesterName.text = [NSString stringWithFormat:@"%@ %@", requester.firstName, requester.lastName];
+        requesterImage.file = requester.profilePicture;
+        [requesterImage loadInBackground];
         
         [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
         
