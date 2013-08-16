@@ -259,10 +259,10 @@
     NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
     NSString *tempName = [deleteReminder objectForKey:@"user"];
     
+    
     [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-            indexPaths = [NSArray arrayWithObject:indexPath];
             [self loadObjects];
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
             [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
