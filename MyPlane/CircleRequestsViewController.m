@@ -39,11 +39,13 @@
     //
     //    PFQuery *circleQuery = [Circles query];
     //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
-    //    [circleQuery includeKey:@"owner"];
+    //    [circleQuery includeKey:@"owner"];circle IN %@ OR 
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"circle IN %@ OR invitedUsername = '%@'", self.circles, self.currentUser.user];
-    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = '%@'", [PFUser currentUser].username];
+    PFQuery *query = [PFQuery queryWithClassName:@"Requests"];
 //    [query whereKey:@"circle" containedIn:self.circles];
+    [query whereKey:@"invitedUsername" equalTo:[PFUser currentUser].username];
+    NSLog(@"%@", [PFUser currentUser].username);
     [query includeKey:@"circle"];
     [query includeKey:@"requester"];
     [query includeKey:@"invited"];
@@ -55,7 +57,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    NSLog(@"%lu", (unsigned long)self.objects.count);
     self.segmentName = @"invites";
     
     self.invites = [[NSMutableArray alloc] init];
