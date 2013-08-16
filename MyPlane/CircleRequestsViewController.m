@@ -90,7 +90,8 @@
         return self.requests.count;
     }
 }
- 
+////
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
