@@ -221,7 +221,6 @@
         [push setQuery:pushQuery];
         [push setData:data];
         [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSLog(@"success!");
         }];
         
     }];

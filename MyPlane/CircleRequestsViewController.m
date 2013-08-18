@@ -157,7 +157,6 @@
 
 - (void)acceptRequest:(id)sender
 {
-    NSLog(@"YES");
     if ([self.segmentName isEqualToString:@"invites"]) {
         UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
@@ -165,14 +164,9 @@
         Circles *circle = (Circles *)request.circle;
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
         
-        NSLog(@"1");
         [circle addObject:user forKey:@"members"];
-        [request delete];
-        
-        [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSLog(@"2");
+        [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                NSLog(@"3");
                 [self loadObjects];
             }];
         }];
@@ -183,23 +177,13 @@
         Requests *request = [self.requests objectAtIndex:clickedButtonPath.row];
         Circles *circle = (Circles *)request.circle;
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:request.requester.objectId];
-        NSLog(@"1");
-
+        
         if ([circle.members containsObject:user]) {
             [self loadObjects];
-            NSLog(@"2");
-
         } else {
             [circle addObject:user forKey:@"members"];
-            [request delete];
-            NSLog(@"3");
-            
-            [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                NSLog(@"4");
-
+            [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    NSLog(@"5");
-
                     [self loadObjects];
                 }];
             }];
