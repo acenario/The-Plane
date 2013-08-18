@@ -33,24 +33,14 @@
 }
 
 - (PFQuery *)queryForTable
-{
-    //    userQuery = [UserInfo query];
-    //    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    //
-    //    PFQuery *circleQuery = [Circles query];
-    //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
-    //    [circleQuery includeKey:@"owner"];circle IN %@ OR 
-    
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = '%@'", [PFUser currentUser].username];
-    PFQuery *query = [Requests query];
-    [query whereKeyExists:@"circle"];
-//    [query whereKey:@"circle" containedIn:self.circles];
-//    [query whereKey:@"invitedUsername" equalTo:[PFUser currentUser].username];
-    NSLog(@"%@", [PFUser currentUser].username);
-//    [query includeKey:@"circle"];
-//    [query includeKey:@"requester"];
-//    [query includeKey:@"invited"];
-//    [query includeKey:@"invitedBy"];
+{    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@ OR circle IN %@", [PFUser currentUser].username, self.circles];
+    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
+
+    [query includeKey:@"circle"];
+    [query includeKey:@"requester"];
+    [query includeKey:@"invited"];
+    [query includeKey:@"invitedBy"];
     
     return query;
 }
@@ -58,17 +48,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"objects: %lu", (unsigned long)self.objects.count);
     self.segmentName = @"invites";
     
-    self.invites = [[NSMutableArray alloc] init];
-    self.requests = [[NSMutableArray alloc] init];
+    self.invites = [[NSMutableArray alloc] initWithCapacity:5];
+    self.requests = [[NSMutableArray alloc] initWithCapacity:5];
     
+    NSLog(@"%@", self.objects);
     for (Requests *request in self.objects) {
         if (request.invited != nil) {
-//            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
                 [self.invites addObject:request];
-//            }
         } else {
             [self.requests addObject:request];
         }
@@ -87,13 +75,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%@", self.objects);
     if ([self.segmentName isEqualToString:@"invites"]) {
+        NSLog(@"%lu", (unsigned long)self.invites.count);
         return self.invites.count;
     } else {
+        NSLog(@"%lu", (unsigned long)self.requests.count);
         return self.requests.count;
     }
 }
-//
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
