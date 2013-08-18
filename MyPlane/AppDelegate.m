@@ -7,11 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "UserInfo.h"
-#import "Circles.h"
-#import "SocialPosts.h"
-#import "Comments.h"
-#import "Requests.h"
+#import "SubclassHeader.h"
 #import "RemindersViewController.h"
 #import "FriendsQueryViewController.h"
 
@@ -58,6 +54,7 @@
     [SocialPosts registerSubclass];
     [Comments registerSubclass];
     [Requests registerSubclass];
+    [CommonTasks registerSubclass];
 
     [Parse setApplicationId:@"eG1erDMSBskOUbLbiQJVCN9f8oWazzCWeQ2qg9Fb"
                   clientKey:@"nklHXrOh7SAgnhvfJYC0zjqjFLkkt9OVGQ8U7uyK"];

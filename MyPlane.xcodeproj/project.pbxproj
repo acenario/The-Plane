@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE017AC917BEF179005E2C45 /* CommonTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = AE017AC817BEF179005E2C45 /* CommonTasks.m */; };
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
@@ -148,6 +149,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE017AC717BEF179005E2C45 /* CommonTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonTasks.h; sourceTree = "<group>"; };
+		AE017AC817BEF179005E2C45 /* CommonTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonTasks.m; sourceTree = "<group>"; };
+		AE017ACA17BEF288005E2C45 /* SubclassHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubclassHeader.h; sourceTree = "<group>"; };
 		AE46DEA4178B73390080CB0A /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		AE46DEA5178B73390080CB0A /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
@@ -383,6 +387,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE017ACB17BEF393005E2C45 /* CommonTasks */ = {
+			isa = PBXGroup;
+			children = (
+				DC73AEF917BD85590049AF50 /* CommonTasksViewController.h */,
+				DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */,
+				DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */,
+				DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */,
+				DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */,
+				DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */,
+			);
+			name = CommonTasks;
+			sourceTree = "<group>";
+		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +438,9 @@
 				AED62A3017A1ED59002055ED /* Comments.m */,
 				AE89177C17AF115E00DD2DC0 /* Requests.h */,
 				AE89177D17AF115E00DD2DC0 /* Requests.m */,
+				AE017AC717BEF179005E2C45 /* CommonTasks.h */,
+				AE017AC817BEF179005E2C45 /* CommonTasks.m */,
+				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -472,28 +492,23 @@
 				DC2FE9F717939C1E009EACD0 /* ReminderDisclosureViewController.m */,
 				DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */,
 				DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */,
-				AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */,
-				AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */,
-				DC73AEF917BD85590049AF50 /* CommonTasksViewController.h */,
-				DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */,
-				DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */,
-				DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */,
-				DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */,
-				DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */,
-				AEF4584B17A31B2100AFF8D6 /* AddRemindersDelegation */,
+				AEF4584B17A31B2100AFF8D6 /* AddReminders */,
+				AE017ACB17BEF393005E2C45 /* CommonTasks */,
 			);
 			name = RemindersVCDelegation;
 			sourceTree = "<group>";
 		};
-		AEF4584B17A31B2100AFF8D6 /* AddRemindersDelegation */ = {
+		AEF4584B17A31B2100AFF8D6 /* AddReminders */ = {
 			isa = PBXGroup;
 			children = (
+				AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */,
+				AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */,
 				AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */,
 				AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */,
 				DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */,
 				DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */,
 			);
-			name = AddRemindersDelegation;
+			name = AddReminders;
 			sourceTree = "<group>";
 		};
 		DC38B1ED1793192600304619 /* LoginandSignUp */ = {
@@ -919,6 +934,7 @@
 				DC73AEFB17BD85590049AF50 /* CommonTasksViewController.m in Sources */,
 				DC73AEFE17BD857E0049AF50 /* AddCommonTaskViewController.m in Sources */,
 				DC73AF0117BD85920049AF50 /* EditCommonTaskViewController.m in Sources */,
+				AE017AC917BEF179005E2C45 /* CommonTasks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
