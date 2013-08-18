@@ -14,5 +14,6 @@
 #import "SocialPosts.h"
 #import "Circles.h"
 #import "Requests.h"
+#import "CommonTasks.h"
 
 #endif
