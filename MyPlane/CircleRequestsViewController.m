@@ -39,40 +39,69 @@
     //
     //    PFQuery *circleQuery = [Circles query];
     //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
-    //    [circleQuery includeKey:@"owner"];circle IN %@ OR 
+    //    [circleQuery includeKey:@"owner"];circle IN %@ OR
     
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = '%@'", [PFUser currentUser].username];
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
+    
+    //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@", [PFUser currentUser].username];
     PFQuery *query = [Requests query];
     [query whereKeyExists:@"circle"];
-//    [query whereKey:@"circle" containedIn:self.circles];
-//    [query whereKey:@"invitedUsername" equalTo:[PFUser currentUser].username];
-    NSLog(@"%@", [PFUser currentUser].username);
-//    [query includeKey:@"circle"];
-//    [query includeKey:@"requester"];
-//    [query includeKey:@"invited"];
-//    [query includeKey:@"invitedBy"];
+    //    [query whereKey:@"circle" containedIn:self.circles];
+    //    [query whereKey:@"invitedUsername" equalTo:[PFUser currentUser].username];
+    //    NSLog(@"%@", [PFUser currentUser].username);
+    [query includeKey:@"circle"];
+    [query includeKey:@"requester"];
+    [query includeKey:@"invited"];
+    [query includeKey:@"invitedBy"];
+    
     
     return query;
+    
+}
+
+
+-(void)objectsDidLoad:(NSError *)error {
+    [super objectsDidLoad:error];
+    
+    NSLog(@"begin");
+    
+    for (Requests *request in self.objects) {
+        if (request.invited) {
+            //                if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
+            [self.invites addObject:request];
+            NSLog(@"in load %d", self.invites.count);
+            //                }
+        } else {
+            [self.requests addObject:request];
+        }
+    }
+    
+    if (error) {
+        NSLog(@"error: %@", error);
+        
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"objects: %lu", (unsigned long)self.objects.count);
+    //    NSLog(@"objects: %d", self.objects.count);
     self.segmentName = @"invites";
     
-    self.invites = [[NSMutableArray alloc] init];
-    self.requests = [[NSMutableArray alloc] init];
+    self.invites = [[NSMutableArray alloc] initWithCapacity:5];
+    self.requests = [[NSMutableArray alloc] initWithCapacity:5];
     
-    for (Requests *request in self.objects) {
-        if (request.invited != nil) {
-//            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
-                [self.invites addObject:request];
-//            }
-        } else {
-            [self.requests addObject:request];
-        }
-    }
+    //    for (Requests *request in self.objects) {
+    //        if (request.invited != nil) {
+    ////            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
+    //                [self.invites addObject:request];
+    ////            }
+    //        } else {
+    //            [self.requests addObject:request];
+    //        }
+    //    }
     
     self.tableView.rowHeight = 60;
 }
@@ -88,18 +117,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
+        NSLog(@"%d", self.invites.count);
         return self.invites.count;
     } else {
+        NSLog(@"%d", self.requests.count);
         return self.requests.count;
     }
+    //    return 0;
 }
 //
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
         
-        static NSString *CellIdentifier = @"InviteCell";
-        PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *cellIdentifier = @"InviteCell";
+        PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
         Requests *request = (Requests *)[self.invites objectAtIndex:indexPath.row];
         
