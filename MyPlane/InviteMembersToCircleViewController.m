@@ -14,7 +14,7 @@
 
 @end
 
-@implementation InviteMembersToCircleViewController {    
+@implementation InviteMembersToCircleViewController {
     NSMutableArray *searchResults;
     PFQuery *currentUserQuery;
     UserInfo *userObject;
@@ -47,9 +47,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.searchBar becomeFirstResponder];
+    //    [self.searchBar becomeFirstResponder];
     self.searchBar.delegate = self;
-
+    
     [self currentUserQuery];
     
     self.tableView.rowHeight = 60;
@@ -69,43 +69,45 @@
     [currentUserQuery includeKey:@"friends"];
     
     
-    [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (UserInfo *object in objects) {
-            userObject = object;
-            NSMutableArray *subarray = [[NSMutableArray alloc] initWithArray:object.friends];
-            for (UserInfo *obj in object.friends) {
-                if ([obj.user isEqualToString:[PFUser currentUser].username]) {
-                    [subarray removeObject:obj];
-                }
+    [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        userObject = (UserInfo *)object;
+        NSMutableArray *subarray = [[NSMutableArray alloc] initWithArray:userObject.friends];
+        NSMutableArray *usernames = [[NSMutableArray alloc] initWithArray:self.circle.memberUsernames];
+        for (UserInfo *friend in userObject.friends) {
+            if ([friend.user isEqualToString:[PFUser currentUser].username]) {
+                [subarray removeObject:friend];
+            } else if ([usernames containsObject:friend.user]) {
+                [subarray removeObject:friend];
             }
-//            NSLog(@"%@", [subarray objectAtIndex:0]);
-            searchResults = [[NSMutableArray alloc] initWithArray:subarray];
-            [self loadObjects];
         }
+        
+        searchResults = [[NSMutableArray alloc] initWithArray:subarray];
+        [self loadObjects];
     }];
 }
 
 //-(void)getIDs {
-//    
+//
 //    friendsObjectId = [[NSMutableArray alloc]init];
 //    sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
-//    
+//
 //    for (PFObject *object in userObject.friends) {
 //        [friendsObjectId addObject:[object objectId]];
 //    }
 //    for (PFObject *object in userObject.sentFriendRequests) {
 //        [sentFriendRequestsObjectId addObject:[object objectId]];
 //    }
-//    
+//
 //}
 
 - (void)filterResults:(NSString *)searchTerm
 {
     NSString *newTerm = [searchTerm lowercaseString];
-        
+    
     PFQuery *query = [UserInfo query];
     [query whereKey:@"user" containsString:newTerm];
     [query whereKey:@"user" notEqualTo:[PFUser currentUser].username];
+    [query whereKey:@"user" notContainedIn:self.circle.memberUsernames];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -142,8 +144,7 @@
         UILabel *name = (UILabel *)[cell viewWithTag:6301];
         UILabel *username = (UILabel *)[cell viewWithTag:6302];
         PFImageView *picImage = (PFImageView *)[cell viewWithTag:6311];
-//        UIButton *addButton = (UIButton *)[cell viewWithTag:2121];
-//        addButton.enabled = YES;
+        
         
         UserInfo *searchedUser = [searchResults objectAtIndex:indexPath.row];
         name.text = [NSString stringWithFormat:@"%@ %@", searchedUser.firstName, searchedUser.lastName];
@@ -152,15 +153,12 @@
         
         [picImage loadInBackground];
         
-//        NSLog(@"%@", self.currentlyInvitedMembers);
-        
         if ([self.invitedUsernames containsObject:searchedUser.user]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//            NSLog(@"yES");
         }
         
     }
-        
+    
     return cell;
 }
 
@@ -170,17 +168,15 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     UserInfo *user = [searchResults objectAtIndex:indexPath.row];
-//    UserInfo *user2 = [UserInfo objectWithoutDataWithObjectId:user.objectId];
+    //    UserInfo *user2 = [UserInfo objectWithoutDataWithObjectId:user.objectId];
     
     NSUInteger index = [self.invitedUsernames indexOfObject:user.user];
     
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         [self.currentlyInvitedMembers removeObjectAtIndex:index];
-//        NSLog(@"%@", user);
-//        NSLog(@"%@", self.currentlyInvitedMembers);
+        
         [self.invitedUsernames removeObject:user.user];
-//        NSLog(@"%@", self.invitedUsernames);
     } else {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         [self.currentlyInvitedMembers addObject:user];
@@ -189,7 +185,7 @@
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
- 
+
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

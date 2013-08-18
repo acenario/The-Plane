@@ -87,6 +87,7 @@
 - (IBAction)leaveCircle:(id)sender {
     [userObject removeObject:self.circle forKey:@"circles"];
     [self.circle removeObject:userObject forKey:@"members"];
+    [self.circle removeObject:userObject.user forKey:@"memberUsernames"];
     
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.circle saveInBackground];

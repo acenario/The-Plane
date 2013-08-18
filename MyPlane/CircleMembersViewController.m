@@ -36,6 +36,7 @@
     PFQuery *query = [Circles query];
     [query whereKey:@"name" equalTo:self.circle.name];
     [query includeKey:@"members"];
+//    [query includeKey:@"memberUsernames"];
     
     return query;
 }
@@ -44,13 +45,12 @@
 {
     PFQuery *query = [UserInfo query];
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [query includeKey:@"members"];
+//    [query includeKey:@"members"];
     
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
         if ([self.circle.admins containsObject:userObject.user]) {
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Admin Options" style:UIBarButtonItemStyleBordered target:self action:@selector(adminPanel:)];
-            NSLog(@"Done");
         }
     }];
 }
@@ -79,7 +79,6 @@
     
     selectedUsers = [[NSMutableArray alloc] initWithCapacity:5];
     self.tableView.rowHeight = 60;
-    NSLog(@"Done2");
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,10 +89,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.objects.count;
+    if (self.objects.count > 0) {
+        return ((Circles *)[self.objects objectAtIndex:0]).members.count;
+    }
+    return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
@@ -102,7 +104,7 @@
     UILabel *username = (UILabel *)[cell viewWithTag:6402];
     PFImageView *image = (PFImageView *)[cell viewWithTag:6411];
     
-    Circles *circle = (Circles *)object;
+    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
     UserInfo *member = (UserInfo *)[circle.members objectAtIndex:indexPath.row];
     
     name.text = [NSString stringWithFormat:@"%@ %@", member.firstName, member.lastName];
@@ -147,15 +149,26 @@
 
 - (void)kickSelectedUsers
 {
+    NSMutableArray *usernames = [[NSMutableArray alloc] init];
+    for (UserInfo *user in selectedUsers) {
+        [usernames addObject:user.user];
+    }
+    
     [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %lu Members", (unsigned long)selectedUsers.count]];
+    [self.circle removeObjectsInArray:usernames forKey:@"memberUsernames"];
+    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %d Members", selectedUsers.count]];
     [self.circle saveInBackground];
 }
 
 - (void)promoteSelectedUsers
 {
-    [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %lu Members", (unsigned long)selectedUsers.count]];
+    NSMutableArray *usernames = [[NSMutableArray alloc] init];
+    for (UserInfo *user in selectedUsers) {
+        [usernames addObject:user.user];
+    }
+    
+    [self.circle addObjectsFromArray:usernames forKey:@"admins"];
+    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Promoted %d Members", selectedUsers.count]];
     [self.circle saveInBackground];
 }
 

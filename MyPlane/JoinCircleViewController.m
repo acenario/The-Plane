@@ -17,7 +17,6 @@
 @implementation JoinCircleViewController {
     NSMutableArray *circlesArray;
     NSMutableArray *searchResults;
-    PFQuery *currentUserQuery;
     PFQuery *circleQuery;
     UserInfo *userObject;
 }
@@ -54,7 +53,7 @@
 
 - (void)currentUserQuery
 {
-    currentUserQuery = [UserInfo query];
+    PFQuery *currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];    
     
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -102,8 +101,7 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *uniqueIdentifier = @"Cell";
     
     PFTableViewCell *cell = (PFTableViewCell *) [self.tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
@@ -153,6 +151,7 @@
     addFriendButton.hidden = YES;
     
     [circle addObject:userObject forKey:@"members"];
+    [circle addObject:userObject.user forKey:@"memberUsernames"];
     
     if ([circle.pendingMembers containsObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId]]) {
         [circle removeObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId] forKey:@"pendingMembers"];

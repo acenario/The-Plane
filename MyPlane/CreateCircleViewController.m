@@ -270,6 +270,7 @@
         [circle addObject:currentUser.user forKey:@"admins"];
     }
     [circle addObject:currentUser forKey:@"members"];
+    [circle addObject:currentUser.user forKey:@"memberUsernames"];
     
     if (invitedMembers.count > 0) {
         for (UserInfo *user in invitedMembers) {

@@ -124,6 +124,7 @@
     controller.delegate = self;
     controller.currentlyInvitedMembers = [[NSMutableArray alloc] initWithArray:invitedMembers];
     controller.invitedUsernames = [[NSMutableArray alloc] initWithArray:invitedUsernames];
+    controller.circle = self.circle;
 }
 
 - (IBAction)cancel:(id)sender {
@@ -154,7 +155,7 @@
                 }];
             }];
         }
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%lu Members Invited", (unsigned long)invitedMembers.count]];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }

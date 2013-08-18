@@ -16,6 +16,7 @@
 @property (retain) NSString *name;
 @property (retain) PFObject *owner;
 @property (retain) NSArray *members;
+@property (retain) NSArray *memberUsernames;
 @property (retain) NSArray *pendingMembers;
 @property (retain) NSArray *posts;
 @property (retain) NSString *privacy;

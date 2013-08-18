@@ -18,6 +18,7 @@
 @dynamic searchName;
 @dynamic name;
 @dynamic members;
+@dynamic memberUsernames;
 @dynamic pendingMembers;
 @dynamic posts;
 @dynamic owner;

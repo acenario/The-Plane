@@ -165,6 +165,7 @@
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
         
         [circle addObject:user forKey:@"members"];
+        [circle addObject:user.user forKey:@"memberUsernames"];
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self loadObjects];
@@ -182,6 +183,7 @@
             [self loadObjects];
         } else {
             [circle addObject:user forKey:@"members"];
+            [circle addObject:user.user forKey:@"memberUsernames"];
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [self loadObjects];

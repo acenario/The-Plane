@@ -24,6 +24,7 @@
 - (IBAction)done:(id)sender;
 @property (nonatomic, strong) NSMutableArray *currentlyInvitedMembers;
 @property (nonatomic, strong) NSMutableArray *invitedUsernames;
+@property (nonatomic, strong) Circles *circle;
 
 @end
  
