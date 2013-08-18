@@ -34,21 +34,9 @@
 
 - (PFQuery *)queryForTable
 {
-    //    userQuery = [UserInfo query];
-    //    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    //
-    //    PFQuery *circleQuery = [Circles query];
-    //    [circleQuery whereKey:@"members" matchesQuery:userQuery];
-    //    [circleQuery includeKey:@"owner"];circle IN %@ OR
-    
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
-    
-    //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@", [PFUser currentUser].username];
-    PFQuery *query = [Requests query];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@ OR circle IN %@ AND requester IN SELF", [PFUser currentUser].username, self.circles, nil];
+    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
     [query whereKeyExists:@"circle"];
-    //    [query whereKey:@"circle" containedIn:self.circles];
-    //    [query whereKey:@"invitedUsername" equalTo:[PFUser currentUser].username];
-    //    NSLog(@"%@", [PFUser currentUser].username);
     [query includeKey:@"circle"];
     [query includeKey:@"requester"];
     [query includeKey:@"invited"];
@@ -63,14 +51,12 @@
 -(void)objectsDidLoad:(NSError *)error {
     [super objectsDidLoad:error];
     
-    NSLog(@"begin");
+    [self.invites removeAllObjects];
+    [self.requests removeAllObjects];
     
     for (Requests *request in self.objects) {
         if (request.invited) {
-            //                if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
             [self.invites addObject:request];
-            NSLog(@"in load %d", self.invites.count);
-            //                }
         } else {
             [self.requests addObject:request];
         }
@@ -87,21 +73,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //    NSLog(@"objects: %d", self.objects.count);
     self.segmentName = @"invites";
     
     self.invites = [[NSMutableArray alloc] initWithCapacity:5];
     self.requests = [[NSMutableArray alloc] initWithCapacity:5];
-    
-    //    for (Requests *request in self.objects) {
-    //        if (request.invited != nil) {
-    ////            if ([request.invitedUsername isEqualToString:[PFUser currentUser].username]) {
-    //                [self.invites addObject:request];
-    ////            }
-    //        } else {
-    //            [self.requests addObject:request];
-    //        }
-    //    }
     
     self.tableView.rowHeight = 60;
 }
@@ -117,15 +92,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
-        NSLog(@"%d", self.invites.count);
         return self.invites.count;
     } else {
-        NSLog(@"%d", self.requests.count);
         return self.requests.count;
     }
-    //    return 0;
 }
-//
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.segmentName isEqualToString:@"invites"]) {
@@ -149,7 +121,6 @@
         [inviterImage loadInBackground];
         
         [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
-        
         return cell;
         
     } else {
@@ -172,7 +143,6 @@
         [requesterImage loadInBackground];
         
         [accept addTarget:self action:@selector(acceptRequest:) forControlEvents:UIControlEventTouchUpInside];
-        
         return cell;
     }
 }
@@ -187,18 +157,54 @@
 
 - (void)acceptRequest:(id)sender
 {
-    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
-    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
-    Circles *circle = [self.objects objectAtIndex:clickedButtonPath.row];
-    UserInfo *object = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
-    
-    [circle addObject:self.currentUser forKey:@"members"];
-    [circle removeObject:object forKey:@"pendingMembers"];
-    [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self.currentUser removeObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
-        [self.currentUser saveInBackground];
-        [self loadObjects];
-    }];
+    NSLog(@"YES");
+    if ([self.segmentName isEqualToString:@"invites"]) {
+        UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        Requests *request = [self.invites objectAtIndex:clickedButtonPath.row];
+        Circles *circle = (Circles *)request.circle;
+        UserInfo *user = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
+        
+        NSLog(@"1");
+        [circle addObject:user forKey:@"members"];
+        [request delete];
+        
+        [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSLog(@"2");
+            [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSLog(@"3");
+                [self loadObjects];
+            }];
+        }];
+        
+    } else {
+        UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        Requests *request = [self.requests objectAtIndex:clickedButtonPath.row];
+        Circles *circle = (Circles *)request.circle;
+        UserInfo *user = [UserInfo objectWithoutDataWithObjectId:request.requester.objectId];
+        NSLog(@"1");
+
+        if ([circle.members containsObject:user]) {
+            [self loadObjects];
+            NSLog(@"2");
+
+        } else {
+            [circle addObject:user forKey:@"members"];
+            [request delete];
+            NSLog(@"3");
+            
+            [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSLog(@"4");
+
+                [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    NSLog(@"5");
+
+                    [self loadObjects];
+                }];
+            }];
+        }
+    }
 }
 
 - (IBAction)segmentedChange:(id)sender {
