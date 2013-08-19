@@ -140,19 +140,19 @@
     
     [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         for (UserInfo *user in invitedMembers) {
-            [user addObject:[Circles objectWithoutDataWithObjectId:self.circle.objectId] forKey:@"circleRequests"];
+            [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
+            Requests *request = [Requests object];
+            
+            [request setCircle:self.circle];
+            [request setInvitedBy:self.currentUser];
+            [request setInvitedUsername:self.currentUser.user];
+            [request setInvited:user];
+            [request setInvitedUsername:user.user];
+            
+            [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                nil;
+            }];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                Requests *request = [Requests object];
-                
-                [request setCircle:self.circle];
-                [request setInvitedBy:self.currentUser];
-                [request setInvitedUsername:self.currentUser.user];
-                [request setInvited:user];
-                [request setInvitedUsername:user.user];
-                
-                [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    nil;
-                }];
             }];
         }
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];

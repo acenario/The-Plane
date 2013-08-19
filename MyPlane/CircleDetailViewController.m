@@ -79,6 +79,11 @@
         controller.delegate = self;
         controller.circle = self.circle;
         controller.currentUser = userObject;
+    } else if ([segue.identifier isEqualToString:@"Reminders"]) {
+        CircleRemindersViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        controller.circle = self.circle;
+        controller.circles = self.circles;
     }
 }
 

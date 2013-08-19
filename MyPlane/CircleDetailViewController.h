@@ -11,6 +11,7 @@
 #import "CircleMembersViewController.h"
 #import "CirclePostsViewController.h"
 #import "IndependentInviteMenuViewController.h"
+#import "CircleRemindersViewController.h"
 
 @class CircleDetailViewController;
 
@@ -18,10 +19,11 @@
 
 @end
 
-@interface CircleDetailViewController : UITableViewController <CircleMembersViewControllerDelegate, CirclePostsViewControllerDelegate, IndependentInviteMenuViewControllerDelegate>
+@interface CircleDetailViewController : UITableViewController <CircleMembersViewControllerDelegate, CirclePostsViewControllerDelegate, IndependentInviteMenuViewControllerDelegate, CircleRemindersViewControllerDelegate>
 
 @property (nonatomic, weak) id <CircleDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
+@property (nonatomic, strong) NSArray *circles;
 @property (strong, nonatomic) IBOutlet UILabel *ownerName;
 @property (strong, nonatomic) IBOutlet UILabel *membersCount;
 @property (strong, nonatomic) IBOutlet UILabel *postsCount;

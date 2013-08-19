@@ -15,5 +15,6 @@
 #import "Circles.h"
 #import "Requests.h"
 #import "CommonTasks.h"
+#import "Reminders.h"
 
 #endif
