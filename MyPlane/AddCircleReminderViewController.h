@@ -22,6 +22,7 @@
 @property (nonatomic, weak) id <AddCircleReminderViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
 @property (nonatomic, strong) NSArray *circles;
+@property (strong, nonatomic) IBOutlet UILabel *dateTextLabel;
 @property (strong, nonatomic) IBOutlet UILabel *circleLeftLabel;
 @property (strong, nonatomic) IBOutlet UILabel *circleName;
 @property (strong, nonatomic) IBOutlet UILabel *memberCountDisplay;

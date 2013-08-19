@@ -3022,33 +3022,43 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-9J-q26">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="233" id="Tgu-Ui-IqO"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="X8A-A6-tLN" firstAttribute="centerY" secondItem="H4S-oO-gtK" secondAttribute="centerY" type="default" id="5Y1-1P-h7q"/>
-                                            <constraint firstItem="X8A-A6-tLN" firstAttribute="leading" secondItem="H4S-oO-gtK" secondAttribute="leading" constant="98" id="9Im-DZ-nbk"/>
+                                            <constraint firstItem="ESC-9J-q26" firstAttribute="baseline" secondItem="X8A-A6-tLN" secondAttribute="baseline" type="default" id="Dra-Br-3R8"/>
+                                            <constraint firstItem="X8A-A6-tLN" firstAttribute="leading" secondItem="H4S-oO-gtK" secondAttribute="leading" constant="17" id="cZ7-th-hMx"/>
+                                            <constraint firstItem="ESC-9J-q26" firstAttribute="leading" secondItem="X8A-A6-tLN" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="kFX-gq-PVC"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ivS-w0-Kfq">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="UJq-o8-WgK" detailTextLabel="eYm-3U-1nu" style="IBUITableViewCellStyleValue1" id="ivS-w0-Kfq">
                                         <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68o-u3-TXp">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJq-o8-WgK">
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYm-3U-1nu">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <constraints>
-                                            <constraint firstItem="68o-u3-TXp" firstAttribute="top" secondItem="ivS-w0-Kfq" secondAttribute="top" constant="11" id="QiT-qG-6bp"/>
-                                            <constraint firstItem="68o-u3-TXp" firstAttribute="leading" secondItem="ivS-w0-Kfq" secondAttribute="leading" constant="50" id="a1o-MD-R3W"/>
-                                        </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bl3-IO-wBW">
                                         <rect key="frame" x="0.0" y="99" width="320" height="45"/>
@@ -3064,7 +3074,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3AN-oX-Slo">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="210" id="qZH-sS-AHT"/>
+                                                        <constraint firstAttribute="width" constant="213" id="hCO-dP-UO2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -3079,13 +3089,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="hE3-Oz-syj" firstAttribute="leading" secondItem="Df8-wU-kTn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="A1W-y0-Pb7"/>
                                             <constraint firstItem="3AN-oX-Slo" firstAttribute="top" secondItem="bl3-IO-wBW" secondAttribute="top" constant="2" id="G56-vd-NbC"/>
-                                            <constraint firstItem="Df8-wU-kTn" firstAttribute="leading" secondItem="bl3-IO-wBW" secondAttribute="leading" constant="21" id="ShI-VA-vdM"/>
+                                            <constraint firstItem="Df8-wU-kTn" firstAttribute="leading" secondItem="bl3-IO-wBW" secondAttribute="leading" constant="18" id="Vsm-02-ovH"/>
                                             <constraint firstItem="Df8-wU-kTn" firstAttribute="top" secondItem="bl3-IO-wBW" secondAttribute="top" constant="11" id="eJq-OT-bY8"/>
+                                            <constraint firstItem="hE3-Oz-syj" firstAttribute="leading" secondItem="Df8-wU-kTn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="gAd-XJ-ewF"/>
                                             <constraint firstItem="hE3-Oz-syj" firstAttribute="top" secondItem="bl3-IO-wBW" secondAttribute="top" constant="20" type="default" id="rpl-AI-m9B"/>
                                             <constraint firstItem="3AN-oX-Slo" firstAttribute="trailing" secondItem="hE3-Oz-syj" secondAttribute="trailing" type="default" id="vCv-q1-S0U"/>
-                                            <constraint firstItem="3AN-oX-Slo" firstAttribute="leading" secondItem="Df8-wU-kTn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="whh-aO-nRx"/>
+                                            <constraint firstItem="3AN-oX-Slo" firstAttribute="leading" secondItem="Df8-wU-kTn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="vQV-Ky-we1"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -3130,6 +3140,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <outlet property="circleLeftLabel" destination="Df8-wU-kTn" id="5yL-PH-jdr"/>
                         <outlet property="circleName" destination="3AN-oX-Slo" id="FkN-jc-YDX"/>
+                        <outlet property="dateTextLabel" destination="eYm-3U-1nu" id="1UG-fz-eXb"/>
                         <outlet property="memberCountDisplay" destination="hE3-Oz-syj" id="tHR-kA-NTY"/>
                         <segue destination="vyz-uX-TPk" kind="push" identifier="PickCircle" id="ZAW-VO-3lH"/>
                     </connections>
@@ -3946,6 +3957,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="outlet" name="circleLeftLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="circleName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dateTextLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="memberCountDisplay" candidateClass="UILabel"/>
             </relationships>
         </class>
