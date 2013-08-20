@@ -14,12 +14,17 @@
 
 @protocol ACRPickCircleViewControllerDelegate <NSObject>
 
+- (void)acrPickCircleViewController:(ACRPickCircleViewController *)controller
+          didFinishPickingMembers:(NSArray *)members
+                    withUsernames:(NSArray *)usernames
+                         withCircle:(Circles *)circle;
+
 @end
 
-@interface ACRPickCircleViewController : UITableViewController <PickMembersViewControllerDelegate>
+@interface ACRPickCircleViewController : PFQueryTableViewController <PickMembersViewControllerDelegate>
 
 @property (nonatomic, weak) id <ACRPickCircleViewControllerDelegate> delegate;
-@property (nonatomic, strong) NSArray *circles;
-@property (nonatomic, strong) UserInfo *currentUser;
+//@property (nonatomic, strong) NSArray *circles;
+@property (nonatomic, strong) PFQuery *currentUserQuery;
 
 @end

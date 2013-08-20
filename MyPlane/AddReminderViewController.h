@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "FriendsForRemindersViewController.h"
 #import "ReminderDateViewController.h"
+#import "AddCircleReminderViewController.h"
 
 @class AddReminderViewController;
 

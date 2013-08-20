@@ -26,7 +26,7 @@
     return self;
 }
 
-- (void)currentUserQuery
+- (void)userQuery
 {
     PFQuery * currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -49,7 +49,7 @@
     self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
     self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
     
-    [self currentUserQuery];
+    [self userQuery];
 }
 
 - (void)didReceiveMemoryWarning

@@ -41,6 +41,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet UIView *segmentView;
 - (IBAction)segmentChange:(id)sender;
-
+- (IBAction)unwindToAddCircleReminder:(UIStoryboardSegue *)unwindSegue;
 @end

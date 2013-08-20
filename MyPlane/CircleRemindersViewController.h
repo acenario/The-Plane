@@ -24,4 +24,5 @@
 @property (nonatomic, strong) UserInfo *currentUser;
 @property (nonatomic, strong) NSArray *circles;
 
+
 @end

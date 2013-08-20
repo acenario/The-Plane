@@ -54,7 +54,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%d", self.objects.count);
+//    NSLog(@"%d", self.objects.count);
     return self.objects.count;
 }
 
@@ -117,18 +117,14 @@
     [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
         for (Reminders *reminder in toSave) {
             PFRelation *relation = [self.circle relationforKey:@"remTest"];
-            NSLog(@"%@", reminder);
+//            NSLog(@"%@", reminder);
             [relation addObject:reminder];
         }
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [self dismissViewControllerAnimated:YES completion:^{
                 [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.name]];
             }];
-       
-        
         }];
-        
-        
     }];
 }
 

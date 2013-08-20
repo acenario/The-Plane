@@ -154,12 +154,12 @@
     self.uzysSMenu.hidden = NO;
     if (menuCheck == YES) {
         [self.uzysSMenu toggleMenu];
-        NSLog(@"open");
+//        NSLog(@"open");
         menuCheck = NO;
     } else {
         [self.uzysSMenu openIconMenu];
         menuCheck = YES;
-        NSLog(@"close");
+//        NSLog(@"close");
         
     }
     

@@ -136,7 +136,11 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.isFromCircles) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self performSegueWithIdentifier:@"UnwindToAddCircleReminder" sender:nil];
+    }
 }
 
 - (IBAction)done:(id)sender {
@@ -152,8 +156,13 @@
 //        }
 //    }
     
-    [self.delegate pickMembersViewController:self didFinishPickingMembers:self.invitedMembers withUsernames:self.invitedUsernames];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate pickMembersViewController:self didFinishPickingMembers:self.invitedMembers withUsernames:self.invitedUsernames withCircle:self.circle];
+    
+    if (self.isFromCircles) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self performSegueWithIdentifier:@"UnwindToAddCircleReminder" sender:nil];
+    }
 }
 
 - (void)setButtonTitle:(UIButton *)button withTitle:(NSString *)title

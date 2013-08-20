@@ -124,8 +124,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
         
         
-        NSLog(@"Friend Added! Time to Reload!");
-         
+//        NSLog(@"Friend Added! Time to Reload!");
+        
     }
     
     if ([reminderAdd isEqualToString:@"n"]) {
