@@ -69,6 +69,7 @@
         CircleMembersViewController *controller = [segue destinationViewController];
         controller.delegate = self;
         controller.circle = self.circle;
+        controller.currentUser = self.currentUser;
     } else if ([segue.identifier isEqualToString:@"Posts"]) {
         CirclePostsViewController *controller = [segue destinationViewController];
         controller.delegate = self;

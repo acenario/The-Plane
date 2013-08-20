@@ -91,19 +91,18 @@
     }
 }
 
-- (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller
-        didFinishAddingReminderInCircle:(Circles *)circle
-                              withUsers:(NSArray *)users
-                               withTask:(NSString *)task
-                        withDescription:(NSString *)description
-                               withDate:(NSDate *)date
+- (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
 {
     NSMutableArray *toSave = [[NSMutableArray alloc] init];
     
     for (UserInfo *user in users) {
         Reminders *reminder = [Reminders object];
         reminder.date = date;
-        reminder.description = description;
+        if (![description isEqualToString:@"Enter more information about the reminder..."]) {
+            [reminder setObject:description forKey:@"description"];
+        } else {
+            [reminder setObject:@"No description available." forKey:@"description"];
+        }
         reminder.fromFriend = self.currentUser;
         reminder.fromUser = self.currentUser.user;
         reminder.recipient = user;

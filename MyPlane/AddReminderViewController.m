@@ -55,7 +55,10 @@
     
     textCheck = NO;
     friendCheck = NO;
-    // Do any additional setup after loading the view.
+
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -207,6 +210,12 @@
     if (self.segmentedControl.selectedSegmentIndex == 1) {
         [self performSegueWithIdentifier:@"CircleReminder" sender:nil];
     }
+}
+
+- (void)hideKeyboard
+{
+    [self.taskTextField resignFirstResponder];
+    [self.descriptionTextView resignFirstResponder];
 }
 
 @end

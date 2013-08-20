@@ -27,21 +27,35 @@
 
 @interface AddCircleReminderViewController : UITableViewController <ACRPickCircleViewControllerDelegate, PickMembersViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, ReminderDateViewControllerDelegate>
 
+#pragma mark - Public Properties
 @property (nonatomic, weak) id <AddCircleReminderViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
 @property (nonatomic, strong) NSArray *circles;
 @property (nonatomic, strong) UserInfo *currentUser;
-@property (strong, nonatomic) IBOutlet UILabel *circleLeftLabel;
+@property (nonatomic, strong) NSArray *invitedMembers;
+@property (nonatomic, strong) NSArray *invitedUsernames;
+@property BOOL circleCheck;
+
+#pragma mark - Storyboard Outlets
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet UIView *segmentView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *circleCell;
+
+#pragma mark Labels, Text Views, and Text Fields
 @property (strong, nonatomic) IBOutlet UILabel *circleName;
 @property (strong, nonatomic) IBOutlet UILabel *memberCountDisplay;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
-- (IBAction)cancel:(id)sender;
-- (IBAction)done:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *dateTextLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (strong, nonatomic) IBOutlet UIView *segmentView;
+
+#pragma mark Buttons
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (strong, nonatomic) IBOutlet UIButton *commonTasksButton;
+
+#pragma mark - Actions
+- (IBAction)cancel:(id)sender;
+- (IBAction)done:(id)sender;
 - (IBAction)segmentChange:(id)sender;
 - (IBAction)unwindToAddCircleReminder:(UIStoryboardSegue *)unwindSegue;
+
 @end

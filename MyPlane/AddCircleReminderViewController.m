@@ -10,9 +10,6 @@
 
 @interface AddCircleReminderViewController ()
 
-@property (nonatomic, strong) NSArray *invitedMembers;
-@property (nonatomic, strong) NSArray *invitedUsernames;
-
 @end
 
 @implementation AddCircleReminderViewController {
@@ -22,7 +19,6 @@
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
     BOOL textCheck;
-    BOOL circleCheck;
     PFQuery *currentUserQuery;
 }
 
@@ -46,9 +42,8 @@
         self.segmentView.frame = CGRectMake(0,0,0,0);
         self.view.autoresizesSubviews = NO;
     } else {
-        self.circleName.hidden = YES;
         self.memberCountDisplay.hidden = YES;
-        self.circleLeftLabel.text = @"Pick a circle...";
+        self.circleName.text = @"Pick a circle...";
         isFromCircles = NO;
         currentUserQuery = [UserInfo query];
         [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -70,14 +65,26 @@
     reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
     self.dateTextLabel.text = [mainFormatter stringFromDate:reminderDate];
     
-    descriptionPlaceholderText = @"Enter more information about the reminder.";
+    descriptionPlaceholderText = @"Enter more information about the reminder...";
     self.descriptionTextView.text = descriptionPlaceholderText;
     self.descriptionTextView.textColor = [UIColor lightGrayColor];
     
     self.taskTextField.delegate = self;
     
     textCheck = NO;
-    circleCheck = NO;
+    if (!(self.invitedMembers)) {
+        self.circleCheck = NO;
+    } else {
+        NSLog(@"test, ");
+        self.circleName.text = self.circle.name;
+        self.memberCountDisplay.hidden = NO;
+        self.circleCell.userInteractionEnabled = NO;
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    }
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,7 +101,12 @@
         [self.taskTextField becomeFirstResponder];
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
+    } else if ((indexPath.section == 0) && (indexPath.row == 2)) {
+        if (isFromCircles) {
+            [self performSegueWithIdentifier:@"PickMembers" sender:nil];
+        } else {
+            [self performSegueWithIdentifier:@"PickCircle" sender:nil];
+        }
     } else if ((indexPath.section == 1) && (indexPath.row == 0)) {
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
@@ -105,12 +117,7 @@
         [self.descriptionTextView becomeFirstResponder];
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else if ((indexPath.section == 0) && (indexPath.row == 2)) {
-        if (isFromCircles) {
-            [self performSegueWithIdentifier:@"PickMembers" sender:nil];
-        } else {
-            [self performSegueWithIdentifier:@"PickCircle" sender:nil];
-        }
+        
     }
 }
 
@@ -153,7 +160,8 @@
 {
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
     self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
-    circleCheck = YES;
+    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    self.circleCheck = YES;
     
     [self configureDoneButton];
     [self.tableView reloadData];
@@ -163,11 +171,13 @@
 
 - (void)acrPickCircleViewController:(ACRPickCircleViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames withCircle:(Circles *)circle
 {
-    NSLog(@"test");
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
     self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
     self.circle = circle;
-    circleCheck = YES;
+    self.circleName.text = circle.name;
+    self.memberCountDisplay.hidden = NO;
+    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    self.circleCheck = YES;
     
     [self configureDoneButton];
     [self.tableView reloadData];
@@ -206,14 +216,12 @@
 
 - (void)configureDoneButton
 {
-    if ((textCheck) && (circleCheck)) {
+    if ((textCheck) && (self.circleCheck)) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = NO;
     }
 }
-
-
 
 - (IBAction)segmentChange:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
@@ -228,7 +236,11 @@
     for (UserInfo *user in users) {
         Reminders *reminder = [Reminders object];
         reminder.date = date;
-        reminder.description = description;
+        if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+            [reminder setObject:self.descriptionTextView.text forKey:@"description"];
+        } else {
+            [reminder setObject:@"No description available." forKey:@"description"];
+        }
         reminder.fromFriend = self.currentUser;
         reminder.fromUser = self.currentUser.user;
         reminder.recipient = user;
@@ -252,6 +264,11 @@
     }];
 }
 
+- (void)hideKeyboard
+{
+    [self.taskTextField resignFirstResponder];
+    [self.descriptionTextView resignFirstResponder];
+}
 
 #pragma mark - Segue Methods
 

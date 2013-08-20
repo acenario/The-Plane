@@ -15,7 +15,6 @@
 @end
 
 @implementation CircleMembersViewController {
-    UserInfo *userObject;
     NSMutableArray *selectedUsers;
 }
 
@@ -41,39 +40,43 @@
     return query;
 }
 
-- (void)userQuery
-{
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-//    [query includeKey:@"members"];
-    
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userObject = (UserInfo *)object;
-        if ([self.circle.admins containsObject:userObject.user]) {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Admin Options" style:UIBarButtonItemStyleBordered target:self action:@selector(adminPanel:)];
-        }
-    }];
-}
+//- (void)userQuery
+//{
+//    PFQuery *query = [UserInfo query];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+////    [query includeKey:@"members"];
+//    
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        userObject = (UserInfo *)object;
+//        if ([self.circle.admins containsObject:userObject.user]) {
+//            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Admin Options" style:UIBarButtonItemStyleBordered target:self action:@selector(adminPanel:)];
+//        }
+//    }];
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Create Reminder for Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        [self createReminder];
     }];
     item0.tag = 0;
+
+    if ([self.circle.admins containsObject:self.currentUser.user]) {
+        UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+        }];
+        item0.tag = 1;
+        
+        UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        }];
+        item0.tag = 2;
+        
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1, item2]];
+    } else {
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0]];;
+    }
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-    }];
-    item0.tag = 1;
-    
-    //    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-    //        NSLog(@"Item: %@", item);
-    //    }];
-    //    item0.tag = 2;
-    
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
     [self.view addSubview:self.uzysSMenu];
 
     
@@ -116,32 +119,20 @@
     return cell;
 }
 
-- (void)adminPanel:(id)sender {
-    [self.uzysSMenu toggleMenu];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    UserInfo *user = [self.objects objectAtIndex:indexPath.row];
-    //    UserInfo *user2 = [UserInfo objectWithoutDataWithObjectId:user.objectId];
+    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
+    UserInfo *user = (UserInfo *)[circle.members objectAtIndex:indexPath.row];
     
-    NSUInteger index = [self.objects indexOfObject:user];
+    NSUInteger index = [selectedUsers indexOfObject:user];
     
-    if ([self.circle.admins containsObject:userObject.user]) {
-        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            if (![self.circle.admins containsObject:user.user]) {
-                [selectedUsers removeObjectAtIndex:index];
-            }
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            if (![self.circle.admins containsObject:user.user]) {
-                [selectedUsers addObject:user];
-            }
-        }
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+            [selectedUsers removeObjectAtIndex:index];
     } else {
-        nil;
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [selectedUsers addObject:user];
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -151,7 +142,9 @@
 {
     NSMutableArray *usernames = [[NSMutableArray alloc] init];
     for (UserInfo *user in selectedUsers) {
-        [usernames addObject:user.user];
+        if (![self.circle.admins containsObject:user.user]) {
+            [usernames addObject:user.user];
+        }
     }
     
     [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
@@ -164,12 +157,76 @@
 {
     NSMutableArray *usernames = [[NSMutableArray alloc] init];
     for (UserInfo *user in selectedUsers) {
-        [usernames addObject:user.user];
+        if (![self.circle.admins containsObject:user.user]) {
+            [usernames addObject:user.user];
+        }
     }
     
     [self.circle addObjectsFromArray:usernames forKey:@"admins"];
     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Promoted %d Members", selectedUsers.count]];
     [self.circle saveInBackground];
+}
+
+- (void)createReminder
+{
+    [self performSegueWithIdentifier:@"CreateReminder" sender:nil];
+}
+
+- (IBAction)options:(id)sender
+{
+    [self.uzysSMenu toggleMenu];
+}
+
+- (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+{
+    NSMutableArray *toSave = [[NSMutableArray alloc] init];
+    
+    for (UserInfo *user in users) {
+        Reminders *reminder = [Reminders object];
+        reminder.date = date;
+        if (![description isEqualToString:@"Enter more information about the reminder..."]) {
+            [reminder setObject:description forKey:@"description"];
+        } else {
+            [reminder setObject:@"No description available." forKey:@"description"];
+        }
+        reminder.fromFriend = self.currentUser;
+        reminder.fromUser = self.currentUser.user;
+        reminder.recipient = user;
+        reminder.title = task;
+        reminder.user = user.user;
+        [reminder setObject:circle forKey:@"circle"];
+        [toSave addObject:reminder];
+    }
+    
+    [SVProgressHUD showWithStatus:@"Sending Reminders..."];
+    [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
+        for (Reminders *reminder in toSave) {
+            PFRelation *relation = [self.circle relationforKey:@"remTest"];
+            //            NSLog(@"%@", reminder);
+            [relation addObject:reminder];
+        }
+        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.name]];
+            }];
+        }];
+    }];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"CreateReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
+        
+        controller.delegate = self;
+        controller.circle = self.circle;
+        controller.currentUser = self.currentUser;
+        controller.circleCheck = YES;
+//        controller.circleCell.userInteractionEnabled = NO;
+        controller.invitedMembers = [[NSArray alloc] initWithArray:selectedUsers];
+    }
 }
 
 @end

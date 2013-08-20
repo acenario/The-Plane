@@ -11,7 +11,7 @@
 @interface CreateCircleViewController ()
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
-
+@property (strong, nonatomic) UITextField *textField;
 
 @end
 
@@ -93,6 +93,8 @@
             
             UITextField *name = (UITextField *)[cell viewWithTag:6221];
             name.delegate = self;
+            
+            self.textField = name;
             
             [name addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
             
@@ -298,6 +300,11 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     };
     }];
+}
+
+- (void)hideKeyboard
+{
+    [self.textField resignFirstResponder];
 }
 
 @end

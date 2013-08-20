@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "SubclassHeader.h"
 #import "UzysSlideMenu.h"
+#import "AddCircleReminderViewController.h"
 
 @class CircleMembersViewController;
 
@@ -16,11 +17,13 @@
 
 @end
 
-@interface CircleMembersViewController : PFQueryTableViewController
+@interface CircleMembersViewController : PFQueryTableViewController <AddCircleReminderViewControllerDelegate>
 
 @property (nonatomic, weak) id <CircleMembersViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) Circles *circle;
+@property (nonatomic, strong) UserInfo *currentUser;
+- (IBAction)options:(id)sender;
 
 @end
  

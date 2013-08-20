@@ -48,6 +48,9 @@
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -223,6 +226,11 @@
         [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         }];
     }];
+}
+
+- (void)hideKeyboard
+{
+    [self.commentTextField resignFirstResponder];
 }
 
 @end

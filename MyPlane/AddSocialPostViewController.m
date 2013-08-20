@@ -44,6 +44,10 @@
     [self.userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
     }];
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +106,11 @@
 {
     self.circleLabel.text = circle.searchName;
     circleObject = circle;
+}
+
+- (void)hideKeyboard
+{
+    [self.postTextField resignFirstResponder];
 }
 
 @end

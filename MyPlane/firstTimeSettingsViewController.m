@@ -50,7 +50,9 @@
 {
     [super viewDidLoad];
     
-    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -247,6 +249,11 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)hideKeyboard
+{
+    [self.firstNameField resignFirstResponder];
+    [self.lastNameField resignFirstResponder];
+}
 
 
 @end
