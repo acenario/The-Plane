@@ -17,6 +17,7 @@
 @implementation CirclesViewController {
     PFQuery *userQuery;
     UserInfo *userObject;
+    BOOL menuCheck;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -55,10 +56,18 @@
     self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
     [self.view addSubview:self.uzysSMenu];
     
+    
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
         self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
     }];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    menuCheck = YES;
+    self.uzysSMenu.hidden = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +85,10 @@
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"owner"];
     [query includeKey:@"members"];
+    
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
     
     return query;
 }
@@ -138,7 +151,18 @@
 }
 
 - (IBAction)circleMenu:(id)sender {
-    [self.uzysSMenu toggleMenu];
+    self.uzysSMenu.hidden = NO;
+    if (menuCheck == YES) {
+        [self.uzysSMenu toggleMenu];
+        NSLog(@"open");
+        menuCheck = NO;
+    } else {
+        [self.uzysSMenu openIconMenu];
+        menuCheck = YES;
+        NSLog(@"close");
+        
+    }
+    
 }
 
 @end
