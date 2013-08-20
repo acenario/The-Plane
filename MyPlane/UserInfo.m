@@ -20,6 +20,6 @@
 @dynamic sentFriendRequests;
 @dynamic receivedFriendRequests;
 @dynamic profilePicture;
-@dynamic circleRequests;
+@dynamic circleRequestsCount;
 
 @end

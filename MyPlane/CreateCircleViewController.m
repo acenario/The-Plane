@@ -280,7 +280,7 @@
     
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         for (UserInfo *user in invitedMembers) {
-            [user addObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
+            [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 Requests *request = [Requests object];
                 

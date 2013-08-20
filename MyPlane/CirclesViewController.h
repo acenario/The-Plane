@@ -24,7 +24,7 @@
 
 @end
 
-@interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate>
+@interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate, CreateCircleViewControllerDelegate>
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
 - (IBAction)circleMenu:(id)sender;

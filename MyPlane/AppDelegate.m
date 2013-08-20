@@ -48,7 +48,7 @@
     [self customizeApp];
     //[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
 
-    
+    [Reminders registerSubclass];
     [UserInfo registerSubclass];
     [Circles registerSubclass];
     [SocialPosts registerSubclass];

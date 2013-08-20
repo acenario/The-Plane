@@ -44,7 +44,7 @@
     [self currentUserQuery];
     
 }
- 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -54,7 +54,7 @@
 - (void)currentUserQuery
 {
     PFQuery *currentUserQuery = [UserInfo query];
-    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];    
+    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (UserInfo *object in objects) {
@@ -66,12 +66,12 @@
 - (void)filterResults:(NSString *)searchTerm
 {
     NSString *newTerm = [searchTerm lowercaseString];
-//    NSLog(@"%@", newTerm);
+    //    NSLog(@"%@", newTerm);
     circleQuery = [Circles query];
     [circleQuery whereKey:@"name" containsString:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
     [circleQuery includeKey:@"requests"];
-//    [circleQuery includeKey:@"members"];
+    //    [circleQuery includeKey:@"members"];
     
     if (self.objects.count == 0) {
         circleQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -81,7 +81,7 @@
     dispatch_async(queue, ^{
         [searchResults removeAllObjects];
         searchResults = [[NSMutableArray alloc] initWithArray:[circleQuery findObjects]];
-
+        
         [self loadObjects];
     });
     
@@ -124,8 +124,10 @@
             [objIds addObject:[object objectId]];
         }
         
-        for (Requests *object in searchedCircle.requests) {
-            [names addObject:object.requesterUsername];
+        if (searchedCircle.requests.count > 0) {
+            for (Requests *object in searchedCircle.requests) {
+                [names addObject:object.requesterUsername];
+            }
         }
         
         if ((![objIds containsObject:userObject.objectId]) && (![names containsObject:userObject.user]) ) {
@@ -155,7 +157,6 @@
     
     if ([circle.pendingMembers containsObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId]]) {
         [circle removeObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId] forKey:@"pendingMembers"];
-        [userObject removeObject:[Circles objectWithoutDataWithObjectId:circle.objectId] forKey:@"circleRequests"];
     }
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -177,13 +178,19 @@
     Requests *request = [Requests object];
     
     request.requester = userObject;
-    request.requesterUsername = userObject.user;
+    request.requesterUsername = [PFUser currentUser].username;
     request.circle = circle;
     
     [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requests"];
         [circle addObject:[UserInfo objectWithoutDataWithObjectId:userObject.objectId] forKey:@"pendingMembers"];
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            for (UserInfo *user in circle.members) {
+                [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    nil;
+                }];
+            }
             [SVProgressHUD showSuccessWithStatus:@"Request Sent"];
         }];
     }];

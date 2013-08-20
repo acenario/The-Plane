@@ -10,9 +10,16 @@
 #import "InviteMembersToCircleViewController.h"
 #import "SubclassHeader.h"
 
+@class CreateCircleViewController;
+
+@protocol CreateCircleViewControllerDelegate <NSObject>
+
+@end
+
 @interface CreateCircleViewController : UITableViewController <UITextFieldDelegate, InviteMembersToCircleViewControllerDelegate>
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
+@property (nonatomic, weak) id <CreateCircleViewControllerDelegate> delegate;
 
 @end
  

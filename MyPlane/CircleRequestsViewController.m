@@ -166,8 +166,16 @@
         
         [circle addObject:user forKey:@"members"];
         [circle addObject:user.user forKey:@"memberUsernames"];
+        [circle removeObject:user forKey:@"pendingMembers"];
+        
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                for (UserInfo *user in circle.members) {
+                    [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        nil;
+                    }];
+                }
                 [self loadObjects];
             }];
         }];
@@ -183,9 +191,17 @@
             [self loadObjects];
         } else {
             [circle addObject:user forKey:@"members"];
-            [circle addObject:user.user forKey:@"memberUsernames"];
+            [circle addObject:request.requesterUsername forKey:@"memberUsernames"];
+            [circle removeObject:user forKey:@"pendingMembers"];
+            
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    for (UserInfo *obj in circle.members) {
+                    [obj incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+                    [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        nil;
+                    }];
+                    }
                     [self loadObjects];
                 }];
             }];

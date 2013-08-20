@@ -59,7 +59,7 @@
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
-        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequests.count];
+        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
     }];
 }
 
@@ -84,6 +84,7 @@
     PFQuery *query = [Circles query];
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"owner"];
+    [query includeKey:@"members"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -133,6 +134,7 @@
         Circles *circle = (Circles *)sender;
         controller.delegate = self;
         controller.circle = circle;
+        controller.circles = self.objects;
     }
 }
 
