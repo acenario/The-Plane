@@ -58,6 +58,10 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.segmentedControl setSelectedSegmentIndex:0];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -151,7 +155,7 @@
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-    } else if ((indexPath.section == 0) && (indexPath.row == 1)) {
+    } else if ((indexPath.section == 1) && (indexPath.row == 0)) {
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
             self.descriptionTextView.textColor = [UIColor blackColor];
@@ -198,5 +202,11 @@
     
 }
 
+
+- (IBAction)segmentChanged:(id)sender {
+    if (self.segmentedControl.selectedSegmentIndex == 1) {
+        [self performSegueWithIdentifier:@"CircleReminder" sender:nil];
+    }
+}
 
 @end

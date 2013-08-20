@@ -108,7 +108,13 @@
         PickMembersViewController *controller = (PickMembersViewController *)nav.topViewController;
         controller.delegate = self;
         controller.circle = [self.circles objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        controller.currentUser = self.currentUser;
     }
+}
+
+- (void)pickMembersViewController:(PickMembersViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames
+{
+    nil;
 }
 
 @end

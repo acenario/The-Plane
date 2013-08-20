@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "SubclassHeader.h"
 #import "AddCircleReminderViewController.h"
+#import "ReminderDisclosureViewController.h"
 
 @class CircleRemindersViewController;
 
@@ -16,10 +17,11 @@
 
 @end
 
-@interface CircleRemindersViewController : PFQueryTableViewController <AddCircleReminderViewControllerDelegate>
+@interface CircleRemindersViewController : PFQueryTableViewController <AddCircleReminderViewControllerDelegate, ReminderDisclosureViewControllerDelegate>
 
 @property (nonatomic, weak) id <CircleRemindersViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
+@property (nonatomic, strong) UserInfo *currentUser;
 @property (nonatomic, strong) NSArray *circles;
 
 @end

@@ -84,6 +84,7 @@
         controller.delegate = self;
         controller.circle = self.circle;
         controller.circles = self.circles;
+        controller.currentUser = self.currentUser;
     }
 }
 

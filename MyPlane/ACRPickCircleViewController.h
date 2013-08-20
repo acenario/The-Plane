@@ -20,5 +20,6 @@
 
 @property (nonatomic, weak) id <ACRPickCircleViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray *circles;
+@property (nonatomic, strong) UserInfo *currentUser;
 
 @end

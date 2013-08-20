@@ -45,6 +45,10 @@
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
     
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"fromFriend"];
+    [query includeKey:@"comments"];
+    [query includeKey:@"recipient"];
     return query;
 }
 
@@ -66,6 +70,12 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Reminders *reminder = (Reminders *)[self.objects objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"ReminderDisclosure" sender:reminder];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"AddReminder"]) {
@@ -73,7 +83,53 @@
         AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
         controller.delegate = self;
         controller.circle = self.circle;
+        controller.currentUser = self.currentUser;
+    } else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
+        ReminderDisclosureViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        controller.reminderObject = sender;
     }
+}
+
+- (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller
+        didFinishAddingReminderInCircle:(Circles *)circle
+                              withUsers:(NSArray *)users
+                               withTask:(NSString *)task
+                        withDescription:(NSString *)description
+                               withDate:(NSDate *)date
+{
+    NSMutableArray *toSave = [[NSMutableArray alloc] init];
+    
+    for (UserInfo *user in users) {
+        Reminders *reminder = [Reminders object];
+        reminder.date = date;
+        reminder.description = description;
+        reminder.fromFriend = self.currentUser;
+        reminder.fromUser = self.currentUser.user;
+        reminder.recipient = user;
+        reminder.title = task;
+        reminder.user = user.user;
+        [reminder setObject:circle forKey:@"circle"];
+        [toSave addObject:reminder];
+    }
+    
+    [SVProgressHUD showWithStatus:@"Sending Reminders..."];
+    [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
+        for (Reminders *reminder in toSave) {
+            PFRelation *relation = [self.circle relationforKey:@"remTest"];
+            NSLog(@"%@", reminder);
+            [relation addObject:reminder];
+        }
+        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.name]];
+            }];
+       
+        
+        }];
+        
+        
+    }];
 }
 
 @end

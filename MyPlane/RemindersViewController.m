@@ -29,6 +29,7 @@
     //NSString *tempUsername;
     //PFObject *meObject;
     NSDateFormatter *dateFormatter;
+
 }
 
 
@@ -530,7 +531,19 @@
     
 }
 
-
+- (IBAction)unwindToReminders:(UIStoryboardSegue *)unwindSegue
+{
+//    UIViewController* sourceViewController = unwindSegue.sourceViewController;
+//    
+//    if ([sourceViewController isKindOfClass:[AddReminderViewController class]])
+//    {
+//        NSLog(@"Coming from AR!");
+//    }
+//    else if ([sourceViewController isKindOfClass:[AddCircleReminderViewController class]])
+//    {
+//        NSLog(@"Coming from ACR!");
+//    }
+}
 
 
 

@@ -23,6 +23,7 @@
 
 @property (nonatomic, weak) id <CircleDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
+@property (nonatomic, strong) UserInfo *currentUser;
 @property (nonatomic, strong) NSArray *circles;
 @property (strong, nonatomic) IBOutlet UILabel *ownerName;
 @property (strong, nonatomic) IBOutlet UILabel *membersCount;

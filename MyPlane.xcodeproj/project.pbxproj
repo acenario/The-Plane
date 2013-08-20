@@ -430,6 +430,7 @@
 			children = (
 				AEF4583217A1F6DF00AFF8D6 /* CircleDetailViewController.h */,
 				AEF4583317A1F6DF00AFF8D6 /* CircleDetailViewController.m */,
+				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AEF17C1ED07005E2C45 /* CirclePosts */,
 				AE017AEC17C1EC31005E2C45 /* CircleMembers */,
 				AE017AEA17C1EBD0005E2C45 /* CircleReminders */,
@@ -442,10 +443,6 @@
 			children = (
 				AEF4583417A1F6DF00AFF8D6 /* CircleMembersViewController.h */,
 				AEF4583517A1F6DF00AFF8D6 /* CircleMembersViewController.m */,
-				AEF7165017BC290400AC82B9 /* IndependentInviteMenuViewController.h */,
-				AEF7165117BC290400AC82B9 /* IndependentInviteMenuViewController.m */,
-				AEF4583E17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.h */,
-				AEF4583F17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.m */,
 			);
 			name = CircleMembers;
 			sourceTree = "<group>";
@@ -495,14 +492,14 @@
 			name = PickCircleMembers;
 			sourceTree = "<group>";
 		};
-		AE017AF417C1EE12005E2C45 /* PickCircles */ = {
+		AE017AF417C1EE12005E2C45 /* PickCircles(NOT IMPLEMENTED) */ = {
 			isa = PBXGroup;
 			children = (
 				AE017AE717C1E364005E2C45 /* ACRPickCircleViewController.h */,
 				AE017AE817C1E368005E2C45 /* ACRPickCircleViewController.m */,
 				AE017AF317C1EE02005E2C45 /* PickCircleMembers */,
 			);
-			name = PickCircles;
+			name = "PickCircles(NOT IMPLEMENTED)";
 			sourceTree = "<group>";
 		};
 		AE017AF517C1EE1C005E2C45 /* AddCircleReminder */ = {
@@ -510,7 +507,7 @@
 			children = (
 				AE017AE417C1E1A8005E2C45 /* AddCircleReminderViewController.h */,
 				AE017AE517C1E1B4005E2C45 /* AddCircleReminderViewController.m */,
-				AE017AF417C1EE12005E2C45 /* PickCircles */,
+				AE017AF417C1EE12005E2C45 /* PickCircles(NOT IMPLEMENTED) */,
 			);
 			name = AddCircleReminder;
 			sourceTree = "<group>";
@@ -538,6 +535,17 @@
 				DC2FE9FF1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m */,
 			);
 			name = Friends;
+			sourceTree = "<group>";
+		};
+		AEC247FF17C29FB500381DEF /* InviteMembers */ = {
+			isa = PBXGroup;
+			children = (
+				AEF7165017BC290400AC82B9 /* IndependentInviteMenuViewController.h */,
+				AEF7165117BC290400AC82B9 /* IndependentInviteMenuViewController.m */,
+				AEF4583E17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.h */,
+				AEF4583F17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.m */,
+			);
+			name = InviteMembers;
 			sourceTree = "<group>";
 		};
 		AED62A2B17A1ECA4002055ED /* Subclasses */ = {

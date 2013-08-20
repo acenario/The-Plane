@@ -122,6 +122,7 @@
         controller.delegate = self;
         controller.circle = circle;
         controller.circles = self.objects;
+        controller.currentUser = userObject;
     }
 }
 

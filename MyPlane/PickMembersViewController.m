@@ -10,9 +10,13 @@
 
 @interface PickMembersViewController ()
 
+//@property (nonatomic, strong) NSMutableArray *members;
+
 @end
 
-@implementation PickMembersViewController
+@implementation PickMembersViewController {
+    BOOL allChecked;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,12 +30,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    allChecked = NO;
+//    self.members = [[NSMutableArray alloc]initWithArray:self.circle.members];
+//    for (UserInfo *object in self.circle.members) {
+//        if ([object.user isEqualToString:[PFUser currentUser].username]) {
+//            [self.members removeObject:object];
+//        }
+//    }
+    [self setButtonTitle:self.checkAllButton withTitle:@"Check All"];
+    self.doneBarButton.enabled = NO;
+    self.invitedMembers = [[NSMutableArray alloc] initWithCapacity:10];
+    self.invitedUsernames = [[NSMutableArray alloc] initWithCapacity:10];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,7 +53,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return self.circle.members.count;
 }
 
@@ -53,61 +61,116 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    UILabel *name = (UILabel *)[cell viewWithTag:1];
+    UILabel *username = (UILabel *)[cell viewWithTag:2];
+    PFImageView *image = (PFImageView *)[cell viewWithTag:11];
+    
+    UserInfo *user = (UserInfo *)[self.circle.members objectAtIndex:indexPath.row];
+    
+    name.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+    username.text = user.user;
+    image.file = user.profilePicture;
+    [image loadInBackground];
+    
+    if ([self.invitedMembers containsObject:user]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UserInfo *user = [self.circle.members objectAtIndex:indexPath.row];
+    
+    NSUInteger index = [self.invitedUsernames indexOfObject:user.user];
+    
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [self.invitedMembers removeObjectAtIndex:index];
+        [self.invitedUsernames removeObject:user.user];
+        allChecked = NO;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [self.invitedMembers addObject:user];
+        [self.invitedUsernames addObject:user.user];
+    }
+    
+    [self checkDoneBarState];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (IBAction)checkAll:(id)sender
+{
+//    [self.invitedMembers removeAllObjects];
+//    [self.invitedUsernames removeAllObjects];
+    
+    if (!allChecked) {
+        [self setButtonTitle:self.checkAllButton withTitle:@"Uncheck All"];
+        for (UserInfo *user in self.circle.members) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.circle.members indexOfObject:user] inSection:0];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            self.doneBarButton.enabled = YES;
+            [self.invitedMembers addObject:user];
+            [self.invitedUsernames addObject:user.user];
+        }
+        allChecked = YES;
+    } else {
+        [self setButtonTitle:self.checkAllButton withTitle:@"Check All"];
+        for (UserInfo *user in self.circle.members) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.circle.members indexOfObject:user] inSection:0];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        [self.invitedMembers removeAllObjects];
+        [self.invitedUsernames removeAllObjects];
+        
+        allChecked = NO;
+    }
+    
+    [self checkDoneBarState];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)done:(id)sender {
+//    [self.invitedMembers removeAllObjects];
+//    [self.invitedUsernames removeAllObjects];
+//
+//    for (UserInfo *user in self.circle.members) {
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.circle.members indexOfObject:user] inSection:0];
+//        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+//            [self.invitedMembers addObject:user];
+//            [self.invitedUsernames addObject:user.user];
+//        }
+//    }
+    
+    [self.delegate pickMembersViewController:self didFinishPickingMembers:self.invitedMembers withUsernames:self.invitedUsernames];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setButtonTitle:(UIButton *)button withTitle:(NSString *)title
+{
+    [button setTitle:title forState: UIControlStateNormal];
+    [button setTitle:title forState: UIControlStateApplication];
+    [button setTitle:title forState: UIControlStateHighlighted];
+    [button setTitle:title forState: UIControlStateReserved];
+    [button setTitle:title forState: UIControlStateSelected];
+    [button setTitle:title forState: UIControlStateDisabled];
+}
+
+- (void)checkDoneBarState
+{
+    if (self.invitedMembers.count > 0) {
+        self.doneBarButton.enabled = YES;
+    }
 }
 
 @end

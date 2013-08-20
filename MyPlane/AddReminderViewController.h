@@ -31,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (strong, nonatomic) IBOutlet UILabel *dateDetail;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+- (IBAction)segmentChanged:(id)sender;
 
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;
 
