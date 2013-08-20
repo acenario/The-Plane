@@ -115,7 +115,7 @@
                 
                 if(idx ==0)
                 {
-                    itemView.alpha = 1;
+                    itemView.alpha = 0;
                     itemView.label.alpha = 0;
                     itemView.backgroundView.alpha = 0;
                     itemView.seperatorView.alpha = 0;
@@ -123,7 +123,7 @@
                 }
                 else
                 {
-                    itemView.backgroundView.alpha = 0.7;
+                    itemView.backgroundView.alpha = 0;
                     itemView.label.alpha = 0;
                     itemView.seperatorView.alpha = 1;
                     itemView.alpha = 0;
@@ -153,7 +153,7 @@
             }
             else
             {
-                itemView.backgroundView.alpha = 0.7;
+                itemView.backgroundView.alpha = 0;
                 itemView.label.alpha = 0;
                 itemView.seperatorView.alpha = 0;
                 itemView.alpha = 0;
@@ -206,7 +206,7 @@
             
             if(idx ==0)
             {
-                itemView.alpha = 1;
+                itemView.alpha = 0;
                 itemView.label.alpha =1;
                 itemView.seperatorView.alpha = 0;
                 itemView.imageView.alpha = 1;
