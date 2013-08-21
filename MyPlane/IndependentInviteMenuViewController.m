@@ -114,6 +114,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -133,15 +134,15 @@
 
 - (IBAction)done:(id)sender {
     if (invitedMembers.count > 0) {
-        for (UserInfo *user in invitedMembers) {
-            [self.circle addObject:user.user forKey:@"pendingMembers"];
-        }
-    }
-    
-    [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         PFRelation *relation = [self.circle relationforKey:@"requests"];
+        NSMutableArray *requestsToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
+        
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
+            
+            [usersToSave addObject:user];
+            
             Requests *request = [Requests object];
             
             [request setCircle:self.circle];
@@ -149,19 +150,24 @@
             [request setSenderUsername:self.currentUser.user];
             [request setReceiver:user];
             [request setReceiverUsername:user.user];
-///IMPLEMENT SAVE ALL
-            [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [relation addObject:request];
+            
+            [self.circle addObject:user.user forKey:@"pendingMembers"];
+            
+            [requestsToSave addObject:request];
+            
+        };
+        [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+            [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
+                for (Requests *request in requestsToSave) {
+                    [relation addObject:request];
+                }
                 [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        nil;
-                    }];
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ Members Invited", self.circle.name]];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
-        }
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+        }];
+    }
 }
 
 - (void)removeInvitedMember:(id)sender

@@ -272,43 +272,56 @@
     circle.owner = currentUser;
     circle.public = public;
     circle.privacy = privacy;
+    
+    
     if (![privacy isEqualToString:@"open"]) {
         [circle addObject:currentUser.user forKey:@"admins"];
     }
+    
     [circle addObject:currentUser forKey:@"members"];
     [circle addObject:currentUser.user forKey:@"memberUsernames"];
     
     if (invitedMembers.count > 0) {
-        for (UserInfo *user in invitedMembers) {
-            [circle addObject:user.user forKey:@"pendingMembers"];
-        }
-    }
-    
-    [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
         PFRelation *relation = [circle relationforKey:@"requests"];
+        NSMutableArray *requestsToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
+        
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
-            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                Requests *request = [Requests object];
-                
-                [request setCircle:circle];
-                [request setSender:currentUser];
-                [request setSenderUsername:currentUser.user];
-                [request setReceiver:user];
-                [request setReceiverUsername:user.user];
-                
-/// IMPLEMENT SAVE ALL
-                [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [usersToSave addObject:user];
+            
+            Requests *request = [Requests object];
+            
+            [request setCircle:circle];
+            [request setSender:currentUser];
+            [request setSenderUsername:currentUser.user];
+            [request setReceiver:user];
+            [request setReceiverUsername:user.user];
+            
+            [circle addObject:user.user forKey:@"pendingMembers"];
+            
+            [requestsToSave addObject:request];
+            
+        };
+        
+        [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+            [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
+                for (Requests *request in requestsToSave) {
                     [relation addObject:request];
-                    [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        nil;
-                    }];
+                }
+                [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    };
-    }];
+        }];
+    } else {
+        [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)hideKeyboard

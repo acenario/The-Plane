@@ -73,10 +73,13 @@
         userObject = (UserInfo *)object;
         NSMutableArray *subarray = [[NSMutableArray alloc] initWithArray:userObject.friends];
         NSMutableArray *usernames = [[NSMutableArray alloc] initWithArray:self.circle.memberUsernames];
+        NSMutableArray *pendingMembers = [[NSMutableArray alloc] initWithArray:self.circle.pendingMembers];
         for (UserInfo *friend in userObject.friends) {
             if ([friend.user isEqualToString:[PFUser currentUser].username]) {
                 [subarray removeObject:friend];
             } else if ([usernames containsObject:friend.user]) {
+                [subarray removeObject:friend];
+            } else if ([pendingMembers containsObject:friend.user]) {
                 [subarray removeObject:friend];
             }
         }
