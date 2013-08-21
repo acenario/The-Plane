@@ -14,6 +14,7 @@
 #import "QuartzCore/CALayer.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PlaneTabViewController.h"
+#import "KGStatusBar.h"
 
 
 @interface RemindersViewController ()
@@ -318,6 +319,7 @@
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
     
+    [KGStatusBar dismiss];
     
     return query;
 }
@@ -369,7 +371,8 @@
     [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [SVProgressHUD dismiss];
-            [SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
+            [KGStatusBar showWithStatus:@"Please Reload!"];
+            //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
         } else {
             NSLog(@"There was an error deleting an old reminder!");
             [SVProgressHUD dismiss];

@@ -224,10 +224,8 @@
     
     [cell setSelectedBackgroundView:bgView];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator"]];
-    imgView.frame = CGRectMake(0, (cell.frame.size.height - 1), 300, 1);
-    imgView.tag = 3500;
-    NSLog(@" imgview: %@", imgView);
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
     if (indexPath.row == 0) {
         [cell.contentView addSubview:imgView];
@@ -248,10 +246,7 @@
     if (indexPath.row == 0) {
         nil;
     } else {
-        UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:3500];
-        [[cell.contentView viewWithTag:3500]removeFromSuperview];
-        
+       
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 

@@ -317,32 +317,23 @@
 
 - (void)remindAgain:(id)sender {
     
-    if (![[PFUser currentUser].username isEqualToString:currentUserObject.user]) {
-    
-    // Create our Installation query
-    PFQuery *pushQuery = [PFInstallation query];
-    [pushQuery whereKey:@"user" equalTo:currentUserObject.user];
-    
-    // Send push notification to query
-    PFPush *push = [[PFPush alloc] init];
-    [push setQuery:pushQuery]; // Set our Installation query
-    [push setMessage:[self.reminderObject objectForKey:@"title"]];
-    [push sendPushInBackground];
-    
-    
-    NSLog(@"Arjun implement a notification here in \"remindAgain\"");
-    } else {
         UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
         PFQuery *pushQuery = [PFInstallation query];
         [pushQuery whereKey:@"user" equalTo:recipient.user];
+    
+    if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
+        [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
         
+        
+    } else {
+    
         // Send push notification to query
         PFPush *push = [[PFPush alloc] init];
         [push setQuery:pushQuery]; // Set our Installation query
         [push setMessage:[self.reminderObject objectForKey:@"title"]];
         [push sendPushInBackground];
-        NSLog(@"Arjun implement a notification here in \"remindAgain\"");
     }
+    
 }
 
 -(void)showAlert:(NSString *)message title:(NSString *)title {
