@@ -37,7 +37,7 @@
 
 - (PFQuery *)queryForTable
 {
-    PFRelation *relation = [self.circle relationforKey:@"remTest"];
+    PFRelation *relation = [self.circle relationforKey:@"reminders"];
     
     PFQuery *query = [relation query];
     
@@ -115,7 +115,7 @@
     [SVProgressHUD showWithStatus:@"Sending Reminders..."];
     [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
         for (Reminders *reminder in toSave) {
-            PFRelation *relation = [self.circle relationforKey:@"remTest"];
+            PFRelation *relation = [self.circle relationforKey:@"reminders"];
 //            NSLog(@"%@", reminder);
             [relation addObject:reminder];
         }

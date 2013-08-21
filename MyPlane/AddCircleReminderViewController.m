@@ -253,7 +253,7 @@
     [SVProgressHUD showWithStatus:@"Sending Reminders..."];
     [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
         for (Reminders *reminder in toSave) {
-            PFRelation *relation = [circle relationforKey:@"remTest"];
+            PFRelation *relation = [circle relationforKey:@"reminders"];
             [relation addObject:reminder];
         }
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

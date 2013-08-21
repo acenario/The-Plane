@@ -15,6 +15,7 @@
 		AE017AE917C1E371005E2C45 /* ACRPickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE017AE817C1E368005E2C45 /* ACRPickCircleViewController.m */; };
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
+		AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67ACE817C50DA000D148E4 /* FriendRequests.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
@@ -171,6 +172,8 @@
 		AE46DEA5178B73390080CB0A /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
 		AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewController.m; sourceTree = "<group>"; };
+		AE67ACE717C50DA000D148E4 /* FriendRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequests.h; sourceTree = "<group>"; };
+		AE67ACE817C50DA000D148E4 /* FriendRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequests.m; sourceTree = "<group>"; };
 		AE89177C17AF115E00DD2DC0 /* Requests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Requests.h; sourceTree = "<group>"; };
 		AE89177D17AF115E00DD2DC0 /* Requests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Requests.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
@@ -563,6 +566,8 @@
 				AED62A3017A1ED59002055ED /* Comments.m */,
 				AE89177C17AF115E00DD2DC0 /* Requests.h */,
 				AE89177D17AF115E00DD2DC0 /* Requests.m */,
+				AE67ACE717C50DA000D148E4 /* FriendRequests.h */,
+				AE67ACE817C50DA000D148E4 /* FriendRequests.m */,
 				AE017AC717BEF179005E2C45 /* CommonTasks.h */,
 				AE017AC817BEF179005E2C45 /* CommonTasks.m */,
 				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
@@ -1053,6 +1058,7 @@
 				AE017ADF17C1DF0C005E2C45 /* CircleRemindersViewController.m in Sources */,
 				AE017AE617C1E1B5005E2C45 /* AddCircleReminderViewController.m in Sources */,
 				AE017AE917C1E371005E2C45 /* ACRPickCircleViewController.m in Sources */,
+				AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

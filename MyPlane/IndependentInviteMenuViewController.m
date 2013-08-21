@@ -134,25 +134,29 @@
 - (IBAction)done:(id)sender {
     if (invitedMembers.count > 0) {
         for (UserInfo *user in invitedMembers) {
-            [self.circle addObject:user forKey:@"pendingMembers"];
+            [self.circle addObject:user.user forKey:@"pendingMembers"];
         }
     }
     
     [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        PFRelation *relation = [self.circle relationforKey:@"requests"];
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
             Requests *request = [Requests object];
             
             [request setCircle:self.circle];
-            [request setInvitedBy:self.currentUser];
-            [request setInvitedUsername:self.currentUser.user];
-            [request setInvited:user];
-            [request setInvitedUsername:user.user];
-            
+            [request setSender:self.currentUser];
+            [request setSenderUsername:self.currentUser.user];
+            [request setReceiver:user];
+            [request setReceiverUsername:user.user];
+///IMPLEMENT SAVE ALL
             [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                nil;
-            }];
-            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [relation addObject:request];
+                [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        nil;
+                    }];
+                }];
             }];
         }
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];

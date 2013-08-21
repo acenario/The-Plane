@@ -47,7 +47,7 @@
     self.ownerName.text = [NSString stringWithFormat:@"%@ %@", owner.firstName, owner.lastName];
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
     self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
-    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
+//    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
     
     [self userQuery];
 }

@@ -32,16 +32,23 @@
     return self;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Preload Methods
+
 - (PFQuery *)queryForTable
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@ OR circle IN %@ AND requester IN SELF", [PFUser currentUser].username, self.circles, nil];
-    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
-    [query whereKeyExists:@"circle"];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@ OR circle IN %@ AND requester IN SELF", [PFUser currentUser].username, self.circles, nil];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
+    PFQuery *query = [Requests query];
+    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
     [query includeKey:@"circle"];
-    [query includeKey:@"requester"];
-    [query includeKey:@"invited"];
-    [query includeKey:@"invitedBy"];
-    
+    [query includeKey:@"sender"];
+    [query includeKey:@"receiver"];    
     
     return query;
     
@@ -55,7 +62,7 @@
     [self.requests removeAllObjects];
     
     for (Requests *request in self.objects) {
-        if (request.invited) {
+        if (request.sender) {
             [self.invites addObject:request];
         } else {
             [self.requests addObject:request];
@@ -81,12 +88,6 @@
     self.tableView.rowHeight = 60;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -108,7 +109,7 @@
         Requests *request = (Requests *)[self.invites objectAtIndex:indexPath.row];
         
         Circles *circle = (Circles *)request.circle;
-        UserInfo *inviter = (UserInfo *)request.invitedBy;
+        UserInfo *inviter = (UserInfo *)request.sender;
         
         UITextView *inviterName = (UITextView *)[cell viewWithTag:6001];
         UITextView *circleName = (UITextView *)[cell viewWithTag:6002];
@@ -130,7 +131,7 @@
         Requests *request = (Requests *)[self.requests objectAtIndex:indexPath.row];
         
         Circles *circle = (Circles *)request.circle;
-        UserInfo *requester = (UserInfo *)request.requester;
+        UserInfo *requester = (UserInfo *)request.receiver;
         
         UITextView *name = (UITextView *)[cell viewWithTag:6003];
         UITextView *requesterName = (UITextView *)[cell viewWithTag:6004];
@@ -166,7 +167,7 @@
         
         [circle addObject:user forKey:@"members"];
         [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
-        [circle removeObject:user forKey:@"pendingMembers"];
+        [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
         
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -185,14 +186,14 @@
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
         Requests *request = [self.requests objectAtIndex:clickedButtonPath.row];
         Circles *circle = (Circles *)request.circle;
-        UserInfo *user = [UserInfo objectWithoutDataWithObjectId:request.requester.objectId];
+        UserInfo *user = [UserInfo objectWithoutDataWithObjectId:request.receiver.objectId];
         
         if ([circle.members containsObject:user]) {
             [self loadObjects];
         } else {
             [circle addObject:user forKey:@"members"];
-            [circle addObject:request.requesterUsername forKey:@"memberUsernames"];
-            [circle removeObject:user forKey:@"pendingMembers"];
+            [circle addObject:request.receiverUsername forKey:@"memberUsernames"];
+            [circle removeObject:request.receiverUsername forKey:@"pendingMembers"];
             
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

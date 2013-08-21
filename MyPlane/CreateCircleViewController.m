@@ -265,7 +265,6 @@
 }
 
 - (IBAction)done:(id)sender {
-    NSLog(@"test");
     Circles *circle = [Circles object];
     circle.name = [circleName lowercaseString];
     circle.searchName = circleName;
@@ -281,24 +280,29 @@
     
     if (invitedMembers.count > 0) {
         for (UserInfo *user in invitedMembers) {
-            [circle addObject:user forKey:@"pendingMembers"];
+            [circle addObject:user.user forKey:@"pendingMembers"];
         }
     }
     
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        PFRelation *relation = [circle relationforKey:@"requests"];
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 Requests *request = [Requests object];
                 
                 [request setCircle:circle];
-                [request setInvitedBy:currentUser];
-                [request setInvitedUsername:currentUser.user];
-                [request setInvited:user];
-                [request setInvitedUsername:user.user];
+                [request setSender:currentUser];
+                [request setSenderUsername:currentUser.user];
+                [request setReceiver:user];
+                [request setReceiverUsername:user.user];
                 
+/// IMPLEMENT SAVE ALL
                 [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    nil;
+                    [relation addObject:request];
+                    [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        nil;
+                    }];
                 }];
             }];
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
