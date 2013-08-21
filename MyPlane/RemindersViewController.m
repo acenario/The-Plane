@@ -309,7 +309,7 @@
     }
     
     [query includeKey:@"fromFriend"];
-    
+    [query includeKey:@"recipient"];
     
     [query orderByAscending:@"date"];
     
