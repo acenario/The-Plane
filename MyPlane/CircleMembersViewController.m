@@ -16,6 +16,7 @@
 
 @implementation CircleMembersViewController {
     NSMutableArray *selectedUsers;
+    BOOL optionToggle;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,7 +79,7 @@
     }
     
     [self.view addSubview:self.uzysSMenu];
-
+    optionToggle = NO;
     
     selectedUsers = [[NSMutableArray alloc] initWithCapacity:5];
     self.tableView.rowHeight = 60;
@@ -174,7 +175,13 @@
 
 - (IBAction)options:(id)sender
 {
-    [self.uzysSMenu toggleMenu];
+    if (optionToggle) {
+        //Arjun do something
+    } else {
+        //Arjun do something
+    }
+    
+    optionToggle = !optionToggle;
 }
 
 - (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date

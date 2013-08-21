@@ -107,6 +107,7 @@
         } else {
             [self performSegueWithIdentifier:@"PickCircle" sender:nil];
         }
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if ((indexPath.section == 1) && (indexPath.row == 0)) {
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";

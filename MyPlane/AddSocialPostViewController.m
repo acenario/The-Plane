@@ -15,6 +15,8 @@
 @implementation AddSocialPostViewController {
     Circles *circleObject;
     UserInfo *userObject;
+    BOOL textCheck;
+    BOOL circleCheck;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -29,10 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -44,6 +46,8 @@
     [self.userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
     }];
+    
+    [self configureDoneButton];
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
@@ -69,10 +73,11 @@
     } else {
         nil;
     }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
- 
+
 - (IBAction)done:(id)sender {
-        
+    
     SocialPosts *post = [SocialPosts object];
     [post setObject:self.postTextField.text forKey:@"text"];
     [post setObject:circleObject forKey:@"circle"];
@@ -106,11 +111,32 @@
 {
     self.circleLabel.text = circle.searchName;
     circleObject = circle;
+    circleCheck = YES;
+    [self configureDoneButton];
 }
 
 - (void)hideKeyboard
 {
     [self.postTextField resignFirstResponder];
+}
+
+- (IBAction)validateText:(id)sender
+{
+    if (self.postTextField.text.length > 0) {
+        textCheck = YES;
+    } else {
+        textCheck = NO;
+    }
+    
+    [self configureDoneButton];
+}
+
+- (void)configureDoneButton {
+    if ((circleCheck) && (textCheck)) {
+        self.doneButton.enabled = YES;
+    } else {
+        self.doneButton.enabled = NO;
+    }
 }
 
 @end

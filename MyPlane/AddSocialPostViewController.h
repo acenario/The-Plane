@@ -25,6 +25,7 @@
 @property (nonatomic, weak) id <AddSocialPostViewControllerDelegate> delegate;
 @property (strong, nonatomic) PFQuery *userQuery;
 @property (strong, nonatomic) IBOutlet UILabel *circleLabel;
+@property (nonatomic, strong) UIBarButtonItem *doneButton;
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 
