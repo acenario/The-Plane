@@ -80,7 +80,9 @@
 		DC73AEFB17BD85590049AF50 /* CommonTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */; };
 		DC73AEFE17BD857E0049AF50 /* AddCommonTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */; };
 		DC73AF0117BD85920049AF50 /* EditCommonTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */; };
-		DC73AF0317C552C20049AF50 /* separator.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AF0217C552C20049AF50 /* separator.png */; };
+		DC73AF0617C55FFD0049AF50 /* separator2.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AF0417C55FFD0049AF50 /* separator2.png */; };
+		DC73AF0717C55FFD0049AF50 /* separator2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC73AF0517C55FFD0049AF50 /* separator2@2x.png */; };
+		DC73AF0B17C561530049AF50 /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AF0A17C561530049AF50 /* KGStatusBar.m */; };
 		DC935CDA178F013800C316A3 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC935CD9178F013700C316A3 /* UserInfo.m */; };
 		DCD415E717959250003F9E55 /* buttonAdd-F.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E517959250003F9E55 /* buttonAdd-F.png */; };
 		DCD415E817959250003F9E55 /* buttonAdd-F@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD415E617959250003F9E55 /* buttonAdd-F@2x.png */; };
@@ -274,7 +276,10 @@
 		DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommonTaskViewController.m; sourceTree = "<group>"; };
 		DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCommonTaskViewController.h; sourceTree = "<group>"; };
 		DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCommonTaskViewController.m; sourceTree = "<group>"; };
-		DC73AF0217C552C20049AF50 /* separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separator.png; sourceTree = "<group>"; };
+		DC73AF0417C55FFD0049AF50 /* separator2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separator2.png; sourceTree = "<group>"; };
+		DC73AF0517C55FFD0049AF50 /* separator2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separator2@2x.png"; sourceTree = "<group>"; };
+		DC73AF0917C561530049AF50 /* KGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGStatusBar.h; sourceTree = "<group>"; };
+		DC73AF0A17C561530049AF50 /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
 		DC935CD8178F013700C316A3 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		DC935CD9178F013700C316A3 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		DCD415E517959250003F9E55 /* buttonAdd-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd-F.png"; sourceTree = "<group>"; };
@@ -696,6 +701,15 @@
 			path = MZFormSheetController;
 			sourceTree = "<group>";
 		};
+		DC73AF0817C561530049AF50 /* KGStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				DC73AF0917C561530049AF50 /* KGStatusBar.h */,
+				DC73AF0A17C561530049AF50 /* KGStatusBar.m */,
+			);
+			path = KGStatusBar;
+			sourceTree = "<group>";
+		};
 		DCD4AE53179AA74000F6C3FA /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,6 +815,7 @@
 		DCE1FE4D178910D60012478B /* MyPlane */ = {
 			isa = PBXGroup;
 			children = (
+				DC73AF0817C561530049AF50 /* KGStatusBar */,
 				DC73AEF217BD7F0F0049AF50 /* MZFormSheetController */,
 				DC73AEDF17BB4EAB0049AF50 /* UzysSlideMenu */,
 				DCD4AE53179AA74000F6C3FA /* SVProgressHUD */,
@@ -855,7 +870,8 @@
 		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
 			isa = PBXGroup;
 			children = (
-				DC73AF0217C552C20049AF50 /* separator.png */,
+				DC73AF0417C55FFD0049AF50 /* separator2.png */,
+				DC73AF0517C55FFD0049AF50 /* separator2@2x.png */,
 				DCF891E0178A1E9000A89F6E /* tabbarBackground.png */,
 				DCF891E1178A1E9000A89F6E /* tabbarBackground@2x.png */,
 				DCF891E2178A1E9000A89F6E /* tabBarSelectionIndicator.png */,
@@ -1003,7 +1019,8 @@
 				DC73AEEF17BB4F500049AF50 /* a0@2x.png in Resources */,
 				DC73AEF017BB4F500049AF50 /* a1@2x.png in Resources */,
 				DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */,
-				DC73AF0317C552C20049AF50 /* separator.png in Resources */,
+				DC73AF0617C55FFD0049AF50 /* separator2.png in Resources */,
+				DC73AF0717C55FFD0049AF50 /* separator2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1104,7 @@
 				AE017AE617C1E1B5005E2C45 /* AddCircleReminderViewController.m in Sources */,
 				AE017AE917C1E371005E2C45 /* ACRPickCircleViewController.m in Sources */,
 				AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */,
+				DC73AF0B17C561530049AF50 /* KGStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
