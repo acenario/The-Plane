@@ -63,9 +63,23 @@
         currentUserObject = (UserInfo *)object;
     }];
     
+    [self configureViewController];
+    
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+}
+
+-(void)configureViewController {
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
     
 }
 
@@ -187,7 +201,62 @@
 //        return cell;
 //    }
 }
- 
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    UIFont *myFont = [UIFont flatFontOfSize:18];
+    UIColor *fontColor = [UIColor lightGrayColor];
+    UILabel *commentLabel = (UILabel *)[cell viewWithTag:9];
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator"]];
+    imgView.frame = CGRectMake(0, (cell.frame.size.height - 1), 300, 1);
+    imgView.tag = 3500;
+    NSLog(@" imgview: %@", imgView);
+    
+    if (indexPath.row == 0) {
+        [cell.contentView addSubview:imgView];
+        
+    } else {
+        
+        commentLabel.font = myFont;
+        commentLabel.textColor = fontColor;
+        
+    }
+    
+    
+    return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        nil;
+    } else {
+        UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:3500];
+        [[cell.contentView viewWithTag:3500]removeFromSuperview];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
