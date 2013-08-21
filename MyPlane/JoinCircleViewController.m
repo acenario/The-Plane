@@ -71,7 +71,6 @@
     [circleQuery whereKey:@"name" containsString:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
     [circleQuery includeKey:@"requests"];
-    [circleQuery includeKey:@"]
     //    [circleQuery includeKey:@"members"];
     
     if (self.objects.count == 0) {
