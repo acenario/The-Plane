@@ -42,10 +42,10 @@
 
 - (PFQuery *)queryForTable
 {
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"invitedUsername = %@ OR circle IN %@ AND requester IN SELF", [PFUser currentUser].username, self.circles, nil];
-//    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
-    PFQuery *query = [Requests query];
-    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"receiverUsername = %@ OR circle IN %@ AND sender =  %@", [PFUser currentUser].username, self.circles, NULL];
+    PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
+//    PFQuery *query = [Requests query];
+//    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
     [query includeKey:@"circle"];
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];    
@@ -62,7 +62,8 @@
     [self.requests removeAllObjects];
     
     for (Requests *request in self.objects) {
-        if (request.sender) {
+        NSLog(@"%d", self.objects.count);
+        if ((request.sender)) {
             [self.invites addObject:request];
         } else {
             [self.requests addObject:request];
