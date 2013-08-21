@@ -46,6 +46,10 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUser = (UserInfo *)object;
     }];
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -261,6 +265,7 @@
 }
 
 - (IBAction)done:(id)sender {
+    NSLog(@"test");
     Circles *circle = [Circles object];
     circle.name = [circleName lowercaseString];
     circle.searchName = circleName;

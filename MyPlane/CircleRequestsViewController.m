@@ -165,7 +165,7 @@
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
         
         [circle addObject:user forKey:@"members"];
-        [circle addObject:user.user forKey:@"memberUsernames"];
+        [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
         [circle removeObject:user forKey:@"pendingMembers"];
         
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

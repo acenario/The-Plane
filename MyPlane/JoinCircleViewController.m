@@ -126,7 +126,9 @@
         
         if (searchedCircle.requests.count > 0) {
             for (Requests *object in searchedCircle.requests) {
+                if ((object.requesterUsername)) {
                 [names addObject:object.requesterUsername];
+                }
             }
         }
         
