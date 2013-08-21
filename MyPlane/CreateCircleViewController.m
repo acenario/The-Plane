@@ -147,6 +147,24 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section != 2) {
+        return 44;
+    } else {
+        return 60;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if ((invitedMembers.count > 0) && (section == 2)) {
+        return @"Invited Members";
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - Other Methods
 
 - (void)publicBoolSwitch:(id)sender {
@@ -219,23 +237,6 @@
     [self.tableView reloadData];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section != 2) {
-        return 44;
-    } else {
-        return 60;
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if ((invitedMembers.count > 0) && (section == 2)) {
-        return @"Invited Members";
-    } else {
-        return nil;
-    }
-}
 
 - (void)checkTextField:(id)sender
 {

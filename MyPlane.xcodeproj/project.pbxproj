@@ -515,6 +515,34 @@
 			name = AddCircleReminder;
 			sourceTree = "<group>";
 		};
+		AE67ACED17C5499000D148E4 /* AddSocialPost */ = {
+			isa = PBXGroup;
+			children = (
+				AEF4582E17A1F68D00AFF8D6 /* AddSocialPostViewController.h */,
+				AEF4582F17A1F68D00AFF8D6 /* AddSocialPostViewController.m */,
+				AE67ACEE17C5499700D148E4 /* PickCircle */,
+			);
+			name = AddSocialPost;
+			sourceTree = "<group>";
+		};
+		AE67ACEE17C5499700D148E4 /* PickCircle */ = {
+			isa = PBXGroup;
+			children = (
+				AEF4582B17A1F67E00AFF8D6 /* PickCircleViewController.h */,
+				AEF4582C17A1F67E00AFF8D6 /* PickCircleViewController.m */,
+			);
+			name = PickCircle;
+			sourceTree = "<group>";
+		};
+		AE67ACEF17C549A000D148E4 /* SocialPostDetail */ = {
+			isa = PBXGroup;
+			children = (
+				AEF4582517A1F65700AFF8D6 /* SocialPostDetailViewController.h */,
+				AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */,
+			);
+			name = SocialPostDetail;
+			sourceTree = "<group>";
+		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,12 +608,8 @@
 			children = (
 				AEF4582717A1F65700AFF8D6 /* SocialViewController.h */,
 				AEF4582817A1F65700AFF8D6 /* SocialViewController.m */,
-				AEF4582E17A1F68D00AFF8D6 /* AddSocialPostViewController.h */,
-				AEF4582F17A1F68D00AFF8D6 /* AddSocialPostViewController.m */,
-				AEF4582B17A1F67E00AFF8D6 /* PickCircleViewController.h */,
-				AEF4582C17A1F67E00AFF8D6 /* PickCircleViewController.m */,
-				AEF4582517A1F65700AFF8D6 /* SocialPostDetailViewController.h */,
-				AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */,
+				AE67ACED17C5499000D148E4 /* AddSocialPost */,
+				AE67ACEF17C549A000D148E4 /* SocialPostDetail */,
 			);
 			name = Social;
 			sourceTree = "<group>";

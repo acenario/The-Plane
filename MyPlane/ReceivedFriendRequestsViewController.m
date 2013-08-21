@@ -160,7 +160,7 @@
     
     return cell;
 }
- 
+
 - (IBAction)adjustButtonState:(id)sender
 {
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
@@ -172,29 +172,23 @@
     
     UserInfo *friendToAdd = [UserInfo objectWithoutDataWithClassName:@"UserInfo" objectId:friendObjectID];
     UserInfo *userObjectID = [UserInfo objectWithoutDataWithClassName:@"UserInfo" objectId:userID];
-    
+    NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
     [friendsObjectId addObject:friendAdded.objectId];
-    //[currentUserObject addObject:friendAdded forKey:@"friends"];
     [currentUserObject addObject:friendToAdd forKey:@"friends"];
-    //[currentUserObject removeObject:friendAdded forKey:@"receivedFriendRequests"];
     [currentUserObject removeObject:friendToAdd forKey:@"receivedFriendRequests"];
-    [currentUserObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [friendAdded addObject:userObjectID forKey:@"friends"];
-        [friendAdded removeObject:userObjectID forKey:@"sentFriendRequests"];
-        //[friendAdded addObject:currentUserObject forKey:@"friends"];
-        //[friendAdded removeObject:currentUserObject forKey:@"sentFriendRequests"];
-        [friendAdded saveInBackground];
+    [usersToSave addObject:currentUserObject];
+    [friendAdded addObject:userObjectID forKey:@"friends"];
+    [friendAdded removeObject:userObjectID forKey:@"sentFriendRequests"];
+    [usersToSave addObject:friendAdded];
+    
+    [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {        
         [self.tableView reloadData];
         [self.delegate receivedFriendRequests:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
-        
-
     }];
-    
+
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.enabled = NO;
-    
-    
 }
 
 

@@ -223,10 +223,10 @@
     if (indexPath.section == 1) {
         [self remindAgain:nil];
        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
         nil;
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -44,11 +44,11 @@
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"receiverUsername = %@ OR circle IN %@ AND sender =  %@", [PFUser currentUser].username, self.circles, NULL];
     PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
-//    PFQuery *query = [Requests query];
-//    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
+    //    PFQuery *query = [Requests query];
+    //    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
     [query includeKey:@"circle"];
     [query includeKey:@"sender"];
-    [query includeKey:@"receiver"];    
+    [query includeKey:@"receiver"];
     
     return query;
     
@@ -170,15 +170,18 @@
         [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
         [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
         
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+        
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.name]];
                 for (UserInfo *user in circle.members) {
                     [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        nil;
-                    }];
+                    [usersToSave addObject:user];
                 }
-                [self loadObjects];
+                [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+                    [self loadObjects];
+                }];
             }];
         }];
         
@@ -189,6 +192,8 @@
         Circles *circle = (Circles *)request.circle;
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:request.receiver.objectId];
         
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+        
         if ([circle.members containsObject:user]) {
             [self loadObjects];
         } else {
@@ -198,13 +203,14 @@
             
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ is now part of %@", request.receiverUsername,circle.name]];
                     for (UserInfo *obj in circle.members) {
-                    [obj incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
-                    [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        nil;
-                    }];
+                        [obj incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+                        [usersToSave addObject:obj];
                     }
-                    [self loadObjects];
+                    [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+                        [self loadObjects];
+                    }];
                 }];
             }];
         }
