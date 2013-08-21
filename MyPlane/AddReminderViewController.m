@@ -16,12 +16,13 @@
 @implementation AddReminderViewController {
     NSString *nameOfUser;
     PFObject *recievedObjectID;
-    UserInfo *recipient;
+//    UserInfo *recipient;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
     BOOL textCheck;
     BOOL friendCheck;
+    BOOL isFromFriends;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,6 +37,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.recipient) {
+        friendCheck = YES;
+        self.name.text = [NSString stringWithFormat:@"%@ %@", self.recipient.firstName, self.recipient.lastName];
+        self.username.text = self.recipient.user;
+        
+        self.userImage.file = self.recipient.profilePicture;
+        [self.userImage loadInBackground];
+        self.friendCell.accessoryType = UITableViewCellAccessoryNone;
+        self.friendCell.userInteractionEnabled = NO;
+        self.segmentUIView.hidden = YES;
+        self.segmentUIView.frame = CGRectMake(0,0,0,0);
+        recievedObjectID = self.recipient;
+    } else {
+        self.name.hidden = YES;
+        self.username.hidden = YES;
+        self.userImage.hidden = YES;
+        self.selectAFriendLabel.hidden = NO;
+        self.friendCell.userInteractionEnabled = YES;
+        friendCheck = NO;
+    }
+    
 	mainFormatter = [[NSDateFormatter alloc] init];
     [mainFormatter setDateStyle:NSDateFormatterShortStyle];
     [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -54,7 +77,6 @@
     self.taskTextField.delegate = self;
     
     textCheck = NO;
-    friendCheck = NO;
 
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
@@ -81,7 +103,7 @@
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
     [reminder setObject:recievedObjectID forKey:@"fromFriend"];
-    [reminder setObject:recipient forKey:@"recipient"];
+    [reminder setObject:self.recipient forKey:@"recipient"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
     if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
         [reminder setObject:self.descriptionTextView.text forKey:@"description"];
@@ -135,7 +157,11 @@
     self.userImage.image = image;
     recievedObjectID = objectID;
     friendCheck = YES;
-    recipient = [UserInfo objectWithoutDataWithObjectId:recievedObjectID.objectId];
+    self.recipient = [UserInfo objectWithoutDataWithObjectId:recievedObjectID.objectId];
+    self.name.hidden = NO;
+    self.userImage.hidden = NO;
+    self.username.hidden = NO;
+    self.selectAFriendLabel.hidden = YES;
     [self configureDoneButton];
 }
 

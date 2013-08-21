@@ -117,8 +117,6 @@
 }
 
 
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -143,14 +141,8 @@
     if (self.objects.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    
-    
-    
-    
-    
-    
-    return friendQuery;
-    
+
+    return friendQuery;    
     
 }
 
@@ -252,7 +244,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"AddReminder" sender:[self.objects objectAtIndex:indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -344,6 +336,10 @@
     } else if ([segue.identifier isEqualToString:@"ReceivedFriendRequests"]){
         ReceivedFriendRequestsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"AddReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        controller.recipient = sender;
     }
 }
 

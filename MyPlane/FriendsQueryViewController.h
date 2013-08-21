@@ -9,6 +9,7 @@
 #import "AddFriendViewController.h"
 #import "UserInfo.h"
 #import "ReceivedFriendRequestsViewController.h"
+#import "AddReminderViewController.h"
 
 @interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 

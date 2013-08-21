@@ -42,6 +42,7 @@
     
     self.postTextField.text = placeholderText;
     self.postTextField.textColor = [UIColor grayColor];
+    self.postTextField.delegate = self;
     
     [self.userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
@@ -120,7 +121,15 @@
     [self.postTextField resignFirstResponder];
 }
 
-- (IBAction)validateText:(id)sender
+- (void)configureDoneButton {
+    if ((circleCheck) && (textCheck)) {
+        self.doneButton.enabled = YES;
+    } else {
+        self.doneButton.enabled = NO;
+    }
+}
+
+- (void)textViewDidChange:(UITextView *)textView
 {
     if (self.postTextField.text.length > 0) {
         textCheck = YES;
@@ -129,14 +138,6 @@
     }
     
     [self configureDoneButton];
-}
-
-- (void)configureDoneButton {
-    if ((circleCheck) && (textCheck)) {
-        self.doneButton.enabled = YES;
-    } else {
-        self.doneButton.enabled = NO;
-    }
 }
 
 @end

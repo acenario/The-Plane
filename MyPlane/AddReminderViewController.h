@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "SubclassHeader.h"
 #import "FriendsForRemindersViewController.h"
 #import "ReminderDateViewController.h"
 #import "AddCircleReminderViewController.h"
@@ -30,9 +31,13 @@
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *username;
-@property (strong, nonatomic) IBOutlet UIImageView *userImage;
+@property (strong, nonatomic) IBOutlet PFImageView *userImage;
 @property (strong, nonatomic) IBOutlet UILabel *dateDetail;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet UIView *segmentUIView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *friendCell;
+@property (strong, nonatomic) IBOutlet UILabel *selectAFriendLabel;
+@property (nonatomic, strong) UserInfo *recipient;
 - (IBAction)segmentChanged:(id)sender;
 
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;
