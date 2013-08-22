@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
+#define TAG_LEAVE 1
+#define TAG_DISBAND 2
 #import "CircleDetailViewController.h"
 
 @interface CircleDetailViewController ()
@@ -47,7 +49,7 @@
     self.ownerName.text = [NSString stringWithFormat:@"%@ %@", owner.firstName, owner.lastName];
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
     self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
-//    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
+    //    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
     
     [self userQuery];
 }
@@ -56,7 +58,7 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-} 
+}
 
 #pragma mark - Table view data source
 
@@ -92,6 +94,64 @@
 #pragma mark - Other Methods
 
 - (IBAction)leaveCircle:(id)sender {
+    
+    if (self.circle.members.count > 1) {
+        NSString *message = @"Are you sure you want to leave this circle?";
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+        
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.name]
+                                   message:message
+                                   delegate:self
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:@"Yes", nil];
+        
+        alertView.tag = TAG_LEAVE;
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+        alertView.messageLabel.textColor = [UIColor cloudsColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+        alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        
+        
+        [alertView show];
+    } else {
+        NSString *message = @"You are the last member of this circle. By leaving you will disband this circle. Are you sure you want leave?";
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+        
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.name]
+                                   message:message
+                                   delegate:self
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:@"Yes", nil];
+        
+        alertView.tag = TAG_DISBAND;
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+        alertView.messageLabel.textColor = [UIColor cloudsColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+        alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        
+        
+        [alertView show];
+    }
+}
+
+- (void)leave
+{
     [userObject removeObject:self.circle forKey:@"circles"];
     [self.circle removeObject:userObject forKey:@"members"];
     [self.circle removeObject:userObject.user forKey:@"memberUsernames"];
@@ -102,6 +162,35 @@
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
         }];
     }];
+    
+}
+
+- (void)disband
+{
+    [userObject removeObject:self.circle forKey:@"circles"];
+    [self.circle removeObject:userObject forKey:@"members"];
+    [self.circle removeObject:userObject.user forKey:@"memberUsernames"];
+    
+    [self.circle deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        }];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
+        }];
+    }];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == TAG_LEAVE) {
+        if (buttonIndex == 0) {
+            [self leave];
+        }
+    } else {
+        if (buttonIndex == 0) {
+            [self disband];
+        }
+    }
 }
 
 @end
