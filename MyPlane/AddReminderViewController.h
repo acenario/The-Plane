@@ -38,6 +38,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *friendCell;
 @property (strong, nonatomic) IBOutlet UILabel *selectAFriendLabel;
 @property (nonatomic, strong) UserInfo *recipient;
+@property (nonatomic, strong) UserInfo *currentUser;
+
 - (IBAction)segmentChanged:(id)sender;
 
 @property (nonatomic, weak) id <AddReminderViewControllerDelegate> delegate;

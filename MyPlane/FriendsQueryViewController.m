@@ -15,7 +15,7 @@
 @end
 
 @implementation FriendsQueryViewController {
-    PFObject *meObject;
+    UserInfo *meObject;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,8 +71,7 @@
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"friends"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        meObject = object;
-        NSLog(@"complete");
+        meObject = (UserInfo *)object;
     }];
     
     if (self.objects.count == 0) {
@@ -156,7 +155,6 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         NSArray *array = [object objectForKey:@"receivedFriendRequests"];
         int count = array.count;
-        NSLog(@"count: %d", count);
         self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d Pending", count];
     }];
 }
@@ -349,6 +347,7 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
         controller.recipient = sender;
+        controller.currentUser = meObject;
     }
 }
 

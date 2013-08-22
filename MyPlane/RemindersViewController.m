@@ -9,7 +9,6 @@
 #import "RemindersViewController.h"
 #import "MyLoginViewController.h"
 #import "MySignUpViewController.h"
-#import "FriendsViewController.h"
 #import "SettingsViewController.h"
 #import "QuartzCore/CALayer.h"
 #import <QuartzCore/QuartzCore.h>

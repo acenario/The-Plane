@@ -154,7 +154,7 @@
 		DCF891E7178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891E3178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png */; };
 		DCF891ED178A20EF00A89F6E /* buttonAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891EB178A20EF00A89F6E /* buttonAdd.png */; };
 		DCF891EE178A20EF00A89F6E /* buttonAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF891EC178A20EF00A89F6E /* buttonAdd@2x.png */; };
-		DCF891F1178A348E00A89F6E /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF891F0178A348E00A89F6E /* FriendsViewController.m */; };
+		DCF891F1178A348E00A89F6E /* DeprecatedFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF891F0178A348E00A89F6E /* DeprecatedFriendsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -383,8 +383,8 @@
 		DCF891E3178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarSelectionIndicator@2x.png"; sourceTree = "<group>"; };
 		DCF891EB178A20EF00A89F6E /* buttonAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonAdd.png; sourceTree = "<group>"; };
 		DCF891EC178A20EF00A89F6E /* buttonAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAdd@2x.png"; sourceTree = "<group>"; };
-		DCF891EF178A348E00A89F6E /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
-		DCF891F0178A348E00A89F6E /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		DCF891EF178A348E00A89F6E /* DeprecatedFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeprecatedFriendsViewController.h; sourceTree = "<group>"; };
+		DCF891F0178A348E00A89F6E /* DeprecatedFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeprecatedFriendsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,8 +562,6 @@
 		AEB24DC6178CD5E900C7711D /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				DCF891EF178A348E00A89F6E /* FriendsViewController.h */,
-				DCF891F0178A348E00A89F6E /* FriendsViewController.m */,
 				DCD4AE501796E5DD00F6C3FA /* FriendsQueryViewController.h */,
 				DCD4AE511796E5DD00F6C3FA /* FriendsQueryViewController.m */,
 				AE46DEA4178B73390080CB0A /* AddFriendViewController.h */,
@@ -863,6 +861,8 @@
 				DCE1FE59178910D60012478B /* Default.png */,
 				DCE1FE5B178910D60012478B /* Default@2x.png */,
 				DCE1FE5D178910D60012478B /* Default-568h@2x.png */,
+				DCF891EF178A348E00A89F6E /* DeprecatedFriendsViewController.h */,
+				DCF891F0178A348E00A89F6E /* DeprecatedFriendsViewController.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1036,7 +1036,7 @@
 				DCE1FE64178910D60012478B /* FirstViewController.m in Sources */,
 				DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */,
 				DCDF265B1789B5F4005168BE /* RemindersViewController.m in Sources */,
-				DCF891F1178A348E00A89F6E /* FriendsViewController.m in Sources */,
+				DCF891F1178A348E00A89F6E /* DeprecatedFriendsViewController.m in Sources */,
 				AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */,
 				AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */,
 				AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */,

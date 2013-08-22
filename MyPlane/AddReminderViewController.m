@@ -20,7 +20,6 @@
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
-    UserInfo *currentUser;
     BOOL textCheck;
     BOOL friendCheck;
     BOOL isFromFriends;
@@ -97,13 +96,14 @@
 
 - (void)done:(id)sender
 {
+    [self hideKeyboard];
     PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
     
     //[reminder setObject:[NSDate date] forKey:@"date"];
     [reminder setObject:reminderDate forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
-    [reminder setObject:currentUser forKey:@"fromFriend"];
+    [reminder setObject:self.currentUser forKey:@"fromFriend"];
     [reminder setObject:self.recipient forKey:@"recipient"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
     if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
@@ -157,7 +157,7 @@
     self.username.text = username;
     self.userImage.image = image;
     receivedObjectID = objectID;
-    currentUser = userObject;
+    self.currentUser = userObject;
     friendCheck = YES;
     self.recipient = [UserInfo objectWithoutDataWithObjectId:receivedObjectID.objectId];
     self.name.hidden = NO;

@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import "FriendsViewController.h"
+#import "DeprecatedFriendsViewController.h"
 #import "QuartzCore/CALayer.h"
 
-@interface FriendsViewController ()
+@interface DeprecatedFriendsViewController ()
 
 @end
 
-@implementation FriendsViewController {
+@implementation DeprecatedFriendsViewController {
     NSArray *friendsArray;
     NSMutableArray *receievedFriendRequestsArray;
     NSMutableArray *fileArray;

@@ -11,7 +11,7 @@
 #import "ReceivedFriendRequestsViewController.h"
 
 
-@interface FriendsViewController : UITableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
+@interface DeprecatedFriendsViewController : UITableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 
 @end
  
