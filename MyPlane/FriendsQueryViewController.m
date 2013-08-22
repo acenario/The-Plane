@@ -134,9 +134,12 @@
     PFQuery *friendQuery = [UserInfo query];
     [friendQuery whereKey:@"friends" matchesQuery:query];
         
-    
+    /*NSSortDescriptor * firstNameDescriptor = [[NSSortDescriptor alloc]
+                                              initWithKey:@"firstName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *sortDescriptors = @[firstNameDescriptor];
+    [friendQuery orderBySortDescriptors:sortDescriptors];*/
     [friendQuery orderByAscending:@"firstName"];
-    
+
     
     if (self.objects.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;

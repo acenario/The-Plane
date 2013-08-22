@@ -335,7 +335,7 @@
 
 - (IBAction)doneButton:(id)sender {
     
-    
+    [self hideKeyboard];
     [self updateAlltheMethods];
     
     
