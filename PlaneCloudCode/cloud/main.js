@@ -21,9 +21,9 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                                       where: userQuery, // Set our Installation query
                                       push_time: reminderDate,
                                       data: {
-                                      alert: "New reminder: " + titleText + " " + "from: " + fromUserName,
-                                      badge: "Increment",
-                                      r: "n"
+                                      alert: "Remember: " + titleText + " " + "from: " + fromUserName,
+                                      badge: "Increment"
+                                      //r: "n"
                                       //reminder: titleText
                                       //sound: "cheering.caf",
     

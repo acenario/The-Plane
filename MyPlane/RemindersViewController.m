@@ -196,7 +196,7 @@
     
     PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
     
-    NSDate *currentDate = [NSDate date];
+    NSDate *currentDate = [[NSDate date] dateByAddingTimeInterval:7200];
     NSComparisonResult result;
     
     result = [currentDate compare:[object objectForKey:@"date"]];
@@ -288,7 +288,8 @@
             [push setQuery:pushQuery];
             [push setMessage:message];
             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                NSLog(@"Reminder Deleted!");
+                NSString *message = [NSString stringWithFormat:@"%@ has been notified", deleteName];
+                [SVProgressHUD showSuccessWithStatus:message];
             }];
             
         }
@@ -373,10 +374,10 @@
 - (void)checkDateforCell:(UITableViewCell *)cell withReminder:(PFObject *)reminder
 {
     
-    NSLog(@"reminder: %@ from: %@", [reminder objectForKey:@"title"], [reminder objectForKey:@"fromUser"]);
-    
-    [SVProgressHUD showWithStatus:@"Cleanup..."];
-    
+    //NSLog(@"reminder: %@ from: %@", [reminder objectForKey:@"title"], [reminder objectForKey:@"fromUser"]);
+
+        [SVProgressHUD showWithStatus:@"Cleanup..."];
+
     [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [SVProgressHUD dismiss];
@@ -388,6 +389,7 @@
         }
         
     }];
+        
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

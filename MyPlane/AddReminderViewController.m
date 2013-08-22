@@ -115,6 +115,22 @@
      
     [reminder saveEventually:^(BOOL succeeded, NSError *error) {
         [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
+        NSString *message = [NSString stringWithFormat:@"New Reminder: %@ from: %@", self.taskTextField.text, self.currentUser.user];
+        NSDictionary *data = @{
+                               @"r": @"n"
+                               };
+        
+        PFQuery *pushQuery = [PFInstallation query];
+        [pushQuery whereKey:@"user" equalTo:self.recipient.user];
+        
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery];
+        [push setData:data];
+        [push setMessage:message];
+        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSString *success = [NSString stringWithFormat:@"%@ has Received the reminder", self.recipient.user];
+            [SVProgressHUD showSuccessWithStatus:success];
+        }];
        
     }];
     
