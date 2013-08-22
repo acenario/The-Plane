@@ -31,6 +31,13 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    optionToggle = YES;
+    self.uzysSMenu.hidden = YES;
+    
+}
+
 - (PFQuery *)queryForTable
 {
     PFQuery *query = [Circles query];
@@ -79,7 +86,6 @@
     }
     
     [self.view addSubview:self.uzysSMenu];
-    optionToggle = NO;
     
     selectedUsers = [[NSMutableArray alloc] initWithCapacity:5];
     self.tableView.rowHeight = 60;
@@ -175,13 +181,18 @@
 
 - (IBAction)options:(id)sender
 {
+    self.uzysSMenu.hidden = NO;
     if (optionToggle) {
-        //Arjun do something
+        [self.uzysSMenu toggleMenu];
+        //        NSLog(@"open");
+        optionToggle = NO;
     } else {
-        //Arjun do something
+        [self.uzysSMenu openIconMenu];
+        optionToggle = YES;
+        //        NSLog(@"close");
+        
     }
     
-    optionToggle = !optionToggle;
 }
 
 - (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
