@@ -306,6 +306,7 @@
             
         };
         
+        [SVProgressHUD setStatus:@"Creating circles"];
         [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
             [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
                 for (Requests *request in requestsToSave) {
