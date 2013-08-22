@@ -7,7 +7,20 @@
 //
 
 #import <Parse/Parse.h>
+#import "SubclassHeader.h"
 
-@interface AddCommonTaskViewController : PFQueryTableViewController
+@class AddCommonTaskViewController;
+
+@protocol AddCommonTaskViewControllerDelegate <NSObject>
+
+@end
+
+@interface AddCommonTaskViewController : PFQueryTableViewController <UITextFieldDelegate>
+
+@property (nonatomic, strong) CommonTasks *task;
+@property (nonatomic, strong) UserInfo *currentUser;
+@property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) UIBarButtonItem *doneButton;
+@property (nonatomic, weak) id <AddCommonTaskViewControllerDelegate> delegate;
 
 @end

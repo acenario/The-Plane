@@ -8,7 +8,11 @@
 
 #import <Parse/Parse.h>
 #import "SubclassHeader.h"
+#import "AddCommonTaskViewController.h"
+#import "EditCommonTaskViewController.h"
 
-@interface CommonTasksViewController : PFQueryTableViewController
+@interface CommonTasksViewController : UITableViewController <AddCommonTaskViewControllerDelegate>
+
+@property (nonatomic, strong) UserInfo *currentUser;
 
 @end
