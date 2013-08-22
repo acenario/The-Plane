@@ -38,7 +38,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"spCenterTabbarItemTapped"
+                                               object:nil];
     
     UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Circles" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
         NSLog(@"Item: %@", item);
@@ -46,17 +49,7 @@
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-        NSLog(@"Item: %@", item);
-    }];
-    item0.tag = 1;
-    
-    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-        NSLog(@"Item: %@", item);
-    }];
-    item0.tag = 2;
-    
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1,item2]];
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0]];
     [self.view addSubview:self.uzysSMenu];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -81,6 +74,18 @@
     
     self.tableView.backgroundView = av;
     
+}
+
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:@"spCenterTabbarItemTapped"]) {
+        NSLog (@"Successfully received the add Social Post command!");
+        [self performSegueWithIdentifier:@"AddSocialPost" sender:nil];
+    }
 }
 
 -(IBAction)socialMenu:(id)sender {
@@ -233,7 +238,7 @@
         
         nameLabel.font = socialFont;
         nameLabel.textColor = [UIColor asbestosColor];
-        postLabel.font = [UIFont flatFontOfSize:17];
+        postLabel.font = [UIFont flatFontOfSize:16];
         postLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         circleLabel.font = socialFont;
         circleNameLabel.font = socialFont;

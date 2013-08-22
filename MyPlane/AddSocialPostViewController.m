@@ -49,10 +49,21 @@
     }];
     
     [self configureDoneButton];
+    [self configureViewController];
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +87,48 @@
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    if (indexPath.row == 0) {
+        
+        self.postTextField.font = [UIFont flatFontOfSize:14];
+        
+        [cell.contentView addSubview:imgView];
+        
+    } else {
+        
+        self.circleName.font = [UIFont flatFontOfSize:16];
+        self.circleLabel.font = [UIFont flatFontOfSize:16];
+        self.circleLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+        self.circleLabel.backgroundColor = [UIColor whiteColor];
+        self.circleName.backgroundColor = [UIColor whiteColor];
+    }
+    
+    
+    return cell;
+    
+}
+
 
 - (IBAction)done:(id)sender {
     
@@ -102,7 +155,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PickCircle"]) {
-        PickCircleViewController *controller = [segue destinationViewController];
+        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+        PickCircleViewController *controller = (PickCircleViewController *)navController.topViewController;
         controller.delegate = self;
         controller.userQuery = self.userQuery;
     }

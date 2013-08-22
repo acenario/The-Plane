@@ -54,10 +54,13 @@
         self.name.hidden = YES;
         self.username.hidden = YES;
         self.userImage.hidden = YES;
+        self.userFrame.hidden = YES;
         self.selectAFriendLabel.hidden = NO;
         self.friendCell.userInteractionEnabled = YES;
         friendCheck = NO;
     }
+    
+    [self configureViewController];
     
 	mainFormatter = [[NSDateFormatter alloc] init];
     [mainFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -83,8 +86,28 @@
     gestureRecognizer.cancelsTouchesInView = NO;
 }
 
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+    self.segmentedControl.selectedFont = [UIFont boldFlatFontOfSize:16];
+    self.segmentedControl.selectedFontColor = [UIColor cloudsColor];
+    self.segmentedControl.deselectedFont = [UIFont flatFontOfSize:16];
+    self.segmentedControl.deselectedFontColor = [UIColor cloudsColor];
+    self.segmentedControl.selectedColor = [UIColor colorFromHexCode:@"0A67A3"];
+    self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"3E97D1"];
+    self.segmentedControl.dividerColor = [UIColor wetAsphaltColor];
+    self.segmentedControl.cornerRadius = 15.0;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self.segmentedControl setSelectedSegmentIndex:0];
 }
 
@@ -178,6 +201,7 @@
     self.recipient = [UserInfo objectWithoutDataWithObjectId:receivedObjectID.objectId];
     self.name.hidden = NO;
     self.userImage.hidden = NO;
+    self.userFrame.hidden = NO;
     self.username.hidden = NO;
     self.selectAFriendLabel.hidden = YES;
     [self configureDoneButton];
@@ -210,6 +234,59 @@
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+            self.taskInd.font = [UIFont flatFontOfSize:16];
+            self.taskTextField.font = [UIFont flatFontOfSize:14];
+            
+            
+            [cell.contentView addSubview:imgView];
+            
+        } else if (indexPath.row == 1) {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+            
+            [cell.contentView addSubview:imgView];
+            
+        } else {
+            self.selectAFriendLabel.font = [UIFont flatFontOfSize:17];
+            self.name.font = [UIFont flatFontOfSize:16];
+            self.username.font = [UIFont flatFontOfSize:14];
+        }
+    } else {
+        self.descriptionLabel.font = [UIFont boldFlatFontOfSize:16];
+        self.descriptionTextView.font = [UIFont flatFontOfSize:14];
+    }
+    
+    return cell;
+    
+}
+
 
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
 {

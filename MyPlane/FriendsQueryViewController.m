@@ -363,4 +363,8 @@
 
 
 
+- (IBAction)addFriend:(id)sender {
+    [self performSegueWithIdentifier:@"AddFriend" sender:nil];
+}
+
 @end

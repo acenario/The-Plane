@@ -9,10 +9,8 @@
 #import "RemindersViewController.h"
 #import "MyLoginViewController.h"
 #import "MySignUpViewController.h"
-#import "SettingsViewController.h"
 #import "QuartzCore/CALayer.h"
 #import <QuartzCore/QuartzCore.h>
-#import "PlaneTabViewController.h"
 #import "KGStatusBar.h"
 
 
@@ -424,6 +422,9 @@
 
 }
 
+- (IBAction)addReminder:(id)sender {
+    [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+}
 
 
 #pragma mark - LoginViewController Delegates
@@ -558,6 +559,7 @@
 //        NSLog(@"Coming from ACR!");
 //    }
 }
+
 
 
 

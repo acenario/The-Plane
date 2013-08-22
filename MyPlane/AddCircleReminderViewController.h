@@ -37,7 +37,7 @@
 @property BOOL circleCheck;
 
 #pragma mark - Storyboard Outlets
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *segmentView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *circleCell;
 
@@ -45,6 +45,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *circleName;
 @property (strong, nonatomic) IBOutlet UILabel *memberCountDisplay;
 @property (strong, nonatomic) IBOutlet UILabel *dateTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *taskInd;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 

@@ -13,6 +13,7 @@
 
 @interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 
+- (IBAction)addFriend:(id)sender;
 
 @end
  

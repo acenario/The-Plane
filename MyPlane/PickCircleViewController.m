@@ -26,7 +26,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
 	// Do any additional setup after loading the view.
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,7 +66,34 @@
     
     return cell;
 }
- 
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont flatFontOfSize:16];
+    cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
+    
+    cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Circles *object = [self.objects objectAtIndex:indexPath.row];

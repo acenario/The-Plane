@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sentReminders;
 
 - (IBAction)unwindToReminders:(UIStoryboardSegue *)unwindSegue;
+- (IBAction)addReminder:(id)sender;
 
 @end
  

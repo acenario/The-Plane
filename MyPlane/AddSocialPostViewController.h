@@ -24,8 +24,9 @@
 @property (strong, nonatomic) IBOutlet UITextView *postTextField;
 @property (nonatomic, weak) id <AddSocialPostViewControllerDelegate> delegate;
 @property (strong, nonatomic) PFQuery *userQuery;
-@property (strong, nonatomic) IBOutlet UILabel *circleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *circleLabel; //actual name
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *circleName; //static label
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 

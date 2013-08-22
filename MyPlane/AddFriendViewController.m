@@ -57,12 +57,24 @@
     self.searchBar.delegate = self;
     UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
     [[UISearchBar appearance] setBackgroundColor:barColor];
-    
+    [self configureViewController];
     
     //self.searchResults = [NSMutableArray array];
     //friendsUNArray = [NSMutableArray array];
     [self currentUserQuery];
     
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.rowHeight = 70;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,7 +171,6 @@
     
     PFTableViewCell *cell = (PFTableViewCell *) [self.tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
     
-    
     if (searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:2101];
         UILabel *username = (UILabel *)[cell viewWithTag:2102];
@@ -183,10 +194,40 @@
         
     }
     
-    //SOMETHING NEEDED - CONVERT TO PFFILE
     
     return cell;
-} 
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:2101];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2101];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    
+    nameLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    
+    return cell;
+}
 
 - (IBAction)adjustButtonState:(id)sender
 {
