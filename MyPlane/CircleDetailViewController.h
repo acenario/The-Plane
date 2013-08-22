@@ -19,7 +19,7 @@
 
 @end
 
-@interface CircleDetailViewController : UITableViewController <CircleMembersViewControllerDelegate, CirclePostsViewControllerDelegate, IndependentInviteMenuViewControllerDelegate, CircleRemindersViewControllerDelegate>
+@interface CircleDetailViewController : UITableViewController <CircleMembersViewControllerDelegate, CirclePostsViewControllerDelegate, IndependentInviteMenuViewControllerDelegate, CircleRemindersViewControllerDelegate, FUIAlertViewDelegate>
 
 @property (nonatomic, weak) id <CircleDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Circles *circle;
