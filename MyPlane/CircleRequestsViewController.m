@@ -154,7 +154,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    nil;
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)acceptRequest:(id)sender

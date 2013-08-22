@@ -74,6 +74,7 @@
 {
     Reminders *reminder = (Reminders *)[self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:reminder];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

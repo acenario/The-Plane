@@ -110,6 +110,7 @@
     UserInfo *fromFriend = [friendsArray objectAtIndex:indexPath.row];
     
     [self.delegate friendsForReminders:self didFinishSelectingContactWithUsername:detailText.text withName:contactText.text withProfilePicture:picImage.image withObjectId:fromFriend];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (IBAction)cancel:(id)sender {

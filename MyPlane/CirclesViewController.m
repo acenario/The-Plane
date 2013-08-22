@@ -148,6 +148,7 @@
 {
     Circles *circle = [self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"CircleDetail" sender:circle];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (IBAction)circleMenu:(id)sender {
