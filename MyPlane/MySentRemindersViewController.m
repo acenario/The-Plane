@@ -159,6 +159,17 @@
     
     [cell setSelectedBackgroundView:bgView];
     
+    UILabel *reminderLabel = (UILabel *)[cell viewWithTag:1];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:3];
+    
+    reminderLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    dateLabel.font = [UIFont flatFontOfSize:14];
+    
+    reminderLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+
+    
     
     /*cell.textLabel.backgroundColor = [UIColor clearColor];
      if ([cell respondsToSelector:@selector(detailTextLabel)])

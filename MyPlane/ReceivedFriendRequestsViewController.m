@@ -120,6 +120,12 @@
     
     [cell setSelectedBackgroundView:bgView];
     
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:2201];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2202];
+    nameLabel.font = [UIFont flatFontOfSize:17];
+    usernameLabel.font = [UIFont flatFontOfSize:15];
+    
+    
     return cell;
 }
 

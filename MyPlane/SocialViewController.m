@@ -155,9 +155,9 @@
         UILabel *circle = (UILabel *)[cell viewWithTag:5104];
         PFImageView *ownerImage = (PFImageView *)[cell viewWithTag:5111];
         
-        name.text = userObject.firstName;
+        name.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
         text.text = object.text;
-        circle.text = [object.circle objectForKey:@"name"];
+        circle.text = [object.circle objectForKey:@"displayName"];
         ownerImage.file = userObject.profilePicture;
         date.text = [dateFormatter stringFromDate:object.createdAt];
         [ownerImage loadInBackground];
@@ -205,11 +205,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
-    UIFont *myFont = [UIFont flatFontOfSize:18];
-    UIColor *fontColor = [UIColor lightGrayColor];
-    UILabel *commentLabel = (UILabel *)[cell viewWithTag:9];
-    
-    
+
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -228,11 +224,29 @@
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
     if (indexPath.row == 0) {
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:5101];
+        UILabel *postLabel = (UILabel *)[cell viewWithTag:5102];
+        UILabel *circleLabel = (UILabel *)[cell viewWithTag:302];
+        UILabel *circleNameLabel = (UILabel *)[cell viewWithTag:5104];
+        UILabel *dateLabel = (UILabel *)[cell viewWithTag:1];
+        UIFont *socialFont = [UIFont flatFontOfSize:14];
+        
+        nameLabel.font = socialFont;
+        nameLabel.textColor = [UIColor asbestosColor];
+        postLabel.font = [UIFont flatFontOfSize:17];
+        postLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+        circleLabel.font = socialFont;
+        circleNameLabel.font = socialFont;
+        dateLabel.font = socialFont;
+        
+        
         [cell.contentView addSubview:imgView];
         
     } else {
-        
-        commentLabel.font = myFont;
+        UIFont *commentFont = [UIFont flatFontOfSize:18];
+        UIColor *fontColor = [UIColor lightGrayColor];
+        UILabel *commentLabel = (UILabel *)[cell viewWithTag:9];
+        commentLabel.font = commentFont;
         commentLabel.textColor = fontColor;
         
     }

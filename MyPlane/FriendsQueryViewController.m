@@ -169,6 +169,9 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:2001];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2002];
+
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
     UIImage *background = [UIImage imageNamed:@"list-item"];
@@ -184,6 +187,8 @@
     
     [cell setSelectedBackgroundView:bgView];
     
+    nameLabel.font = [UIFont flatFontOfSize:17];
+    usernameLabel.font = [UIFont flatFontOfSize:15];
     
     /*cell.textLabel.backgroundColor = [UIColor clearColor];
      if ([cell respondsToSelector:@selector(detailTextLabel)])

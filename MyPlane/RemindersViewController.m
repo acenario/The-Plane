@@ -161,6 +161,16 @@
     
     [cell setSelectedBackgroundView:bgView];
     
+    UILabel *reminderLabel = (UILabel *)[cell viewWithTag:1001];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:1002];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1003];
+
+    reminderLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    dateLabel.font = [UIFont flatFontOfSize:14];
+    
+    reminderLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
     
     /*cell.textLabel.backgroundColor = [UIColor clearColor];
      if ([cell respondsToSelector:@selector(detailTextLabel)])
@@ -371,7 +381,7 @@
     [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [SVProgressHUD dismiss];
-            [KGStatusBar showWithStatus:@"Please Reload!"];
+            [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
             //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
         } else {
             NSLog(@"There was an error deleting an old reminder!");
