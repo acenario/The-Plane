@@ -417,10 +417,7 @@
 			children = (
 				DC73AEF917BD85590049AF50 /* CommonTasksViewController.h */,
 				DC73AEFA17BD85590049AF50 /* CommonTasksViewController.m */,
-				DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */,
-				DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */,
-				DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */,
-				DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */,
+				AEC883DB17C69E6B005E9BDC /* AddEdit */,
 			);
 			name = CommonTasks;
 			sourceTree = "<group>";
@@ -581,6 +578,17 @@
 				AEF4583F17A1F6DF00AFF8D6 /* InviteMembersToCircleViewController.m */,
 			);
 			name = InviteMembers;
+			sourceTree = "<group>";
+		};
+		AEC883DB17C69E6B005E9BDC /* AddEdit */ = {
+			isa = PBXGroup;
+			children = (
+				DC73AEFC17BD857D0049AF50 /* AddCommonTaskViewController.h */,
+				DC73AEFD17BD857D0049AF50 /* AddCommonTaskViewController.m */,
+				DC73AEFF17BD85910049AF50 /* EditCommonTaskViewController.h */,
+				DC73AF0017BD85920049AF50 /* EditCommonTaskViewController.m */,
+			);
+			name = AddEdit;
 			sourceTree = "<group>";
 		};
 		AED62A2B17A1ECA4002055ED /* Subclasses */ = {

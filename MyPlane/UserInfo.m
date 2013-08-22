@@ -19,6 +19,7 @@
 @dynamic friends;
 @dynamic sentFriendRequests;
 @dynamic receivedFriendRequests;
+@dynamic commonTasks;
 @dynamic profilePicture;
 @dynamic circleRequestsCount;
 
