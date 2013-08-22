@@ -174,12 +174,12 @@
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.hidden = YES;
     
-    
     Requests *request = [Requests object];
     
     request.receiver = userObject;
     request.receiverUsername = [PFUser currentUser].username;
     request.circle = circle;
+    NSMutableArray *usersToSave = [[NSMutableArray alloc] initWithCapacity:circle.members.count];
     
     [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         PFRelation *relation = [circle relationforKey:@"requests"];
@@ -188,10 +188,9 @@
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             for (UserInfo *user in circle.members) {
                 [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
-                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    nil;
-                }];
+                [usersToSave addObject:user];
             }
+            [UserInfo saveAllInBackground:usersToSave];
             [SVProgressHUD showSuccessWithStatus:@"Request Sent"];
         }];
     }];

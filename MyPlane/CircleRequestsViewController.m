@@ -165,24 +165,23 @@
         Requests *request = [self.invites objectAtIndex:clickedButtonPath.row];
         Circles *circle = (Circles *)request.circle;
         UserInfo *user = [UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId];
+//        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+        
+        [self.currentUser incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
         
         [circle addObject:user forKey:@"members"];
         [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
         [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
         
-        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
         
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.name]];
-                for (UserInfo *user in circle.members) {
-                    [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
-                    [usersToSave addObject:user];
-                }
-                [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
-                    [self loadObjects];
+                [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    nil;
                 }];
             }];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.name]];
+            [self loadObjects];
         }];
         
     } else {
@@ -197,6 +196,12 @@
         if ([circle.members containsObject:user]) {
             [self loadObjects];
         } else {
+            
+            for (UserInfo *obj in circle.members) {
+                [obj incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+                [usersToSave addObject:obj];
+            }
+            
             [circle addObject:user forKey:@"members"];
             [circle addObject:request.receiverUsername forKey:@"memberUsernames"];
             [circle removeObject:request.receiverUsername forKey:@"pendingMembers"];
@@ -204,10 +209,6 @@
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ is now part of %@", request.receiverUsername,circle.name]];
-                    for (UserInfo *obj in circle.members) {
-                        [obj incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
-                        [usersToSave addObject:obj];
-                    }
                     [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
                         [self loadObjects];
                     }];

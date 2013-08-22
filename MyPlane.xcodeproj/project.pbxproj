@@ -440,7 +440,6 @@
 			children = (
 				AEF4583217A1F6DF00AFF8D6 /* CircleDetailViewController.h */,
 				AEF4583317A1F6DF00AFF8D6 /* CircleDetailViewController.m */,
-				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AEF17C1ED07005E2C45 /* CirclePosts */,
 				AE017AEC17C1EC31005E2C45 /* CircleMembers */,
 				AE017AEA17C1EBD0005E2C45 /* CircleReminders */,
@@ -626,6 +625,7 @@
 			children = (
 				AEF4583A17A1F6DF00AFF8D6 /* CirclesViewController.h */,
 				AEF4583B17A1F6DF00AFF8D6 /* CirclesViewController.m */,
+				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AEB17C1EBFE005E2C45 /* CircleDetail */,
 				AE017AF217C1ED48005E2C45 /* JoinCircle */,
 				AE017AF117C1ED40005E2C45 /* CreateCircle */,
