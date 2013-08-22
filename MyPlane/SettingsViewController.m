@@ -106,12 +106,12 @@
 
 -(void)configureFlatUI {
     UIFont *myFont = [UIFont flatFontOfSize:16];
-    UIColor *myColor = [UIColor colorFromHexCode:@"FF9773"];
+    UIColor *myColor = [UIColor colorFromHexCode:@"FF7140"];
     UIColor *unColor = [UIColor colorFromHexCode:@"A62A00"];
 
     
     self.fullNameField.font = myFont;
-    self.fullNameField.textColor = myColor;
+    self.fullNameField.textColor = unColor;
     
     self.lastNameField.font = myFont;
     self.lastNameField.textColor = myColor;
@@ -120,7 +120,7 @@
     self.emailField.textColor = myColor;
     
     self.usernameField.font = myFont;
-    self.usernameField.textColor = unColor;
+    self.usernameField.textColor = myColor;
     
     
     
