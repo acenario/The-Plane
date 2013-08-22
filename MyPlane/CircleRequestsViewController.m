@@ -89,6 +89,11 @@
     self.tableView.rowHeight = 60;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.delegate circleRequestsDidFinish:self];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,7 +123,7 @@
         UIButton *accept = (UIButton *)[cell viewWithTag:6041];
         
         inviterName.text = [NSString stringWithFormat:@"%@ %@ invites you to join", inviter.firstName, [inviter.lastName substringToIndex:1]];
-        circleName.text = circle.searchName;
+        circleName.text = circle.displayName;
         inviterImage.file = inviter.profilePicture;
         [inviterImage loadInBackground];
         
@@ -139,7 +144,7 @@
         PFImageView *requesterImage = (PFImageView *)[cell viewWithTag:6012];
         UIButton *accept = (UIButton *)[cell viewWithTag:6042];
         
-        name.text = circle.searchName;
+        name.text = circle.displayName;
         requesterName.text = [NSString stringWithFormat:@"%@ %@", requester.firstName, requester.lastName];
         requesterImage.file = requester.profilePicture;
         [requesterImage loadInBackground];

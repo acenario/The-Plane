@@ -43,7 +43,7 @@
     [super viewDidLoad];
     
     owner = (UserInfo *)self.circle.owner;
-    self.navigationItem.title = self.circle.searchName;
+    self.navigationItem.title = self.circle.displayName;
     self.ownerName.text = [NSString stringWithFormat:@"%@ %@", owner.firstName, owner.lastName];
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
     self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
@@ -99,7 +99,7 @@
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.circle saveInBackground];
         [self dismissViewControllerAnimated:YES completion:^{
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.searchName]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
         }];
     }];
 }

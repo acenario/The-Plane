@@ -18,6 +18,7 @@
     NSMutableArray *searchResults;
     PFQuery *currentUserQuery;
     UserInfo *userObject;
+    BOOL didSearch;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -53,7 +54,7 @@
     [self currentUserQuery];
     
     self.tableView.rowHeight = 60;
-    
+    didSearch = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,6 +106,7 @@
 
 - (void)filterResults:(NSString *)searchTerm
 {
+    didSearch = YES;
     NSString *newTerm = [searchTerm lowercaseString];
     
     PFQuery *query = [UserInfo query];
@@ -120,6 +122,18 @@
     dispatch_async(queue, ^{
         [searchResults removeAllObjects];
         searchResults = [[NSMutableArray alloc] initWithArray:[query findObjects]];
+        NSMutableArray *usernames = [[NSMutableArray alloc] initWithArray:self.circle.memberUsernames];
+        NSMutableArray *pendingMembers = [[NSMutableArray alloc] initWithArray:self.circle.pendingMembers];
+        for (UserInfo *friend in searchResults) {
+            if ([friend.user isEqualToString:[PFUser currentUser].username]) {
+                [searchResults removeObject:friend];
+            } else if ([usernames containsObject:friend.user]) {
+                [searchResults removeObject:friend];
+            } else if ([pendingMembers containsObject:friend.user]) {
+                [searchResults removeObject:friend];
+            }
+        }
+        
         [self loadObjects];
     });
     
@@ -136,6 +150,15 @@
     return searchResults.count;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (didSearch) {
+        return @"Friends";
+    } else {
+        return @"All Members";
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     
     static NSString *uniqueIdentifier = @"Cell";
@@ -144,6 +167,7 @@
     
     
     if (searchResults.count > 0) {
+
         UILabel *name = (UILabel *)[cell viewWithTag:6301];
         UILabel *username = (UILabel *)[cell viewWithTag:6302];
         PFImageView *picImage = (PFImageView *)[cell viewWithTag:6311];
@@ -158,6 +182,8 @@
         
         if ([self.invitedUsernames containsObject:searchedUser.user]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
         
     }

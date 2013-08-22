@@ -16,7 +16,8 @@
 -(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username
     withName:(NSString *)name
     withProfilePicture:(UIImage *)image
-    withObjectId:(PFObject *)objectID;
+    withObjectId:(PFObject *)objectID
+    selfUserObject:(UserInfo *)userObject;
 
 @end
 

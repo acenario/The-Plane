@@ -16,7 +16,7 @@
     NSArray *friendsArray;
     NSMutableArray *fileArray;
     PFFile *pictureFile;
-//    UserInfo *fromFriend;
+    UserInfo *fromFriend;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -57,7 +57,7 @@
     [userQuery includeKey:@"friends"];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-//        fromFriend = (UserInfo *)object;
+        fromFriend = (UserInfo *)object;
         friendsArray = [object objectForKey:@"friends"];
         [userQuery orderByAscending:@"friend"];
         [self.tableView reloadData];
@@ -107,9 +107,9 @@
     UIImageView *picImage = (UIImageView *)[cell viewWithTag:1111];
     UILabel *contactText = (UILabel *)[cell viewWithTag:1101];
     UILabel *detailText = (UILabel *)[cell viewWithTag:1102];
-    UserInfo *fromFriend = [friendsArray objectAtIndex:indexPath.row];
+    UserInfo *recipient = [friendsArray objectAtIndex:indexPath.row];
     
-    [self.delegate friendsForReminders:self didFinishSelectingContactWithUsername:detailText.text withName:contactText.text withProfilePicture:picImage.image withObjectId:fromFriend];
+    [self.delegate friendsForReminders:self didFinishSelectingContactWithUsername:detailText.text withName:contactText.text withProfilePicture:picImage.image withObjectId:recipient selfUserObject:fromFriend];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

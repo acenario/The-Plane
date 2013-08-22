@@ -38,7 +38,7 @@
 //    self.segmentedControl.selectedSegmentIndex = 1;
 //    self.navigationController.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", self.count];
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Join a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
     }];
     item0.tag = 0;
@@ -105,7 +105,7 @@
     
     Circles *circleObject = (Circles *)object;
     
-    cell.textLabel.text = circleObject.searchName;
+    cell.textLabel.text = circleObject.displayName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d member(s)", [circleObject.members count]];
     
     return cell;
@@ -136,11 +136,19 @@
         controller.circle = circle;
         controller.circles = self.objects;
         controller.currentUser = userObject;
+    } else if ([segue.identifier isEqualToString:@"CreateCircle"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        CreateCircleViewController *controller = (CreateCircleViewController *)nav.topViewController;
+        controller.delegate = self;
     }
 }
 
 - (void)circleRequestsDidFinish:(CircleRequestsViewController *)controller
 {
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        userObject = (UserInfo *)object;
+        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
+    }];
     [self loadObjects];
 }
 
@@ -164,6 +172,12 @@
         
     }
     
+}
+
+- (void)createCircleViewControllerDidFinishCreatingCircle:(CreateCircleViewController *)controller
+{
+    [self loadObjects];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

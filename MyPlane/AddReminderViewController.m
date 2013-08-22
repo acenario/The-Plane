@@ -15,11 +15,12 @@
 
 @implementation AddReminderViewController {
     NSString *nameOfUser;
-    PFObject *recievedObjectID;
+    PFObject *receivedObjectID;
 //    UserInfo *recipient;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
+    UserInfo *currentUser;
     BOOL textCheck;
     BOOL friendCheck;
     BOOL isFromFriends;
@@ -49,7 +50,7 @@
         self.friendCell.userInteractionEnabled = NO;
         self.segmentUIView.hidden = YES;
         self.segmentUIView.frame = CGRectMake(0,0,0,0);
-        recievedObjectID = self.recipient;
+        receivedObjectID = self.recipient;
     } else {
         self.name.hidden = YES;
         self.username.hidden = YES;
@@ -102,7 +103,7 @@
     [reminder setObject:reminderDate forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];
     [reminder setObject:self.username.text forKey:@"user"];
-    [reminder setObject:recievedObjectID forKey:@"fromFriend"];
+    [reminder setObject:currentUser forKey:@"fromFriend"];
     [reminder setObject:self.recipient forKey:@"recipient"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
     if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
@@ -149,15 +150,16 @@
     return YES;
 }
 
--(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username withName:(NSString *)name withProfilePicture:(UIImage *)image withObjectId:(PFObject *)objectID
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username withName:(NSString *)name withProfilePicture:(UIImage *)image withObjectId:(PFObject *)objectID selfUserObject:(UserInfo *)userObject
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     self.name.text = name;
     self.username.text = username;
     self.userImage.image = image;
-    recievedObjectID = objectID;
+    receivedObjectID = objectID;
+    currentUser = userObject;
     friendCheck = YES;
-    self.recipient = [UserInfo objectWithoutDataWithObjectId:recievedObjectID.objectId];
+    self.recipient = [UserInfo objectWithoutDataWithObjectId:receivedObjectID.objectId];
     self.name.hidden = NO;
     self.userImage.hidden = NO;
     self.username.hidden = NO;
@@ -182,19 +184,15 @@
     if ((indexPath.section == 0) && (indexPath.row == 0)) {
         [self.taskTextField becomeFirstResponder];
         
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
     } else if ((indexPath.section == 1) && (indexPath.row == 0)) {
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
             self.descriptionTextView.textColor = [UIColor blackColor];
         }
-        
         self.descriptionTextView.userInteractionEnabled = YES;
         [self.descriptionTextView becomeFirstResponder];
-        
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date

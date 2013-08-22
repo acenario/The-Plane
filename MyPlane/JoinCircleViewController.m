@@ -114,7 +114,7 @@
         addButton.hidden = YES;
         
         Circles *searchedCircle = [searchResults objectAtIndex:indexPath.row];
-        name.text = searchedCircle.searchName;
+        name.text = searchedCircle.displayName;
         membersLabel.text = [NSString stringWithFormat:@"%d members", searchedCircle.members.count];
         
         NSMutableArray *objIds = [[NSMutableArray alloc] init];

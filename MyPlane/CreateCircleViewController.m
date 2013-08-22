@@ -266,9 +266,11 @@
 }
 
 - (IBAction)done:(id)sender {
+    [SVProgressHUD setStatus:@"Creating circles"];
+    
     Circles *circle = [Circles object];
     circle.name = [circleName lowercaseString];
-    circle.searchName = circleName;
+    circle.displayName = circleName;
     circle.user = [PFUser currentUser].username;
     circle.owner = currentUser;
     circle.public = public;
@@ -306,7 +308,6 @@
             
         };
         
-        [SVProgressHUD setStatus:@"Creating circles"];
         [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
             [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
                 for (Requests *request in requestsToSave) {
@@ -314,14 +315,14 @@
                 }
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
                 }];
             }];
         }];
     } else {
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
         }];
     }
 }

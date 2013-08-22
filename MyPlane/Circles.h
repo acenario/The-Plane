@@ -12,7 +12,7 @@
 + (NSString *)parseClassName;
 
 @property (retain) NSString *user;
-@property (retain) NSString *searchName;
+@property (retain) NSString *displayName;
 @property (retain) NSString *name;
 @property (retain) PFObject *owner;
 @property (retain) NSArray *members;

@@ -119,6 +119,8 @@
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
+    } else {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 

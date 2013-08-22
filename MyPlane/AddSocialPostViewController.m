@@ -110,7 +110,7 @@
 
 - (void)pickCircleViewController:(PickCircleViewController *)controller didSelectCircle:(Circles *)circle
 {
-    self.circleLabel.text = circle.searchName;
+    self.circleLabel.text = circle.displayName;
     circleObject = circle;
     circleCheck = YES;
     [self configureDoneButton];

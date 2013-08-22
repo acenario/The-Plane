@@ -15,7 +15,7 @@
 }
 
 @dynamic user;
-@dynamic searchName;
+@dynamic displayName;
 @dynamic name;
 @dynamic members;
 @dynamic memberUsernames;

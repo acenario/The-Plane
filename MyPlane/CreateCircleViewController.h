@@ -14,6 +14,8 @@
 
 @protocol CreateCircleViewControllerDelegate <NSObject>
 
+- (void)createCircleViewControllerDidFinishCreatingCircle:(CreateCircleViewController *)controller;
+
 @end
 
 @interface CreateCircleViewController : UITableViewController <UITextFieldDelegate, InviteMembersToCircleViewControllerDelegate>
