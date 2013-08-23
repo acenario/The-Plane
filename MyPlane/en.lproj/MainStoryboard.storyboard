@@ -927,9 +927,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Friends Query View Controller - My Friends-->
         <scene sceneID="Aax-zz-de6">
             <objects>
-                <tableViewController id="bo1-BX-yHR" customClass="FriendsQueryViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="friendQuery" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bo1-BX-yHR" customClass="FriendsQueryViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="jaD-Tr-Rve">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -1008,7 +1008,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZi-nY-zvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1211" y="1466"/>
+            <point key="canvasLocation" x="1427" y="958"/>
         </scene>
         <!--Add Friend View Controller - Add Friends-->
         <scene sceneID="In2-zx-V61">
@@ -1308,12 +1308,69 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="bo1-BX-yHR" kind="relationship" relationship="rootViewController" id="yUg-mG-kE9"/>
+                        <segue destination="gfp-RX-u4y" kind="relationship" relationship="rootViewController" id="Pt0-7Y-8Pe"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-BT-o7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="1466"/>
+            <point key="canvasLocation" x="607" y="1362"/>
+        </scene>
+        <!--Container View Controller-->
+        <scene sceneID="Acc-gP-Efp">
+            <objects>
+                <viewController id="gfp-RX-u4y" customClass="FCContainerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eEA-ty-yWs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wrf-ns-7YJ">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="bo1-BX-yHR" kind="embed" id="k4h-Gq-2Oe"/>
+                                </connections>
+                            </containerView>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QdK-zv-AAI">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Rph-vb-JUr" kind="embed" id="EqO-WY-ZgE"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wrf-ns-7YJ" firstAttribute="top" secondItem="eEA-ty-yWs" secondAttribute="top" type="default" id="KH2-WU-0RY"/>
+                            <constraint firstItem="QdK-zv-AAI" firstAttribute="bottom" secondItem="eEA-ty-yWs" secondAttribute="bottom" type="default" id="agZ-yG-tYz"/>
+                            <constraint firstItem="QdK-zv-AAI" firstAttribute="top" secondItem="eEA-ty-yWs" secondAttribute="top" type="default" id="aue-20-bJO"/>
+                            <constraint firstItem="wrf-ns-7YJ" firstAttribute="leading" secondItem="eEA-ty-yWs" secondAttribute="leading" type="default" id="cKr-T4-TWT"/>
+                            <constraint firstItem="wrf-ns-7YJ" firstAttribute="trailing" secondItem="eEA-ty-yWs" secondAttribute="trailing" type="default" id="gSs-Ng-GTG"/>
+                            <constraint firstItem="QdK-zv-AAI" firstAttribute="trailing" secondItem="eEA-ty-yWs" secondAttribute="trailing" type="default" id="gqR-Or-bwu"/>
+                            <constraint firstItem="QdK-zv-AAI" firstAttribute="leading" secondItem="eEA-ty-yWs" secondAttribute="leading" type="default" id="hys-mg-wQF"/>
+                            <constraint firstItem="wrf-ns-7YJ" firstAttribute="bottom" secondItem="eEA-ty-yWs" secondAttribute="bottom" type="default" id="wVn-uE-Ds3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="e4E-BN-PBa">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="xba-7u-rxM">
+                            <rect key="frame" x="96" y="7" width="128" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                            <connections>
+                                <action selector="changePage:" destination="gfp-RX-u4y" eventType="valueChanged" id="w15-Uf-c3d"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="FCContainer" destination="wrf-ns-7YJ" id="dBt-ko-VBS"/>
+                        <outlet property="circContainer" destination="QdK-zv-AAI" id="Qfm-CS-FxU"/>
+                        <outlet property="segmentedControl" destination="xba-7u-rxM" id="n5v-2h-fqF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H6G-kl-IxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1069" y="1607"/>
         </scene>
         <!--My Sent Reminders View Controller - Sent-->
         <scene sceneID="fIW-oB-RvU">
@@ -1417,14 +1474,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l5f-9S-JRM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672" y="1466"/>
+            <point key="canvasLocation" x="1789" y="1530"/>
         </scene>
         <!--Received Friend Requests View Controller - Friend Requests-->
         <scene sceneID="6DT-n1-E3u">
             <objects>
                 <tableViewController id="wuP-pG-1CI" customClass="ReceivedFriendRequestsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="36q-jw-3l3">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -1956,9 +2013,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="pmf-CL-eDY" kind="modal" identifier="showSocialCircles" id="JU5-7p-iQC"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oq8-qt-l0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1969,7 +2023,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="Rph-vb-JUr" customClass="CirclesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Bdt-Gj-XNj">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2021,7 +2075,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntg-Dm-kSd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1643" y="5330"/>
+            <point key="canvasLocation" x="962" y="2166"/>
         </scene>
         <!--Add Social Post View Controller-->
         <scene sceneID="lMa-6e-PA4">
@@ -2123,7 +2177,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="UAg-mc-Kmn" customClass="SocialPostDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yQV-Sf-spq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -2573,7 +2627,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="AK6-h8-dPK" customClass="CircleRequestsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jH0-dS-hnR">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2718,7 +2772,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="bnW-Ei-pWy" customClass="CircleDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="SEM-uy-rqX">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -2897,7 +2951,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="7Ea-Ja-a27" customClass="CircleMembersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="x9x-Gh-6gX">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2962,7 +3016,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="Jya-Nr-DoD" customClass="CirclePostsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="TXR-hK-loS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -3037,7 +3091,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="arS-Lo-oDT" customClass="CircleRemindersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Npk-Au-oIF">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -3567,24 +3621,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLo-AV-OYC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3296" y="9094"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="iAL-Od-ew1">
-            <objects>
-                <navigationController id="pmf-CL-eDY" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZSC-ZD-q2W">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Rph-vb-JUr" kind="relationship" relationship="rootViewController" id="jzU-ej-HaZ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="29Z-zy-afK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1117" y="5330"/>
         </scene>
         <!--Join Circle View Controller - Join Circle-->
         <scene sceneID="1jo-fu-xBw">
@@ -4264,6 +4300,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="setPic" candidateClass="FUIButton"/>
             </relationships>
         </class>
+        <class className="FCContainerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FCContainerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changePage:"/>
+                <relationship kind="outlet" name="FCContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="circContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
         <class className="FUIButton" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FUIButton.h"/>
         </class>
@@ -4416,14 +4461,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="RYe-tY-AK6"/>
         <segue reference="clu-AU-b0I"/>
-        <segue reference="U7Z-W4-19C"/>
         <segue reference="xq7-7e-SmO"/>
         <segue reference="muu-mG-r8o"/>
+        <segue reference="std-vO-s0Z"/>
+        <segue reference="7cf-9Z-bI4"/>
         <segue reference="yEb-j2-o0N"/>
         <segue reference="OGa-b0-0On"/>
         <segue reference="hB8-tL-UEI"/>
-        <segue reference="std-vO-s0Z"/>
-        <segue reference="7cf-9Z-bI4"/>
     </inferredMetricsTieBreakers>
 </document>
