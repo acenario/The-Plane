@@ -16,18 +16,23 @@
 #import "CircleDetailViewController.h"
 #import "JoinCircleViewController.h"
 #import "CreateCircleViewController.h"
+//#import "FCContainerViewController.h"
 #import "UzysSlideMenu.h"
 
 @class CirclesViewController;
 
 @protocol CirclesDelegate <NSObject>
 
+- (void)circlesSegmentDidChange:(UISegmentedControl *)segmentedController;
+
 @end
 
 @interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate, CreateCircleViewControllerDelegate>
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedController;
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
 - (IBAction)circleMenu:(id)sender;
+- (IBAction)segmentChanged:(id)sender;
 
 //@property NSInteger count;
 //- (IBAction)segmentedSwitch:(id)sender;

@@ -11,8 +11,19 @@
 #import "AddCommonTaskViewController.h"
 #import "EditCommonTaskViewController.h"
 
-@interface CommonTasksViewController : UITableViewController <AddCommonTaskViewControllerDelegate>
+@class CommonTasksViewController;
 
-@property (nonatomic, strong) UserInfo *currentUser;
+@protocol CommonTasksViewControllerDelegate <NSObject>
+
+- (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task;
+
+@end
+
+@interface CommonTasksViewController : PFQueryTableViewController <AddCommonTaskViewControllerDelegate>
+
+//@property (nonatomic, strong) UserInfo *currentUser;
+@property (nonatomic, strong) id <CommonTasksViewControllerDelegate> delegate;
+- (IBAction)addTask:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

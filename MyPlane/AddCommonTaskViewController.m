@@ -7,6 +7,7 @@
 //
 
 #import "AddCommonTaskViewController.h"
+#import "MZFormSheetController.h"
 
 @interface AddCommonTaskViewController ()
 
@@ -30,13 +31,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if ((self.task)) {
+    if (!(self.task)) {
         editing = NO;
+        self.doneButton.enabled = NO;
     } else {
         editing = YES;
         self.textField.text = self.task.text;
+        self.navigationController.title = @"Edit Task";
         self.doneButton.enabled = YES;
     }
+    
+    self.textField.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,35 +50,48 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)done
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (editing) {
-
-        self.task.text = self.textField.text;
-        self.task.lastUsed = [NSDate date];
-        
-        [self.task saveInBackground];
-    } else {
-        
-        CommonTasks *task = [CommonTasks object];
-        task.text = self.textField.text;
-        task.user = self.currentUser;
-        task.username = self.currentUser.user;
-        task.lastUsed = [NSDate date];
-        
-        [task saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [self.currentUser addObject:[CommonTasks objectWithoutDataWithObjectId:task.objectId] forKey:@"commonTasks"];
-            [self.currentUser saveInBackground];
-        }];
-    }
-}
-
-- (void)textValidate {
     if ([self.textField.text length] > 0) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = YES;
     }
+    
+    return YES;
+}
+
+- (IBAction)done:(id)sender {
+    if (editing) {
+        
+        self.task.text = self.textField.text;
+        self.task.lastUsed = [NSDate date];
+        
+        [self.task saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+                [self.delegate didFinish];
+            }];
+        }];
+    } else {
+        
+        CommonTasks *task = [CommonTasks object];
+        task.text = self.textField.text;
+//        task.user = self.currentUser;
+        task.username = [PFUser currentUser].username;
+        task.lastUsed = [NSDate date];
+        
+        [task saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+                [self.delegate didFinish];
+            }];
+        }];
+    }
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+        
+    }];
 }
 
 @end

@@ -11,6 +11,8 @@
 #import "ACRPickCircleViewController.h"
 #import "PickMembersViewController.h"
 #import "ReminderDateViewController.h"
+#import "CommonTasksViewController.h"
+#import "MZFormSheetController.h"
 
 @class AddCircleReminderViewController;
 
@@ -25,7 +27,7 @@
 
 @end
 
-@interface AddCircleReminderViewController : UITableViewController <ACRPickCircleViewControllerDelegate, PickMembersViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, ReminderDateViewControllerDelegate>
+@interface AddCircleReminderViewController : UITableViewController <ACRPickCircleViewControllerDelegate, PickMembersViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, ReminderDateViewControllerDelegate,CommonTasksViewControllerDelegate>
 
 #pragma mark - Public Properties
 @property (nonatomic, weak) id <AddCircleReminderViewControllerDelegate> delegate;
@@ -57,6 +59,7 @@
 #pragma mark - Actions
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
+- (IBAction)showCommon:(id)sender;
 - (IBAction)segmentChange:(id)sender;
 - (IBAction)unwindToAddCircleReminder:(UIStoryboardSegue *)unwindSegue;
 

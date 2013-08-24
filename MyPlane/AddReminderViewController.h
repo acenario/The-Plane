@@ -11,6 +11,7 @@
 #import "FriendsForRemindersViewController.h"
 #import "ReminderDateViewController.h"
 #import "AddCircleReminderViewController.h"
+#import "CommonTasksViewController.h"
 
 @class AddReminderViewController;
 
@@ -19,7 +20,7 @@
 @end
 
 
-@interface AddReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, FriendsForRemindersDelegate, ReminderDateViewControllerDelegate, UITextViewDelegate>
+@interface AddReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, FriendsForRemindersDelegate, ReminderDateViewControllerDelegate, UITextViewDelegate, CommonTasksViewControllerDelegate>
 
 -(IBAction)done:(id)sender;
 -(IBAction)cancel:(id)sender;

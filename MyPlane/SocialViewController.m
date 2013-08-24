@@ -12,13 +12,12 @@
 
 @property (nonatomic, strong) UITextField *commentTextField;
 @property (nonatomic, strong) UIButton *addCommentButton;
-@property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
 
 @end
 
 @implementation SocialViewController {
     UserInfo *currentUserObject;
-    Circles *currentCircleObject;
+//    Circles *currentCircleObject;
     SocialPosts *currentSocialObject;
     PFQuery *userQuery;
     NSDateFormatter *dateFormatter;
@@ -42,15 +41,6 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"spCenterTabbarItemTapped"
                                                object:nil];
-    
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Circles" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
-        NSLog(@"Item: %@", item);
-        [self performSegueWithIdentifier:@"showSocialCircles" sender:nil];
-    }];
-    item0.tag = 0;
-    
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0]];
-    [self.view addSubview:self.uzysSMenu];
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
@@ -88,10 +78,6 @@
     }
 }
 
--(IBAction)socialMenu:(id)sender {
-    [self.uzysSMenu toggleMenu];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -121,7 +107,7 @@
     if (self.objects.count == 0) {
         postsQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    NSLog(@"CHECK");
+    
     return postsQuery;
 }
 

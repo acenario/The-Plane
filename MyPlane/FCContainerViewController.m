@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     self.circContainer.hidden = YES;
+    self.navigationController.navigationBar.hidden = YES;
     //UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"friendQuery"];
     
 	// Do any additional setup after loading the view.
@@ -49,4 +50,44 @@
         NSLog(@"show circles");
     }
 }
+
+- (void)friendsSegmentChanged:(UISegmentedControl *)segmentedController
+{
+    if (segmentedController.selectedSegmentIndex == 0) {
+        self.FCContainer.hidden = NO;
+        self.circContainer.hidden = YES;
+        NSLog(@"showFriends");
+    } else {
+        self.FCContainer.hidden = YES;
+        self.circContainer.hidden = NO;
+        NSLog(@"show circles");
+    }
+}
+
+- (void)circlesSegmentDidChange:(UISegmentedControl *)segmentedController
+{
+    if (segmentedController.selectedSegmentIndex == 0) {
+        self.FCContainer.hidden = NO;
+        self.circContainer.hidden = YES;
+        NSLog(@"showFriends");
+    } else {
+        self.FCContainer.hidden = YES;
+        self.circContainer.hidden = NO;
+        NSLog(@"show circles");
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Circles"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        CirclesViewController *controller = (CirclesViewController *)nav.topViewController;
+        controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"Friends"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        FriendsQueryViewController *controller = (FriendsQueryViewController *)nav.topViewController;
+        controller.delegate = self;
+    }
+}
+
 @end

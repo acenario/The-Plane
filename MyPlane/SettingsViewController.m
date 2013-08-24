@@ -187,20 +187,9 @@
     self.lastNameField.text = [object objectForKey:@"lastName"];
     self.usernameField.text = [object objectForKey:@"user"];
     self.emailField.text = [user email];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        PFFile *pictureFile = [object objectForKey:@"profilePicture"];
-        UIImage *fromUserImage = [[UIImage alloc] initWithData:pictureFile.getData];
-        //UIImage *roundedImage = [self imageWithRoundedCornersSize:5.0f usingImage:fromUserImage];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.profilePicture.image = fromUserImage;
-            self.editButton.enabled = YES;
-
-        });
-        
-    });
-    NSLog(@"firstname : %@", [object objectForKey:@"firstName"]);
+    self.profilePicture.file = [object objectForKey:@"profilePicture"];
+    self.editButton.enabled = YES;
+    [self.profilePicture loadInBackground];
 }
 
 - (void)didReceiveMemoryWarning

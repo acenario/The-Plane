@@ -13,14 +13,18 @@
 
 @protocol AddCommonTaskViewControllerDelegate <NSObject>
 
+- (void)didFinish;
+
 @end
 
-@interface AddCommonTaskViewController : PFQueryTableViewController <UITextFieldDelegate>
+@interface AddCommonTaskViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) CommonTasks *task;
 @property (nonatomic, strong) UserInfo *currentUser;
-@property (nonatomic, strong) UITextField *textField;
-@property (nonatomic, strong) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+- (IBAction)done:(id)sender;
+- (IBAction)cancel:(id)sender;
 @property (nonatomic, weak) id <AddCommonTaskViewControllerDelegate> delegate;
 
 @end

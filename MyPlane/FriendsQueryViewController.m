@@ -91,7 +91,7 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"increaseFriend"
                                                object:nil];
-    
+    self.segmentedController.selectedSegmentIndex = 0;
     [self loadObjects];
 }
 
@@ -360,11 +360,13 @@
     
 }
 
-
-
-
 - (IBAction)addFriend:(id)sender {
     [self performSegueWithIdentifier:@"AddFriend" sender:nil];
 }
+
+- (IBAction)segmentChanged:(id)sender {
+    [self.delegate friendsSegmentChanged:self.segmentedController];
+}
+
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CommonTasksViewController.h"
+#import "MZFormSheetController.h"
 
 @interface CommonTasksViewController ()
 
@@ -45,6 +46,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (PFQuery *)queryForTable
+{
+    PFQuery *query = [CommonTasks query];
+    [query whereKey:@"username" equalTo:[PFUser currentUser].username];
+    [query orderByDescending:@"lastUsed"];
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    return query;
+}
+
 #pragma mark - Table view data source
 //
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -52,68 +64,98 @@
 //    return 0;
 //}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.currentUser.commonTasks.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    CommonTasks *task = [self.currentUser.commonTasks objectAtIndex:indexPath.row];
+    CommonTasks *task = (CommonTasks *)object;
     
     cell.textLabel.text = task.text;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"AddCommonTask" sender:nil];
+    CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
+    
+    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+        [self.delegate commonTasksViewControllerDidFinishWithTask:task.text];
+    }];
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    if ([segue.identifier isEqualToString:@"AddCommonTasks"]) {
-        AddCommonTaskViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
-        controller.currentUser = self.currentUser;
-    }
+    CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
+    
+    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"addCommonTask"];
+    
+    AddCommonTaskViewController *cVC = (AddCommonTaskViewController *)[vc topViewController];
+    cVC.task = task;
+    cVC.delegate = self;
+    
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    formSheet.cornerRadius = 9.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    
+    
+    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    };
+    
+    
+    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+        
+        
+    }];
+}
+
+- (IBAction)addTask:(id)sender
+{
+    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"addCommonTask"];
+    
+    AddCommonTaskViewController *cVC = (AddCommonTaskViewController *)[vc topViewController];
+    cVC.delegate = self;
+    
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    formSheet.cornerRadius = 9.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    
+    
+    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    };
+    
+    
+    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+        
+        
+    }];
+}
+
+- (void)cancel:(id)sender
+{
+    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+        
+    }];
+}
+
+- (void)didFinish {
+    [self loadObjects];
 }
 
 @end

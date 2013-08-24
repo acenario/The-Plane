@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CirclesViewController.h"
+#import "FriendsQueryViewController.h"
 
-@interface FCContainerViewController : UIViewController
+@interface FCContainerViewController : UIViewController <FriendsQueryViewControllerDelegate, CirclesDelegate>
+
 @property (strong, nonatomic) IBOutlet UIView *FCContainer;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *circContainer;
+
 - (IBAction)changePage:(id)sender;
 
 @end

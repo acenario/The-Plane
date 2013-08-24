@@ -8,6 +8,7 @@
 
 #import "AddReminderViewController.h"
 #import "MZFormSheetController.h"
+#import "CommonTasksViewController.h"
 
 @interface AddReminderViewController ()
 
@@ -300,8 +301,9 @@
 }
 
 -(IBAction)showCommon:(id)sender {
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
-    
+    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
+    cVC.delegate = self;
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
     formSheet.shouldDismissOnBackgroundViewTap = YES;
     formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
@@ -317,11 +319,18 @@
     
     
     [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+    
         
     }];
     
 }
 
+- (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task
+{
+    self.taskTextField.text = task;
+    textCheck = YES;
+    [self hideKeyboard];
+}
 
 - (IBAction)segmentChanged:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 1) {

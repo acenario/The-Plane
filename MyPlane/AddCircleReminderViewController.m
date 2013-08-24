@@ -290,6 +290,30 @@
     }
 }
 
+- (IBAction)showCommon:(id)sender {
+    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
+    cVC.delegate = self;
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    formSheet.cornerRadius = 9.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    
+    
+    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    };
+    
+    
+    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+        
+        
+    }];
+}
+
 #pragma mark - Other Methods
 
 - (void)configureDoneButton
@@ -382,6 +406,13 @@
         controller.delegate = self;
         controller.displayDate = self.dateTextLabel.text;
     }
+}
+
+- (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task
+{
+    self.taskTextField.text = task;
+    textCheck = YES;
+    [self hideKeyboard];
 }
 
 @end

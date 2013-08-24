@@ -66,6 +66,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     menuCheck = YES;
+    self.segmentedController.selectedSegmentIndex = 1;
     self.uzysSMenu.hidden = YES;
     
 }
@@ -172,6 +173,10 @@
         
     }
     
+}
+
+- (IBAction)segmentChanged:(id)sender {
+    [self.delegate circlesSegmentDidChange:self.segmentedController];
 }
 
 - (void)createCircleViewControllerDidFinishCreatingCircle:(CreateCircleViewController *)controller

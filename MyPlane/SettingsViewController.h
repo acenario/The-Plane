@@ -16,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *fullNameField;
 @property (strong, nonatomic) IBOutlet UITextField *usernameField;
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
-@property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (strong, nonatomic) IBOutlet PFImageView *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
 -(IBAction)logOut;
