@@ -27,8 +27,6 @@
 @property (nonatomic, strong) NSArray *circles;
 @property (strong, nonatomic) IBOutlet UILabel *ownerName;
 @property (strong, nonatomic) IBOutlet UILabel *membersCount;
-@property (strong, nonatomic) IBOutlet UILabel *postsCount;
-@property (strong, nonatomic) IBOutlet UILabel *remindersCount;
 - (IBAction)leaveCircle:(id)sender;
 
 @end

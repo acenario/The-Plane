@@ -13,8 +13,6 @@
 @end
 
 @implementation AddSocialPostViewController {
-    Circles *circleObject;
-    UserInfo *userObject;
     BOOL textCheck;
     BOOL circleCheck;
 }
@@ -44,9 +42,12 @@
     self.postTextField.textColor = [UIColor grayColor];
     self.postTextField.delegate = self;
     
-    [self.userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userObject = (UserInfo *)object;
-    }];
+    if ((self.circle)) {
+        self.circleLabel.text = self.circle.displayName;
+        circleCheck = YES;
+        self.pickCircleCell.userInteractionEnabled = NO;
+        self.pickCircleCell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     [self configureDoneButton];
     [self configureViewController];
@@ -134,17 +135,15 @@
     
     SocialPosts *post = [SocialPosts object];
     [post setObject:self.postTextField.text forKey:@"text"];
-    [post setObject:circleObject forKey:@"circle"];
-    [post setObject:userObject forKey:@"user"];
+    [post setObject:self.circle forKey:@"circle"];
+    [post setObject:self.currentUser forKey:@"user"];
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        Circles *newCircle = [Circles objectWithoutDataWithObjectId:circleObject.objectId];
-        [newCircle addObject:post forKey:@"posts"];
-        [newCircle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            nil;
+        [self.circle addObject:post forKey:@"posts"];
+        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self.delegate addSocialDidFinishAdding:self];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }];
-        [self.delegate addSocialDidFinishAdding:self];
-        [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }
 
@@ -165,7 +164,7 @@
 - (void)pickCircleViewController:(PickCircleViewController *)controller didSelectCircle:(Circles *)circle
 {
     self.circleLabel.text = circle.displayName;
-    circleObject = circle;
+    self.circle = circle;
     circleCheck = YES;
     [self configureDoneButton];
 }

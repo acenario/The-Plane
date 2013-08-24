@@ -52,7 +52,7 @@
     [self configureFlatUI];
     
     UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Edit Common Tasks" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
-        [SVProgressHUD showErrorWithStatus:@"Show Common Tasks!"];
+        [self showCommon];
     }];
     item0.tag = 0;
     
@@ -438,7 +438,30 @@
     
 }
 
-
+- (void)showCommon
+{
+    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
+    cVC.isFromSettings = YES;
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    formSheet.cornerRadius = 9.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    
+    
+    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    };
+    
+    
+    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+        
+        
+    }];
+}
 
 
 

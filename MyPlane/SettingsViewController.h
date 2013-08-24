@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "EditSettingsViewController.h"
 #import "UzysSlideMenu.h"
+#import "CommonTasksViewController.h"
+#import "MZFormSheetController.h"
 
 @interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 

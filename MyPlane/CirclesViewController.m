@@ -112,6 +112,7 @@
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"owner"];
     [query includeKey:@"members"];
+    [query includeKey:@"posts"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -228,6 +229,11 @@
 {
     [self loadObjects];
     [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)unwindToCircles:(UIStoryboardSegue *)unwindSegue
+{
+    
 }
 
 @end

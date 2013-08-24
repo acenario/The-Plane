@@ -7,6 +7,7 @@
 //
 
 #import "CirclePostsViewController.h"
+#import "AddSocialPostViewController.h"
 
 @interface CirclePostsViewController ()
 
@@ -23,6 +24,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self loadObjects];
 }
 
 - (void)viewDidLoad
@@ -160,9 +166,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([segue.identifier isEqualToString:@"Detail"]) {
     SocialPostDetailViewController *controller = [segue destinationViewController];
 //    controller.delegate = self;
     controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
+    } else if ([segue.identifier isEqualToString:@"AddPost"]) {
+        AddSocialPostViewController *controller = [segue destinationViewController];
+        controller.circle = self.circle;
+    }
 }
 
 @end

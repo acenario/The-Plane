@@ -24,5 +24,6 @@
 @property (nonatomic, strong) id <CommonTasksViewControllerDelegate> delegate;
 - (IBAction)addTask:(id)sender;
 - (IBAction)cancel:(id)sender;
+@property BOOL isFromSettings;
 
 @end

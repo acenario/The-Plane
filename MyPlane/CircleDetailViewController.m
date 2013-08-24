@@ -48,7 +48,6 @@
     self.navigationItem.title = self.circle.displayName;
     self.ownerName.text = [NSString stringWithFormat:@"%@ %@", owner.firstName, owner.lastName];
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
-    self.postsCount.text = [NSString stringWithFormat:@"%d", self.circle.posts.count];
     //    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
     
     [self userQuery];
@@ -76,6 +75,7 @@
         CirclePostsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
         controller.circle = self.circle;
+        controller.currentUSer = self.currentUser;
     } else if ([segue.identifier isEqualToString:@"InviteMembers"]) {
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         IndependentInviteMenuViewController *controller = (IndependentInviteMenuViewController *)nav.topViewController;
@@ -158,25 +158,27 @@
     
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.circle saveInBackground];
-        [self dismissViewControllerAnimated:YES completion:^{
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
-        }];
+        [self performSegueWithIdentifier:@"UnwindToCircles" sender:nil];
     }];
     
 }
 
 - (void)disband
 {
+    NSMutableArray *postsToDelete = [[NSMutableArray alloc] init];
     [userObject removeObject:self.circle forKey:@"circles"];
-    [self.circle removeObject:userObject forKey:@"members"];
-    [self.circle removeObject:userObject.user forKey:@"memberUsernames"];
     
+    for (SocialPosts *post in self.circle.posts) {
+        [postsToDelete addObject:post];
+    }
+
     [self.circle deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        }];
-        [self dismissViewControllerAnimated:YES completion:^{
+        [SocialPosts deleteAllInBackground:postsToDelete block:^(BOOL succeeded, NSError *error) {
+            [userObject saveInBackground];
+        }];;
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
-        }];
+        [self performSegueWithIdentifier:@"UnwindToCircles" sender:nil];
     }];
 }
 

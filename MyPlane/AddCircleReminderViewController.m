@@ -298,6 +298,7 @@
     UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
     CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
     cVC.delegate = self;
+    cVC.isFromSettings = NO;
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
     formSheet.shouldDismissOnBackgroundViewTap = YES;
     formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;

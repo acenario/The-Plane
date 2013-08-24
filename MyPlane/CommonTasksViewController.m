@@ -86,7 +86,11 @@
     CommonTasks *task = (CommonTasks *)object;
     
     cell.textLabel.text = task.text;
+    if (!self.isFromSettings) {
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
@@ -120,6 +124,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.isFromSettings) {
     CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
     task.lastUsed = [NSDate date];
     [task saveInBackground];
@@ -128,6 +133,34 @@
     }];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
+        
+        UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"addCommonTask"];
+        
+        AddCommonTaskViewController *cVC = (AddCommonTaskViewController *)[vc topViewController];
+        cVC.task = task;
+        cVC.delegate = self;
+        
+        MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+        formSheet.shouldDismissOnBackgroundViewTap = YES;
+        formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+        formSheet.cornerRadius = 9.0;
+        formSheet.portraitTopInset = 6.0;
+        formSheet.landscapeTopInset = 6.0;
+        formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+        
+        
+        formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+            presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+        };
+        
+        
+        [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+            
+            
+        }];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath

@@ -328,13 +328,9 @@
     } else if ([segue.identifier isEqualToString:@"AddSocialPost"]) {
         AddSocialPostViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+        controller.currentUser = currentUserObject;
         controller.userQuery = userQuery;
     }
-}
-
-- (void)addSocialDidFinishAdding:(AddSocialPostViewController *)controller
-{
-    [self loadObjects];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -344,6 +340,11 @@
     } else {
         return nil;
     }
+}
+
+- (void)addSocialDidFinishAdding:(AddSocialPostViewController *)controller
+{
+    [self loadObjects];
 }
 
 //- (void)socialPostDetailRefreshData:(SocialPostDetailViewController *)controller

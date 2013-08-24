@@ -31,6 +31,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
 - (IBAction)circleMenu:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
+- (IBAction)unwindToCircles:(UIStoryboardSegue *)unwindSegue;
 
 //@property NSInteger count;
 //- (IBAction)segmentedSwitch:(id)sender;

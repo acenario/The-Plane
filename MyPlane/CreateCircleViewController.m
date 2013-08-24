@@ -290,9 +290,9 @@
 {
     NSString *message;
     if ([privacy isEqualToString:@"private"]) {
-        message = @"Private circles are not searchable. In order to join you must be invited by a current member. Private Circles are also managed by Administrators.";
+        message = @"'Invite-Only' circles are not searchable. In order for others to join they must be invited by a current member. \n Recommended for families and other small groups";
     } else if ([privacy isEqualToString:@"closed"]) {
-        message = @"Closed Circles are searchable. You can join by either requesting, or receiving an invite from a current member. Closed Circles are also managed by Administrators";
+        message = @"Circles that aren't invite-only are searchable. \n Others can join by either searching and sending a request, or by receiving an invition from a current member.";
     } else if ([privacy isEqualToString:@"open"]) {
         message = @"Open Circles are searchable. You can join within the search menu, and can receive a request to join. Open Circles are not managed by any single entity.";
     }

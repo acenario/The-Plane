@@ -163,7 +163,7 @@
                     [relation addObject:request];
                 }
                 [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ Members Invited", self.circle.name]];
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
