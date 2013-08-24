@@ -22,6 +22,7 @@
 @property (nonatomic, strong) id <JoinCircleViewController> delegate;
 
 - (IBAction)done:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end
  

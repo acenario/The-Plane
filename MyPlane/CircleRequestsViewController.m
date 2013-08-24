@@ -50,6 +50,10 @@
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
     return query;
     
 }
@@ -81,12 +85,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.segmentName = @"invites";
+    //self.segmentName = @"invites";
     
     self.invites = [[NSMutableArray alloc] initWithCapacity:5];
     self.requests = [[NSMutableArray alloc] initWithCapacity:5];
+        
+    [self configureViewController];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
     
-    self.tableView.rowHeight = 60;
+    self.tableView.backgroundView = av;
+    
+    self.tableView.rowHeight = 70;
+    
+    self.segmentedControl.selectedFont = [UIFont boldFlatFontOfSize:16];
+    self.segmentedControl.selectedFontColor = [UIColor cloudsColor];
+    self.segmentedControl.deselectedFont = [UIFont flatFontOfSize:16];
+    self.segmentedControl.deselectedFontColor = [UIColor cloudsColor];
+    self.segmentedControl.selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
+    self.segmentedControl.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedControl.cornerRadius = 5.0f;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -98,7 +123,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.segmentName isEqualToString:@"invites"]) {
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
         return self.invites.count;
     } else {
         return self.requests.count;
@@ -107,7 +132,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.segmentName isEqualToString:@"invites"]) {
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
         
         static NSString *cellIdentifier = @"InviteCell";
         PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -117,12 +142,12 @@
         Circles *circle = (Circles *)request.circle;
         UserInfo *inviter = (UserInfo *)request.sender;
         
-        UITextView *inviterName = (UITextView *)[cell viewWithTag:6001];
-        UITextView *circleName = (UITextView *)[cell viewWithTag:6002];
+        UILabel *inviterName = (UILabel *)[cell viewWithTag:6001];
+        UILabel *circleName = (UILabel *)[cell viewWithTag:6002];
         PFImageView *inviterImage = (PFImageView *)[cell viewWithTag:6011];
         UIButton *accept = (UIButton *)[cell viewWithTag:6041];
         
-        inviterName.text = [NSString stringWithFormat:@"%@ %@ invites you to join", inviter.firstName, [inviter.lastName substringToIndex:1]];
+        inviterName.text = [NSString stringWithFormat:@"%@ %@. invites you to join:", inviter.firstName, [inviter.lastName substringToIndex:1]];
         circleName.text = circle.displayName;
         inviterImage.file = inviter.profilePicture;
         [inviterImage loadInBackground];
@@ -139,8 +164,8 @@
         Circles *circle = (Circles *)request.circle;
         UserInfo *requester = (UserInfo *)request.receiver;
         
-        UITextView *name = (UITextView *)[cell viewWithTag:6003];
-        UITextView *requesterName = (UITextView *)[cell viewWithTag:6004];
+        UILabel *name = (UILabel *)[cell viewWithTag:6003];
+        UILabel *requesterName = (UILabel *)[cell viewWithTag:6004];
         PFImageView *requesterImage = (PFImageView *)[cell viewWithTag:6012];
         UIButton *accept = (UIButton *)[cell viewWithTag:6042];
         
@@ -154,17 +179,75 @@
     }
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6001];
+    UILabel *circleLabel = (UILabel *)[cell viewWithTag:6002];
+    FUIButton *joinBtn = (FUIButton *)[cell viewWithTag:6041];
+    nameLabel.font = [UIFont flatFontOfSize:13];
+    circleLabel.font = [UIFont boldFlatFontOfSize:13];
+        
+    joinBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+    joinBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+    joinBtn.shadowHeight = 2.0f;
+    joinBtn.cornerRadius = 3.0f;
+    joinBtn.titleLabel.font = [UIFont boldFlatFontOfSize:15];
+        
+    [joinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [joinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    
+    } else {
+        UILabel *requestCircleLabel = (UILabel *)[cell viewWithTag:6003];
+        UILabel *requestNamecircleLabel = (UILabel *)[cell viewWithTag:6004];
+        UILabel *requestInviteLabel = (UILabel *)[cell viewWithTag:6005];
+        FUIButton *acceptBtn = (FUIButton *)[cell viewWithTag:6042];
+        requestCircleLabel.font = [UIFont flatFontOfSize:14];
+        requestNamecircleLabel.font = [UIFont boldFlatFontOfSize:13];
+        requestInviteLabel.font = [UIFont flatFontOfSize:12];
+        
+        acceptBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+        acceptBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+        acceptBtn.shadowHeight = 2.0f;
+        acceptBtn.cornerRadius = 3.0f;
+        acceptBtn.titleLabel.font = [UIFont boldFlatFontOfSize:15];
+        
+        [acceptBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [acceptBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        
+    }
+    
+    return cell;
+}
+
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    nil;
+    //[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)acceptRequest:(id)sender
 {
-    if ([self.segmentName isEqualToString:@"invites"]) {
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
         UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
         Requests *request = [self.invites objectAtIndex:clickedButtonPath.row];
@@ -224,7 +307,7 @@
 }
 
 - (IBAction)segmentedChange:(id)sender {
-    self.segmentName = [[self.segmentedControl titleForSegmentAtIndex:self.segmentedControl.selectedSegmentIndex] lowercaseString];
+    //self.segmentName = [[self.segmentedControl titleForSegmentAtIndex:self.segmentedControl.selectedSegmentIndex] lowercaseString];
     [self.tableView reloadData];
 }
 

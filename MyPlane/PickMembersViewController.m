@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     allChecked = NO;
 //    self.members = [[NSMutableArray alloc]initWithArray:self.circle.members];
 //    for (UserInfo *object in self.circle.members) {
@@ -41,6 +42,18 @@
     self.doneBarButton.enabled = NO;
     self.invitedMembers = [[NSMutableArray alloc] initWithCapacity:10];
     self.invitedUsernames = [[NSMutableArray alloc] initWithCapacity:10];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+    self.tableView.rowHeight = 70;
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,6 +88,35 @@
     if ([self.invitedMembers containsObject:user]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
+    
+    return cell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+//    UIImageView *av = [[UIImageView alloc] init];
+//    av.backgroundColor = [UIColor clearColor];
+//    av.opaque = NO;
+//    UIImage *background = [UIImage imageNamed:@"list-item"];
+//    av.image = background;
+//    
+//    cell.backgroundView = av;
+//    
+//    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+//    
+//    UIView *bgView = [[UIView alloc]init];
+//    bgView.backgroundColor = selectedColor;
+//    
+//    
+//    [cell setSelectedBackgroundView:bgView];
+//    
+//    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6301];
+//    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6302];
+//    
+//    nameLabel.font = [UIFont flatFontOfSize:16];
+//    usernameLabel.font = [UIFont flatFontOfSize:14];
+    
     
     return cell;
 }

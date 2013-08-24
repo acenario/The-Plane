@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EditSettingsViewController.h"
+#import "UzysSlideMenu.h"
 
 @interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -19,6 +20,6 @@
 @property (strong, nonatomic) IBOutlet PFImageView *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
--(IBAction)logOut;
+- (IBAction)showMenu:(id)sender;
 
 @end

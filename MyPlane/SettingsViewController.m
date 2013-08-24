@@ -14,6 +14,9 @@
 
 @interface SettingsViewController ()
 
+@property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+
+
 @end
 
 @implementation SettingsViewController {
@@ -23,7 +26,7 @@
     NSString *displayName;
     NSString *theUsername;
     UIImage *defaultPic;
-
+    BOOL menuCheck;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -47,6 +50,25 @@
     
     self.tableView.backgroundView = av;
     [self configureFlatUI];
+    
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Edit Common Tasks" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+        [SVProgressHUD showErrorWithStatus:@"Show Common Tasks!"];
+    }];
+    item0.tag = 0;
+    
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
+    }];
+    item0.tag = 1;
+    
+    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+        [self logOut];
+    }];
+    item0.tag = 2;
+    
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1,item2]];
+    [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -74,7 +96,8 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    menuCheck = YES;
+    self.uzysSMenu.hidden = YES;
     if (![PFUser currentUser]) { // No user logged in
         
         // Create the log in view controller
@@ -123,6 +146,19 @@
     self.usernameField.textColor = myColor;
     
     
+    
+}
+
+- (IBAction)showMenu:(id)sender {
+    self.uzysSMenu.hidden = NO;
+    if (menuCheck == YES) {
+        [self.uzysSMenu toggleMenu];
+        menuCheck = NO;
+    } else {
+        [self.uzysSMenu openIconMenu];
+        menuCheck = YES;
+        
+    }
     
 }
 

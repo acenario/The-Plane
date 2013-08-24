@@ -48,13 +48,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     //    [self.searchBar becomeFirstResponder];
     self.searchBar.delegate = self;
     
     [self currentUserQuery];
     
-    self.tableView.rowHeight = 60;
+    
     didSearch = NO;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    self.tableView.rowHeight = 70;
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,7 +80,7 @@
     currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [currentUserQuery includeKey:@"friends"];
-    
+    currentUserQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     
     [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
@@ -152,12 +164,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (didSearch) {
+    if (!didSearch) {
         return @"Friends";
     } else {
-        return @"All Members";
+        return @"Searched Users";
     }
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     
@@ -167,7 +180,7 @@
     
     
     if (searchResults.count > 0) {
-
+        
         UILabel *name = (UILabel *)[cell viewWithTag:6301];
         UILabel *username = (UILabel *)[cell viewWithTag:6302];
         PFImageView *picImage = (PFImageView *)[cell viewWithTag:6311];
@@ -191,10 +204,40 @@
     return cell;
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6301];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6302];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    
+    
+    return cell;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.searchBar resignFirstResponder];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     UserInfo *user = [searchResults objectAtIndex:indexPath.row];
     //    UserInfo *user2 = [UserInfo objectWithoutDataWithObjectId:user.objectId];

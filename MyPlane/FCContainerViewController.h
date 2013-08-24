@@ -13,7 +13,7 @@
 @interface FCContainerViewController : UIViewController <FriendsQueryViewControllerDelegate, CirclesDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *FCContainer;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *circContainer;
 
 - (IBAction)changePage:(id)sender;

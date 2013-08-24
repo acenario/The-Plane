@@ -34,9 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-//    self.segmentedControl.selectedSegmentIndex = 1;
-//    self.navigationController.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d", self.count];
+    [self configureViewController];
     
     UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
@@ -48,10 +46,6 @@
     }];
     item0.tag = 1;
     
-    //    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"UzysSlide Menu" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-    //        NSLog(@"Item: %@", item);
-    //    }];
-    //    item0.tag = 2;
     
     self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
     [self.view addSubview:self.uzysSMenu];
@@ -63,11 +57,43 @@
     }];
 }
 
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+    self.segmentedController.selectedFont = [UIFont boldFlatFontOfSize:16];
+    self.segmentedController.selectedFontColor = [UIColor cloudsColor];
+    self.segmentedController.deselectedFont = [UIFont flatFontOfSize:16];
+    self.segmentedController.deselectedFontColor = [UIColor cloudsColor];
+    self.segmentedController.selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedController.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
+    self.segmentedController.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedController.cornerRadius = 5.0f;
+
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewDidAppearInContainer:)
+                                                 name:@"showCircles"
+                                               object:nil];
     menuCheck = YES;
     self.segmentedController.selectedSegmentIndex = 1;
     self.uzysSMenu.hidden = YES;
+    [self loadObjects];
+    
+}
+
+-(void)viewDidAppearInContainer:(NSNotification *) notification {
+    if ([[notification name] isEqualToString:@"showCircles"]) {
+        self.segmentedController.selectedSegmentIndex = 1;
+    }
     
 }
 
@@ -112,11 +138,30 @@
     return cell;
 }
 
-//- (IBAction)segmentedSwitch:(id)sender {
-//    if ([sender selectedSegmentIndex] == 0) {
-//        [self dismissViewControllerAnimated:NO completion:nil];
-//    }
-//}
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont flatFontOfSize:17];
+    cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
+    cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    return cell;
+}
 
 - (void)joinCircleViewControllerDidFinishAddingFriends:(JoinCircleViewController *)controller
 {

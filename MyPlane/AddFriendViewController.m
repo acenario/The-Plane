@@ -89,7 +89,7 @@
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     //[currentUserQuery includeKey:@"friends"];
     //[currentUserQuery includeKey:@"friends.user"];
-    
+    currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
     
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (UserInfo *object in objects) {

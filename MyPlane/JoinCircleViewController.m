@@ -40,9 +40,21 @@
     [super viewDidLoad];
     [self.searchBar becomeFirstResponder];
     self.searchBar.delegate = self;
-    
+    [self configureViewController];
     [self currentUserQuery];
     
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.rowHeight = 60;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,12 +122,12 @@
     if (searchResults.count > 0) {
         UILabel *name = (UILabel *)[cell viewWithTag:6101];
         UILabel *membersLabel = (UILabel *)[cell viewWithTag:6102];
-        UIButton *addButton = (UIButton *)[cell viewWithTag:6131];
+        FUIButton *addButton = (FUIButton *)[cell viewWithTag:6131];
         addButton.hidden = YES;
         
         Circles *searchedCircle = [searchResults objectAtIndex:indexPath.row];
         name.text = searchedCircle.displayName;
-        membersLabel.text = [NSString stringWithFormat:@"%d members", searchedCircle.members.count];
+        membersLabel.text = [NSString stringWithFormat:@"%d member(s)", searchedCircle.members.count];
         
         NSMutableArray *objIds = [[NSMutableArray alloc] init];
         NSMutableArray *names = [[NSMutableArray alloc ] init];
@@ -135,13 +147,59 @@
         }
         
         if ([searchedCircle.privacy isEqualToString:@"closed"]) {
-            [addButton.titleLabel setText:@"Request" ];
+            [addButton setTitle:@"Request" forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(requestToJoin:) forControlEvents:UIControlEventTouchUpInside];
         } else {
             [addButton addTarget:self action:@selector(adjustButtonState:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     return cell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6101];
+    UILabel *memberCount = (UILabel *)[cell viewWithTag:6102];
+    FUIButton *joinBtn = (FUIButton *)[cell viewWithTag:6131];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    memberCount.font = [UIFont flatFontOfSize:12];
+    
+    nameLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    joinBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+    joinBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+    joinBtn.shadowHeight = 2.0f;
+    joinBtn.cornerRadius = 3.0f;
+    joinBtn.titleLabel.font = [UIFont boldFlatFontOfSize:13];
+    
+    [joinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [joinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    nil;
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)adjustButtonState:(id)sender
@@ -204,6 +262,10 @@
 - (IBAction)done:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.delegate joinCircleViewControllerDidFinishAddingFriends:self];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -29,7 +29,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	[self configureViewController];
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
     
     if (!(self.task)) {
         editing = NO;
@@ -42,6 +46,21 @@
     }
     
     self.textField.delegate = self;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+}
+
+-(void)hideKeyboard {
+    [self.textField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +78,32 @@
     }
     
     return YES;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    self.taskLabel.font = [UIFont boldFlatFontOfSize:17];
+    self.textField.font = [UIFont flatFontOfSize:16];
+
+    
+    return cell;
 }
 
 - (IBAction)done:(id)sender {

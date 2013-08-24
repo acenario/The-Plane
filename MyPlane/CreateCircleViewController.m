@@ -37,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     public = YES;
     
@@ -50,6 +51,16 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -106,7 +117,7 @@
             static NSString *CellIdentifier = @"BoolCell";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
-            UISegmentedControl *privacySegmentedController = (UISegmentedControl *)[cell viewWithTag:6251];
+            FUISegmentedControl *privacySegmentedController = (FUISegmentedControl *)[cell viewWithTag:6251];
             UIButton *infoButton = (UIButton *)[cell viewWithTag:6261];
             
             privacySegmentedController.selectedSegmentIndex = 1;
@@ -119,7 +130,7 @@
     } else if (indexPath.section == 1){ // Invite Members (Segue) Cell
         static NSString *CellIdentifier = @"InviteCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        
+
         cell.textLabel.text = @"Invite Members";
         
     } else { // Invited members cell(s)
@@ -129,7 +140,7 @@
         UILabel *name = (UILabel *)[cell viewWithTag:6201];
         UILabel *username = (UILabel *)[cell viewWithTag:6202];
         PFImageView *userImage = (PFImageView *)[cell viewWithTag:6211];
-        UIButton *removeMember = (UIButton *)[cell viewWithTag:6241];
+        FUIButton *removeMember = (FUIButton *)[cell viewWithTag:6241];
         
         UserInfo *user = [invitedMembers objectAtIndex:indexPath.row];
         
@@ -149,10 +160,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 2) {
-        return 44;
+    if (indexPath.section == 2) {
+        return 70;
     } else {
-        return 60;
+        return 44;
     }
 }
 
@@ -165,10 +176,99 @@
     }
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+            UILabel *nameTitle = (UILabel *)[cell viewWithTag:622];
+            UITextField *postLabel = (UITextField *)[cell viewWithTag:6221];
+            
+            nameTitle.font = [UIFont flatFontOfSize:17];
+            postLabel.font = [UIFont flatFontOfSize:14];
+            
+            
+            [cell.contentView addSubview:imgView];
+            
+        } else {
+            UILabel *publicTitle = (UILabel *)[cell viewWithTag:625];
+            FUISegmentedControl *postLabel = (FUISegmentedControl *)[cell viewWithTag:6251];
+            
+            publicTitle.font = [UIFont flatFontOfSize:17];
+            
+            postLabel.selectedFont = [UIFont boldFlatFontOfSize:16];
+            postLabel.selectedFontColor = [UIColor cloudsColor];
+            postLabel.deselectedFont = [UIFont flatFontOfSize:16];
+            postLabel.deselectedFontColor = [UIColor cloudsColor];
+            postLabel.selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+            postLabel.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
+            postLabel.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
+            postLabel.cornerRadius = 15.0f;
+            
+            
+        } 
+    } else if (indexPath.section == 1) {
+        cell.textLabel.font = [UIFont flatFontOfSize:17];
+        cell.textLabel.backgroundColor = [UIColor whiteColor];
+        
+    } else {
+        
+        UILabel *name = (UILabel *)[cell viewWithTag:6201];
+        UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6202];
+        FUIButton *removeBtn = (FUIButton *)[cell viewWithTag:6241];
+        
+        name.font = [UIFont flatFontOfSize:15];
+        usernameLabel.font = [UIFont flatFontOfSize:14];
+        
+        removeBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+        removeBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+        removeBtn.shadowHeight = 2.0f;
+        removeBtn.cornerRadius = 3.0f;
+        removeBtn.titleLabel.font = [UIFont boldFlatFontOfSize:14];
+        
+        [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        
+        [cell.contentView addSubview:imgView];
+        
+    }
+    
+    return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        nil;
+    }
+}
+
+
 #pragma mark - Other Methods
 
 - (void)publicBoolSwitch:(id)sender {
-    UISegmentedControl *privacySegmentedControl = (UISegmentedControl *)sender;
+    FUISegmentedControl *privacySegmentedControl = (FUISegmentedControl *)sender;
     
     switch (privacySegmentedControl.selectedSegmentIndex) {
         case 0:

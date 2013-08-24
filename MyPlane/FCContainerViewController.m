@@ -26,11 +26,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"fCenterTabbarItemTapped"
+                                               object:nil];
     self.circContainer.hidden = YES;
     self.navigationController.navigationBar.hidden = YES;
     //UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"friendQuery"];
     
 	// Do any additional setup after loading the view.
+}
+
+
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
+        NSLog (@"Successfully received the add notification for friends or circles!");
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+        [self performSegueWithIdentifier:@"containerAddFriend" sender:nil];
+        } else {
+            [self performSegueWithIdentifier:@"containerCreateCircle" sender:nil];
+        }
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,10 +63,12 @@
 
 - (IBAction)changePage:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showFriends" object:nil];
         self.FCContainer.hidden = NO;
         self.circContainer.hidden = YES;
         NSLog(@"showFriends");
     } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showCircles" object:nil];
         self.FCContainer.hidden = YES;
         self.circContainer.hidden = NO;
         NSLog(@"show circles");
@@ -54,12 +78,16 @@
 - (void)friendsSegmentChanged:(UISegmentedControl *)segmentedController
 {
     if (segmentedController.selectedSegmentIndex == 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showFriends" object:nil];
         self.FCContainer.hidden = NO;
         self.circContainer.hidden = YES;
+        self.segmentedControl.selectedSegmentIndex = 0;
         NSLog(@"showFriends");
     } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showCircles" object:nil];
         self.FCContainer.hidden = YES;
         self.circContainer.hidden = NO;
+        self.segmentedControl.selectedSegmentIndex = 1;
         NSLog(@"show circles");
     }
 }
@@ -67,12 +95,16 @@
 - (void)circlesSegmentDidChange:(UISegmentedControl *)segmentedController
 {
     if (segmentedController.selectedSegmentIndex == 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showFriends" object:nil];
         self.FCContainer.hidden = NO;
         self.circContainer.hidden = YES;
+        self.segmentedControl.selectedSegmentIndex = 0;
         NSLog(@"showFriends");
     } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showCircles" object:nil];
         self.FCContainer.hidden = YES;
         self.circContainer.hidden = NO;
+        self.segmentedControl.selectedSegmentIndex = 1;
         NSLog(@"show circles");
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import <Parse/Parse.h>
 #import "UserInfo.h"
 #import "Comments.h"
 #import "SocialPosts.h"
@@ -16,7 +15,6 @@
 #import "CircleDetailViewController.h"
 #import "JoinCircleViewController.h"
 #import "CreateCircleViewController.h"
-//#import "FCContainerViewController.h"
 #import "UzysSlideMenu.h"
 
 @class CirclesViewController;
@@ -28,7 +26,7 @@
 @end
 
 @interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate, CreateCircleViewControllerDelegate>
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedController;
+@property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedController;
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
 - (IBAction)circleMenu:(id)sender;

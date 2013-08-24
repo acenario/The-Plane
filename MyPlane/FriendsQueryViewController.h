@@ -22,7 +22,7 @@
 
 @interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedController;
+@property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedController;
 @property (nonatomic, strong) id <FriendsQueryViewControllerDelegate> delegate;
 - (IBAction)addFriend:(id)sender;
 - (IBAction)segmentChanged:(id)sender;

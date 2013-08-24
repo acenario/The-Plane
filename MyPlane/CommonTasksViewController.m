@@ -37,7 +37,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,10 +61,13 @@
 {
     PFQuery *query = [CommonTasks query];
     [query whereKey:@"username" equalTo:[PFUser currentUser].username];
+    
     [query orderByDescending:@"lastUsed"];
+    
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
+
     return query;
 }
 
@@ -79,10 +93,36 @@
 
 #pragma mark - Table view delegate
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
+    
+    return cell;
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
-    
+    task.lastUsed = [NSDate date];
+    [task saveInBackground];
     [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
         [self.delegate commonTasksViewControllerDidFinishWithTask:task.text];
     }];

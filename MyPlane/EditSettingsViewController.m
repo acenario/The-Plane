@@ -67,13 +67,13 @@
     self.tableView.backgroundView = av;
     
     UIColor *regColor = [UIColor colorFromHexCode:@"FF7140"];
-    UIColor *selColor = [UIColor colorFromHexCode:@"FF9773"];
+    //UIColor *selColor = [UIColor colorFromHexCode:@"FF9773"];
     
     self.setPic.buttonColor = regColor;
-    self.setPic.shadowColor = selColor;
-    self.setPic.shadowHeight = 3.0f;
-    self.setPic.cornerRadius = 6.0f;
-    self.setPic.titleLabel.font = [UIFont boldFlatFontOfSize:22];
+    self.setPic.shadowColor = regColor;
+    self.setPic.shadowHeight = 2.0f;
+    self.setPic.cornerRadius = 3.0f;
+    self.setPic.titleLabel.font = [UIFont boldFlatFontOfSize:18];
     
     
     [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

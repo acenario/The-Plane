@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Acubed Productions. All rights reserved.
 //
 
-#import <Parse/Parse.h>
 #import "SubclassHeader.h"
 
 @class AddCommonTaskViewController;
@@ -23,6 +22,7 @@
 @property (nonatomic, strong) UserInfo *currentUser;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *taskLabel;
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 @property (nonatomic, weak) id <AddCommonTaskViewControllerDelegate> delegate;

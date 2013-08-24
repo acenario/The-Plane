@@ -9,7 +9,6 @@
 #import <Parse/Parse.h>
 #import "SubclassHeader.h"
 #import "AddCommonTaskViewController.h"
-#import "EditCommonTaskViewController.h"
 
 @class CommonTasksViewController;
 

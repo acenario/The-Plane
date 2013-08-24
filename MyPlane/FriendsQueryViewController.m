@@ -44,15 +44,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveAddNotification:)
-                                                 name:@"fCenterTabbarItemTapped"
-                                               object:nil];
+    [self configureViewController];
     
-   
-    //CUSTOMIZE
-    self.tableView.rowHeight = 70;
-    
+    [self getUserInfo];
+
+	// Do any additional setup after loading the view.
+}
+
+-(void)configureViewController {
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -61,9 +60,16 @@
     
     self.tableView.backgroundView = av;
     
-    [self getUserInfo];
-
-	// Do any additional setup after loading the view.
+    self.tableView.rowHeight = 70;
+    
+    self.segmentedController.selectedFont = [UIFont boldFlatFontOfSize:16];
+    self.segmentedController.selectedFontColor = [UIColor cloudsColor];
+    self.segmentedController.deselectedFont = [UIFont flatFontOfSize:16];
+    self.segmentedController.deselectedFontColor = [UIColor cloudsColor];
+    self.segmentedController.selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedController.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
+    self.segmentedController.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedController.cornerRadius = 5.0f;
 }
 
 -(void)getUserInfo {
@@ -91,6 +97,10 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"increaseFriend"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewDidAppearInContainer:)
+                                                 name:@"showFriends"
+                                               object:nil];
     self.segmentedController.selectedSegmentIndex = 0;
     [self loadObjects];
 }
@@ -101,18 +111,20 @@
     // unless you use this method for observation of other notifications
     // as well.
     
-    if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
-        NSLog (@"Successfully received the add notification for friends!");
-        [self performSegueWithIdentifier:@"AddFriend" sender:nil];
-    }
-    
-    else if ([[notification name] isEqualToString:@"reloadFriends"]) {
+    if ([[notification name] isEqualToString:@"reloadFriends"]) {
         [self loadObjects];
     }
     
     else if ([[notification name] isEqualToString:@"increaseFriend"]) {
         [self checkFriendRequests];
     }
+}
+
+-(void)viewDidAppearInContainer:(NSNotification *) notification {
+    if ([[notification name] isEqualToString:@"showFriends"]) {
+        self.segmentedController.selectedSegmentIndex = 0;
+    }
+    
 }
 
 
@@ -187,18 +199,6 @@
     
     nameLabel.font = [UIFont flatFontOfSize:17];
     usernameLabel.font = [UIFont flatFontOfSize:15];
-    
-    /*cell.textLabel.backgroundColor = [UIColor clearColor];
-     if ([cell respondsToSelector:@selector(detailTextLabel)])
-     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-     
-     //Guess some good text colors
-     cell.textLabel.textColor = selectedColor;
-     cell.textLabel.highlightedTextColor = color;
-     if ([cell respondsToSelector:@selector(detailTextLabel)]) {
-     cell.detailTextLabel.textColor = selectedColor;
-     cell.detailTextLabel.highlightedTextColor = color;
-     }*/
     
     return cell;
 }

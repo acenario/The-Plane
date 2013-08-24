@@ -47,6 +47,7 @@
         isFromCircles = NO;
         currentUserQuery = [UserInfo query];
         [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+        currentUserQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
         [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             self.currentUser = (UserInfo *)object;
         }];
@@ -101,9 +102,12 @@
     self.segmentedControl.selectedFontColor = [UIColor cloudsColor];
     self.segmentedControl.deselectedFont = [UIFont flatFontOfSize:16];
     self.segmentedControl.deselectedFontColor = [UIColor cloudsColor];
-    self.segmentedControl.selectedColor = [UIColor colorFromHexCode:@"0A67A3"];
-    self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"3E97D1"];
-    self.segmentedControl.dividerColor = [UIColor wetAsphaltColor];
+//    self.segmentedControl.selectedColor = [UIColor colorFromHexCode:@"0A67A3"];
+//    self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"3E97D1"];
+//    self.segmentedControl.dividerColor = [UIColor colorFromHexCode:@"0A67A3"];
+    self.segmentedControl.selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
+    self.segmentedControl.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
     self.segmentedControl.cornerRadius = 15.0;
 
 }
