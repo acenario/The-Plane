@@ -32,12 +32,7 @@
     [super viewDidLoad];
     [self configureViewController];
     allChecked = NO;
-//    self.members = [[NSMutableArray alloc]initWithArray:self.circle.members];
-//    for (UserInfo *object in self.circle.members) {
-//        if ([object.user isEqualToString:[PFUser currentUser].username]) {
-//            [self.members removeObject:object];
-//        }
-//    }
+
     [self.checkAllButton setTitle:@"Check All" forState:UIControlStateNormal];
     self.doneBarButton.enabled = NO;
     self.invitedMembers = [[NSMutableArray alloc] initWithCapacity:10];
@@ -176,6 +171,7 @@
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        self.doneBarButton.enabled = NO;
         [self.invitedMembers removeAllObjects];
         [self.invitedUsernames removeAllObjects];
         
@@ -229,6 +225,8 @@
 {
     if (self.invitedMembers.count > 0) {
         self.doneBarButton.enabled = YES;
+    } else {
+        self.doneBarButton.enabled = NO;
     }
 }
 

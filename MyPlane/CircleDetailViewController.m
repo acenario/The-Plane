@@ -84,7 +84,7 @@
         CirclePostsViewController *controller = [segue destinationViewController];
         controller.delegate = self;
         controller.circle = self.circle;
-        controller.currentUSer = self.currentUser;
+        controller.currentUser = self.currentUser;
     } else if ([segue.identifier isEqualToString:@"InviteMembers"]) {
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         IndependentInviteMenuViewController *controller = (IndependentInviteMenuViewController *)nav.topViewController;

@@ -16,7 +16,7 @@
 
 @implementation AddReminderViewController {
     NSString *nameOfUser;
-    PFObject *receivedObjectID;
+//    PFObject *receivedObjectID;
 //    UserInfo *recipient;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
@@ -50,7 +50,7 @@
         self.friendCell.userInteractionEnabled = NO;
         self.segmentUIView.hidden = YES;
         self.segmentUIView.frame = CGRectMake(0,0,0,0);
-        receivedObjectID = self.recipient;
+//        receivedObjectID = self.recipient;
     } else {
         self.name.hidden = YES;
         self.username.hidden = YES;
@@ -73,7 +73,6 @@
     
     reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
     self.dateDetail.text = [mainFormatter stringFromDate:reminderDate];
-    
     descriptionPlaceholderText = @"Enter more information about the reminder.";
     self.descriptionTextView.text = descriptionPlaceholderText;
     self.descriptionTextView.textColor = [UIColor lightGrayColor];
@@ -199,10 +198,10 @@
     self.name.text = name;
     self.username.text = username;
     self.userImage.image = image;
-    receivedObjectID = objectID;
+//    receivedObjectID = objectID;
     self.currentUser = userObject;
     friendCheck = YES;
-    self.recipient = [UserInfo objectWithoutDataWithObjectId:receivedObjectID.objectId];
+    self.recipient = (UserInfo *)objectID;
     self.name.hidden = NO;
     self.userImage.hidden = NO;
     self.userFrame.hidden = NO;
@@ -333,7 +332,7 @@
 {
     self.taskTextField.text = task;
     textCheck = YES;
-    [self hideKeyboard];
+    [self configureDoneButton];
 }
 
 - (IBAction)segmentChanged:(id)sender {

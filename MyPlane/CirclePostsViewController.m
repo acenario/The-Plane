@@ -250,6 +250,7 @@
     } else if ([segue.identifier isEqualToString:@"AddPost"]) {
         AddSocialPostViewController *controller = [segue destinationViewController];
         controller.circle = self.circle;
+        controller.currentUser = self.currentUser;
     }
 }
 

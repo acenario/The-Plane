@@ -21,7 +21,7 @@
 @property (nonatomic, weak) id <CirclePostsViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) Circles *circle;
-@property (nonatomic, strong) UserInfo *currentUSer;
+@property (nonatomic, strong) UserInfo *currentUser;
 
 @end
  
