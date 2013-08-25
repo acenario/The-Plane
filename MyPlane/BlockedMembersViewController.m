@@ -29,10 +29,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    self.tableView.rowHeight = 70;
+    [self configureViewController];
+    
     self.unblockButton.enabled = NO;
     selectedUsers = [[NSMutableArray alloc] init];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    self.tableView.rowHeight = 70;
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,6 +99,35 @@
     
     return cell;
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+    UILabel *username = (UILabel *)[cell viewWithTag:2];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    username.font = [UIFont flatFontOfSize:14];
+    
+    
+    return cell;
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

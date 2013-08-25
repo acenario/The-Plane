@@ -37,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
 	// Do any additional setup after loading the view.
     //    self.tableView.rowHeight = 60;
     
@@ -63,6 +64,16 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,7 +188,7 @@
             Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
              
             UserInfo *userObject = (UserInfo *)comment.user;
-            nameLabel.text = userObject.firstName;
+            nameLabel.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
             date.text = [dateFormatter2 stringFromDate:[self.reminderObject objectForKey:@"date"]];
             commentLabel.text = comment.text;
             userImage.file = userObject.profilePicture;
@@ -218,6 +229,82 @@
     }
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:13101];
+        UILabel *username = (UILabel *)[cell viewWithTag:13102];
+                
+        nameLabel.font = [UIFont flatFontOfSize:16];
+        username.font = [UIFont flatFontOfSize:14];
+            
+        [cell.contentView addSubview:imgView];
+        
+        } else if (indexPath.row != 3) {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont boldFlatFontOfSize:14];
+            cell.detailTextLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+            
+            [cell.contentView addSubview:imgView];
+        } else {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont boldFlatFontOfSize:14];
+            cell.detailTextLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+        }
+        
+    } else if (indexPath.section == 1) {
+        cell.textLabel.font = [UIFont boldFlatFontOfSize:16];
+        cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+        cell.textLabel.backgroundColor = [UIColor whiteColor];
+    } else if (indexPath.section == 2) {
+        if (self.objects.count > 0) {
+            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
+            UILabel *postLabel = (UILabel *)[cell viewWithTag:1302];
+            UILabel *timeLabel = (UILabel *)[cell viewWithTag:1];
+            
+            nameLabel.font = [UIFont flatFontOfSize:14];
+            postLabel.font = [UIFont flatFontOfSize:15];
+            timeLabel.font = [UIFont flatFontOfSize:14];
+            
+            [cell.contentView addSubview:imgView];
+        } else {
+            UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
+            commentText.font = [UIFont flatFontOfSize:14];
+        }
+        
+    } else {
+        UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
+        commentText.font = [UIFont flatFontOfSize:14];
+        
+    }
+    
+    return cell;
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 1) {
@@ -237,7 +324,7 @@
         } else if (indexPath.row == 3) {
             return 44;
         } else {
-            return 60;
+            return 70;
         }
     } if (indexPath.section == 1) {
         return 44;
