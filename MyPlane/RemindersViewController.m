@@ -194,10 +194,10 @@
     
     PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
     
-    NSDate *currentDate = [[NSDate date] dateByAddingTimeInterval:7200];
+    NSDate *currentDate = [NSDate date];
     NSComparisonResult result;
     
-    result = [currentDate compare:[object objectForKey:@"date"]];
+    result = [currentDate compare:[[object objectForKey:@"date"] dateByAddingTimeInterval:7200]];
     
     if (result == NSOrderedDescending) {
         [self checkDateforCell:cell withReminder:reminder];

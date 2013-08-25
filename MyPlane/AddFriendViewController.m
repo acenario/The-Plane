@@ -229,6 +229,11 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.searchBar resignFirstResponder];
+    nil;
+}
+
 - (IBAction)adjustButtonState:(id)sender
 {
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
