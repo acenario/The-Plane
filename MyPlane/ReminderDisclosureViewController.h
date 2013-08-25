@@ -19,8 +19,6 @@
 @property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) PFObject *reminderObject;
-- (IBAction)cancel:(id)sender;
-- (IBAction)done:(id)sender;
 - (IBAction)addComment:(id)sender;
 
 

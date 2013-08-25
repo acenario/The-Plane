@@ -66,8 +66,13 @@
     }];
     item0.tag = 2;
     
+    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Blocked Users" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+        [self performSegueWithIdentifier:@"BlockedUsers" sender:nil];
+    }];
+    item0.tag = 3;
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1,item2]];
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -250,6 +255,9 @@
         controller.lastname = self.lastNameField.text;
         controller.email = self.emailField.text;
         controller.profilePicture = self.profilePicture.image;
+    } else if ([segue.identifier isEqualToString:@"EditCommonTasks"]) {
+        CommonTasksViewController *controller = [segue destinationViewController];
+        controller.isFromSettings = YES;
     }
 }
 
@@ -440,29 +448,33 @@
 
 - (void)showCommon
 {
-    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
-    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
-    cVC.isFromSettings = YES;
-    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
-    formSheet.shouldDismissOnBackgroundViewTap = YES;
-    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
-    formSheet.cornerRadius = 9.0;
-    formSheet.portraitTopInset = 6.0;
-    formSheet.landscapeTopInset = 6.0;
-    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
-    
-    
-    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
-        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
-    };
-    
-    
-    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-        
-        
-    }];
+//    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+//    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
+//    cVC.isFromSettings = YES;
+//    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+//    formSheet.shouldDismissOnBackgroundViewTap = YES;
+//    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+//    formSheet.cornerRadius = 9.0;
+//    formSheet.portraitTopInset = 6.0;
+//    formSheet.landscapeTopInset = 6.0;
+//    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+//    
+//    
+//    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+//        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+//    };
+//    
+//    
+//    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+//        
+//        
+//    }];
+    [self performSegueWithIdentifier:@"EditCommonTasks" sender:nil];
 }
 
-
+- (void)unwindToSettings:(UIStoryboardSegue *)unwindSegue
+{
+    
+}
 
 @end

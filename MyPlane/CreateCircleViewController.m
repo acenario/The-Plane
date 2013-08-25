@@ -48,6 +48,8 @@
         currentUser = (UserInfo *)object;
     }];
     
+    privacy = @"closed";
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
@@ -121,7 +123,6 @@
             UIButton *infoButton = (UIButton *)[cell viewWithTag:6261];
             
             privacySegmentedController.selectedSegmentIndex = 1;
-            privacy = [[privacySegmentedController titleForSegmentAtIndex:1] lowercaseString];
             
             [privacySegmentedController addTarget:self action:@selector(publicBoolSwitch:) forControlEvents:UIControlEventValueChanged];
             [infoButton addTarget:self action:@selector(infoButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -273,25 +274,28 @@
     switch (privacySegmentedControl.selectedSegmentIndex) {
         case 0:
             public = NO;
+            privacy = @"private";
             break;
         case 1:
+            public = YES;
+            privacy = @"closed";
+            break;
         case 2:
             public = YES;
+            privacy = @"open";
             break;
             
         default:
             break;
     }
-    
-    privacy = [[privacySegmentedControl titleForSegmentAtIndex:privacySegmentedControl.selectedSegmentIndex] lowercaseString];
 }
 
 - (void)infoButton:(id)sender
 {
     NSString *message;
-    if ([privacy isEqualToString:@"yes"]) {
+    if ([privacy isEqualToString:@"private"]) {
         message = @"'Invite-Only' circles are not searchable. In order for others to join they must be invited by a current member. \n Recommended for families and other small groups";
-    } else if ([privacy isEqualToString:@"no"]) {
+    } else if ([privacy isEqualToString:@"closed"]) {
         message = @"Circles that aren't invite-only are searchable. \n Others can join by either searching and sending a request, or by receiving an invition from a current member.";
     } else if ([privacy isEqualToString:@"open"]) {
         message = @"Open Circles are searchable. You can join within the search menu, and can receive a request to join. Open Circles are not managed by any single entity.";
@@ -416,6 +420,7 @@
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
                     [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
         }];
@@ -423,6 +428,7 @@
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
             [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }];
     }
 }

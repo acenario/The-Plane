@@ -97,7 +97,7 @@
                         <outlet property="sentReminders" destination="3nc-zN-QlH" id="aKQ-hL-AU4"/>
                         <segue destination="CWe-JA-5Yf" kind="modal" identifier="AddReminder" id="U7Z-W4-19C"/>
                         <segue destination="unW-ub-e0M" kind="modal" identifier="firstTimeSettings" modalTransitionStyle="crossDissolve" id="clu-AU-b0I"/>
-                        <segue destination="W9r-SP-M2g" kind="modal" identifier="ReminderDisclosure" id="6aJ-Tx-IGe"/>
+                        <segue destination="Dcc-nQ-kd2" kind="push" identifier="ReminderDisclosure" id="zNQ-I4-gIZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9L-Ru-aTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -109,7 +109,7 @@
             <objects>
                 <tableViewController id="3zc-to-0f3" customClass="CommonTasksViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WyH-SF-Spo">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -136,7 +136,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Common Tasks" id="8zV-Vm-GAP">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3Q9-vg-naP">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="3Q9-vg-naP">
                             <connections>
                                 <action selector="cancel:" destination="3zc-to-0f3" id="d8K-lJ-egL"/>
                             </connections>
@@ -147,8 +147,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="3Q9-vg-naP" id="FUs-R7-yc8"/>
+                        <segue destination="FIb-pA-URc" kind="unwind" identifier="UnwindToSettings" unwindAction="unwindToSettings:" id="4Oa-uM-7XN"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ot6-e8-jue" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="FIb-pA-URc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="633" y="-2234"/>
         </scene>
@@ -472,7 +477,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hB7-Ij-sHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="20E-SM-7dc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3114" y="-1439"/>
+            <point key="canvasLocation" x="3031" y="-1427"/>
         </scene>
         <!--Friends For Reminders View Controller-->
         <scene sceneID="uAW-jN-2Bz">
@@ -781,28 +786,17 @@
                             <outlet property="delegate" destination="Dcc-nQ-kd2" id="Rz2-PG-kMb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Reminder" id="M6Z-fC-fiL">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kVc-1V-mGA">
-                            <connections>
-                                <action selector="cancel:" destination="Dcc-nQ-kd2" id="4ej-Ca-WaT"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="czi-de-2An">
-                            <connections>
-                                <action selector="done:" destination="Dcc-nQ-kd2" id="pcl-yT-0Tt"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Reminder" id="M6Z-fC-fiL"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hjo-Ly-1zc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2183" y="-738"/>
+            <point key="canvasLocation" x="2385" y="-687"/>
         </scene>
         <!--Reminder Date View Controller-->
         <scene sceneID="bia-1d-A81">
             <objects>
                 <tableViewController id="M1V-vV-Liq" customClass="ReminderDateViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kYy-Kr-wly">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kYy-Kr-wly">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -895,7 +889,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="3988" y="-1439"/>
+            <point key="canvasLocation" x="3678" y="-1427"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fPh-z2-2De">
@@ -1009,7 +1003,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZi-nY-zvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953" y="958"/>
+            <point key="canvasLocation" x="2385" y="1418"/>
         </scene>
         <!--Add Friend View Controller - Add Friends-->
         <scene sceneID="In2-zx-V61">
@@ -1123,7 +1117,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5S-mN-aK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2326" y="1538"/>
+            <point key="canvasLocation" x="3458" y="718"/>
         </scene>
         <!--Settings View Controller - My Profile-->
         <scene sceneID="Vjq-k0-IAt">
@@ -1269,11 +1263,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="profilePicture" destination="0kl-KD-IHn" id="u3a-OO-r71"/>
                         <outlet property="usernameField" destination="J4y-2M-NFX" id="MGV-fB-EEB"/>
                         <segue destination="unW-ub-e0M" kind="modal" identifier="firstTimeSettings" id="ODM-E9-Ohb"/>
+                        <segue destination="3zc-to-0f3" kind="push" identifier="EditCommonTasks" id="7p7-Gb-VJp"/>
+                        <segue destination="rrq-vk-eEv" kind="push" identifier="BlockedUsers" id="hcP-U0-dnY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8EP-2F-cre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="2724"/>
+            <point key="canvasLocation" x="1364" y="2876"/>
         </scene>
         <!--Plane Tab View Controller-->
         <scene sceneID="15">
@@ -1295,7 +1291,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-120" y="188"/>
+            <point key="canvasLocation" x="-2544" y="1332"/>
         </scene>
         <!--Navigation Controller - Friends-->
         <scene sceneID="a5f-i5-uvZ">
@@ -1314,7 +1310,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-BT-o7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="607" y="1362"/>
+            <point key="canvasLocation" x="783" y="1362"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="Acc-gP-Efp">
@@ -1373,7 +1369,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6G-kl-IxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1069" y="1607"/>
+            <point key="canvasLocation" x="1359" y="1362"/>
         </scene>
         <!--My Sent Reminders View Controller - Sent-->
         <scene sceneID="fIW-oB-RvU">
@@ -1454,12 +1450,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </tableView>
                     <navigationItem key="navigationItem" title="Sent" id="UU9-pw-ZuC"/>
                     <connections>
-                        <segue destination="W9r-SP-M2g" kind="modal" identifier="ReminderDisclosure" modalTransitionStyle="crossDissolve" id="xq7-7e-SmO"/>
+                        <segue destination="Dcc-nQ-kd2" kind="push" identifier="ReminderDisclosure" id="8sh-ab-kA6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-YH-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1418" y="-1358"/>
+            <point key="canvasLocation" x="1804" y="-318"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dkf-Q1-1Pt">
@@ -1477,7 +1473,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l5f-9S-JRM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1801" y="1618"/>
+            <point key="canvasLocation" x="2917" y="718"/>
         </scene>
         <!--Received Friend Requests View Controller - Friend Requests-->
         <scene sceneID="6DT-n1-E3u">
@@ -1557,7 +1553,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsl-X5-Rfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2204" y="2176"/>
+            <point key="canvasLocation" x="2928" y="1402"/>
         </scene>
         <!--Edit Settings View Controller - Edit My Info-->
         <scene sceneID="TOK-AJ-qUg">
@@ -1809,7 +1805,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pz4-lR-drA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2142" y="2948"/>
+            <point key="canvasLocation" x="2434" y="2876"/>
         </scene>
         <!--Social View Controller - Social-->
         <scene sceneID="esr-bk-S9G">
@@ -2015,7 +2011,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oq8-qt-l0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1627" y="3826"/>
+            <point key="canvasLocation" x="1359" y="4162"/>
         </scene>
         <!--Circles View Controller-->
         <scene sceneID="6hA-bJ-138">
@@ -2087,7 +2083,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntg-Dm-kSd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1488" y="2166"/>
+            <point key="canvasLocation" x="1364" y="7134"/>
         </scene>
         <!--Add Social Post View Controller-->
         <scene sceneID="lMa-6e-PA4">
@@ -2183,7 +2179,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7he-Vy-ZME" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2205" y="3826"/>
+            <point key="canvasLocation" x="1900" y="4162"/>
         </scene>
         <!--Social Post Detail View Controller - Social Post Detail-->
         <scene sceneID="TFW-UX-G1c">
@@ -2386,7 +2382,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4C-un-bEf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2281" y="4746"/>
+            <point key="canvasLocation" x="1900" y="4818"/>
         </scene>
         <!--Pick Circle View Controller - Pick Circle-->
         <scene sceneID="qrb-8F-4t3">
@@ -2434,7 +2430,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Co-cu-pjn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3367" y="3848"/>
+            <point key="canvasLocation" x="2973" y="4162"/>
         </scene>
         <!--Navigation Controller - Profile-->
         <scene sceneID="nhu-bj-6KJ">
@@ -2453,7 +2449,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbS-6N-fUl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="646" y="2972"/>
+            <point key="canvasLocation" x="783" y="2876"/>
         </scene>
         <!--Navigation Controller - Settings-->
         <scene sceneID="Z8u-t6-2CN">
@@ -2472,7 +2468,72 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mWl-lh-CA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1684" y="2964"/>
+            <point key="canvasLocation" x="1908" y="2876"/>
+        </scene>
+        <!--Blocked Members View Controller - Blocked Users-->
+        <scene sceneID="VeF-bP-F4h">
+            <objects>
+                <tableViewController id="rrq-vk-eEv" customClass="BlockedMembersViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="A12-dg-OjN">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="NzL-t3-VkV">
+                                <rect key="frame" x="0.0" y="22" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EKb-eQ-2ds" customClass="PFImageView">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="55" id="O9Q-TL-y9V"/>
+                                                <constraint firstAttribute="width" constant="55" id="q3Z-N1-NyG"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="First Last" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4R-PB-HFI">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wc8-Wt-H04">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="EKb-eQ-2ds" firstAttribute="leading" secondItem="NzL-t3-VkV" secondAttribute="leading" constant="7" id="F41-lS-EAo"/>
+                                    <constraint firstItem="y4R-PB-HFI" firstAttribute="top" secondItem="EKb-eQ-2ds" secondAttribute="top" type="default" id="OBL-h6-oe0"/>
+                                    <constraint firstItem="wc8-Wt-H04" firstAttribute="leading" secondItem="y4R-PB-HFI" secondAttribute="leading" type="default" id="SD6-1B-1WE"/>
+                                    <constraint firstItem="y4R-PB-HFI" firstAttribute="leading" secondItem="NzL-t3-VkV" secondAttribute="leading" constant="86" id="SgZ-kq-YCs"/>
+                                    <constraint firstItem="EKb-eQ-2ds" firstAttribute="top" secondItem="NzL-t3-VkV" secondAttribute="top" constant="7" id="rsw-aT-Srd"/>
+                                    <constraint firstItem="wc8-Wt-H04" firstAttribute="bottom" secondItem="EKb-eQ-2ds" secondAttribute="bottom" type="default" id="udf-97-IDX"/>
+                                </constraints>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rrq-vk-eEv" id="LK0-5a-jHd"/>
+                            <outlet property="delegate" destination="rrq-vk-eEv" id="Puu-Gx-T0Y"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Blocked Users" id="vxs-xt-9sc">
+                        <barButtonItem key="rightBarButtonItem" title="Unblock" id="rjl-eX-zKC">
+                            <connections>
+                                <action selector="unblock:" destination="rrq-vk-eEv" id="sRY-gU-xm1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="unblockButton" destination="rjl-eX-zKC" id="0Q0-Cb-eET"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BZI-Nm-AZh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="3522"/>
         </scene>
         <!--First Time Settings View Controller - Set My Info-->
         <scene sceneID="l4c-dH-wn9">
@@ -2621,7 +2682,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kRU-tl-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="12"/>
+            <point key="canvasLocation" x="2434" y="2208"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e1A-DB-s9i">
@@ -2639,7 +2700,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5g-ZW-OVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1099" y="-8"/>
+            <point key="canvasLocation" x="1900" y="2208"/>
         </scene>
         <!--Navigation Controller - Reminders-->
         <scene sceneID="3rS-Fk-0Jo">
@@ -2660,24 +2721,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="783" y="-727"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="W92-KV-xqV">
-            <objects>
-                <navigationController id="W9r-SP-M2g" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xeo-bh-ouW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Dcc-nQ-kd2" kind="relationship" relationship="rootViewController" id="muu-mG-r8o"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hOP-53-CGv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1661" y="-743"/>
-        </scene>
         <!--Navigation Controller - Favrs-->
         <scene sceneID="Z9g-CR-b0h">
             <objects>
@@ -2695,7 +2738,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tAQ-pB-hMo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1007" y="3826"/>
+            <point key="canvasLocation" x="783" y="4162"/>
         </scene>
         <!--Circle Requests View Controller-->
         <scene sceneID="mV1-Zi-daq">
@@ -2877,7 +2920,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wjh-4a-lUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2215" y="6814"/>
+            <point key="canvasLocation" x="1887" y="6614"/>
         </scene>
         <!--Circle Detail View Controller-->
         <scene sceneID="yMx-9P-JrU">
@@ -3042,7 +3085,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="viB-qu-tjs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="9vx-tp-2sc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2215" y="7778"/>
+            <point key="canvasLocation" x="1887" y="7134"/>
         </scene>
         <!--Circle Members View Controller - Members-->
         <scene sceneID="IkZ-pS-bQ9">
@@ -3119,7 +3162,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V7N-m4-g3m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="6806"/>
+            <point key="canvasLocation" x="2417" y="7646"/>
         </scene>
         <!--Circle Posts View Controller - Posts-->
         <scene sceneID="Mg0-vm-W2X">
@@ -3245,7 +3288,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fua-WI-HyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="7566"/>
+            <point key="canvasLocation" x="2417" y="6614"/>
         </scene>
         <!--Circle Reminders View Controller - Reminders-->
         <scene sceneID="4Ac-Cj-NPe">
@@ -3327,12 +3370,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Dcc-nQ-kd2" kind="push" identifier="ReminderDisclosure" id="SfK-7R-xgK"/>
+                        <segue destination="Dcc-nQ-kd2" kind="push" identifier="ReminderDisclosure" id="ueR-b5-QFZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfc-Bz-Uer" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2739" y="8318"/>
+            <point key="canvasLocation" x="2417" y="7134"/>
         </scene>
         <!--Add Circle Reminder View Controller - Add Reminder-->
         <scene sceneID="mg2-qs-NMj">
@@ -3546,7 +3589,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I7y-ye-Byy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="bnp-Xa-BLA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3822" y="8318"/>
+            <point key="canvasLocation" x="3442" y="7382"/>
         </scene>
         <!--Pick Circle View Controller - Pick Circle-->
         <scene sceneID="2Nl-Vb-CjX">
@@ -3591,7 +3634,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d4r-a2-gFv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4540" y="7890"/>
+            <point key="canvasLocation" x="3996" y="7850"/>
         </scene>
         <!--Pick Members View Controller - Pick Members-->
         <scene sceneID="qsP-DS-OXR">
@@ -3701,7 +3744,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EJe-0q-44V" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="YR5-hj-d1k" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5489" y="8318"/>
+            <point key="canvasLocation" x="5081" y="7382"/>
         </scene>
         <!--Independent Invite Menu View Controller - Invite Members-->
         <scene sceneID="ynV-Lj-7hq">
@@ -3850,7 +3893,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLo-AV-OYC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3296" y="9094"/>
+            <point key="canvasLocation" x="2964" y="8182"/>
         </scene>
         <!--Join Circle View Controller - Join Circle-->
         <scene sceneID="1jo-fu-xBw">
@@ -3941,7 +3984,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yaR-HP-zVL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2813" y="6070"/>
+            <point key="canvasLocation" x="2417" y="6002"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NHd-Rd-rMl">
@@ -3959,7 +4002,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hk-9v-bpl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2204" y="6070"/>
+            <point key="canvasLocation" x="1887" y="6002"/>
         </scene>
         <!--Create Circle View Controller - Create Circle-->
         <scene sceneID="1gY-06-eoT">
@@ -4150,7 +4193,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jWy-6x-0on" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2731" y="5330"/>
+            <point key="canvasLocation" x="2417" y="5394"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OM2-RO-I5e">
@@ -4168,7 +4211,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rR6-qw-xuA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1317" y="4450"/>
+            <point key="canvasLocation" x="1896" y="5394"/>
         </scene>
         <!--Invite Members To Circle View Controller - Invite Members-->
         <scene sceneID="ocL-NQ-zAh">
@@ -4255,7 +4298,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYF-JG-42R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3675" y="5330"/>
+            <point key="canvasLocation" x="3417" y="5394"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nhu-Tm-laO">
@@ -4273,7 +4316,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n83-xM-DPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3229" y="5330"/>
+            <point key="canvasLocation" x="2971" y="5394"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sjW-HN-kU6">
@@ -4291,7 +4334,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="05s-bZ-aDk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="9094"/>
+            <point key="canvasLocation" x="2417" y="8182"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ADI-cT-Xf0">
@@ -4345,7 +4388,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJw-NS-XMy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3296" y="8318"/>
+            <point key="canvasLocation" x="2958" y="7382"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d2f-fD-Jix">
@@ -4363,7 +4406,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qZ5-Lf-gq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4963" y="8318"/>
+            <point key="canvasLocation" x="4555" y="7382"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SUy-We-n7Q">
@@ -4381,7 +4424,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av1-Ux-X1M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2588" y="-1439"/>
+            <point key="canvasLocation" x="2408" y="-1435"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="udi-Ni-lTf">
@@ -4399,7 +4442,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4d5-yN-Jda" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2841" y="3848"/>
+            <point key="canvasLocation" x="2434" y="4162"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="v7P-6X-eTk">
@@ -4417,7 +4460,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OFa-dh-lww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1427" y="958"/>
+            <point key="canvasLocation" x="1914" y="1418"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="C4N-ve-liN">
@@ -4435,7 +4478,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="feA-Vs-qL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="962" y="2166"/>
+            <point key="canvasLocation" x="783" y="7134"/>
         </scene>
     </scenes>
     <resources>
@@ -4528,6 +4571,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="postTextField" candidateClass="UITextView"/>
             </relationships>
         </class>
+        <class className="BlockedMembersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BlockedMembersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="unblock:"/>
+                <relationship kind="outlet" name="unblockButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
         <class className="CircleDetailViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CircleDetailViewController.h"/>
             <relationships>
@@ -4570,6 +4620,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="action" name="addTask:"/>
                 <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="CreateCircleViewController" superclassName="UITableViewController">
@@ -4701,8 +4752,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDisclosureViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addComment:"/>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
             </relationships>
         </class>
         <class className="RemindersViewController" superclassName="PFQueryTableViewController">
@@ -4717,6 +4766,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="showMenu:"/>
+                <relationship kind="action" name="unwindToSettings:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
@@ -4759,17 +4809,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="RYe-tY-AK6"/>
+        <segue reference="7p7-Gb-VJp"/>
+        <segue reference="ODM-E9-Ohb"/>
         <segue reference="GfZ-it-DUs"/>
+        <segue reference="ueR-b5-QFZ"/>
+        <segue reference="nx5-Dy-vwJ"/>
+        <segue reference="hB8-tL-UEI"/>
+        <segue reference="OGa-b0-0On"/>
         <segue reference="bIX-eH-0BW"/>
-        <segue reference="7cf-9Z-bI4"/>
         <segue reference="6cG-gq-PK8"/>
-        <segue reference="SfK-7R-xgK"/>
+        <segue reference="7cf-9Z-bI4"/>
         <segue reference="azN-Uw-T1Q"/>
-        <segue reference="6aJ-Tx-IGe"/>
-        <segue reference="U7Z-W4-19C"/>
-        <segue reference="clu-AU-b0I"/>
-        <segue reference="VvN-4L-dlp"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="ALS-KN-DIo"/>
     </inferredMetricsTieBreakers>
 </document>

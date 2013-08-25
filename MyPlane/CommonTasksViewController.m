@@ -39,6 +39,9 @@
     [super viewDidLoad];
     [self configureViewController];
     
+    if (self.isFromSettings) {
+        self.cancelButton.title = @"Close";
+    }
 }
 
 -(void)configureViewController {
@@ -89,7 +92,7 @@
     if (!self.isFromSettings) {
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     return cell;
@@ -223,9 +226,13 @@
 
 - (void)cancel:(id)sender
 {
-    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
-        
-    }];
+    if (!self.isFromSettings) {
+        [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+            
+        }];
+    } else {
+        [self performSegueWithIdentifier:@"UnwindToSettings" sender:nil];
+    }
 }
 
 - (void)didFinish {

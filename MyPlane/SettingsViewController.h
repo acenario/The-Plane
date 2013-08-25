@@ -22,6 +22,8 @@
 @property (strong, nonatomic) IBOutlet PFImageView *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
+
+- (IBAction)unwindToSettings:(UIStoryboardSegue *)unwindSegue;
 - (IBAction)showMenu:(id)sender;
 
 @end

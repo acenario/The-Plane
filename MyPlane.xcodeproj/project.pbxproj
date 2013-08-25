@@ -17,6 +17,7 @@
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
 		AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67ACE817C50DA000D148E4 /* FriendRequests.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
+		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
 		AED62A3117A1ED59002055ED /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3017A1ED59002055ED /* Comments.m */; };
@@ -179,6 +180,8 @@
 		AE67ACE817C50DA000D148E4 /* FriendRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequests.m; sourceTree = "<group>"; };
 		AE89177C17AF115E00DD2DC0 /* Requests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Requests.h; sourceTree = "<group>"; };
 		AE89177D17AF115E00DD2DC0 /* Requests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Requests.m; sourceTree = "<group>"; };
+		AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedMembersViewController.h; sourceTree = "<group>"; };
+		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
 		AED62A2C17A1ED42002055ED /* SocialPosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPosts.h; sourceTree = "<group>"; };
@@ -851,6 +854,8 @@
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
+				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
+				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
 				DCECC6BE179DB26D00D084D0 /* ProfileQueryViewController.h */,
 				DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
@@ -1113,6 +1118,7 @@
 				AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */,
 				DC73AF0B17C561530049AF50 /* KGStatusBar.m in Sources */,
 				DCAA087017C7EFE000F992A1 /* FCContainerViewController.m in Sources */,
+				AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

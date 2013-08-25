@@ -114,6 +114,8 @@
     [query includeKey:@"members"];
     [query includeKey:@"posts"];
     
+    [query orderByDescending:@"name"];
+    
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
@@ -228,7 +230,6 @@
 - (void)createCircleViewControllerDidFinishCreatingCircle:(CreateCircleViewController *)controller
 {
     [self loadObjects];
-    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)unwindToCircles:(UIStoryboardSegue *)unwindSegue

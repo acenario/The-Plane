@@ -288,14 +288,6 @@
 
 #pragma mark - Other Methods
 
-- (IBAction)cancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)done:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (IBAction)addComment:(id)sender {
     Comments *comment = [Comments object];
     

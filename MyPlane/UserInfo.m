@@ -20,6 +20,8 @@
 @dynamic sentFriendRequests;
 @dynamic receivedFriendRequests;
 @dynamic commonTasks;
+@dynamic blockedUsers;
+@dynamic blockedUsernames;
 @dynamic profilePicture;
 @dynamic circleRequestsCount;
 

@@ -41,7 +41,7 @@
     } else {
         editing = YES;
         self.textField.text = self.task.text;
-        self.navigationController.title = @"Edit Task";
+        [self.navigationItem setTitle:@"Edit Task"];
         self.doneButton.enabled = YES;
     }
     

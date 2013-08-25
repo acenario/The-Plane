@@ -24,6 +24,7 @@
 @property (nonatomic, strong) id <CommonTasksViewControllerDelegate> delegate;
 - (IBAction)addTask:(id)sender;
 - (IBAction)cancel:(id)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property BOOL isFromSettings;
 
 @end

@@ -40,10 +40,11 @@
 
 - (PFQuery *)queryForTable
 {
-    PFQuery *query = [Circles query];
-    [query whereKey:@"name" equalTo:self.circle.name];
-    [query includeKey:@"members"];
-//    [query includeKey:@"memberUsernames"];
+    PFQuery *query = [UserInfo query];
+    [query whereKey:@"user" containedIn:self.circle.memberUsernames];
+    [query whereKey:@"user" notContainedIn:self.currentUser.blockedUsernames];
+//    [query whereKey:@"memberUsernames" notContainedIn:self.currentUser.blockedUsers];
+//    [query includeKey:@"members"];
     
     return query;
 }
@@ -71,19 +72,26 @@
         [self createReminder];
     }];
     item0.tag = 0;
+    
+    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Block Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        [self blockUsers];
+    }];
+    item0.tag = 3;
 
     if ([self.circle.admins containsObject:self.currentUser.user]) {
         UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+            [self promoteSelectedUsers];
         }];
         item0.tag = 1;
         
         UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+            [self kickSelectedUsers];
         }];
         item0.tag = 2;
         
-        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1, item2]];
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0, item3, item1, item2]];
     } else {
-        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0]];;
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0, item3]];;
     }
     
     [self.view addSubview:self.uzysSMenu];
@@ -111,12 +119,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.objects.count > 0) {
-        return ((Circles *)[self.objects objectAtIndex:0]).members.count;
+        return self.objects.count;
     }
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = (PFTableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
@@ -125,14 +133,22 @@
     UILabel *username = (UILabel *)[cell viewWithTag:6402];
     PFImageView *image = (PFImageView *)[cell viewWithTag:6411];
     
-    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
-    UserInfo *member = (UserInfo *)[circle.members objectAtIndex:indexPath.row];
+//    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
+    UserInfo *member = (UserInfo *)object;
     
     name.text = [NSString stringWithFormat:@"%@ %@", member.firstName, member.lastName];
     username.text = member.user;
     image.file = member.profilePicture;
     
     [image loadInBackground];
+    
+    
+    NSArray *users = [[NSArray alloc] initWithArray:selectedUsers];
+    if ([users containsObject:member]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
@@ -166,8 +182,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
-    UserInfo *user = (UserInfo *)[circle.members objectAtIndex:indexPath.row];
+//    Circles *circle = (Circles *)[self.objects objectAtIndex:0];
+    UserInfo *user = (UserInfo *)[self.objects objectAtIndex:indexPath.row];
     
     NSUInteger index = [selectedUsers indexOfObject:user];
     
@@ -184,31 +200,75 @@
 
 - (void)kickSelectedUsers
 {
-    NSMutableArray *usernames = [[NSMutableArray alloc] init];
-    for (UserInfo *user in selectedUsers) {
-        if (![self.circle.admins containsObject:user.user]) {
-            [usernames addObject:user.user];
+    if (selectedUsers.count > 0) {
+        NSMutableArray *usernames = [[NSMutableArray alloc] init];
+        NSMutableArray *users = [[NSMutableArray alloc] init];
+        for (UserInfo *user in selectedUsers) {
+            if (![self.circle.admins containsObject:user.user]) {
+                [usernames addObject:user.user];
+                [users addObject:[UserInfo objectWithoutDataWithObjectId:user.objectId]];
+            }
         }
+        
+        [self.circle removeObjectsInArray:users forKey:@"members"];
+        [self.circle removeObjectsInArray:usernames forKey:@"memberUsernames"];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %d Members", usernames.count]];
+        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [selectedUsers removeAllObjects];
+            [self loadObjects];
+            [self.tableView reloadData];
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    
-    [self.circle removeObjectsInArray:selectedUsers forKey:@"members"];
-    [self.circle removeObjectsInArray:usernames forKey:@"memberUsernames"];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Kicked %d Members", selectedUsers.count]];
-    [self.circle saveInBackground];
 }
 
 - (void)promoteSelectedUsers
 {
-    NSMutableArray *usernames = [[NSMutableArray alloc] init];
-    for (UserInfo *user in selectedUsers) {
-        if (![self.circle.admins containsObject:user.user]) {
-            [usernames addObject:user.user];
+    if (selectedUsers.count > 0) {
+        NSMutableArray *usernames = [[NSMutableArray alloc] init];
+        for (UserInfo *user in selectedUsers) {
+            if (![self.circle.admins containsObject:user.user]) {
+                [usernames addObject:user.user];
+            }
         }
+        
+        [self.circle addObjectsFromArray:usernames forKey:@"admins"];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Promoted %d Members", usernames.count]];
+        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [selectedUsers removeAllObjects];
+            [self.tableView reloadData];
+        }];
+
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    
-    [self.circle addObjectsFromArray:usernames forKey:@"admins"];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Promoted %d Members", selectedUsers.count]];
-    [self.circle saveInBackground];
+}
+
+- (void)blockUsers
+{
+    if (selectedUsers.count > 0) {
+        NSMutableArray *usernames = [[NSMutableArray alloc] init];
+        NSMutableArray *users = [[NSMutableArray alloc] init];
+        for (UserInfo *user in selectedUsers) {
+            if (![user.user isEqualToString:[PFUser currentUser].username]) {
+                [usernames addObject:user.user];
+                [users addObject:[UserInfo objectWithoutDataWithObjectId:user.objectId]];
+            }
+        }
+        
+        [self.currentUser addObjectsFromArray:users forKey:@"blockedUsers"];
+        [self.currentUser addObjectsFromArray:usernames forKey:@"blockedUsernames"];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Blocked %d Members", usernames.count]];
+        [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [selectedUsers removeAllObjects];
+            [self loadObjects];
+            [self.tableView reloadData];
+        }];
+        
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
+    }
 }
 
 - (void)createReminder
