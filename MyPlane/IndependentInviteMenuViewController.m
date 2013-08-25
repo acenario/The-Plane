@@ -38,12 +38,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    self.tableView.rowHeight = 70;
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,19 +82,57 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    UITextView *name = (UITextView *)[cell viewWithTag:6201];
-    UITextView *username = (UITextView *)[cell viewWithTag:6202];
+    UILabel *name = (UILabel *)[cell viewWithTag:6201];
+    UILabel *username = (UILabel *)[cell viewWithTag:6202];
     PFImageView *userImage = (PFImageView *)[cell viewWithTag:6211];
-    UIButton *removeMember = (UIButton *)[cell viewWithTag:6241];
+    FUIButton *removeMember = (FUIButton *)[cell viewWithTag:6241];
     
     UserInfo *user = [invitedMembers objectAtIndex:indexPath.row];
     
-    name.text = user.firstName;
+    name.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
     username.text = user.user;
     userImage.file = user.profilePicture;
     [userImage loadInBackground];
     
     [removeMember addTarget:self action:@selector(removeInvitedMember:) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6201];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6202];
+    FUIButton *removeBtn = (FUIButton *)[cell viewWithTag:6241];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    
+    removeBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+    removeBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+    removeBtn.shadowHeight = 2.0f;
+    removeBtn.cornerRadius = 3.0f;
+    removeBtn.titleLabel.font = [UIFont boldFlatFontOfSize:13];
+    
+    [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    
+    
     return cell;
 }
 

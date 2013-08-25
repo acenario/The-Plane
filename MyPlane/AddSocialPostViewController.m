@@ -137,12 +137,13 @@
     [post setObject:self.postTextField.text forKey:@"text"];
     [post setObject:self.circle forKey:@"circle"];
     [post setObject:self.currentUser forKey:@"user"];
-    
+        
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.circle addObject:post forKey:@"posts"];
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [self.delegate addSocialDidFinishAdding:self];
             [self dismissViewControllerAnimated:YES completion:nil];
+        
         }];
     }];
 }

@@ -32,7 +32,7 @@
 {
     PFQuery * currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
+    currentUserQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (UserInfo *object in objects) {
             userObject = object;
@@ -43,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     owner = (UserInfo *)self.circle.owner;
     self.navigationItem.title = self.circle.displayName;
@@ -53,13 +54,21 @@
     [self userQuery];
 }
 
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
 
 
 #pragma mark - Table view delegate
@@ -89,6 +98,38 @@
         controller.circles = self.circles;
         controller.currentUser = self.currentUser;
     }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont boldFlatFontOfSize:16];
+    cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+    cell.detailTextLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    cell.textLabel.backgroundColor = [UIColor whiteColor];
+    cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Other Methods

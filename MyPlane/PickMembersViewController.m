@@ -38,7 +38,7 @@
 //            [self.members removeObject:object];
 //        }
 //    }
-    [self setButtonTitle:self.checkAllButton withTitle:@"Check All"];
+    [self.checkAllButton setTitle:@"Check All" forState:UIControlStateNormal];
     self.doneBarButton.enabled = NO;
     self.invitedMembers = [[NSMutableArray alloc] initWithCapacity:10];
     self.invitedUsernames = [[NSMutableArray alloc] initWithCapacity:10];
@@ -54,6 +54,15 @@
     self.tableView.backgroundView = av;
     
     self.tableView.rowHeight = 70;
+    
+    self.checkAllButton.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+    self.checkAllButton.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+    self.checkAllButton.shadowHeight = 2.0f;
+    self.checkAllButton.cornerRadius = 3.0f;
+    self.checkAllButton.titleLabel.font = [UIFont boldFlatFontOfSize:13];
+    
+    [self.checkAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.checkAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,28 +103,27 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
     
-//    UIImageView *av = [[UIImageView alloc] init];
-//    av.backgroundColor = [UIColor clearColor];
-//    av.opaque = NO;
-//    UIImage *background = [UIImage imageNamed:@"list-item"];
-//    av.image = background;
-//    
-//    cell.backgroundView = av;
-//    
-//    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
-//    
-//    UIView *bgView = [[UIView alloc]init];
-//    bgView.backgroundColor = selectedColor;
-//    
-//    
-//    [cell setSelectedBackgroundView:bgView];
-//    
-//    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6301];
-//    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6302];
-//    
-//    nameLabel.font = [UIFont flatFontOfSize:16];
-//    usernameLabel.font = [UIFont flatFontOfSize:14];
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2];
+    
+    nameLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
     
     
     return cell;
@@ -151,7 +159,7 @@
 //    [self.invitedUsernames removeAllObjects];
     
     if (!allChecked) {
-        [self setButtonTitle:self.checkAllButton withTitle:@"Uncheck All"];
+        [self.checkAllButton setTitle:@"Uncheck All" forState:UIControlStateNormal];
         for (UserInfo *user in self.circle.members) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.circle.members indexOfObject:user] inSection:0];
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -162,7 +170,7 @@
         }
         allChecked = YES;
     } else {
-        [self setButtonTitle:self.checkAllButton withTitle:@"Check All"];
+        [self.checkAllButton setTitle:@"Check All" forState:UIControlStateNormal];
         for (UserInfo *user in self.circle.members) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.circle.members indexOfObject:user] inSection:0];
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];

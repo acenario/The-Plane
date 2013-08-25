@@ -15,6 +15,7 @@
 
 @implementation CirclePostsViewController {
     PFQuery *userQuery;
+    NSDateFormatter *dateFormatter;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,7 +35,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self configureViewController];
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
     self.tableView.rowHeight = 90;
 }
 
@@ -96,14 +112,20 @@
         PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         UserInfo *userObject = (UserInfo *)object.user;
+        Circles *circle = (Circles *)object.circle;
         UILabel *name = (UILabel *)[cell viewWithTag:6403];
         UILabel *text = (UILabel *)[cell viewWithTag:6404];
-//        UILabel *circle = (UILabel *)[cell viewWithTag:5104];
+        
+        UILabel *circleNameLabel = (UILabel *)[cell viewWithTag:641];
+        UILabel *dateLabel = (UILabel *)[cell viewWithTag:642];
+        
+        
         PFImageView *ownerImage = (PFImageView *)[cell viewWithTag:6412];
         
-        name.text = userObject.firstName;
+        name.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
         text.text = object.text;
-//        circle.text = [object.circle objectForKey:@"name"];
+        circleNameLabel.text = circle.displayName;
+        dateLabel.text = [dateFormatter stringFromDate:object.createdAt];
         ownerImage.file = userObject.profilePicture;
         [ownerImage loadInBackground];
         
@@ -145,6 +167,61 @@
     //
     //        return cell;
     //    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    if (indexPath.row == 0) {
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:6403];
+        UILabel *postLabel = (UILabel *)[cell viewWithTag:6404];
+        UILabel *circleLabel = (UILabel *)[cell viewWithTag:640];
+        UILabel *circleNameLabel = (UILabel *)[cell viewWithTag:641];
+        UILabel *dateLabel = (UILabel *)[cell viewWithTag:642];
+        UIFont *socialFont = [UIFont flatFontOfSize:14];
+        
+        nameLabel.font = socialFont;
+        nameLabel.textColor = [UIColor asbestosColor];
+        postLabel.font = [UIFont flatFontOfSize:16];
+        postLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+        circleLabel.font = socialFont;
+        circleNameLabel.font = socialFont;
+        dateLabel.font = socialFont;
+        
+        
+        [cell.contentView addSubview:imgView];
+        
+    } else {
+        UIFont *commentFont = [UIFont flatFontOfSize:18];
+        UIColor *fontColor = [UIColor lightGrayColor];
+        UILabel *commentLabel = (UILabel *)[cell viewWithTag:643];
+        commentLabel.font = commentFont;
+        commentLabel.textColor = fontColor;
+        commentLabel.backgroundColor = [UIColor whiteColor];
+        
+    }
+    
+    
+    return cell;
+    
 }
  
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

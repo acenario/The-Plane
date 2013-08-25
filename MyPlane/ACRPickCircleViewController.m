@@ -26,12 +26,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [self configureViewController];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +75,7 @@
     
     Circles *circle = (Circles *)[self.objects objectAtIndex:indexPath.row];
     cell.textLabel.text = circle.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Members", circle.members.count];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Member(s)", circle.members.count];
     
     return cell;
 }
@@ -89,6 +99,31 @@
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
+    cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
+    
+    return cell;
+}
+
 
 - (void)pickMembersViewController:(PickMembersViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames withCircle:(Circles *)circle
 {

@@ -25,7 +25,7 @@
 //@property (nonatomic, strong) UserInfo *currentUser;
 @property (nonatomic, strong) NSMutableArray *invitedMembers;
 @property (nonatomic, strong) NSMutableArray *invitedUsernames;
-@property (strong, nonatomic) IBOutlet UIButton *checkAllButton;
+@property (strong, nonatomic) IBOutlet FUIButton *checkAllButton;
 - (IBAction)checkAll:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;

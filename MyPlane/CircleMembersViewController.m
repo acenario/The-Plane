@@ -65,6 +65,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Create Reminder for Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
         [self createReminder];
@@ -88,7 +89,17 @@
     [self.view addSubview:self.uzysSMenu];
     
     selectedUsers = [[NSMutableArray alloc] initWithCapacity:5];
-    self.tableView.rowHeight = 60;
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    self.tableView.rowHeight = 70;
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,6 +133,32 @@
     image.file = member.profilePicture;
     
     [image loadInBackground];
+    
+    return cell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIImageView *av = [[UIImageView alloc] init];
+    
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:6401];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:6402];
+    nameLabel.font = [UIFont flatFontOfSize:17];
+    usernameLabel.font = [UIFont flatFontOfSize:15];
     
     return cell;
 }

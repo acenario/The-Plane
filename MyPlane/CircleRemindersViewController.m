@@ -12,7 +12,9 @@
 
 @end
 
-@implementation CircleRemindersViewController
+@implementation CircleRemindersViewController {
+    NSDateFormatter *dateFormatter;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +28,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self configureViewController];
+	
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    self.tableView.rowHeight = 70;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -70,7 +87,49 @@
     
     Reminders *reminder = (Reminders *)object;
     
-    cell.textLabel.text = reminder.title;
+    PFImageView *profPic = (PFImageView *)[cell viewWithTag:1337];
+    UILabel *reminderLabel = (UILabel *)[cell viewWithTag:1338];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:1339];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1340];
+    
+    reminderLabel.text = reminder.title;
+    usernameLabel.text = reminder.user;
+    dateLabel.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
+    profPic.file = [reminder.fromFriend objectForKey:@"profilePicture"];
+    [profPic loadInBackground];
+    
+    return cell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"list-item"];
+    av.image = background;
+    
+    cell.backgroundView = av;
+    
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UILabel *reminderLabel = (UILabel *)[cell viewWithTag:1338];
+    UILabel *usernameLabel = (UILabel *)[cell viewWithTag:1339];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1340];
+    
+    reminderLabel.font = [UIFont flatFontOfSize:16];
+    usernameLabel.font = [UIFont flatFontOfSize:14];
+    dateLabel.font = [UIFont flatFontOfSize:14];
+    
+    reminderLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    
     
     return cell;
 }
