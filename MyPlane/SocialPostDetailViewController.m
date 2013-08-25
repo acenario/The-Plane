@@ -269,6 +269,34 @@
     nil;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
+    UserInfo *userObject = (UserInfo *)comment.user;
+    
+    if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
+        [comment deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                [self loadObjects];
+                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                
+                [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
+                
+            } else {
+                NSLog(@"error: %@", error);
+            }
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Can't delete try blocking instead!"];
+    }
+    
+    
+    
+}
+
+
 - (IBAction)checkTextField:(id)sender
 {
     UITextField *textField = (UITextField *)sender;

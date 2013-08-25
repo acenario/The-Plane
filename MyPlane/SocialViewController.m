@@ -257,6 +257,34 @@
 
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    PFObject *socialPost = [self.objects objectAtIndex:indexPath.section];
+    UserInfo *userObject = (UserInfo *)[socialPost objectForKey:@"user"];
+    
+    [SVProgressHUD showWithStatus:@"Deleting post"];
+    if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
+        [socialPost deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                [self loadObjects];
+                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+ 
+                [SVProgressHUD showSuccessWithStatus:@"Deleted Post!"];
+          
+            } else {
+                NSLog(@"error: %@", error);
+            }
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Can't delete try blocking instead!"];
+    }
+    
+    
+    
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
