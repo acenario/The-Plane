@@ -69,6 +69,7 @@
 		DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F21793196400304619 /* MySignUpViewController.m */; };
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
+		DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */; };
 		DC73AEE817BB4EAB0049AF50 /* UzysSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */; };
 		DC73AEE917BB4EAB0049AF50 /* UzysSMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE417BB4EAB0049AF50 /* UzysSMMenuItem.m */; };
 		DC73AEEA17BB4EAB0049AF50 /* UzysSMMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE617BB4EAB0049AF50 /* UzysSMMenuItemView.m */; };
@@ -258,6 +259,8 @@
 		DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstTimeSettingsViewController.m; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
+		DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
+		DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		DC73AEE017BB4EAB0049AF50 /* ARCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCHelper.h; sourceTree = "<group>"; };
 		DC73AEE117BB4EAB0049AF50 /* UzysSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysSlideMenu.h; sourceTree = "<group>"; };
 		DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysSlideMenu.m; sourceTree = "<group>"; };
@@ -858,6 +861,8 @@
 				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
 				DCECC6BE179DB26D00D084D0 /* ProfileQueryViewController.h */,
 				DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */,
+				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
+				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
@@ -1119,6 +1124,7 @@
 				DC73AF0B17C561530049AF50 /* KGStatusBar.m in Sources */,
 				DCAA087017C7EFE000F992A1 /* FCContainerViewController.m in Sources */,
 				AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */,
+				DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

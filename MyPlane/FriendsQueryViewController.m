@@ -8,6 +8,7 @@
 
 #import "FriendsQueryViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CurrentUser.h"
 
 
 @interface FriendsQueryViewController ()
@@ -45,6 +46,7 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+   
     
     [self getUserInfo];
 

@@ -10,6 +10,7 @@
 #import "UserInfo.h"
 #import "MyLoginViewController.h"
 #import "MySignUpViewController.h"
+#import "CurrentUser.h"
 
 
 @interface SettingsViewController ()
@@ -357,7 +358,14 @@
      
      }];*/
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        PFQuery *userObject = [UserInfo query];
+        [userObject whereKey:@"user" equalTo:[PFUser currentUser].username];
+        [userObject getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            sharedManager.currentUser = (UserInfo *)object;
+        }];
+    }];
     
 }
 
@@ -387,6 +395,10 @@
     
     
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        //Add Singleton reference
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        sharedManager.currentUser = (UserInfo *)object;
+        
         //Add Self Friend
         
         NSString *objectID = [object objectId];

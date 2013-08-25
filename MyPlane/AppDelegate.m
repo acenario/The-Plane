@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SubclassHeader.h"
-#import "RemindersViewController.h"
-#import "FriendsQueryViewController.h"
+#import "CurrentUser.h"
 
 @implementation AppDelegate
 
@@ -87,6 +86,16 @@
     if ([reminderAdd isEqualToString:@"n"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
         
+    }
+    
+    if ([PFUser currentUser]) {
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        PFQuery *userObject = [UserInfo query];
+        [userObject whereKey:@"user" equalTo:[PFUser currentUser].username];
+        userObject.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        [userObject getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            sharedManager.currentUser = (UserInfo *)object;
+        }];
     }
 
     

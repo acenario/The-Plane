@@ -10,11 +10,13 @@
 #import "firstTimeSettingsViewController.h"
 #import "ReminderDisclosureViewController.h"
 #import "AddCircleReminderViewController.h"
+#import "CurrentUser.h"
 
 
 @interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate, ReminderDisclosureViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sentReminders;
+
 
 - (IBAction)unwindToReminders:(UIStoryboardSegue *)unwindSegue;
 - (IBAction)addReminder:(id)sender;

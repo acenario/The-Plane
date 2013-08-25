@@ -8,6 +8,7 @@
 
 #import "EditSettingsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CurrentUser.h"
 
 @interface EditSettingsViewController ()
 
@@ -287,6 +288,8 @@
     if ((usersave) && (objectsave)) {
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                CurrentUser *sharedManager = [CurrentUser sharedManager];
+                sharedManager.currentUser = (UserInfo *)object;
                 [self.delegate updateUserInfo:self];
             }];
         }];
@@ -296,6 +299,8 @@
         }];
     } else {
         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = (UserInfo *)object;
             [self.delegate updateUserInfo:self];
         }];
     }
