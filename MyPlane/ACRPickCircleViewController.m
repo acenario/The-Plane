@@ -14,11 +14,12 @@
 
 @implementation ACRPickCircleViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithStyle:style];
+    self = [super initWithCoder:coder];
     if (self) {
-        // Custom initialization
+        self.loadingViewEnabled = NO;
+        
     }
     return self;
 }
