@@ -66,7 +66,7 @@
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [userQuery includeKey:@"friends"];
-    
+    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         fromFriend = (UserInfo *)object;
         friendsArray = [object objectForKey:@"friends"];

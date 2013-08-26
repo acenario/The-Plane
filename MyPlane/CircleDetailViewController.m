@@ -30,14 +30,18 @@
 
 - (void)userQuery
 {
+    CurrentUser *sharedmanager = [CurrentUser sharedManager];
     PFQuery * currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    currentUserQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (UserInfo *object in objects) {
             userObject = object;
+           
+            NSLog(@"singleton: %@", sharedmanager.currentUser.user);
         }
     }];
+    NSLog(@"singleton DUO: %@", sharedmanager.currentUser.user);
 }
 
 - (void)viewDidLoad

@@ -8,6 +8,7 @@
 
 #import "SocialPostDetailViewController.h"
 #import "CurrentUser.h"
+#import "Reachability.h"
 
 @interface SocialPostDetailViewController ()
 
@@ -21,6 +22,7 @@
     SocialPosts *currentSocialObject;
     PFQuery *userQuery;
     NSDateFormatter *dateFormatter;
+    Reachability *reachability;
     
 }
 
@@ -37,13 +39,10 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    reachability = [Reachability reachabilityForInternetConnection];
 	// Do any additional setup after loading the view.
-    userQuery = [UserInfo query];
-    [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        currentUserObject = (UserInfo *)object;
-    }];
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    currentUserObject = sharedManager.currentUser;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterNoStyle];
@@ -76,9 +75,7 @@
     [query whereKey:@"post" equalTo:self.socialPost];
     [query includeKey:@"user"];
     
-//    CurrentUser *sharedManager = [CurrentUser sharedManager];
-//    [query wh]
-    
+
     [query orderByDescending:@"createdAt"];
     
     if (self.objects.count == 0) {
@@ -215,6 +212,9 @@
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
+    
     if (indexPath.section == 0) {
             
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:5201];
@@ -247,6 +247,14 @@
         
         [cell.contentView addSubview:imgView];
         
+        if (indexPath.row != 0) {
+            [cell.contentView addSubview:bottomView];
+        }
+        
+        
+        
+        
+        
     }
     
     return cell;
@@ -276,12 +284,17 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        return UITableViewCellEditingStyleNone;
+    } else {
     if (indexPath.section == 2)
     {
         return UITableViewCellEditingStyleDelete;
     }
     
     return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -289,16 +302,20 @@
     
     Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
     UserInfo *userObject = (UserInfo *)comment.user;
+    SocialPosts *post = self.socialPost;
     
     if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
         [comment deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-                [self loadObjects];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
-                
-                [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
-                
+                [post removeObject:[Comments objectWithoutDataWithObjectId:comment.objectId] forKey:@"comments"];
+                [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                    [self loadObjects];
+                    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                    
+                    [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
+                }];
+                                
             } else {
                 NSLog(@"error: %@", error);
             }
@@ -327,9 +344,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+        return YES;
+    } else {
+
     [self addComment:nil];
     [textField resignFirstResponder];
     return YES;
+    }
 }
 
 

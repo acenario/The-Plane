@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedController;
 @property (nonatomic, strong) id <FriendsQueryViewControllerDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *requestsBtn;
 - (IBAction)addFriend:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
 

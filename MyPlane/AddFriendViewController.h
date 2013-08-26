@@ -21,6 +21,7 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 @property (nonatomic, weak) id <AddFriendViewControllerDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBtn;
 
 @end
 

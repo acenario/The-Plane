@@ -9,6 +9,7 @@
 #import "FriendsQueryViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CurrentUser.h"
+#import "Reachability.h"
 
 
 @interface FriendsQueryViewController ()
@@ -17,6 +18,7 @@
 
 @implementation FriendsQueryViewController {
     UserInfo *meObject;
+    Reachability *reachability;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -46,11 +48,23 @@
 {
     [super viewDidLoad];
     [self configureViewController];
-   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     [self getUserInfo];
 
 	// Do any additional setup after loading the view.
+}
+
+- (void) reachabilityChanged:(NSNotification*) notification
+{    
+	if (reachability.currentReachabilityStatus == NotReachable) {
+        self.requestsBtn.enabled = NO;
+    } else {
+        self.requestsBtn.enabled = YES;
+        [self loadObjects];
+    }
 }
 
 -(void)configureViewController {
@@ -78,6 +92,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"friends"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         meObject = (UserInfo *)object;
     }];
@@ -104,7 +119,17 @@
                                                  name:@"showFriends"
                                                object:nil];
     self.segmentedController.selectedSegmentIndex = 0;
-    [self loadObjects];
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", sharedManager.currentUser.receivedFriendRequests.count];
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.requestsBtn.enabled = NO;
+    } else {
+        self.requestsBtn.enabled = YES;
+        [self loadObjects];
+    }
+    
+    
 }
 
 - (void)receiveAddNotification:(NSNotification *) notification
@@ -125,6 +150,15 @@
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"showFriends"]) {
         self.segmentedController.selectedSegmentIndex = 0;
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", sharedManager.currentUser.receivedFriendRequests.count];
+        if (reachability.currentReachabilityStatus == NotReachable) {
+            self.requestsBtn.enabled = NO;
+        } else {
+            self.requestsBtn.enabled = YES;
+            [self loadObjects];
+        }
+        
     }
     
 }
@@ -142,7 +176,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"friends"];
-    
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     
     PFQuery *friendQuery = [UserInfo query];
     [friendQuery whereKey:@"friends" matchesQuery:query];
@@ -169,7 +203,7 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         NSArray *array = [object objectForKey:@"receivedFriendRequests"];
         int count = array.count;
-        self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d Pending", count];
+        self.navigationItem.leftBarButtonItem.title = [NSString stringWithFormat:@"%d Pending", count];
     }];
 }
 

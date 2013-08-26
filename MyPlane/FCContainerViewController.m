@@ -95,12 +95,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showFriends" object:nil];
         self.FCContainer.hidden = NO;
         self.circContainer.hidden = YES;
-        NSLog(@"showFriends");
+        //NSLog(@"showFriends");
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showCircles" object:nil];
         self.FCContainer.hidden = YES;
         self.circContainer.hidden = NO;
-        NSLog(@"show circles");
+        //NSLog(@"show circles");
     }
 }
 
@@ -126,13 +126,13 @@
         self.FCContainer.hidden = NO;
         self.circContainer.hidden = YES;
         self.segmentedControl.selectedSegmentIndex = 0;
-        NSLog(@"showFriends");
+        //NSLog(@"showFriends");
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showCircles" object:nil];
         self.FCContainer.hidden = YES;
         self.circContainer.hidden = NO;
         self.segmentedControl.selectedSegmentIndex = 1;
-        NSLog(@"show circles");
+        //NSLog(@"show circles");
     }
 }
 
@@ -167,6 +167,11 @@
 //    }
     [cNavController popToRootViewControllerAnimated:NO];
     [fNavController popToRootViewControllerAnimated:NO];
+    if (self.FCContainer.hidden) {
+        self.circContainer.hidden = YES;
+        self.FCContainer.hidden = NO;
+    }
+    
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "ReceivedFriendRequestsViewController.h"
 #import "FriendsQueryViewController.h"
+#import "CurrentUser.h"
 
 @interface ReceivedFriendRequestsViewController ()
 
@@ -82,7 +83,7 @@
     PFQuery *userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [userQuery includeKey:@"receivedFriendRequests"];
-    
+    userQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         currentUserObject = (UserInfo *)object;
         //receievedFriendRequestsArray = [object objectForKey:@"receivedFriendRequests"];

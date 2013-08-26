@@ -7,6 +7,7 @@
 //
 
 #import "ReminderDisclosureViewController.h"
+#import "Reachability.h"
 
 @interface ReminderDisclosureViewController ()
 
@@ -20,6 +21,7 @@
     CGPoint originalCenter;
     NSDateFormatter *dateFormatter;
     NSDateFormatter *dateFormatter2;
+    Reachability *reachability;
     
 }
 
@@ -38,17 +40,15 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+
+    reachability = [Reachability reachabilityForInternetConnection];
 	// Do any additional setup after loading the view.
     //    self.tableView.rowHeight = 60;
     
     self.commentTextField.delegate = self;
     
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        currentUserObject = (UserInfo *)object;
-    }];
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    currentUserObject = sharedManager.currentUser;
     
     originalCenter = CGPointMake(self.view.center.x, self.view.center.y);
     
@@ -229,6 +229,8 @@
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
@@ -239,6 +241,7 @@
             username.font = [UIFont flatFontOfSize:14];
             
             [cell.contentView addSubview:imgView];
+            [cell.contentView addSubview:bottomView];
             
         } else if (indexPath.row != 3) {
             cell.textLabel.font = [UIFont flatFontOfSize:16];
@@ -248,6 +251,7 @@
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
             
             [cell.contentView addSubview:imgView];
+            [cell.contentView addSubview:bottomView];
         } else {
             cell.textLabel.font = [UIFont flatFontOfSize:16];
             cell.detailTextLabel.font = [UIFont boldFlatFontOfSize:14];
@@ -272,7 +276,8 @@
         postLabel.font = [UIFont flatFontOfSize:15];
         timeLabel.font = [UIFont flatFontOfSize:14];
         
-        [cell.contentView addSubview:imgView];        
+        [cell.contentView addSubview:imgView];
+        [cell.contentView addSubview:bottomView];
     }
     
     return cell;
@@ -292,12 +297,17 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        return UITableViewCellEditingStyleNone;
+    } else {
+    
     if (indexPath.section == 3)
     {
         return UITableViewCellEditingStyleDelete;
     }
     
-    return UITableViewCellEditingStyleNone;
+        return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -305,16 +315,21 @@
     
     Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
     UserInfo *userObject = (UserInfo *)comment.user;
+    Reminders *reminder = (Reminders *)self.reminderObject;
     
     if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
         [comment deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-                [self loadObjects];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
-                
-                [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
-                
+                [reminder removeObject:[Comments objectWithoutDataWithObjectId:comment.objectId] forKey:@"comments"];
+                [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                    [self loadObjects];
+                    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                    
+                    [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
+
+                }];
+                                
             } else {
                 NSLog(@"error: %@", error);
             }
@@ -374,9 +389,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self addComment:nil];
-    [textField resignFirstResponder];
-    return YES;
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+        return YES;
+    } else {
+        [self addComment:nil];
+        [textField resignFirstResponder];
+        return YES;
+    }
 }
 
 
@@ -400,7 +420,9 @@
 }
 
 - (void)remindAgain:(id)sender {
-    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+    } else {
     UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
     PFQuery *pushQuery = [PFInstallation query];
     [pushQuery whereKey:@"user" equalTo:recipient.user];
@@ -416,6 +438,7 @@
         [push setQuery:pushQuery]; // Set our Installation query
         [push setMessage:[self.reminderObject objectForKey:@"title"]];
         [push sendPushInBackground];
+        }
     }
     
 }

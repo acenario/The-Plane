@@ -7,6 +7,7 @@
 //
 
 #import "MySentRemindersViewController.h"
+#import "Reachability.h"
 
 @interface MySentRemindersViewController ()
 
@@ -16,6 +17,7 @@
     PFObject *selectedReminderObject;
     UIImage *userProfilePicture;
     NSDateFormatter *dateFormatter;
+    Reachability *reachability;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    reachability = [Reachability reachabilityForInternetConnection];
     //    [self getUserPicture];
 	// Do any additional setup after loading the view.
     
@@ -193,6 +196,62 @@
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
 }
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        NSLog(@"No internet connection!");
+        return UITableViewCellEditingStyleNone;
+    } else {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    Reminders *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    NSString *deleteName = [deleteReminder objectForKey:@"user"];
+    NSString *tempName = [deleteReminder objectForKey:@"fromUser"];
+    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
+    
+    for (Comments *comment in deleteReminder.comments) {
+        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+    }
+    
+    [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [Comments deleteAllInBackground:commentsToDelete];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self loadObjects];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [SVProgressHUD showSuccessWithStatus:@"Removed Reminder!"];
+            
+            if (![deleteName isEqualToString:[PFUser currentUser].username]) {
+            NSString *message = [NSString stringWithFormat:@"%@ has deleted his reminder", tempName];
+            
+            PFQuery *pushQuery = [PFInstallation query];
+            [pushQuery whereKey:@"user" equalTo:deleteName];
+            
+            PFPush *push = [[PFPush alloc] init];
+            [push setQuery:pushQuery];
+            [push setMessage:message];
+            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSString *message = [NSString stringWithFormat:@"%@ has been notified!", deleteName];
+                [SVProgressHUD showSuccessWithStatus:message];
+                }];
+            }
+            
+        }
+    }];
+    
+    
+    
+    
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

@@ -7,6 +7,7 @@
 //
 
 #import "MyLoginViewController.h"
+#import "KGStatusBar.h"
 
 @interface MyLoginViewController ()
 
@@ -26,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [KGStatusBar dismiss];
+    [self.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"favrMockup"]]];
 	// Do any additional setup after loading the view.
 }
 

@@ -8,6 +8,7 @@
 
 #import "CirclesViewController.h"
 #import "CurrentUser.h"
+#import "Reachability.h"
 
 @interface CirclesViewController ()
 
@@ -20,6 +21,7 @@
     PFQuery *userQuery;
     UserInfo *userObject;
     BOOL menuCheck;
+    Reachability *reachability;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,6 +39,9 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
@@ -51,6 +56,17 @@
     
     self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
     [self.view addSubview:self.uzysSMenu];
+    
+
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.requestButton.enabled = NO;
+    } else {
+        self.requestButton.enabled = YES;
+    }
 }
 
 -(void)configureViewController {
@@ -83,11 +99,18 @@
     menuCheck = YES;
     self.segmentedController.selectedSegmentIndex = 1;
     self.uzysSMenu.hidden = YES;
-    self.segmentedController.selectedSegmentIndex = 1;
     self.sharedManager = [CurrentUser sharedManager];
     userObject = self.sharedManager.currentUser;
     [self loadObjects];
-    self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
+    self.requestButton.title = [NSString stringWithFormat:@"%d Pending", userObject.circleRequestsCount];
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.requestButton.enabled = NO;
+        self.addBtn.enabled = NO;
+    } else {
+        self.requestButton.enabled = YES;
+        self.addBtn.enabled = YES;
+    }
 }
 
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
@@ -95,11 +118,18 @@
         menuCheck = YES;
         self.segmentedController.selectedSegmentIndex = 1;
         self.uzysSMenu.hidden = YES;
-        self.segmentedController.selectedSegmentIndex = 1;
         self.sharedManager = [CurrentUser sharedManager];
         userObject = self.sharedManager.currentUser;
-        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
+        self.requestButton.title = [NSString stringWithFormat:@"%d Pending", userObject.circleRequestsCount];
         [self loadObjects];
+        
+        if (reachability.currentReachabilityStatus == NotReachable) {
+            self.requestButton.enabled = NO;
+            self.addBtn.enabled = NO;
+        } else {
+            self.requestButton.enabled = YES;
+            self.addBtn.enabled = YES;
+        }
     }
     
 }
@@ -114,6 +144,7 @@
 {
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    userQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
     
     PFQuery *query = [Circles query];
     [query whereKey:@"members" matchesQuery:userQuery];
@@ -121,6 +152,7 @@
     [query includeKey:@"members"];
     [query includeKey:@"posts"];
     [query includeKey:@"requestsArray"];
+    [query includeKey:@"adminPointers"];
     
     [query orderByDescending:@"name"];
     
@@ -206,15 +238,20 @@
 {
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         userObject = (UserInfo *)object;
-        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
+        self.requestButton.title = [NSString stringWithFormat:@"%d Pending", userObject.circleRequestsCount];
     }];
     [self loadObjects];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Circles *circle = [self.objects objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"CircleDetail" sender:circle];
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+    } else {
+        Circles *circle = [self.objects objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"CircleDetail" sender:circle];
+    }
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

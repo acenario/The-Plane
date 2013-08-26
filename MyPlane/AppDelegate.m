@@ -97,7 +97,6 @@
             sharedManager.currentUser = (UserInfo *)object;
         }];
     }
-
     
 //    PFQuery *pushQuery = [PFInstallation query];
 //    [pushQuery whereKey:@"deviceType" equalTo:@"ios"];

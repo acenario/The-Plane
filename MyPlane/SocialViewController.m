@@ -99,12 +99,12 @@
 {
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
+    userQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
 //    NSLog(@"%@", currentUserObject);
     PFQuery *query = [Circles query];
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"members"];
-    
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     CurrentUser *sharedManager = [CurrentUser sharedManager];
     
     PFQuery *postsQuery = [SocialPosts query];
@@ -228,6 +228,9 @@
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
+    
     if (indexPath.row == 0) {
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:5101];
         UILabel *postLabel = (UILabel *)[cell viewWithTag:5102];
@@ -253,6 +256,8 @@
         UILabel *commentLabel = (UILabel *)[cell viewWithTag:9];
         commentLabel.font = commentFont;
         commentLabel.textColor = fontColor;
+        
+        [cell.contentView addSubview:bottomView];
         
     }
     

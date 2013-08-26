@@ -8,6 +8,7 @@
 
 #import "AddFriendViewController.h"
 #import "CurrentUser.h"
+#import "Reachability.h"
 
 @interface AddFriendViewController ()
 
@@ -33,6 +34,7 @@
     PFQuery *currentUserQuery;
     PFQuery *friendQuery;
     UserInfo *userObject;
+    Reachability *reachability;
 }
 
 
@@ -54,6 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+
     [self.searchBar becomeFirstResponder];
     self.searchBar.delegate = self;
     UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
@@ -62,8 +66,25 @@
     
     //self.searchResults = [NSMutableArray array];
     //friendsUNArray = [NSMutableArray array];
-    [self currentUserQuery];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
+    if(reachability.currentReachabilityStatus == NotReachable) {
+		self.doneBtn.enabled = NO;
+	} else {
+		self.doneBtn.enabled = YES;
+        [self currentUserQuery];
+    }
+    
+}
+
+- (void)reachabilityChanged:(NSNotification*)notification
+{
+	if(reachability.currentReachabilityStatus == NotReachable) {
+		self.doneBtn.enabled = NO;
+	} else {
+		self.doneBtn.enabled = YES;
+    }
 }
 
 -(void)configureViewController {
@@ -137,7 +158,7 @@
     friendQuery = [UserInfo query];
     [friendQuery whereKey:@"user" hasPrefix:newTerm];
     
-    if (self.objects.count == 0) {
+    if (searchResults.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyNetworkOnly;
     }
     
@@ -240,7 +261,7 @@
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
     UserInfo *friendAdded = [searchResults objectAtIndex:clickedButtonPath.row];
-    NSString *friendAddedName = friendAdded.user;
+    //NSString *friendAddedName = friendAdded.user;
     NSString *friendObjectID = friendAdded.objectId;
     NSString *userID = userObject.objectId;
     
@@ -259,18 +280,18 @@
         
         [SVProgressHUD showSuccessWithStatus:@"Friend Request Sent"];
         
-        NSDictionary *data = @{
-                               @"f": @"add"
-                               };
-        
-        PFQuery *pushQuery = [PFInstallation query];
-        [pushQuery whereKey:@"user" equalTo:friendAddedName];
-        
-        PFPush *push = [[PFPush alloc] init];
-        [push setQuery:pushQuery];
-        [push setData:data];
-        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        }];
+//        NSDictionary *data = @{
+//                               @"f": @"add"
+//                               };
+//        
+//        PFQuery *pushQuery = [PFInstallation query];
+//        [pushQuery whereKey:@"user" equalTo:friendAddedName];
+//        
+//        PFPush *push = [[PFPush alloc] init];
+//        [push setQuery:pushQuery];
+//        [push setData:data];
+//        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        }];
         
     }];    
     

@@ -7,6 +7,7 @@
 //
 
 #import "BlockedMembersViewController.h"
+#import "Reachability.h"
 
 @interface BlockedMembersViewController ()
 
@@ -17,6 +18,7 @@
 @implementation BlockedMembersViewController {
     NSMutableArray *selectedUsers;
     UserInfo *currentUser;
+    Reachability *reachability;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,11 +34,21 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     self.sharedManager = [CurrentUser sharedManager];
     
     self.unblockButton.enabled = NO;
     selectedUsers = [[NSMutableArray alloc] init];
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.unblockButton.enabled = NO;
+    }
 }
 
 -(void)configureViewController {
@@ -62,7 +74,7 @@
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
     [query includeKey:@"blockedUsers"];
     
-    if (currentUser.blockedUsers.count == 0) {
+    if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
     
@@ -165,10 +177,14 @@
 
 - (void)configureDoneButton
 {
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.unblockButton.enabled = NO;
+    } else {
     if (selectedUsers.count > 0) {
         self.unblockButton.enabled = YES;
     } else {
         self.unblockButton.enabled = NO;
+        }
     }
 }
 

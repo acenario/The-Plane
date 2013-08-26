@@ -26,5 +26,6 @@
 - (IBAction)cancel:(id)sender;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property BOOL isFromSettings;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addBtn;
 
 @end

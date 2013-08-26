@@ -25,6 +25,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
 @property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *firstTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lastTitle;
+@property (weak, nonatomic) IBOutlet FUIButton *setPic;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBtn;
 
 
 @end

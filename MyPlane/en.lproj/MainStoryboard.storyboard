@@ -148,6 +148,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBtn" destination="ou0-J0-xZz" id="o6m-qb-9az"/>
                         <outlet property="cancelButton" destination="3Q9-vg-naP" id="FUs-R7-yc8"/>
                         <segue destination="FIb-pA-URc" kind="unwind" identifier="UnwindToSettings" unwindAction="unwindToSettings:" id="4Oa-uM-7XN"/>
                     </connections>
@@ -1017,6 +1018,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="requestsBtn" destination="cCh-YL-9qv" id="E7b-Ad-sIz"/>
                         <outlet property="segmentedController" destination="WOT-g5-Jse" id="pw1-tx-1e7"/>
                         <segue destination="dgd-8a-PU9" kind="modal" identifier="AddFriend" id="azN-Uw-T1Q"/>
                         <segue destination="CWe-JA-5Yf" kind="modal" identifier="AddReminder" id="RYe-tY-AK6"/>
@@ -1133,6 +1135,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneBtn" destination="wrW-86-RLH" id="dP6-bR-Guy"/>
                         <outlet property="searchBar" destination="c4e-f9-bBp" id="qI0-6e-igH"/>
                     </connections>
                 </tableViewController>
@@ -1286,6 +1289,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <segue destination="unW-ub-e0M" kind="modal" identifier="firstTimeSettings" id="ODM-E9-Ohb"/>
                         <segue destination="3zc-to-0f3" kind="push" identifier="EditCommonTasks" id="7p7-Gb-VJp"/>
                         <segue destination="rrq-vk-eEv" kind="push" identifier="BlockedUsers" id="hcP-U0-dnY"/>
+                        <segue destination="CWe-JA-5Yf" kind="modal" identifier="AddReminder" id="hJj-bG-PN9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8EP-2F-cre" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1314,11 +1318,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="-2544" y="1332"/>
         </scene>
-        <!--Navigation Controller - Friends-->
+        <!--Navigation Controller -  Connect-->
         <scene sceneID="a5f-i5-uvZ">
             <objects>
                 <navigationController id="SWZ-Sp-Rbs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="300" title="Friends" image="112-group.png" id="0hq-ER-Kf7"/>
+                    <tabBarItem key="tabBarItem" tag="300" title=" Connect" image="112-group.png" id="0hq-ER-Kf7"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QLS-ts-k0c">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2067,13 +2071,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </tableView>
                     <navigationItem key="navigationItem" id="QGC-nx-ymQ">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="0 Requests" id="2Ph-PR-Nwt">
+                        <barButtonItem key="leftBarButtonItem" title="0 Pending" id="2Ph-PR-Nwt">
                             <connections>
                                 <segue destination="AK6-h8-dPK" kind="push" identifier="CircleRequests" id="vob-rA-YPI"/>
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="GMJ-Bn-KR6" customClass="FUISegmentedControl">
-                            <rect key="frame" x="98" y="7" width="128" height="31"/>
+                            <rect key="frame" x="96" y="7" width="128" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Friends"/>
@@ -2090,6 +2094,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBtn" destination="Yg3-ng-kLJ" id="iOS-Ke-Ig5"/>
                         <outlet property="requestButton" destination="2Ph-PR-Nwt" id="S9L-6e-kAR"/>
                         <outlet property="segmentedController" destination="GMJ-Bn-KR6" id="MON-y8-Sob"/>
                         <segue destination="bnW-Ei-pWy" kind="push" identifier="CircleDetail" id="Y6F-64-BT7"/>
@@ -2572,22 +2577,29 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <sections>
                             <tableViewSection id="9jY-SB-flo">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="94" id="sLp-iz-NPO">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="96"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="97" id="sLp-iz-NPO">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="93"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-0X-Z9i">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-frame.png" translatesAutoresizingMaskIntoConstraints="NO" id="wwx-8Q-Glq">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="88" id="lu3-Cm-WOF"/>
-                                                        <constraint firstAttribute="height" constant="88" id="nNR-M9-F2u"/>
+                                                        <constraint firstAttribute="height" constant="91" id="xDC-81-8Af"/>
+                                                        <constraint firstAttribute="width" constant="91" id="zuV-kO-ypK"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dh-Q1-Lir">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="UPy-0X-Z9i">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="83" id="Rdt-j9-6nu"/>
+                                                        <constraint firstAttribute="height" constant="83" id="YSe-Zf-5zn"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dh-Q1-Lir" customClass="FUIButton">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="147" id="lqv-p8-Krh"/>
+                                                        <constraint firstAttribute="height" constant="56" id="lxX-qT-uuW"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal" title="Set Profile Picture">
@@ -2606,10 +2618,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="wwx-8Q-Glq" firstAttribute="top" secondItem="sLp-iz-NPO" secondAttribute="top" constant="3" id="ReV-DZ-cZV"/>
+                                            <constraint firstItem="UPy-0X-Z9i" firstAttribute="centerY" secondItem="wwx-8Q-Glq" secondAttribute="centerY" type="default" id="TuC-YK-sgb"/>
                                             <constraint firstItem="9dh-Q1-Lir" firstAttribute="leading" secondItem="sLp-iz-NPO" secondAttribute="leading" constant="143" id="a4p-dc-Q2A"/>
-                                            <constraint firstItem="9dh-Q1-Lir" firstAttribute="top" secondItem="sLp-iz-NPO" secondAttribute="top" constant="26" id="lea-Dx-lbr"/>
-                                            <constraint firstItem="UPy-0X-Z9i" firstAttribute="leading" secondItem="sLp-iz-NPO" secondAttribute="leading" constant="18" id="no1-3y-V35"/>
-                                            <constraint firstItem="UPy-0X-Z9i" firstAttribute="centerY" secondItem="sLp-iz-NPO" secondAttribute="centerY" type="default" id="sxA-er-LGm"/>
+                                            <constraint firstItem="UPy-0X-Z9i" firstAttribute="centerX" secondItem="wwx-8Q-Glq" secondAttribute="centerX" type="default" id="a6B-a7-eHi"/>
+                                            <constraint firstItem="9dh-Q1-Lir" firstAttribute="centerY" secondItem="sLp-iz-NPO" secondAttribute="centerY" type="default" id="atU-hf-UeW"/>
+                                            <constraint firstItem="wwx-8Q-Glq" firstAttribute="leading" secondItem="sLp-iz-NPO" secondAttribute="leading" constant="15" id="ljt-5f-f3d"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -2617,7 +2631,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <tableViewSection id="JGa-mv-qfZ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xli-a1-Bjk">
-                                        <rect key="frame" x="0.0" y="126" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="129" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -2651,7 +2665,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yPZ-rl-Rfm">
-                                        <rect key="frame" x="0.0" y="171" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="174" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -2700,10 +2714,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneBtn" destination="tPy-Xm-lfQ" id="9B1-Cd-DDo"/>
                         <outlet property="doneButton" destination="9dh-Q1-Lir" id="tSH-QT-oau"/>
                         <outlet property="firstNameField" destination="XVw-H6-fJG" id="rcu-j8-Azz"/>
+                        <outlet property="firstTitle" destination="SrL-13-GPi" id="yK2-nu-zIl"/>
                         <outlet property="lastNameField" destination="nhd-IB-iZk" id="633-dP-Jwa"/>
+                        <outlet property="lastTitle" destination="yts-x1-eo2" id="fgg-uV-d8p"/>
                         <outlet property="profilePictureSet" destination="UPy-0X-Z9i" id="HAx-b2-7gc"/>
+                        <outlet property="setPic" destination="9dh-Q1-Lir" id="XAK-3h-aCW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kRU-tl-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2747,11 +2765,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="783" y="-727"/>
         </scene>
-        <!--Navigation Controller - Favrs-->
+        <!--Navigation Controller - Social-->
         <scene sceneID="Z9g-CR-b0h">
             <objects>
                 <navigationController id="gbV-pW-ASI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="200" title="Favrs" image="20-gear2.png" id="uoO-PW-lrW"/>
+                    <tabBarItem key="tabBarItem" tag="200" title="Social" image="09-chat-2.png" id="uoO-PW-lrW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kz3-Ob-YrB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4506,9 +4524,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         </scene>
     </scenes>
     <resources>
+        <image name="09-chat-2.png" width="24" height="22"/>
         <image name="112-group.png" width="32" height="21"/>
         <image name="123-id-card.png" width="24" height="17"/>
-        <image name="20-gear2.png" width="26" height="28"/>
         <image name="58-todo.png" width="26" height="27"/>
         <image name="Placeholder.png" width="60" height="60"/>
         <image name="first" width="16" height="16"/>
@@ -4556,6 +4574,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="adjustButtonState:"/>
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
@@ -4635,6 +4654,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="circleMenu:"/>
                 <relationship kind="action" name="segmentChanged:"/>
                 <relationship kind="action" name="unwindToCircles:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="addBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="requestButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="segmentedController" candidateClass="FUISegmentedControl"/>
             </relationships>
@@ -4644,6 +4664,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="action" name="addTask:"/>
                 <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="addBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -4697,6 +4718,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="action" name="addFriend:"/>
                 <relationship kind="action" name="segmentChanged:"/>
+                <relationship kind="outlet" name="requestsBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="segmentedController" candidateClass="FUISegmentedControl"/>
             </relationships>
         </class>
@@ -4811,7 +4833,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SocialViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addComment:"/>
-                <relationship kind="action" name="checkTextField:"/>
             </relationships>
         </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
@@ -4821,10 +4842,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doneButton:"/>
+                <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="firstTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="profilePictureSet" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="setPic" candidateClass="FUIButton"/>
             </relationships>
         </class>
     </classes>
@@ -4834,17 +4859,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="hJj-bG-PN9"/>
         <segue reference="ODM-E9-Ohb"/>
         <segue reference="7p7-Gb-VJp"/>
-        <segue reference="hes-Yo-V4N"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="OGa-b0-0On"/>
+        <segue reference="hB8-tL-UEI"/>
+        <segue reference="azN-Uw-T1Q"/>
+        <segue reference="GfZ-it-DUs"/>
+        <segue reference="std-vO-s0Z"/>
         <segue reference="6cG-gq-PK8"/>
         <segue reference="7cf-9Z-bI4"/>
         <segue reference="ueR-b5-QFZ"/>
-        <segue reference="std-vO-s0Z"/>
-        <segue reference="RYe-tY-AK6"/>
-        <segue reference="azN-Uw-T1Q"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="hB8-tL-UEI"/>
-        <segue reference="OGa-b0-0On"/>
     </inferredMetricsTieBreakers>
 </document>

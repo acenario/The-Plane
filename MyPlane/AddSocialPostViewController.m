@@ -139,7 +139,7 @@
     [post setObject:self.currentUser forKey:@"user"];
     [post setUsername:self.currentUser.user];
     
-    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [post saveEventually:^(BOOL succeeded, NSError *error) {
         [self.circle addObject:[SocialPosts objectWithoutDataWithObjectId:post.objectId] forKey:@"posts"];
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [self dismissViewControllerAnimated:YES completion:^{

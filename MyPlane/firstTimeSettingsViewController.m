@@ -7,6 +7,8 @@
 //
 
 #import "firstTimeSettingsViewController.h"
+#import "CurrentUser.h"
+#import "Reachability.h"
 
 @interface firstTimeSettingsViewController ()
 
@@ -19,6 +21,7 @@
     BOOL checkFirstName;
     BOOL checkLastName;
     NSArray *friendsArray;
+    Reachability *reachability;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -34,6 +37,7 @@
     PFQuery *queryUser = [PFQuery queryWithClassName:@"UserInfo"];
     [queryUser whereKey:@"user" equalTo:[PFUser currentUser].username];
     [queryUser includeKey:@"friends"];
+    queryUser.cachePolicy = kPFCachePolicyNetworkElseCache;
     
     [queryUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         NSString *objectID = [object objectId];
@@ -49,10 +53,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    reachability = [Reachability reachabilityForInternetConnection];
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+    
+    [self configureViewController];
+    
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
+    UIColor *regColor = [UIColor colorFromHexCode:@"FF7140"];
+    //UIColor *selColor = [UIColor colorFromHexCode:@"FF9773"];
+    
+    self.setPic.buttonColor = regColor;
+    self.setPic.shadowColor = regColor;
+    self.setPic.shadowHeight = 2.0f;
+    self.setPic.cornerRadius = 3.0f;
+    self.setPic.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    
+    [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,7 +122,7 @@
     PFQuery *personQuery = [UserInfo query];
     [personQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     [personQuery includeKey:@"friends"];
-    
+    personQuery.cachePolicy = kPFCachePolicyNetworkOnly;
     
     
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {                
@@ -107,7 +138,7 @@
         
         //PROFILE PICTURE
         
-        if (self.profilePictureSet.image != nil) {
+        if ((self.profilePictureSet.image != nil) && (self.profilePictureSet.image != self.profilePictureSet.image)) {
             NSData *data = UIImagePNGRepresentation(self.profilePictureSet.image);
             PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
             [object setObject:imageupload forKey:@"profilePicture"];
@@ -162,7 +193,8 @@
         
         
         if ((checkFirstName) && (checkLastName)) {
-            
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = (UserInfo *)object;
             [self dismissViewControllerAnimated:YES completion:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
             }];
@@ -192,9 +224,56 @@
 
 - (IBAction)doneButton:(id)sender {
     
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+    } else {
+        [self updateAlltheMethods];
+    }
     
-    [self updateAlltheMethods];
     
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    self.firstTitle.font = [UIFont flatFontOfSize:16];
+    self.lastTitle.font = [UIFont flatFontOfSize:16];
+    self.firstTitle.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    self.lastTitle.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    self.firstTitle.backgroundColor = [UIColor whiteColor];
+    self.lastTitle.backgroundColor = [UIColor whiteColor];
+    self.firstNameField.font = [UIFont flatFontOfSize:14];
+    self.lastNameField.font = [UIFont flatFontOfSize:14];
+    self.firstNameField.backgroundColor = [UIColor whiteColor];
+    self.lastNameField.backgroundColor = [UIColor whiteColor];
+    
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0)
+        [cell.contentView addSubview:imgView];
+        
+    }
+    
+    
+    return cell;
     
 }
 

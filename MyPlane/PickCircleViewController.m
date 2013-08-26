@@ -51,6 +51,10 @@
     PFQuery *query = [Circles query];
     [query whereKey:@"members" matchesQuery:self.userQuery];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
     return query;
 }
 

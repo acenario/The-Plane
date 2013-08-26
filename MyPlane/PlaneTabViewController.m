@@ -127,7 +127,7 @@
     }
     
     else if (self.tabBar.selectedItem.tag == 400) {
-        NSLog(@"This is settings page with 400");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"settingsCenterTabbarItemTapped" object:nil];
     }
     
     

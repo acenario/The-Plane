@@ -47,7 +47,7 @@
         isFromCircles = NO;
         currentUserQuery = [UserInfo query];
         [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-        currentUserQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
+        currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
         [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             self.currentUser = (UserInfo *)object;
         }];

@@ -11,12 +11,14 @@
 #import "MyLoginViewController.h"
 #import "MySignUpViewController.h"
 #import "CurrentUser.h"
+#import "AddReminderViewController.h"
+#import "Reachability.h"
 
 
 @interface SettingsViewController ()
 
 @property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
-
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -28,6 +30,7 @@
     NSString *theUsername;
     UIImage *defaultPic;
     BOOL menuCheck;
+    Reachability *reachability;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -42,6 +45,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
@@ -88,7 +94,14 @@
     self.emailField.placeholder = @"";
     
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveAddNotification:)
+                                                 name:@"settingsCenterTabbarItemTapped"
+                                               object:nil];
+    
     [self getUserInfo];
+    
+    
     
     /*self.infoCell = [UITableViewCell configureFlatCellWithColor:[UIColor greenSeaColor]
                                          selectedColor:[UIColor cloudsColor]
@@ -100,6 +113,7 @@
     self.infoCell.separatorHeight = 2.0f; // optional*/
     
 }
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     menuCheck = YES;
@@ -123,14 +137,27 @@
         
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:nil];
+    } else {
+        self.sharedManager = [CurrentUser sharedManager];
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"reloadProfile"
                                                object:nil];
-
     
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.editButton.enabled = NO;
+    } 
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.editButton.enabled = NO;
+    } else {
+        [self reloadInfo];
+    }
 }
 
 -(void)configureFlatUI {
@@ -177,7 +204,11 @@
      if ([[notification name] isEqualToString:@"reloadProfile"]) {
         NSLog (@"Successfully received the reload command!");
          [self reloadInfo];
-    }
+     } else if ([[notification name] isEqualToString:@"settingsCenterTabbarItemTapped"]) {
+         
+         [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+         
+     }
 }
 
 
@@ -230,7 +261,11 @@
     self.usernameField.text = [object objectForKey:@"user"];
     self.emailField.text = [user email];
     self.profilePicture.file = [object objectForKey:@"profilePicture"];
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.editButton.enabled = NO;
+    } else {
     self.editButton.enabled = YES;
+    }
     [self.profilePicture loadInBackground];
 }
 
@@ -259,6 +294,11 @@
     } else if ([segue.identifier isEqualToString:@"EditCommonTasks"]) {
         CommonTasksViewController *controller = [segue destinationViewController];
         controller.isFromSettings = YES;
+    } else if ([segue.identifier isEqualToString:@"AddReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        controller.recipient = self.sharedManager.currentUser;
+        controller.currentUser = self.sharedManager.currentUser;
     }
 }
 

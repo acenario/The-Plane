@@ -8,12 +8,15 @@
 
 #import "CommonTasksViewController.h"
 #import "MZFormSheetController.h"
+#import "Reachability.h"
 
 @interface CommonTasksViewController ()
 
 @end
 
-@implementation CommonTasksViewController
+@implementation CommonTasksViewController {
+    Reachability *reachability;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,9 +41,27 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     if (self.isFromSettings) {
         self.cancelButton.title = @"Close";
+    }
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.addBtn.enabled = NO;
+    } else {
+        self.addBtn.enabled = YES;
+    }
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.addBtn.enabled = NO;
+    } else {
+        self.addBtn.enabled = YES;
     }
 }
 

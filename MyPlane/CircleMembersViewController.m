@@ -36,6 +36,7 @@
     [super viewDidAppear:YES];
     optionToggle = YES;
     self.sharedManager = [CurrentUser sharedManager];
+    self.currentUser = self.sharedManager.currentUser;
     self.uzysSMenu.hidden = YES;
     
 }
@@ -45,6 +46,10 @@
     PFQuery *query = [UserInfo query];
     [query whereKey:@"user" containedIn:self.circle.memberUsernames];
     [query whereKey:@"user" notContainedIn:self.currentUser.blockedUsernames];
+    
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
 //    [query whereKey:@"memberUsernames" notContainedIn:self.currentUser.blockedUsers];
 //    [query includeKey:@"members"];
     

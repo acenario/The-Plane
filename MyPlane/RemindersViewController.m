@@ -12,6 +12,7 @@
 #import "QuartzCore/CALayer.h"
 #import <QuartzCore/QuartzCore.h>
 #import "KGStatusBar.h"
+#import "Reachability.h"
 
 
 @interface RemindersViewController ()
@@ -27,6 +28,7 @@
     //NSString *tempUsername;
     //PFObject *meObject;
     NSDateFormatter *dateFormatter;
+    Reachability *reachability;
 
 }
 
@@ -71,7 +73,10 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"reloadObjects"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
     if (firstTime) {
@@ -105,7 +110,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     if (![PFUser currentUser]) { // No user logged in
         // Create the log in view controller
         PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
@@ -125,10 +129,40 @@
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:nil];
     } else {
-    
-    [self loadObjects];
+        //CurrentUser *sharedManager = [CurrentUser sharedManager];
         
+        
+        if (reachability.currentReachabilityStatus == NotReachable) {
+            NSLog(@"No internet connection!");
+        } else {
+//            if ((sharedManager.currentUser.firstName == nil || sharedManager.currentUser.lastName == nil)) {
+//             [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
+//             [SVProgressHUD showErrorWithStatus:@"You must enter a first name and last name!"];
+//             } else {
+//             [self loadObjects];
+//             }
+            [self loadObjects];
+        }
+ 
     }
+}
+
+- (void)reachabilityChanged:(NSNotification*)notification
+{
+    //CurrentUser *sharedManager = [CurrentUser sharedManager];
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        NSLog(@"No internet connection!");
+    } else {
+//        if ((sharedManager.currentUser.firstName == nil || sharedManager.currentUser.lastName == nil)) {
+//            [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
+//            [SVProgressHUD showErrorWithStatus:@"You must enter a first name and last name!"];
+//        } else {
+//            [self loadObjects];
+//        }
+        [self loadObjects];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -256,6 +290,19 @@
     
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        NSLog(@"No internet connection!");
+        return UITableViewCellEditingStyleNone;
+    } else {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+}
+
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -281,7 +328,7 @@
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
             [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
             
-            
+            if (![deleteName isEqualToString:[PFUser currentUser].username]) {
             NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
             
             PFQuery *pushQuery = [PFInstallation query];
@@ -293,7 +340,8 @@
             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 NSString *message = [NSString stringWithFormat:@"%@ has been notified", deleteName];
                 [SVProgressHUD showSuccessWithStatus:message];
-            }];
+                }];
+            }
             
         }
     }];
@@ -382,13 +430,20 @@
 {
     
     //NSLog(@"reminder: %@ from: %@", [reminder objectForKey:@"title"], [reminder objectForKey:@"fromUser"]);
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        NSLog(@"No internet connection!");
+    } else {
+    Reminders *receivedReminder = (Reminders *)reminder;
 
         [SVProgressHUD showWithStatus:@"Cleanup..."];
     
     NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
     
+    if (receivedReminder.comments.count > 0) {
     for (Comments *comment in [reminder objectForKey:@"comments"]) {
+        NSLog(@"comment: %@", comment);
         [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+        }
     }
 
     [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -404,6 +459,8 @@
         
     }];
         
+    }
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

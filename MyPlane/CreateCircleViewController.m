@@ -7,6 +7,7 @@
 //
 
 #import "CreateCircleViewController.h"
+#import "Reachability.h"
 
 @interface CreateCircleViewController ()
 
@@ -22,6 +23,7 @@
     NSMutableArray *invitedMembers;
     NSMutableArray *invitedUsernames;
     NSString *circleName;
+    Reachability *reachability;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -44,16 +46,32 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     public = YES;
         
     privacy = @"closed";
-    
-    NSLog(@"%@",self.currentUser);
-    
+        
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.doneBarButton.enabled = NO;
+    } else {
+        self.doneBarButton.enabled = YES;
+    }
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.doneBarButton.enabled = NO;
+    } else {
+        self.doneBarButton.enabled = YES;
+    }
 }
 
 -(void)configureViewController {

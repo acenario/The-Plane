@@ -32,6 +32,7 @@
 - (IBAction)circleMenu:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
 - (IBAction)unwindToCircles:(UIStoryboardSegue *)unwindSegue;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addBtn;
 
 //@property NSInteger count;
 //- (IBAction)segmentedSwitch:(id)sender;

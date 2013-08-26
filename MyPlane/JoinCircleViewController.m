@@ -67,7 +67,7 @@
 {
     PFQuery *currentUserQuery = [UserInfo query];
     [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
+    currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
     [currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (UserInfo *object in objects) {
             userObject = object;

@@ -7,6 +7,7 @@
 //
 
 #import "MySignUpViewController.h"
+#import "KGStatusBar.h"
 
 @interface MySignUpViewController ()
 
@@ -26,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [KGStatusBar dismiss];
+    [self.signUpView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"favrMockup"]]];
 	// Do any additional setup after loading the view.
 }
 

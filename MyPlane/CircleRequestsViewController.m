@@ -17,9 +17,7 @@
 
 @end
 
-@implementation CircleRequestsViewController {
-    PFQuery *userQuery;
-}
+@implementation CircleRequestsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -247,6 +245,69 @@
 {
     nil;
     //[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        
+        Requests *deleteInvite = [self.invites objectAtIndex:indexPath.row];
+        Circles *circle = (Circles *)deleteInvite.circle;
+        [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
+        [circle removeObject:[Requests objectWithoutDataWithObjectId:deleteInvite.objectId] forKey:@"requestsArray"];
+        
+        [deleteInvite deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [self.currentUser incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+                    [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {                        
+                        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                        [self loadObjects];
+                        
+                        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                        [SVProgressHUD showSuccessWithStatus:@"Removed Invite!"];
+                    }];
+                }];
+            }
+        }];
+        
+        
+    } else {
+        
+        Requests *deleteRequest = [self.requests objectAtIndex:indexPath.row];
+        Circles *circle = (Circles *)deleteRequest.circle;
+        NSMutableArray *usersToEdit = [[NSMutableArray alloc]init];
+        [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
+        [circle removeObject:[Requests objectWithoutDataWithObjectId:deleteRequest.objectId] forKey:@"requestsArray"];
+        
+        for (UserInfo *user in circle.adminPointers) {
+            [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+            [usersToEdit addObject:user];
+        }
+        
+        [deleteRequest deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    
+                [UserInfo saveAllInBackground:usersToEdit block:^(BOOL succeeded, NSError *error) {
+                    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                    [self loadObjects];
+                    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                    [SVProgressHUD showSuccessWithStatus:@"Removed Request!"];
+                    }];
+                }];
+            }
+        }];
+        
+        
+    }
+    
+    
+    
+    
+    
+    
 }
 
 - (void)acceptRequest:(id)sender

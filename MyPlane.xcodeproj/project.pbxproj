@@ -70,6 +70,11 @@
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */; };
+		DC4F2A4717CBDCE000ED30BB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4617CBDCDF00ED30BB /* Reachability.m */; };
+		DC4F2A4A17CC058000ED30BB /* 09-chat-2.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4F2A4817CC058000ED30BB /* 09-chat-2.png */; };
+		DC4F2A4B17CC058000ED30BB /* 09-chat-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4F2A4917CC058000ED30BB /* 09-chat-2@2x.png */; };
+		DC4F2A4E17CC082B00ED30BB /* favrMockup.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4F2A4C17CC082B00ED30BB /* favrMockup.png */; };
+		DC4F2A4F17CC082B00ED30BB /* favrMockup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4F2A4D17CC082B00ED30BB /* favrMockup@2x.png */; };
 		DC73AEE817BB4EAB0049AF50 /* UzysSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */; };
 		DC73AEE917BB4EAB0049AF50 /* UzysSMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE417BB4EAB0049AF50 /* UzysSMMenuItem.m */; };
 		DC73AEEA17BB4EAB0049AF50 /* UzysSMMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73AEE617BB4EAB0049AF50 /* UzysSMMenuItemView.m */; };
@@ -261,6 +266,12 @@
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
+		DC4F2A4517CBDCDE00ED30BB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		DC4F2A4617CBDCDF00ED30BB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		DC4F2A4817CC058000ED30BB /* 09-chat-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-chat-2.png"; sourceTree = "<group>"; };
+		DC4F2A4917CC058000ED30BB /* 09-chat-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-chat-2@2x.png"; sourceTree = "<group>"; };
+		DC4F2A4C17CC082B00ED30BB /* favrMockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favrMockup.png; sourceTree = "<group>"; };
+		DC4F2A4D17CC082B00ED30BB /* favrMockup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favrMockup@2x.png"; sourceTree = "<group>"; };
 		DC73AEE017BB4EAB0049AF50 /* ARCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCHelper.h; sourceTree = "<group>"; };
 		DC73AEE117BB4EAB0049AF50 /* UzysSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysSlideMenu.h; sourceTree = "<group>"; };
 		DC73AEE217BB4EAB0049AF50 /* UzysSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysSlideMenu.m; sourceTree = "<group>"; };
@@ -840,6 +851,8 @@
 				DCE1FE57178910D60012478B /* AppDelegate.m */,
 				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
 				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
+				DC4F2A4517CBDCDE00ED30BB /* Reachability.h */,
+				DC4F2A4617CBDCDF00ED30BB /* Reachability.m */,
 				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
@@ -888,6 +901,10 @@
 		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
 			isa = PBXGroup;
 			children = (
+				DC4F2A4C17CC082B00ED30BB /* favrMockup.png */,
+				DC4F2A4D17CC082B00ED30BB /* favrMockup@2x.png */,
+				DC4F2A4817CC058000ED30BB /* 09-chat-2.png */,
+				DC4F2A4917CC058000ED30BB /* 09-chat-2@2x.png */,
 				DC73AF0417C55FFD0049AF50 /* separator2.png */,
 				DC73AF0517C55FFD0049AF50 /* separator2@2x.png */,
 				DCF891E0178A1E9000A89F6E /* tabbarBackground.png */,
@@ -1039,6 +1056,10 @@
 				DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */,
 				DC73AF0617C55FFD0049AF50 /* separator2.png in Resources */,
 				DC73AF0717C55FFD0049AF50 /* separator2@2x.png in Resources */,
+				DC4F2A4A17CC058000ED30BB /* 09-chat-2.png in Resources */,
+				DC4F2A4B17CC058000ED30BB /* 09-chat-2@2x.png in Resources */,
+				DC4F2A4E17CC082B00ED30BB /* favrMockup.png in Resources */,
+				DC4F2A4F17CC082B00ED30BB /* favrMockup@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1125,6 +1146,7 @@
 				DCAA087017C7EFE000F992A1 /* FCContainerViewController.m in Sources */,
 				AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */,
 				DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */,
+				DC4F2A4717CBDCE000ED30BB /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

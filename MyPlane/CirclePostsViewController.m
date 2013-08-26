@@ -14,7 +14,7 @@
 @end
 
 @implementation CirclePostsViewController {
-    PFQuery *userQuery;
+    //PFQuery *userQuery;
     NSDateFormatter *dateFormatter;
 }
 

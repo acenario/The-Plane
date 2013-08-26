@@ -58,6 +58,10 @@
     [query whereKey:@"members" matchesQuery:self.currentUserQuery];
     [query includeKey:@"members"];
     
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
     return query;
 }
 
