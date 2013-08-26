@@ -189,6 +189,7 @@
         NSMutableArray *requestsToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
         NSMutableArray *usersToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
         
+        
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
             
@@ -211,7 +212,10 @@
             [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
                 for (Requests *request in requestsToSave) {
                     [relation addObject:request];
+                    [self.circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
+                    //[relation addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
                 }
+//                [self.circle addObjectsFromArray:requestsToSave forKey:@"requestsArray"];
                 [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%d Members Invited", invitedMembers.count]];
                     [self dismissViewControllerAnimated:YES completion:nil];

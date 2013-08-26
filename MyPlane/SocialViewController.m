@@ -7,11 +7,13 @@
 //
 
 #import "SocialViewController.h"
+#import "CurrentUser.h"
 
 @interface SocialViewController ()
 
 @property (nonatomic, strong) UITextField *commentTextField;
 @property (nonatomic, strong) UIButton *addCommentButton;
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -34,6 +36,14 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.sharedManager = [CurrentUser sharedManager];
+    currentUserObject = self.sharedManager.currentUser;
+    [self loadObjects];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,13 +51,14 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"spCenterTabbarItemTapped"
                                                object:nil];
+//    
+//    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        currentUserObject = (UserInfo *)object;
+//    }];
+//
     
-    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        currentUserObject = (UserInfo *)object;
-    }];
     
     [self configureViewController];
-    
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -94,8 +105,11 @@
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"members"];
     
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    
     PFQuery *postsQuery = [SocialPosts query];
     [postsQuery whereKey:@"circle" matchesQuery:query];
+    [postsQuery whereKey:@"username" notContainedIn:sharedManager.currentUser.blockedUsernames];
     [postsQuery includeKey:@"circle"];
     [postsQuery includeKey:@"user"];
     [postsQuery includeKey:@"comments"];
@@ -260,13 +274,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    PFObject *socialPost = [self.objects objectAtIndex:indexPath.section];
-    UserInfo *userObject = (UserInfo *)[socialPost objectForKey:@"user"];
-    
     [SVProgressHUD showWithStatus:@"Deleting post"];
+    SocialPosts *socialPost = [self.objects objectAtIndex:indexPath.section];
+    UserInfo *userObject = (UserInfo *)[socialPost objectForKey:@"user"];
+    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
+    
+    for (Comments *comment in socialPost.comments) {
+        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+    }
+    
     if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
         [socialPost deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
+                [Comments deleteAllInBackground:commentsToDelete];
                 NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
                 [self loadObjects];
                 [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
@@ -306,8 +326,8 @@
 {
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);
-    NSString *textFieldText = [NSString stringWithFormat:@"%@", textField.text];
-    if (textFieldText.length > 0) {
+    NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
@@ -381,5 +401,6 @@
 //    controller.socialPost = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
 //    NSLog(@"%@")
 //}
+
 
 @end

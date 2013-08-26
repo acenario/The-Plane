@@ -7,6 +7,7 @@
 //
 
 #import "AddFriendViewController.h"
+#import "CurrentUser.h"
 
 @interface AddFriendViewController ()
 
@@ -134,7 +135,7 @@
     //[self.searchResults removeAllObjects];
     
     friendQuery = [UserInfo query];
-    [friendQuery whereKey:@"user" containsString:newTerm];
+    [friendQuery whereKey:@"user" hasPrefix:newTerm];
     
     if (self.objects.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -250,6 +251,8 @@
     //[userObject addObject:friendAdded forKey:@"sentFriendRequests"];
     [userObject addObject:friendToAdd forKey:@"sentFriendRequests"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        sharedManager.currentUser = userObject;
         //[friendAdded addObject:userObject forKey:@"receivedFriendRequests"];
         [friendAdded addObject:userObjectID forKey:@"receivedFriendRequests"];
         [friendAdded saveInBackground];
@@ -269,18 +272,7 @@
         [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         }];
         
-    }];
-    
-    
-    /*[currentUserQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            PFObject *friendAdded = (PFObject *)[self.searchResults objectAtIndex:clickedButtonPath.row];
-            PFObject *userObject = (PFObject *)[objects objectAtIndex:0];
-            [userObject addObject:friendAdded forKey:@"friends"];
-            [userObject saveInBackground];
-        }
-    }];*/
-    
+    }];    
     
     UIButton *addFriendButton = (UIButton *)sender;
     addFriendButton.enabled = NO;

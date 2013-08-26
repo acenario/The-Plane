@@ -264,13 +264,18 @@
     //    NSString *myObjectID = [dict objectForKey:@"objectID"];
     
     
-    PFObject *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    Reminders *deleteReminder = [self.objects objectAtIndex:indexPath.row];
     NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
     NSString *tempName = [deleteReminder objectForKey:@"user"];
+    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
     
-    
+    for (Comments *comment in deleteReminder.comments) {
+        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+    }
+
     [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [Comments deleteAllInBackground:commentsToDelete];
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
             [self loadObjects];
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
@@ -312,13 +317,17 @@
     
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
+    
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
     //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
     if([PFUser currentUser]) {
         [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+        [query whereKey:@"fromUser" notContainedIn:sharedManager.currentUser.blockedUsernames];
     }
     
     [query includeKey:@"fromFriend"];
     [query includeKey:@"recipient"];
+    [query includeKey:@"comments"];
     
     [query orderByAscending:@"date"];
     
@@ -375,9 +384,16 @@
     //NSLog(@"reminder: %@ from: %@", [reminder objectForKey:@"title"], [reminder objectForKey:@"fromUser"]);
 
         [SVProgressHUD showWithStatus:@"Cleanup..."];
+    
+    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
+    
+    for (Comments *comment in [reminder objectForKey:@"comments"]) {
+        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+    }
 
     [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [Comments deleteAllInBackground:commentsToDelete];
             [SVProgressHUD dismiss];
             [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
             //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];

@@ -137,6 +137,7 @@
     [post setObject:self.postTextField.text forKey:@"text"];
     [post setObject:self.circle forKey:@"circle"];
     [post setObject:self.currentUser forKey:@"user"];
+    [post setUsername:self.currentUser.user];
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.circle addObject:[SocialPosts objectWithoutDataWithObjectId:post.objectId] forKey:@"posts"];
@@ -185,7 +186,8 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if (self.postTextField.text.length > 0) {
+    NSString *removedSpaces = [self.postTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         textCheck = YES;
     } else {
         textCheck = NO;

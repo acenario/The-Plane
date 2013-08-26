@@ -7,10 +7,12 @@
 //
 
 #import "CirclesViewController.h"
+#import "CurrentUser.h"
 
 @interface CirclesViewController ()
 
 @property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -49,12 +51,6 @@
     
     self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item1]];
     [self.view addSubview:self.uzysSMenu];
-    
-    
-    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        userObject = (UserInfo *)object;
-        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
-    }];
 }
 
 -(void)configureViewController {
@@ -83,16 +79,27 @@
                                              selector:@selector(viewDidAppearInContainer:)
                                                  name:@"showCircles"
                                                object:nil];
+    
     menuCheck = YES;
     self.segmentedController.selectedSegmentIndex = 1;
     self.uzysSMenu.hidden = YES;
+    self.segmentedController.selectedSegmentIndex = 1;
+    self.sharedManager = [CurrentUser sharedManager];
+    userObject = self.sharedManager.currentUser;
     [self loadObjects];
-    
+    self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
 }
 
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"showCircles"]) {
+        menuCheck = YES;
         self.segmentedController.selectedSegmentIndex = 1;
+        self.uzysSMenu.hidden = YES;
+        self.segmentedController.selectedSegmentIndex = 1;
+        self.sharedManager = [CurrentUser sharedManager];
+        userObject = self.sharedManager.currentUser;
+        self.requestButton.title = [NSString stringWithFormat:@"%d Requests", userObject.circleRequestsCount];
+        [self loadObjects];
     }
     
 }
@@ -113,6 +120,7 @@
     [query includeKey:@"owner"];
     [query includeKey:@"members"];
     [query includeKey:@"posts"];
+    [query includeKey:@"requestsArray"];
     
     [query orderByDescending:@"name"];
     
@@ -189,6 +197,8 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         CreateCircleViewController *controller = (CreateCircleViewController *)nav.topViewController;
         controller.delegate = self;
+        controller.currentUser = userObject;
+        NSLog(@"%@", userObject);
     }
 }
 

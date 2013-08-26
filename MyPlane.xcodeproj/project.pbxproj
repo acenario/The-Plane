@@ -635,8 +635,8 @@
 			children = (
 				AEF4583A17A1F6DF00AFF8D6 /* CirclesViewController.h */,
 				AEF4583B17A1F6DF00AFF8D6 /* CirclesViewController.m */,
-				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AEB17C1EBFE005E2C45 /* CircleDetail */,
+				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AF217C1ED48005E2C45 /* JoinCircle */,
 				AE017AF117C1ED40005E2C45 /* CreateCircle */,
 				AE017AF017C1ED37005E2C45 /* CircleRequests */,

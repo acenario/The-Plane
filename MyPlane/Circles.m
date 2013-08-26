@@ -25,7 +25,9 @@
 @dynamic reminders;
 @dynamic public;
 @dynamic requests;
+@dynamic requestsArray;
 @dynamic privacy;
 @dynamic admins;
+@dynamic adminPointers;
 
 @end

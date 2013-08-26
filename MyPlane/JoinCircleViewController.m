@@ -80,10 +80,11 @@
     NSString *newTerm = [searchTerm lowercaseString];
     //    NSLog(@"%@", newTerm);
     circleQuery = [Circles query];
-    [circleQuery whereKey:@"name" containsString:newTerm];
+    [circleQuery whereKey:@"name" hasPrefix:newTerm];
     [circleQuery whereKey:@"public" equalTo:[NSNumber numberWithBool:YES]];
 //    [circleQuery includeKey:@"requests"];
     [circleQuery includeKey:@"members"];
+    [circleQuery includeKey:@"adminPointers"];
     
     if (self.objects.count == 0) {
         circleQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -218,6 +219,8 @@
     }
     [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = userObject;
             [self loadObjects];
         }];
     }];
@@ -242,9 +245,10 @@
     [request saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         PFRelation *relation = [circle relationforKey:@"requests"];
         [relation addObject:request];
+        [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
         [circle addObject:userObject.user forKey:@"pendingMembers"];
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            for (UserInfo *user in circle.members) {
+            for (UserInfo *user in circle.adminPointers) {
                 [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
                 [usersToSave addObject:user];
             }

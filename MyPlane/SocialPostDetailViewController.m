@@ -7,6 +7,7 @@
 //
 
 #import "SocialPostDetailViewController.h"
+#import "CurrentUser.h"
 
 @interface SocialPostDetailViewController ()
 
@@ -74,6 +75,10 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
     [query whereKey:@"post" equalTo:self.socialPost];
     [query includeKey:@"user"];
+    
+//    CurrentUser *sharedManager = [CurrentUser sharedManager];
+//    [query wh]
+    
     [query orderByDescending:@"createdAt"];
     
     if (self.objects.count == 0) {
@@ -269,6 +274,16 @@
     nil;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 2)
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+    return UITableViewCellEditingStyleNone;
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -300,8 +315,8 @@
 - (IBAction)checkTextField:(id)sender
 {
     UITextField *textField = (UITextField *)sender;
-    
-    if (textField.text.length > 0) {
+    NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
@@ -312,6 +327,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self addComment:nil];
     [textField resignFirstResponder];
     return YES;
 }

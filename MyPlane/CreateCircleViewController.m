@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
 @property (strong, nonatomic) UITextField *textField;
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -21,7 +22,6 @@
     NSMutableArray *invitedMembers;
     NSMutableArray *invitedUsernames;
     NSString *circleName;
-    UserInfo *currentUser;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -34,21 +34,22 @@
     return self;
 }
 
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:YES];
+//    self.currentUser = self.sharedManager.currentUser;
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self configureViewController];
     
     public = YES;
-    
-    PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        currentUser = (UserInfo *)object;
-    }];
-    
+        
     privacy = @"closed";
+    
+    NSLog(@"%@",self.currentUser);
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
@@ -347,7 +348,8 @@
     UITextField *textField = (UITextField *)sender;
     
     circleName = textField.text;
-    if (circleName.length > 0) {
+    NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         self.doneBarButton.enabled = YES;
     } else {
         self.doneBarButton.enabled = NO;
@@ -376,23 +378,25 @@
     circle.name = [circleName lowercaseString];
     circle.displayName = circleName;
     circle.user = [PFUser currentUser].username;
-    circle.owner = currentUser;
+    circle.owner = self.currentUser;
     circle.public = public;
     circle.privacy = privacy;
     
     
     if (![privacy isEqualToString:@"open"]) {
-        [circle addObject:currentUser.user forKey:@"admins"];
+        [circle addObject:[PFUser currentUser].username forKey:@"admins"];
+        [circle addObject:[UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId] forKey:@"adminPointers"];
     }
     
-    [circle addObject:currentUser forKey:@"members"];
-    [circle addObject:currentUser.user forKey:@"memberUsernames"];
+    [circle addObject:self.currentUser forKey:@"members"];
+    [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
     
     if (invitedMembers.count > 0) {
         
         PFRelation *relation = [circle relationforKey:@"requests"];
-        NSMutableArray *requestsToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
-        NSMutableArray *usersToSave = [[NSMutableArray alloc] initWithCapacity:invitedMembers.count];
+        NSMutableArray *requestsToSave = [[NSMutableArray alloc] init];
+//        NSMutableArray *requestsToSaveWOData = [[NSMutableArray alloc] init];
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
         
         for (UserInfo *user in invitedMembers) {
             [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
@@ -401,25 +405,25 @@
             Requests *request = [Requests object];
             
             [request setCircle:circle];
-            [request setSender:currentUser];
-            [request setSenderUsername:currentUser.user];
+            [request setSender:self.currentUser];
+            [request setSenderUsername:[PFUser currentUser].username];
             [request setReceiver:user];
             [request setReceiverUsername:user.user];
             
             [circle addObject:user.user forKey:@"pendingMembers"];
             
             [requestsToSave addObject:request];
-            
+//            [requestsToSaveWOData addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
         };
         
         [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
             [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
                 for (Requests *request in requestsToSave) {
                     [relation addObject:request];
+                    [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
                 }
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
-                    [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
@@ -427,7 +431,6 @@
     } else {
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
-            [self.delegate createCircleViewControllerDidFinishCreatingCircle:self];
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
     }

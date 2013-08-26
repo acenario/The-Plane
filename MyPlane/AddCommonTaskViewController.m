@@ -71,7 +71,8 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ([self.textField.text length] > 0) {
+    NSString *removedSpaces = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = YES;

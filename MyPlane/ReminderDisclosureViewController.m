@@ -20,7 +20,7 @@
     CGPoint originalCenter;
     NSDateFormatter *dateFormatter;
     NSDateFormatter *dateFormatter2;
-
+    
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -91,7 +91,7 @@
     [query includeKey:@"user"];
     [query includeKey:@"recipient"];
     
-    [query orderByAscending:@"createdDate"];
+    [query orderByDescending:@"createdAt"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -118,13 +118,9 @@
     } else if (section == 1) {
         return 1;
     }else if (section == 2) {
-        if (self.objects.count > 0) {
-            return ([self.objects count]);
-        } else {
-            return 1;
-        }
-    } else {
         return 1;
+    } else {
+            return ([self.objects count]);
     }
 }
 
@@ -176,43 +172,7 @@
         
         return cell;
     } else if (indexPath.section == 2) {
-        if (self.objects.count > 0) {    // This is the Comment Cell
-            static NSString *CellIdentifier = @"Cell";
-            PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-            
-            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
-            UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
-            UILabel *date = (UILabel *)[cell viewWithTag:1];
-            PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
-            
-            Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
-             
-            UserInfo *userObject = (UserInfo *)comment.user;
-            nameLabel.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
-            date.text = [dateFormatter2 stringFromDate:[self.reminderObject objectForKey:@"date"]];
-            commentLabel.text = comment.text;
-            userImage.file = userObject.profilePicture;
-            
-            [userImage loadInBackground];
-            
-            
-            return cell;
-        } else { // This is the comment text input cell
-            static NSString *CellIdentifier = @"CommentCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            
-            UITextField *commentTextField = (UITextField *)[cell viewWithTag:1341];
-            UIButton *addCommentButton = (UIButton *)[cell viewWithTag:1331];
-            
-            self.commentTextField = commentTextField;
-            self.addCommentButton = addCommentButton;
-            
-            commentTextField.delegate = self;
-            [commentTextField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
-            
-            return cell;
-        }
-    } else { // Same as above
+        // This is the comment text input cell
         static NSString *CellIdentifier = @"CommentCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
@@ -224,6 +184,27 @@
         
         commentTextField.delegate = self;
         [commentTextField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+        
+        return cell;
+    } else {
+        static NSString *CellIdentifier = @"Cell";
+        PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
+        UILabel *commentLabel = (UILabel *)[cell viewWithTag:1302];
+        UILabel *date = (UILabel *)[cell viewWithTag:1];
+        PFImageView *userImage = (PFImageView *)[cell viewWithTag:1311];
+        
+        Comments *comment = (Comments *)[self.objects objectAtIndex:indexPath.row];
+        
+        UserInfo *userObject = (UserInfo *)comment.user;
+        nameLabel.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
+        date.text = [dateFormatter2 stringFromDate:comment.createdAt];
+        commentLabel.text = comment.text;
+        userImage.file = userObject.profilePicture;
+        
+        [userImage loadInBackground];
+        
         
         return cell;
     }
@@ -251,14 +232,14 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-        UILabel *nameLabel = (UILabel *)[cell viewWithTag:13101];
-        UILabel *username = (UILabel *)[cell viewWithTag:13102];
-                
-        nameLabel.font = [UIFont flatFontOfSize:16];
-        username.font = [UIFont flatFontOfSize:14];
+            UILabel *nameLabel = (UILabel *)[cell viewWithTag:13101];
+            UILabel *username = (UILabel *)[cell viewWithTag:13102];
             
-        [cell.contentView addSubview:imgView];
-        
+            nameLabel.font = [UIFont flatFontOfSize:16];
+            username.font = [UIFont flatFontOfSize:14];
+            
+            [cell.contentView addSubview:imgView];
+            
         } else if (indexPath.row != 3) {
             cell.textLabel.font = [UIFont flatFontOfSize:16];
             cell.detailTextLabel.font = [UIFont boldFlatFontOfSize:14];
@@ -280,25 +261,18 @@
         cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         cell.textLabel.backgroundColor = [UIColor whiteColor];
     } else if (indexPath.section == 2) {
-        if (self.objects.count > 0) {
-            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
-            UILabel *postLabel = (UILabel *)[cell viewWithTag:1302];
-            UILabel *timeLabel = (UILabel *)[cell viewWithTag:1];
-            
-            nameLabel.font = [UIFont flatFontOfSize:14];
-            postLabel.font = [UIFont flatFontOfSize:15];
-            timeLabel.font = [UIFont flatFontOfSize:14];
-            
-            [cell.contentView addSubview:imgView];
-        } else {
             UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
-            commentText.font = [UIFont flatFontOfSize:14];
-        }
-        
+            commentText.font = [UIFont flatFontOfSize:14];        
     } else {
-        UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
-        commentText.font = [UIFont flatFontOfSize:14];
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
+        UILabel *postLabel = (UILabel *)[cell viewWithTag:1302];
+        UILabel *timeLabel = (UILabel *)[cell viewWithTag:1];
         
+        nameLabel.font = [UIFont flatFontOfSize:14];
+        postLabel.font = [UIFont flatFontOfSize:15];
+        timeLabel.font = [UIFont flatFontOfSize:14];
+        
+        [cell.contentView addSubview:imgView];        
     }
     
     return cell;
@@ -309,11 +283,21 @@
 {
     if (indexPath.section == 1) {
         [self remindAgain:nil];
-       
+        
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
         nil;
     }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 3)
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+    return UITableViewCellEditingStyleNone;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -356,24 +340,19 @@
     } if (indexPath.section == 1) {
         return 44;
     } else if (indexPath.section == 2) {
-        if (self.objects.count > 0) {
-            return 60;
-        } else {
-            return 44;
-        }
-    } else {
         return 44;
+    } else {
+        return 60;
     }
     
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ((self.objects.count > 0) && (section == 2)) {
-        return @"Comments";
-    } else {
-        return nil;
-    }
+//    if ((self.objects.count > 0) && (section == 2)) {
+//        return @"Comments";
+//    }
+    return nil;
 }
 
 
@@ -383,8 +362,8 @@
 {
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);
-    NSString *textFieldText = [NSString stringWithFormat:@"%@", textField.text];
-    if (textFieldText.length > 0) {
+    NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
@@ -395,6 +374,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self addComment:nil];
     [textField resignFirstResponder];
     return YES;
 }
@@ -405,17 +385,15 @@
 - (IBAction)addComment:(id)sender {
     Comments *comment = [Comments object];
     
-    PFObject *object = [PFObject objectWithoutDataWithClassName:@"Reminders" objectId:self.reminderObject.objectId];
-    
     [comment setObject:self.reminderObject forKey:@"reminder"];
     [comment setObject:currentUserObject forKey:@"user"];
     [comment setObject:self.commentTextField.text forKey:@"text"];
+    self.commentTextField.text = @"";
     
     [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        self.commentTextField.text = @"";
         self.addCommentButton.enabled = NO;
         [self.commentTextField resignFirstResponder];
-        [self.reminderObject addObject:object forKey:@"comments"];
+        [self.reminderObject addObject:[Comments objectWithoutDataWithObjectId:comment.objectId] forKey:@"comments"];
         [self.reminderObject saveInBackground];
         [self loadObjects];
     }];
@@ -423,16 +401,16 @@
 
 - (void)remindAgain:(id)sender {
     
-        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
-        PFQuery *pushQuery = [PFInstallation query];
-        [pushQuery whereKey:@"user" equalTo:recipient.user];
+    UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" equalTo:recipient.user];
     
     if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
         [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
         
         
     } else {
-    
+        
         // Send push notification to query
         PFPush *push = [[PFPush alloc] init];
         [push setQuery:pushQuery]; // Set our Installation query

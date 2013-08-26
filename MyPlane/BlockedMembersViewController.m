@@ -10,6 +10,8 @@
 
 @interface BlockedMembersViewController ()
 
+@property (nonatomic, strong) CurrentUser *sharedManager;
+
 @end
 
 @implementation BlockedMembersViewController {
@@ -30,6 +32,8 @@
 {
     [super viewDidLoad];
     [self configureViewController];
+    
+    self.sharedManager = [CurrentUser sharedManager];
     
     self.unblockButton.enabled = NO;
     selectedUsers = [[NSMutableArray alloc] init];
@@ -154,6 +158,7 @@
     }
     
     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        self.sharedManager.currentUser = currentUser;
         [self loadObjects];
     }];
 }

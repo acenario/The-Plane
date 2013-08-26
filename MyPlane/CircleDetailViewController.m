@@ -54,6 +54,21 @@
     [self userQuery];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    
+    PFQuery *query = [Circles query];
+    [query includeKey:@"owner"];
+    [query includeKey:@"members"];
+    [query includeKey:@"posts"];
+    [query includeKey:@"requestsArray"];
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    [query getObjectInBackgroundWithId:self.circle.objectId block:^(PFObject *object, NSError *error) {
+        self.circle = (Circles *)object;
+    }];
+    
+}
+
 -(void)configureViewController {
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
@@ -193,13 +208,41 @@
 
 - (void)leave
 {
-    [userObject removeObject:self.circle forKey:@"circles"];
     [self.circle removeObject:userObject forKey:@"members"];
     [self.circle removeObject:userObject.user forKey:@"memberUsernames"];
+    if ([self.circle.admins containsObject:userObject.user]) {
+        [self.circle removeObject:userObject forKey:@"adminPointers"];
+        [self.circle removeObject:userObject.user forKey:@"admins"];
+    }
+    NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+    NSMutableArray *requestsToDelete = [[NSMutableArray alloc] init];
     
-    [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self.circle saveInBackground];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
+    for (Requests *request in self.circle.requestsArray) {
+        if ([request.senderUsername isEqualToString:[PFUser currentUser].username]) {
+            UserInfo *sender = (UserInfo *)request.receiver;
+            [sender incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+            [self.circle removeObject:request.receiverUsername forKey:@"pendingMembers"];
+            [usersToSave addObject:sender];
+            [requestsToDelete addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
+        } else if ([self.circle.admins containsObject:[PFUser currentUser].username]) {
+            [self.currentUser incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = self.currentUser;
+            [usersToSave addObject:self.currentUser];
+        }
+    }
+    
+//    NSLog(@"self circle: %@", self.circle);
+    
+    [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"test7");
+        [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+            NSLog(@"test8");
+            [Requests deleteAllInBackground:requestsToDelete block:^(BOOL succeeded, NSError *error) {
+                NSLog(@"test9");
+            }];
+        }];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
         [self performSegueWithIdentifier:@"UnwindToCircles" sender:nil];
     }];
     
@@ -207,19 +250,50 @@
 
 - (void)disband
 {
+    [SVProgressHUD showWithStatus:@"Disbanding circle..."];
     NSMutableArray *postsToDelete = [[NSMutableArray alloc] init];
-    [userObject removeObject:self.circle forKey:@"circles"];
+    NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+    NSMutableArray *requestsToDelete = [[NSMutableArray alloc] init];
+    
+    //    [userObject removeObject:self.circle forKey:@"circles"];
     
     for (SocialPosts *post in self.circle.posts) {
         [postsToDelete addObject:post];
+        NSLog(@"test0");
     }
-
+    
+    for (Requests *request in self.circle.requestsArray) {
+        NSLog(@"LOOK HERE THIS IS A PROPER NSLOG: requesrt: %@", request);
+        if ((request.sender)) {
+            UserInfo *sender = (UserInfo *)request.receiver;
+            [sender incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+            [usersToSave addObject:sender];
+            NSLog(@"test3");
+        } else if ([self.circle.admins containsObject:[PFUser currentUser].username]) {
+            [self.currentUser incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = self.currentUser;
+            [usersToSave addObject:self.currentUser];
+            NSLog(@"test7");
+        }
+        [requestsToDelete addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
+        NSLog(@"test8");
+    }
+    
+//    NSLog(@"self circle: %@", self.circle);
+    
     [self.circle deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"test9");
+
         [SocialPosts deleteAllInBackground:postsToDelete block:^(BOOL succeeded, NSError *error) {
-            [userObject saveInBackground];
-        }];;
+            NSLog(@"test10");
+            [Requests deleteAllInBackground:requestsToDelete block:^(BOOL succeeded, NSError *error) {
+                NSLog(@"test11");
+                [UserInfo saveAllInBackground:usersToSave];
+            }];
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Left %@", self.circle.displayName]];
-        [self performSegueWithIdentifier:@"UnwindToCircles" sender:nil];
+            [self performSegueWithIdentifier:@"UnwindToCircles" sender:nil];
+        }];
     }];
 }
 

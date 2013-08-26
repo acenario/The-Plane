@@ -16,6 +16,7 @@
 
 //@dynamic objectId;
 @dynamic text;
+@dynamic username;
 @dynamic circle;
 @dynamic user;
 @dynamic comments;

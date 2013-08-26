@@ -122,11 +122,12 @@
     NSString *newTerm = [searchTerm lowercaseString];
     
     PFQuery *query = [UserInfo query];
-    [query whereKey:@"user" containsString:newTerm];
+    [query whereKey:@"user" hasPrefix:newTerm];
     [query whereKey:@"user" notEqualTo:[PFUser currentUser].username];
     [query whereKey:@"user" notContainedIn:self.circle.memberUsernames];
+    [query whereKey:@"user" notContainedIn:self.circle.pendingMembers];
     
-    if (self.objects.count == 0) {
+    if (searchResults.count == 0) {
         query.cachePolicy = kPFCachePolicyNetworkOnly;
     }
     
@@ -136,16 +137,17 @@
         searchResults = [[NSMutableArray alloc] initWithArray:[query findObjects]];
         NSMutableArray *usernames = [[NSMutableArray alloc] initWithArray:self.circle.memberUsernames];
         NSMutableArray *pendingMembers = [[NSMutableArray alloc] initWithArray:self.circle.pendingMembers];
-        for (UserInfo *friend in searchResults) {
+        NSMutableArray *newArray = [[NSMutableArray alloc] initWithArray:searchResults];
+        for (UserInfo *friend in self.circle.members) {
             if ([friend.user isEqualToString:[PFUser currentUser].username]) {
-                [searchResults removeObject:friend];
+                [newArray removeObject:friend];
             } else if ([usernames containsObject:friend.user]) {
-                [searchResults removeObject:friend];
+                [newArray removeObject:friend];
             } else if ([pendingMembers containsObject:friend.user]) {
-                [searchResults removeObject:friend];
+                [newArray removeObject:friend];
             }
         }
-        
+        searchResults = newArray;
         [self loadObjects];
     });
     

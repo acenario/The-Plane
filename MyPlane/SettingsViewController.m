@@ -314,6 +314,7 @@
 #pragma mark - Log In/Out Code
 
 - (IBAction)logOut {
+    [self resetAllTabs];
     [PFUser logOut];
     PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
     logInViewController.delegate = self; // Set ourselves as the delegate
@@ -487,6 +488,15 @@
 - (void)unwindToSettings:(UIStoryboardSegue *)unwindSegue
 {
     
+}
+
+- (void)resetAllTabs{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadTabs" object:nil];
+    for (id controller in self.tabBarController.viewControllers) {
+        if ([controller isMemberOfClass:[UINavigationController class]]) {
+            [controller popToRootViewControllerAnimated:NO];
+        }
+    }
 }
 
 @end

@@ -22,6 +22,7 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 @property (nonatomic, weak) id <CreateCircleViewControllerDelegate> delegate;
+@property (nonatomic, strong) UserInfo *currentUser;
 
 @end
  

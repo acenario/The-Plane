@@ -22,7 +22,9 @@
 @property (retain) NSString *privacy;
 @property (retain) NSArray *reminders;
 @property (retain) NSArray *requests;
+@property (retain) NSArray *requestsArray;
 @property (retain) NSArray *admins;
+@property (retain) NSArray *adminPointers;
 @property BOOL public;
 
 @end

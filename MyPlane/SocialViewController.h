@@ -9,9 +9,7 @@
 #import <Parse/Parse.h>
 #import "SocialPostDetailViewController.h"
 #import "AddSocialPostViewController.h"
-#import "UserInfo.h"
-#import "Comments.h"
-#import "SocialPosts.h"
+#import "SubclassHeader.h"
 #import "UzysSlideMenu.h"
 
 @interface SocialViewController : PFQueryTableViewController <UITextFieldDelegate, SocialPostDetailViewControllerDelegate, AddSocialPostViewControllerDelegate>

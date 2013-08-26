@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *segmentName;
 @property (nonatomic, strong) NSMutableArray *invites;
 @property (nonatomic, strong) NSMutableArray *requests;
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -42,7 +43,7 @@
 
 - (PFQuery *)queryForTable
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"receiverUsername = %@ OR circle IN %@ AND sender =  %@", [PFUser currentUser].username, self.circles, NULL];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"receiverUsername = %@ OR circle IN %@ AND sender = %@", [PFUser currentUser].username, self.circles, NULL];
     PFQuery *query = [PFQuery queryWithClassName:@"Requests" predicate:predicate];
     //    PFQuery *query = [Requests query];
     //    [query whereKey:@"receiverUsername" equalTo:[PFUser currentUser].username];
@@ -66,11 +67,13 @@
     [self.requests removeAllObjects];
     
     for (Requests *request in self.objects) {
-        NSLog(@"%d", self.objects.count);
         if ((request.sender)) {
             [self.invites addObject:request];
         } else {
-            [self.requests addObject:request];
+            Circles *circle = (Circles *)request.circle;
+            if ([circle.admins containsObject:[PFUser currentUser].username]) {
+                [self.requests addObject:request];
+            }
         }
     }
     
@@ -89,7 +92,8 @@
     
     self.invites = [[NSMutableArray alloc] initWithCapacity:5];
     self.requests = [[NSMutableArray alloc] initWithCapacity:5];
-        
+    self.sharedManager = [CurrentUser sharedManager];
+    
     [self configureViewController];
 }
 
@@ -260,12 +264,12 @@
         [circle addObject:user forKey:@"members"];
         [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
         [circle removeObject:self.currentUser.user forKey:@"pendingMembers"];
-        
+        [circle removeObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
         
         [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    nil;
+                    self.sharedManager.currentUser = self.currentUser;
                 }];
             }];
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.name]];
@@ -293,6 +297,7 @@
             [circle addObject:user forKey:@"members"];
             [circle addObject:request.receiverUsername forKey:@"memberUsernames"];
             [circle removeObject:request.receiverUsername forKey:@"pendingMembers"];
+            [circle removeObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
             
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

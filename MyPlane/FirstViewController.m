@@ -10,7 +10,7 @@
 //Login Code
 #import "MyLoginViewController.h"
 #import "MySignUpViewController.h"
-
+#import "CurrentUser.h"
 
 @interface FirstViewController ()
 
@@ -198,8 +198,9 @@
     [userObject setObject:displayName forKey:@"displayName"];
     [userObject setObject:imageupload forKey:@"profilePicture"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        sharedManager.currentUser = userObject;
         [self addSelfToFriends];
-        
     }];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

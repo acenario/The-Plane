@@ -13,6 +13,7 @@
 
 //@property (retain) NSString *objectId;
 @property (retain) NSString *text;
+@property (retain) NSString *username;
 @property (retain) PFObject *circle;
 @property (retain) PFObject *user;
 @property (retain) NSArray *comments;

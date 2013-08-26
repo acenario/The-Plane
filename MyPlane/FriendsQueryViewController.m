@@ -274,7 +274,10 @@
             
             
             [meObject removeObject:friendRemovedData forKey:@"friends"];
-            [meObject saveInBackground];
+            [meObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                CurrentUser *sharedManager = [CurrentUser sharedManager];
+                sharedManager.currentUser = meObject;
+            }];
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
             indexPaths = [NSArray arrayWithObject:indexPath];
             [self loadObjects];

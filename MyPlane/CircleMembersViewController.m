@@ -11,6 +11,7 @@
 @interface CircleMembersViewController ()
 
 @property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+@property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
 
@@ -34,6 +35,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     optionToggle = YES;
+    self.sharedManager = [CurrentUser sharedManager];
     self.uzysSMenu.hidden = YES;
     
 }
@@ -221,21 +223,35 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
+    optionToggle = YES;
 }
 
 - (void)promoteSelectedUsers
 {
     if (selectedUsers.count > 0) {
         NSMutableArray *usernames = [[NSMutableArray alloc] init];
+        NSMutableArray *users = [[NSMutableArray alloc] init];
+        NSMutableArray *requests = [[NSMutableArray alloc] init];
+        
+        for (Requests *request in self.circle.requestsArray) {
+            if (!(request.sender)) {
+            [requests addObject:request];
+            }
+        }
+        
         for (UserInfo *user in selectedUsers) {
             if (![self.circle.admins containsObject:user.user]) {
                 [usernames addObject:user.user];
+                [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
+                [users addObject:user];
             }
         }
         
         [self.circle addObjectsFromArray:usernames forKey:@"admins"];
+        [self.circle addObjectsFromArray:users forKey:@"adminPointers"];
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Promoted %d Members", usernames.count]];
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [UserInfo saveAllInBackground:users];
             [selectedUsers removeAllObjects];
             [self.tableView reloadData];
         }];
@@ -243,6 +259,7 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
+    optionToggle = YES;
 }
 
 - (void)blockUsers
@@ -261,6 +278,7 @@
         [self.currentUser addObjectsFromArray:usernames forKey:@"blockedUsernames"];
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat: @"Blocked %d Members", usernames.count]];
         [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            self.sharedManager.currentUser = self.currentUser;
             [selectedUsers removeAllObjects];
             [self loadObjects];
             [self.tableView reloadData];
@@ -269,11 +287,17 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
+    optionToggle = YES;
 }
 
 - (void)createReminder
 {
-    [self performSegueWithIdentifier:@"CreateReminder" sender:nil];
+    if (selectedUsers.count > 0) {
+        [self performSegueWithIdentifier:@"CreateReminder" sender:nil];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
+    }
+    optionToggle = YES;
 }
 
 - (IBAction)options:(id)sender

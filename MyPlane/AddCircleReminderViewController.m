@@ -206,7 +206,8 @@
 #pragma mark - Text Field Methods
 
 - (IBAction)validateText:(id)sender {
-    if ([self.taskTextField.text length] > 0) {
+    NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (removedSpaces.length > 0) {
         textCheck = YES;
     } else {
         textCheck = NO;

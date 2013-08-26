@@ -181,7 +181,9 @@
     [friendAdded removeObject:userObjectID forKey:@"sentFriendRequests"];
     [usersToSave addObject:friendAdded];
     
-    [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {        
+    [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+        CurrentUser *sharedManager = [CurrentUser sharedManager];
+        sharedManager.currentUser = currentUserObject;
         [self.tableView reloadData];
         [self.delegate receivedFriendRequests:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
