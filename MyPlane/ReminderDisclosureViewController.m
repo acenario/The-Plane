@@ -30,7 +30,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.pullToRefreshEnabled = NO;
-        
+        self.loadingViewEnabled = NO;
         
     }
     return self;
