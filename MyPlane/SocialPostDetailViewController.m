@@ -292,7 +292,16 @@
     } else {
     if (indexPath.section == 2)
     {
-        return UITableViewCellEditingStyleDelete;
+        
+        Comments *post = (Comments *)[self.objects objectAtIndex:indexPath.row];
+        UserInfo *selectedUser = (UserInfo *)post.user;
+        if ([selectedUser.user isEqualToString:[PFUser currentUser].username]) {
+            return UITableViewCellEditingStyleDelete;
+        } else {
+            
+            return UITableViewCellEditingStyleNone;
+        }
+
     }
     
     return UITableViewCellEditingStyleNone;

@@ -225,6 +225,37 @@
     
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        nil;
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    } else {
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.row == 0)
+        {
+            SocialPosts *post = (SocialPosts *)[self.objects objectAtIndex:indexPath.row];
+            if ([post.username isEqualToString:[PFUser currentUser].username]) {
+                return UITableViewCellEditingStyleDelete;
+            } else {
+                
+                return UITableViewCellEditingStyleNone;
+            }
+        } else {
+        
+        return UITableViewCellEditingStyleNone;
+            
+        }
+    
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     

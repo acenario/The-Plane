@@ -8,6 +8,7 @@
 
 #import "SocialViewController.h"
 #import "CurrentUser.h"
+#import "Reachability.h"
 
 @interface SocialViewController ()
 
@@ -23,6 +24,7 @@
     SocialPosts *currentSocialObject;
     PFQuery *userQuery;
     NSDateFormatter *dateFormatter;
+    Reachability *reachability;
 //    PFQuery *postQuery;
 }
 
@@ -51,6 +53,7 @@
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"spCenterTabbarItemTapped"
                                                object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
 //    
 //    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
 //        currentUserObject = (UserInfo *)object;
@@ -269,6 +272,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         nil;
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     } else {
        
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -325,6 +329,27 @@
 //    } else {
 //        return 60;
 //    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        return UITableViewCellEditingStyleNone;
+    } else {
+        if (indexPath.row == 0)
+        {
+            SocialPosts *post = (SocialPosts *)[self.objects objectAtIndex:indexPath.row];
+            if ([post.username isEqualToString:[PFUser currentUser].username]) {
+                return UITableViewCellEditingStyleDelete;
+            } else {
+        
+            return UITableViewCellEditingStyleNone;
+            }
+        }
+        
+        return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (IBAction)checkTextField:(id)sender
