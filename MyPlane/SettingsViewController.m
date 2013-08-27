@@ -356,11 +356,11 @@
 - (IBAction)logOut {
     [self resetAllTabs];
     [PFUser logOut];
-    PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
+    PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
     logInViewController.delegate = self; // Set ourselves as the delegate
     
     // Create the sign up view controller
-    PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
+    PFSignUpViewController *signUpViewController = [[MySignUpViewController alloc] init];
     signUpViewController.delegate = self; // Set ourselves as the delegate
     signUpViewController.fields = PFSignUpFieldsUsernameAndPassword
     | PFSignUpFieldsSignUpButton
