@@ -291,20 +291,31 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        NSLog(@"No internet connection!");
+        return UITableViewCellEditingStyleNone;
+    } else {
+        UserInfo *friend = [self.objects objectAtIndex:indexPath.row];
+        if (![friend.user isEqualToString:[PFUser currentUser].username]) {
+            return UITableViewCellEditingStyleDelete;
+        } else {
+            return UITableViewCellEditingStyleNone;
+        }
+    }
+    
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     
     PFObject *friendRemoved = [self.objects objectAtIndex:indexPath.row];
     PFObject *friendRemovedData = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:[friendRemoved objectId]];
-    PFUser *user = [PFUser currentUser];
-    NSString *username = user.username;
-    NSString *friendRemoveName = [friendRemoved objectForKey:@"user"];
     
-    if (![friendRemoveName isEqualToString:username]) {
-        NSLog(@"friendRemove: %@", [friendRemoved objectForKey:@"user"]);
-    
-        [friendRemoved removeObject:meObject forKey:@"friends"];
+        [friendRemoved removeObject:[UserInfo objectWithoutDataWithObjectId:meObject.objectId] forKey:@"friends"];
         [friendRemoved saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             
             
@@ -318,59 +329,9 @@
             [self loadObjects];
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
 
-            
-            /*[CATransaction begin];
-            
-            
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
-            [self loadObjects];
-            [self.tableView endUpdates];
-            
-            //[self loadObjects];
-            
-            [CATransaction setCompletionBlock:^{
-                
-                //[self loadObjects];
-                
-            }];
-            
-            [CATransaction commit];*/
-            
-            
-            //[self loadObjects];
-            
-            
+
         }];
         
-    } else {
-        NSLog(@"CANT DELETE SELF!");
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    /*NSString *friendRemovedName = friendRemoved.user;
-    NSString *userName = [personObject objectForKey:@"user"];
-    
-    if (![friendRemovedName isEqualToString:userName]) {
-        
-        [personObject removeObject:friendRemoved forKey:@"friends"];
-        [friendRemoved removeObject:personObject forKey:@"friends"];
-        
-        [personObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [friendRemoved saveInBackground];
-            [self reQueryForTableWithIndexPath:indexPath];
-            
-        }];
-        
-    } else {
-        NSLog(@"CANT DELETE SELF");
-    }*/
     
 }
  
