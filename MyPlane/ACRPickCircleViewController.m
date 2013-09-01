@@ -79,7 +79,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Circles *circle = (Circles *)[self.objects objectAtIndex:indexPath.row];
-    cell.textLabel.text = circle.name;
+    cell.textLabel.text = circle.displayName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Member(s)", circle.members.count];
     
     return cell;

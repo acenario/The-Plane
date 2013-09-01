@@ -103,7 +103,6 @@
     userQuery = [UserInfo query];
     [userQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
     userQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
-//    NSLog(@"%@", currentUserObject);
     PFQuery *query = [Circles query];
     [query whereKey:@"members" matchesQuery:userQuery];
     [query includeKey:@"members"];
@@ -115,6 +114,8 @@
     [postsQuery whereKey:@"username" notContainedIn:sharedManager.currentUser.blockedUsernames];
     [postsQuery includeKey:@"circle"];
     [postsQuery includeKey:@"user"];
+    [postsQuery includeKey:@"claimers"];
+    [postsQuery includeKey:@"reminder"];
     [postsQuery includeKey:@"comments"];
     [postsQuery includeKey:@"comments.user"];
     [postsQuery orderByDescending:@"createdAt"];
@@ -354,10 +355,15 @@
 
 - (IBAction)checkTextField:(id)sender
 {
+    
+    /// THIS IS FOR THE DEPRECATED 3 COMMENTS PREVIEW IN SOCIAL POSTS
+    
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 70 - textField.text.length;
+//    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;

@@ -18,7 +18,14 @@
 @dynamic text;
 @dynamic username;
 @dynamic circle;
+@dynamic reminderDate;
+@dynamic reminderDescription;
+@dynamic reminderTask;
+@dynamic reminder;
 @dynamic user;
 @dynamic comments;
+@dynamic isClaimed;
+@dynamic claimers;
+@dynamic claimerUsernames;
 
 @end

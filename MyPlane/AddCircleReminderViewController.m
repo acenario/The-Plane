@@ -19,6 +19,7 @@
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
     BOOL textCheck;
+    BOOL descCheck;
     PFQuery *currentUserQuery;
 }
 
@@ -35,7 +36,7 @@
 {
     [super viewDidLoad];
     if (self.circle != nil) {
-        self.circleName.text = self.circle.name;
+        self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.text = @"Select members...";
         isFromCircles = YES;
         self.segmentView.hidden = YES;
@@ -72,13 +73,15 @@
     self.descriptionTextView.textColor = [UIColor lightGrayColor];
     
     self.taskTextField.delegate = self;
+    self.descriptionTextView.delegate = self;
     
     textCheck = NO;
+    descCheck = YES;
+    
     if (!(self.invitedMembers)) {
         self.circleCheck = NO;
     } else {
-        NSLog(@"test, ");
-        self.circleName.text = self.circle.name;
+        self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.hidden = NO;
         self.circleCell.userInteractionEnabled = NO;
         self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
@@ -207,7 +210,9 @@
 
 - (IBAction)validateText:(id)sender {
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 35 - self.taskTextField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         textCheck = YES;
     } else {
         textCheck = NO;
@@ -257,7 +262,7 @@
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
     self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
     self.circle = circle;
-    self.circleName.text = circle.name;
+    self.circleName.text = circle.displayName;
     self.memberCountDisplay.hidden = NO;
     self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
     self.circleCheck = YES;
@@ -324,7 +329,7 @@
 
 - (void)configureDoneButton
 {
-    if ((textCheck) && (self.circleCheck)) {
+    if ((textCheck) && (self.circleCheck) && (descCheck)) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = NO;
@@ -344,10 +349,13 @@
     for (UserInfo *user in users) {
         Reminders *reminder = [Reminders object];
         reminder.date = date;
-        if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+        
+        NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
             [reminder setObject:self.descriptionTextView.text forKey:@"description"];
         } else {
-            [reminder setObject:@"No description available." forKey:@"description"];
+            [reminder setObject:@"" forKey:@"description"];
         }
         reminder.fromFriend = self.currentUser;
         reminder.fromUser = self.currentUser.user;
@@ -365,7 +373,7 @@
             [relation addObject:reminder];
         }
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.name]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
             wait((int *)1);
             [self performSegueWithIdentifier:@"UnwindToReminders" sender:nil];
         }];
@@ -419,6 +427,19 @@
     self.taskTextField.text = task;
     textCheck = YES;
     [self hideKeyboard];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int limit = 250 - self.descriptionTextView.text.length;
+    self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((limit >= 0)) {
+        descCheck = YES;
+    } else {
+        descCheck = NO;
+    }
+    
+    [self configureDoneButton];
 }
 
 @end

@@ -238,9 +238,6 @@
         
     }
     
-    
-    
-    
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
     UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
     UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
@@ -481,6 +478,7 @@
     else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
         ReminderDisclosureViewController *controller = [segue destinationViewController];
         controller.delegate = self;
+        controller.mainFormatter = dateFormatter;
         controller.reminderObject = sender;
     }
 
@@ -645,7 +643,10 @@
 //    }
 }
 
-
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Deny";
+}
 
 
 @end
