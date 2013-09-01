@@ -42,8 +42,11 @@
         editing = YES;
         self.textField.text = self.task.text;
         [self.navigationItem setTitle:@"Edit Task"];
+        self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", 35 - self.task.text.length];
         self.doneButton.enabled = YES;
     }
+    
+    [self.textField addTarget:self action:@selector(textValidation:) forControlEvents:UIControlEventAllEditingEvents];
     
     self.textField.delegate = self;
 }
@@ -69,16 +72,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)textValidation:(id)sender
 {
     NSString *removedSpaces = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 35 - self.textField.text.length;
+    
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.doneButton.enabled = YES;
     } else {
-        self.doneButton.enabled = YES;
+        self.doneButton.enabled = NO;
     }
-    
-    return YES;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

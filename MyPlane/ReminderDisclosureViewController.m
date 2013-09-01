@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) UITextField *commentTextField;
 @property (nonatomic, strong) UIButton *addCommentButton;
+@property (nonatomic, strong) UILabel *limitLabel;
 
 @end
 
@@ -60,6 +61,8 @@
     dateFormatter2 = [[NSDateFormatter alloc] init];
     [dateFormatter2 setDateStyle:NSDateFormatterNoStyle];
     [dateFormatter2 setTimeStyle:NSDateFormatterShortStyle];
+    
+    self.editButton.enabled = ([[self.reminderObject objectForKey:@"fromUser"] isEqualToString:[PFUser currentUser].username]);
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
@@ -155,7 +158,14 @@
             static NSString *CellIdentifier = @"DescriptionCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
-            cell.detailTextLabel.text = [self.reminderObject objectForKey:@"description"];
+            NSString *description = [self.reminderObject objectForKey:@"description"];
+            
+            if (description.length > 0) {
+                cell.detailTextLabel.text = description;
+            } else {
+                cell.detailTextLabel.text = @"No description available";
+            }
+            
             return cell;
             
         } else {
@@ -181,6 +191,7 @@
         
         self.commentTextField = commentTextField;
         self.addCommentButton = addCommentButton;
+        self.limitLabel = (UILabel *)[cell viewWithTag:1337];
         
         commentTextField.delegate = self;
         [commentTextField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
@@ -387,7 +398,9 @@
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 70 - textField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
@@ -479,6 +492,23 @@
 - (void)hideKeyboard
 {
     [self.commentTextField resignFirstResponder];
+}
+
+- (void)editReminderViewController:(EditReminderViewController *)controller didFinishWithReminder:(Reminders *)reminders
+{
+    self.reminderObject = reminders;
+    [self.tableView reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"EditReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        EditReminderViewController *controller = (EditReminderViewController *)nav.topViewController;
+        controller.reminder = (Reminders *)self.reminderObject;
+        controller.mainFormatter = self.mainFormatter;
+        controller.delegate = self;
+    }
 }
 
 @end

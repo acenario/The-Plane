@@ -155,7 +155,7 @@
     [query includeKey:@"requestsArray"];
     [query includeKey:@"adminPointers"];
     
-    [query orderByDescending:@"name"];
+    [query orderByDescending:@"updatedAt"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;

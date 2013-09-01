@@ -7,9 +7,8 @@
 //
 
 #import <Parse/Parse.h>
-#import "UserInfo.h"
-#import "SocialPosts.h"
-#import "Comments.h"
+#import "SubclassHeader.h"
+#import "EditSocialPostViewController.h"
 
 @class SocialPostDetailViewController;
 
@@ -19,13 +18,14 @@
 
 @end
 
-@interface SocialPostDetailViewController : PFQueryTableViewController <UITextFieldDelegate>
+@interface SocialPostDetailViewController : PFQueryTableViewController <UITextFieldDelegate, FUIAlertViewDelegate, EditSocialPostViewControllerDelegate>
 
 @property (nonatomic, strong) SocialPosts *socialPost;
 //@property (nonatomic, strong) PFQuery *postQuery;
 @property (nonatomic, weak) id <SocialPostDetailViewControllerDelegate> delegate;
 - (IBAction)addComment:(id)sender;
 - (IBAction)checkTextField:(id)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
  
 @end

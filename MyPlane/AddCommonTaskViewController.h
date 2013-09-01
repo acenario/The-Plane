@@ -26,5 +26,6 @@
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 @property (nonatomic, weak) id <AddCommonTaskViewControllerDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UILabel *limitLabel;
 
 @end

@@ -187,7 +187,7 @@
         }
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [self dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.name]];
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
             }];
         }];
     }];

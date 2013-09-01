@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButton;
 @property (strong, nonatomic) UITextField *textField;
 @property (nonatomic, strong) CurrentUser *sharedManager;
+@property (nonatomic, strong) UILabel *limitLabel;
 
 @end
 
@@ -128,6 +129,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             UITextField *name = (UITextField *)[cell viewWithTag:6221];
+            self.limitLabel = (UILabel *)[cell viewWithTag:1337];
             name.delegate = self;
             
             self.textField = name;
@@ -367,7 +369,9 @@
     
     circleName = textField.text;
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 35 - textField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.doneBarButton.enabled = YES;
     } else {
         self.doneBarButton.enabled = NO;
@@ -441,14 +445,14 @@
                     [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
                 }
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.displayName]];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }];
             }];
         }];
     } else {
         [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.name]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.displayName]];
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
     }

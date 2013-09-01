@@ -17,6 +17,7 @@
 @implementation CircleDetailViewController {
     UserInfo *owner;
     UserInfo *userObject;
+    BOOL isAdmin;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -55,6 +56,12 @@
     self.membersCount.text = [NSString stringWithFormat:@"%d", self.circle.members.count];
     //    self.remindersCount.text = [NSString stringWithFormat:@"%d", self.circle.reminders.count];
     
+    if (![self.circle.admins containsObject:[PFUser currentUser].username]) {
+        self.inviteCell.hidden = YES;
+        self.inviteCell.frame = CGRectMake(0, 0, 0, 0);
+        isAdmin = NO;
+    }
+    
     [self userQuery];
 }
 
@@ -64,13 +71,51 @@
     PFQuery *query = [Circles query];
     [query includeKey:@"owner"];
     [query includeKey:@"members"];
+    [query includeKey:@"adminPointers"];
     [query includeKey:@"posts"];
     [query includeKey:@"requestsArray"];
     query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query getObjectInBackgroundWithId:self.circle.objectId block:^(PFObject *object, NSError *error) {
         self.circle = (Circles *)object;
+        if (![self.circle.admins containsObject:[PFUser currentUser].username]) {
+            self.inviteCell.hidden = YES;
+            self.inviteCell.frame = CGRectMake(0, 0, 0, 0);
+            isAdmin = NO;
+        } else {
+            self.inviteCell.hidden = NO;
+//            self.inviteCell.frame = CGRectMake(0, 0, 0, 0);
+            isAdmin = NO;
+        }
     }];
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ((!isAdmin) && (indexPath.section == 1)) {
+        return 1;
+    } else {
+        return 44;
+    }
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if ((!isAdmin) && (section == 1)) {
+        return 1;
+    } else {
+        return 10;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if ((!isAdmin) && (section == 1)) {
+        return 1;
+    } else {
+        return 10;
+    }
 }
 
 -(void)configureViewController {
@@ -161,7 +206,7 @@
         UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
-                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.name]
+                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
                                    message:message
                                    delegate:self
                                    cancelButtonTitle:@"No"
@@ -187,7 +232,7 @@
         UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
-                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.name]
+                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
                                    message:message
                                    delegate:self
                                    cancelButtonTitle:@"No"

@@ -15,6 +15,10 @@
 @implementation AddSocialPostViewController {
     BOOL textCheck;
     BOOL circleCheck;
+//    BOOL reminderCheck;
+    NSString *taskText;
+    NSString *descriptionText;
+    NSDate *reminderDate;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -36,7 +40,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    NSString *placeholderText = @"Write a post here...";
+    NSString *placeholderText = @"Write a post here... \n (140 character limit)";
     
     self.postTextField.text = placeholderText;
     self.postTextField.textColor = [UIColor grayColor];
@@ -78,7 +82,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    if ((indexPath.row == 0) && (indexPath.section == 0)) {
         self.postTextField.textColor = [UIColor blackColor];
         self.postTextField.text = @"";
         self.postTextField.userInteractionEnabled = YES;
@@ -139,6 +143,12 @@
     [post setObject:self.currentUser forKey:@"user"];
     [post setUsername:self.currentUser.user];
     
+    if (taskText.length > 0) {
+        [post setObject:taskText forKey:@"reminderTask"];
+        [post setObject:reminderDate forKey:@"reminderDate"];
+        [post setObject:descriptionText forKey:@"reminderDescription"];
+    }
+    
     [post saveEventually:^(BOOL succeeded, NSError *error) {
         [self.circle addObject:[SocialPosts objectWithoutDataWithObjectId:post.objectId] forKey:@"posts"];
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -160,6 +170,13 @@
         PickCircleViewController *controller = (PickCircleViewController *)navController.topViewController;
         controller.delegate = self;
         controller.userQuery = self.userQuery;
+    } else if ([segue.identifier isEqualToString:@"Reminder"]) {
+        UINavigationController *nav = [segue destinationViewController];
+        AttachReminderViewController *controller = (AttachReminderViewController *)nav.topViewController;
+        controller.delegate = self;
+        controller.taskText = taskText;
+        controller.descText = descriptionText;
+        controller.dateText = reminderDate;
     }
 }
 
@@ -177,6 +194,7 @@
 }
 
 - (void)configureDoneButton {
+//    if ((circleCheck) && (textCheck) && (reminderCheck)) {
     if ((circleCheck) && (textCheck)) {
         self.doneButton.enabled = YES;
     } else {
@@ -187,12 +205,27 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSString *removedSpaces = [self.postTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 140 - self.postTextField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         textCheck = YES;
     } else {
         textCheck = NO;
     }
     
+    [self configureDoneButton];
+}
+
+- (void)attachReminderViewController:(AttachReminderViewController *)controller withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date withFormatter:(NSDateFormatter *)formatter
+{
+//    reminderCheck = YES;
+//    
+    taskText = task;
+    descriptionText = description;
+    reminderDate = date;
+    
+    self.reminderTextLabel.text = task;
+    self.reminderSubtitle.text = [formatter stringFromDate:date];
     [self configureDoneButton];
 }
 

@@ -16,7 +16,6 @@
 #import "Requests.h"
 #import "CommonTasks.h"
 #import "Reminders.h"
-#import "FriendRequests.h"
 #import "CurrentUser.h"
 
 #endif

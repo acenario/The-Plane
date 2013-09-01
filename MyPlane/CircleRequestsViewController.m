@@ -334,7 +334,7 @@
                     self.sharedManager.currentUser = self.currentUser;
                 }];
             }];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.name]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"You have joined %@", circle.displayName]];
             [self loadObjects];
         }];
         
@@ -363,7 +363,7 @@
             
             [request deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ is now part of %@", request.receiverUsername,circle.name]];
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ is now part of %@", request.receiverUsername,circle.displayName]];
                     [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
                         [self loadObjects];
                     }];

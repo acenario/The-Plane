@@ -7,6 +7,7 @@
 //
 
 #import "SubclassHeader.h"
+#import "EditReminderViewController.h"
 
 @class ReminderDisclosureViewController;
 
@@ -14,13 +15,14 @@
 
 @end
 
-@interface ReminderDisclosureViewController : PFQueryTableViewController <UITextFieldDelegate>
+@interface ReminderDisclosureViewController : PFQueryTableViewController <UITextFieldDelegate, EditReminderViewControllerDelegate>
 
 @property (nonatomic, weak) id <ReminderDisclosureViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) PFObject *reminderObject;
 - (IBAction)addComment:(id)sender;
-
+@property (nonatomic, strong) NSDateFormatter *mainFormatter;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
 
 @end

@@ -408,5 +408,10 @@
     [self.delegate friendsSegmentChanged:self.segmentedController];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Defriend";
+}
+
 
 @end

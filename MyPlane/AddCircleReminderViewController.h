@@ -51,6 +51,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
+@property (strong, nonatomic) IBOutlet UILabel *limitLabel;
+@property (nonatomic, strong) IBOutlet UILabel *descLimit;
 
 #pragma mark Buttons
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;

@@ -43,6 +43,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *taskInd;
 @property (weak, nonatomic) IBOutlet UIImageView *userFrame;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *limitLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descLabel;
+
 
 - (IBAction)segmentChanged:(id)sender;
 

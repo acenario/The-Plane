@@ -16,12 +16,11 @@
 
 @implementation AddReminderViewController {
     NSString *nameOfUser;
-//    PFObject *receivedObjectID;
-//    UserInfo *recipient;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
     BOOL textCheck;
+    BOOL descCheck;
     BOOL friendCheck;
     BOOL isFromFriends;
 }
@@ -73,13 +72,15 @@
     
     reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
     self.dateDetail.text = [mainFormatter stringFromDate:reminderDate];
-    descriptionPlaceholderText = @"Enter more information about the reminder.";
+    descriptionPlaceholderText = @"Enter more information about the reminder";
     self.descriptionTextView.text = descriptionPlaceholderText;
     self.descriptionTextView.textColor = [UIColor lightGrayColor];
     
     self.taskTextField.delegate = self;
+    self.descriptionTextView.delegate = self;
     
     textCheck = NO;
+    descCheck = YES;
 
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
@@ -132,10 +133,13 @@
     [reminder setObject:self.currentUser forKey:@"fromFriend"];
     [reminder setObject:self.recipient forKey:@"recipient"];
     [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
-    if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+    
+    NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
         [reminder setObject:self.descriptionTextView.text forKey:@"description"];
     } else {
-        [reminder setObject:@"No description available." forKey:@"description"];
+        [reminder setObject:@"" forKey:@"description"];
     }
 
      
@@ -170,7 +174,9 @@
 
 - (IBAction)textValidation:(id)sender {
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (removedSpaces.length > 0) {
+    int limit = 35 - self.taskTextField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         textCheck = YES;
     } else {
         textCheck = NO;
@@ -180,7 +186,7 @@
 
 - (void)configureDoneButton
 {
-    if ((textCheck) && (friendCheck)) {
+    if ((textCheck) && (friendCheck) && (descCheck)) {
         self.doneBarItem.enabled = YES;
     } else {
         self.doneBarItem.enabled = NO;
@@ -346,6 +352,19 @@
 {
     [self.taskTextField resignFirstResponder];
     [self.descriptionTextView resignFirstResponder];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int limit = 250 - self.descriptionTextView.text.length;
+    self.descLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((limit >= 0)) {
+        descCheck = YES;
+    } else {
+        descCheck = NO;
+    }
+    
+    [self configureDoneButton];
 }
 
 @end

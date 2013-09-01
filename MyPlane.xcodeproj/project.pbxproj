@@ -15,8 +15,10 @@
 		AE017AE917C1E371005E2C45 /* ACRPickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE017AE817C1E368005E2C45 /* ACRPickCircleViewController.m */; };
 		AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEA5178B73390080CB0A /* AddFriendViewController.m */; };
 		AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */; };
-		AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67ACE817C50DA000D148E4 /* FriendRequests.m */; };
+		AE7692A317D10A5A004D3129 /* AttachReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7692A217D10A5A004D3129 /* AttachReminderViewController.m */; };
+		AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
+		AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64217D3992E007F3532 /* EditReminderViewController.m */; };
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
@@ -182,10 +184,14 @@
 		AE46DEA5178B73390080CB0A /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		AE46DEAA178B81A60080CB0A /* AddReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewController.h; sourceTree = "<group>"; };
 		AE46DEAB178B81A70080CB0A /* AddReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewController.m; sourceTree = "<group>"; };
-		AE67ACE717C50DA000D148E4 /* FriendRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequests.h; sourceTree = "<group>"; };
-		AE67ACE817C50DA000D148E4 /* FriendRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequests.m; sourceTree = "<group>"; };
+		AE7692A117D10A5A004D3129 /* AttachReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachReminderViewController.h; sourceTree = "<group>"; };
+		AE7692A217D10A5A004D3129 /* AttachReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachReminderViewController.m; sourceTree = "<group>"; };
+		AE7692A417D306D1004D3129 /* EditSocialPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSocialPostViewController.h; sourceTree = "<group>"; };
+		AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditSocialPostViewController.m; sourceTree = "<group>"; };
 		AE89177C17AF115E00DD2DC0 /* Requests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Requests.h; sourceTree = "<group>"; };
 		AE89177D17AF115E00DD2DC0 /* Requests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Requests.m; sourceTree = "<group>"; };
+		AEAAE64117D3992E007F3532 /* EditReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditReminderViewController.h; sourceTree = "<group>"; };
+		AEAAE64217D3992E007F3532 /* EditReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditReminderViewController.m; sourceTree = "<group>"; };
 		AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedMembersViewController.h; sourceTree = "<group>"; };
 		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
@@ -540,6 +546,7 @@
 			children = (
 				AEF4582E17A1F68D00AFF8D6 /* AddSocialPostViewController.h */,
 				AEF4582F17A1F68D00AFF8D6 /* AddSocialPostViewController.m */,
+				AE7692A017D10A44004D3129 /* AttachReminder */,
 				AE67ACEE17C5499700D148E4 /* PickCircle */,
 			);
 			name = AddSocialPost;
@@ -559,8 +566,19 @@
 			children = (
 				AEF4582517A1F65700AFF8D6 /* SocialPostDetailViewController.h */,
 				AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */,
+				AE7692A417D306D1004D3129 /* EditSocialPostViewController.h */,
+				AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */,
 			);
 			name = SocialPostDetail;
+			sourceTree = "<group>";
+		};
+		AE7692A017D10A44004D3129 /* AttachReminder */ = {
+			isa = PBXGroup;
+			children = (
+				AE7692A117D10A5A004D3129 /* AttachReminderViewController.h */,
+				AE7692A217D10A5A004D3129 /* AttachReminderViewController.m */,
+			);
+			name = AttachReminder;
 			sourceTree = "<group>";
 		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
@@ -621,8 +639,6 @@
 				AED62A3017A1ED59002055ED /* Comments.m */,
 				AE89177C17AF115E00DD2DC0 /* Requests.h */,
 				AE89177D17AF115E00DD2DC0 /* Requests.m */,
-				AE67ACE717C50DA000D148E4 /* FriendRequests.h */,
-				AE67ACE817C50DA000D148E4 /* FriendRequests.m */,
 				AE017AC717BEF179005E2C45 /* CommonTasks.h */,
 				AE017AC817BEF179005E2C45 /* CommonTasks.m */,
 				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
@@ -663,7 +679,6 @@
 				DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */,
 				DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */,
 				AEF4584B17A31B2100AFF8D6 /* AddReminders */,
-				AE017ACB17BEF393005E2C45 /* CommonTasks */,
 			);
 			name = RemindersVCDelegation;
 			sourceTree = "<group>";
@@ -677,6 +692,8 @@
 				AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */,
 				DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */,
 				DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */,
+				AEAAE64117D3992E007F3532 /* EditReminderViewController.h */,
+				AEAAE64217D3992E007F3532 /* EditReminderViewController.m */,
 			);
 			name = AddReminders;
 			sourceTree = "<group>";
@@ -856,6 +873,7 @@
 				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
 				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
+				AE017ACB17BEF393005E2C45 /* CommonTasks */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
 				AEF4583117A1F69E00AFF8D6 /* Circle */,
@@ -1141,12 +1159,14 @@
 				AE017ADF17C1DF0C005E2C45 /* CircleRemindersViewController.m in Sources */,
 				AE017AE617C1E1B5005E2C45 /* AddCircleReminderViewController.m in Sources */,
 				AE017AE917C1E371005E2C45 /* ACRPickCircleViewController.m in Sources */,
-				AE67ACE917C50DA000D148E4 /* FriendRequests.m in Sources */,
 				DC73AF0B17C561530049AF50 /* KGStatusBar.m in Sources */,
 				DCAA087017C7EFE000F992A1 /* FCContainerViewController.m in Sources */,
 				AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */,
 				DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */,
 				DC4F2A4717CBDCE000ED30BB /* Reachability.m in Sources */,
+				AE7692A317D10A5A004D3129 /* AttachReminderViewController.m in Sources */,
+				AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */,
+				AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
