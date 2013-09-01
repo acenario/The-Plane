@@ -17,6 +17,7 @@
     BOOL descCheck;
     NSDate *reminderDate;
     NSString *descriptionPlaceholderText;
+    NSDateFormatter *mainFormatter;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -31,10 +32,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    mainFormatter = [[NSDateFormatter alloc] init];
+    [mainFormatter setDateStyle:NSDateFormatterShortStyle];
+    [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     reminderDate = self.reminder.date;
     self.taskTextField.text = self.reminder.title;
-    self.dateLabel.text = [self.mainFormatter stringFromDate:reminderDate];
+    self.dateLabel.text = [mainFormatter stringFromDate:reminderDate];
     self.taskLimit.text = [NSString stringWithFormat:@"%d characters left", 35 - self.taskTextField.text.length];
     if ([[self.reminder objectForKey:@"description"] length] > 0) {
         //        NSLog(@"%@", self.reminder.description);
@@ -51,6 +55,8 @@
     textCheck = YES;
     self.descTextView.delegate = self;
     self.taskTextField.delegate = self;
+    
+
     
 }
 
@@ -159,7 +165,7 @@
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
 {
     reminderDate = date;
-    self.dateLabel.text = [self.mainFormatter stringFromDate:date];
+    self.dateLabel.text = [mainFormatter stringFromDate:date];
 }
 
 - (void)reminderViewControllerDidCancel:(ReminderDateViewController *)controller

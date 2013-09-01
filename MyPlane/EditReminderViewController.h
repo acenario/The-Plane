@@ -23,7 +23,6 @@
 @interface EditReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, CommonTasksViewControllerDelegate, ReminderDateViewControllerDelegate>
 
 @property (nonatomic, strong) Reminders *reminder;
-@property (nonatomic, strong) NSDateFormatter *mainFormatter;
 @property (nonatomic, strong) id <EditReminderViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;

@@ -13,7 +13,7 @@
 #import "CurrentUser.h"
 
 
-@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate, ReminderDisclosureViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface RemindersViewController : PFQueryTableViewController <AddReminderViewControllerDelegate, firstTimeSettingsViewControllerDelegate, ReminderDisclosureViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, FUIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sentReminders;
 

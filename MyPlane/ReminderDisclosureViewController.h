@@ -21,7 +21,6 @@
 
 @property (nonatomic, strong) PFObject *reminderObject;
 - (IBAction)addComment:(id)sender;
-@property (nonatomic, strong) NSDateFormatter *mainFormatter;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
 

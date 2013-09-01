@@ -160,6 +160,39 @@
     }
 }
 
+- (void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller {
+    NSString *message = @"Would you like to a see a walkthrough of the app?";
+    
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    
+    FUIAlertView *alertView = [[FUIAlertView alloc]
+                               initWithTitle:@"Walkthrough"
+                               message:message
+                               delegate:self
+                               cancelButtonTitle:@"No"
+                               otherButtonTitles:@"Yes", nil];
+    
+    alertView.titleLabel.textColor = [UIColor cloudsColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+    alertView.messageLabel.textColor = [UIColor cloudsColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.alertContainer.backgroundColor = barColor;
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    
+    
+    [alertView show];
+}
+
+- (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"Present tutorials!");
+    }
+}
+
 -(void)configureFlatUI {
     UIFont *myFont = [UIFont flatFontOfSize:16];
     UIColor *myColor = [UIColor colorFromHexCode:@"FF7140"];
@@ -299,6 +332,10 @@
         AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
         controller.recipient = self.sharedManager.currentUser;
         controller.currentUser = self.sharedManager.currentUser;
+    } else if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)nav.topViewController;
+        controller.delegate = self;
     }
 }
 

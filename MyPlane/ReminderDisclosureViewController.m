@@ -518,7 +518,6 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         EditReminderViewController *controller = (EditReminderViewController *)nav.topViewController;
         controller.reminder = (Reminders *)self.reminderObject;
-        controller.mainFormatter = self.mainFormatter;
         controller.delegate = self;
     }
 }

@@ -12,6 +12,7 @@
 @class firstTimeSettingsViewController;
 
 @protocol firstTimeSettingsViewControllerDelegate <NSObject>
+-(void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller;
 
 @end
 

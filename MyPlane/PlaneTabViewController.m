@@ -61,11 +61,12 @@
     userQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;*/
     
         
-    /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
-     if (firstTime) {
-     NSLog(@"FIRST TIME BABY!");
-     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
-     }*/
+//    BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+//    
+//     if (firstTime == YES) {
+//     NSLog(@"FIRST TIME BABY!");
+//     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
+//     } 
     
     
     //UIColor *selectedColor = [UIColor darkGrayColor];
@@ -76,13 +77,13 @@
 	// Do any additional setup after loading the view.
 }
 
-/*- (void)registerDefaults
-{
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithBool:YES], @"FirstTime",
-                                nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-}*/
+//- (void)registerDefaults
+//{
+//    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                [NSNumber numberWithBool:YES], @"FirstTime",
+//                                nil];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+//}
 
 - (void)didReceiveMemoryWarning
 {

@@ -165,6 +165,39 @@
 
 }
 
+- (void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller {
+    NSString *message = @"Would you like to a see a walkthrough of the app?";
+    
+    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    
+    FUIAlertView *alertView = [[FUIAlertView alloc]
+                               initWithTitle:@"Walkthrough"
+                               message:message
+                               delegate:self
+                               cancelButtonTitle:@"No"
+                               otherButtonTitles:@"Yes", nil];
+    
+    alertView.titleLabel.textColor = [UIColor cloudsColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+    alertView.messageLabel.textColor = [UIColor cloudsColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.alertContainer.backgroundColor = barColor;
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    
+    
+    [alertView show];
+}
+
+- (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"Present tutorials!");
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -478,7 +511,6 @@
     else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {
         ReminderDisclosureViewController *controller = [segue destinationViewController];
         controller.delegate = self;
-        controller.mainFormatter = dateFormatter;
         controller.reminderObject = sender;
     }
 

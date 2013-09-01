@@ -199,6 +199,7 @@
             sharedManager.currentUser = (UserInfo *)object;
             [self dismissViewControllerAnimated:YES completion:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
+                [self.delegate firstTimePresentTutorial:self];
             }];
             
         }
@@ -209,6 +210,7 @@
     
     
 }
+
 
 
 -(BOOL) NSStringIsNameValid:(NSString *)checkString
