@@ -201,15 +201,19 @@
     
     self.fullNameField.font = myFont;
     self.fullNameField.textColor = unColor;
+    self.fullNameField.adjustsFontSizeToFitWidth = YES;
     
     self.lastNameField.font = myFont;
     self.lastNameField.textColor = myColor;
+    self.lastNameField.adjustsFontSizeToFitWidth = YES;
     
     self.emailField.font = myFont;
     self.emailField.textColor = myColor;
+    self.emailField.adjustsFontSizeToFitWidth = YES;
     
     self.usernameField.font = myFont;
     self.usernameField.textColor = myColor;
+    self.usernameField.adjustsFontSizeToFitWidth = YES;
     
     
     

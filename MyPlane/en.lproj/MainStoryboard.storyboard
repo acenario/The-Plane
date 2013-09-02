@@ -32,7 +32,7 @@
                                                 <constraint firstAttribute="width" constant="55" id="Ewj-tS-d2s"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="This is a giant reminder with lots of text to read. Fit for me." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="223" translatesAutoresizingMaskIntoConstraints="NO" id="r12-CN-mot">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="This is a giant reminder with lots of text to read. Fit for me." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" preferredMaxLayoutWidth="223" translatesAutoresizingMaskIntoConstraints="NO" id="r12-CN-mot">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="42" id="qW5-LQ-x8p"/>
                                             </constraints>
@@ -2791,7 +2791,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="UAg-mc-Kmn" customClass="SocialPostDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yQV-Sf-spq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="303"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -2984,7 +2984,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReminderCell" rowHeight="70" id="rcv-fr-dkN">
-                                <rect key="frame" x="0.0" y="266" width="320" height="71"/>
+                                <rect key="frame" x="0.0" y="266" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="69"/>
@@ -4063,7 +4063,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6404" contentMode="left" text="Post " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6tI-Vv-GkR">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6404" contentMode="left" text="Post " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" preferredMaxLayoutWidth="214" translatesAutoresizingMaskIntoConstraints="NO" id="6tI-Vv-GkR">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="49" id="oQ8-bu-WUo"/>
                                             </constraints>
@@ -4182,7 +4182,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 <constraint firstAttribute="height" constant="55" id="yvI-Kx-Yov"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1338" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYQ-Er-kWU">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1338" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" preferredMaxLayoutWidth="224" translatesAutoresizingMaskIntoConstraints="NO" id="XYQ-Er-kWU">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="224" id="Ipk-g1-w5B"/>
                                                 <constraint firstAttribute="height" constant="42" id="ed0-7e-4gM"/>
@@ -5464,18 +5464,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="GfZ-it-DUs"/>
-        <segue reference="std-vO-s0Z"/>
-        <segue reference="ueR-b5-QFZ"/>
         <segue reference="azN-Uw-T1Q"/>
-        <segue reference="hJj-bG-PN9"/>
-        <segue reference="8lv-Fg-cjF"/>
+        <segue reference="d1z-oJ-MYo"/>
+        <segue reference="U7Z-W4-19C"/>
+        <segue reference="clu-AU-b0I"/>
         <segue reference="7p7-Gb-VJp"/>
-        <segue reference="ODM-E9-Ohb"/>
-        <segue reference="yEb-j2-o0N"/>
+        <segue reference="GfZ-it-DUs"/>
+        <segue reference="ueR-b5-QFZ"/>
+        <segue reference="nx5-Dy-vwJ"/>
         <segue reference="OGa-b0-0On"/>
-        <segue reference="1cS-jb-Zdb"/>
-        <segue reference="ERg-Kc-26H"/>
-        <segue reference="Ybw-aH-ZeF"/>
+        <segue reference="hB8-tL-UEI"/>
+        <segue reference="7cf-9Z-bI4"/>
+        <segue reference="6cG-gq-PK8"/>
+        <segue reference="std-vO-s0Z"/>
     </inferredMetricsTieBreakers>
 </document>

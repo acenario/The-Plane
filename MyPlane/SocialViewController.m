@@ -281,6 +281,7 @@
                 break;
         }
         
+        
         postLabel.font = postFont;
         
         [cell.contentView addSubview:imgView];

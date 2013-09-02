@@ -244,6 +244,8 @@
     
     nameLabel.font = [UIFont flatFontOfSize:16];
     usernameLabel.font = [UIFont flatFontOfSize:14];
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    usernameLabel.adjustsFontSizeToFitWidth = YES;
     
     nameLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
     

@@ -236,6 +236,8 @@
     
     nameLabel.font = [UIFont flatFontOfSize:17];
     usernameLabel.font = [UIFont flatFontOfSize:15];
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    usernameLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }

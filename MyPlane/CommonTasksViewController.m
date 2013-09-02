@@ -142,6 +142,7 @@
     [cell setSelectedBackgroundView:bgView];
     
     cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }

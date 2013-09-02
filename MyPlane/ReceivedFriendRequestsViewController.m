@@ -125,6 +125,8 @@
     UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2202];
     nameLabel.font = [UIFont flatFontOfSize:17];
     usernameLabel.font = [UIFont flatFontOfSize:15];
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    usernameLabel.adjustsFontSizeToFitWidth = YES;
     
     
     return cell;
