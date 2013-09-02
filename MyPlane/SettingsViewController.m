@@ -499,6 +499,7 @@
     [userObject setObject:displayName forKey:@"user"];
     [userObject setObject:displayName forKey:@"displayName"];
     [userObject setObject:imageupload forKey:@"profilePicture"];
+    [userObject setObject:0 forKey:@"gracePeriod"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
         
