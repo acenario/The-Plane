@@ -360,6 +360,9 @@
             
             if (![deleteName isEqualToString:[PFUser currentUser].username]) {
             NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
+            NSDictionary *data = @{
+                                    @"r": @"d"
+                                  };
             
             PFQuery *pushQuery = [PFInstallation query];
             [pushQuery whereKey:@"user" equalTo:deleteName];
@@ -367,9 +370,14 @@
             PFPush *push = [[PFPush alloc] init];
             [push setQuery:pushQuery];
             [push setMessage:message];
+            [push setData:data];
             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
                 NSString *message = [NSString stringWithFormat:@"%@ has been notified", deleteName];
                 [SVProgressHUD showSuccessWithStatus:message];
+                } else {
+                    NSLog(@"%@", error);
+                }
                 }];
             }
             

@@ -236,21 +236,50 @@
     bottomView.frame = CGRectMake(-1, -1, 302, 1);
     
     if (indexPath.row == 0) {
+        SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
+        
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:5101];
         UILabel *postLabel = (UILabel *)[cell viewWithTag:5102];
         UILabel *circleLabel = (UILabel *)[cell viewWithTag:302];
         UILabel *circleNameLabel = (UILabel *)[cell viewWithTag:5104];
         UILabel *dateLabel = (UILabel *)[cell viewWithTag:1];
         UIFont *socialFont = [UIFont flatFontOfSize:14];
+        UIFont *postFont = [UIFont flatFontOfSize:16];
         
         nameLabel.font = socialFont;
         nameLabel.textColor = [UIColor asbestosColor];
-        postLabel.font = [UIFont flatFontOfSize:16];
         postLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         circleLabel.font = socialFont;
         circleNameLabel.font = socialFont;
         dateLabel.font = socialFont;
         
+        int i;
+        
+        for(i = 16; i > 10; i=i-2)
+        {
+            // Set the new font size.
+            postFont = [UIFont flatFontOfSize:i];
+            NSLog(@"Trying size: %u", i);
+            // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+            
+            /* This step is important: We make a constraint box
+             using only the fixed WIDTH of the UILabel. The height will
+             be checked later. */
+            CGSize constraintSize = CGSizeMake(214.0f, MAXFLOAT);
+            
+            // This step checks how tall the label would be with the desired font.
+            CGSize labelSize = [object.text sizeWithFont:postFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+            
+            /* Here is where you use the height requirement!
+             Set the value in the if statement to the height of your UILabel
+             If the label fits into your required height, it will break the loop
+             and use that font size. */
+            if(labelSize.height <= 49.0f)
+                break;
+        }
+        NSLog(@"Best size: %u", i);
+        
+        postLabel.font = postFont;
         
         [cell.contentView addSubview:imgView];
         
@@ -334,13 +363,12 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (reachability.currentReachabilityStatus == NotReachable) {
         return UITableViewCellEditingStyleNone;
     } else {
         if (indexPath.row == 0)
         {
-            SocialPosts *post = (SocialPosts *)[self.objects objectAtIndex:indexPath.row];
+            SocialPosts *post = (SocialPosts *)[self.objects objectAtIndex:indexPath.section];
             if ([post.username isEqualToString:[PFUser currentUser].username]) {
                 return UITableViewCellEditingStyleDelete;
             } else {
@@ -357,6 +385,7 @@
 {
     
     /// THIS IS FOR THE DEPRECATED 3 COMMENTS PREVIEW IN SOCIAL POSTS
+    /// GO AWAY
     
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);

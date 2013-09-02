@@ -336,18 +336,47 @@
     bottomView.frame = CGRectMake(-1, -1, 302, 1);
     
     if (indexPath.section == 0) {
-        
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:5201];
         UILabel *postLabel = (UILabel *)[cell viewWithTag:5202];
         UILabel *circleTitle = (UILabel *)[cell viewWithTag:520];
         UILabel *circleLabel = (UILabel *)[cell viewWithTag:5203];
         UILabel *dateLabel = (UILabel *)[cell viewWithTag:521];
+        UIFont *postFont = [UIFont flatFontOfSize:16];
         
         nameLabel.font = [UIFont flatFontOfSize:14];
-        postLabel.font = [UIFont flatFontOfSize:16];
         circleTitle.font = [UIFont flatFontOfSize:14];
         circleLabel.font = [UIFont flatFontOfSize:14];
         dateLabel.font = [UIFont flatFontOfSize:14];
+        
+        int i;
+        
+        for(i = 16; i > 10; i=i-2)
+        {
+            // Set the new font size.
+            postFont = [UIFont flatFontOfSize:i];
+            NSLog(@"Trying size: %u", i);
+            // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+            
+            /* This step is important: We make a constraint box
+             using only the fixed WIDTH of the UILabel. The height will
+             be checked later. */
+            CGSize constraintSize = CGSizeMake(214.0f, MAXFLOAT);
+            
+            // This step checks how tall the label would be with the desired font.
+            CGSize labelSize = [self.socialPost.text sizeWithFont:postFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+            
+            /* Here is where you use the height requirement!
+             Set the value in the if statement to the height of your UILabel
+             If the label fits into your required height, it will break the loop
+             and use that font size. */
+            if(labelSize.height <= 49.0f)
+                break;
+        }
+        NSLog(@"Best size: %u", i);
+        
+        postLabel.font = postFont;
+        
+        
         
     } else if (indexPath.section == 1) {
         if (self.socialPost.reminderTask.length > 0) {
@@ -407,7 +436,7 @@
 {
     switch (indexPath.section) {
         case 0:
-            return 90;
+            return 115;
             break;
             
         case 1:
