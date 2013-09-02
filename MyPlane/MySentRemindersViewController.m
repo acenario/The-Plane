@@ -247,10 +247,11 @@
             
         }
     }];
-    
-    
-    
-    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Cancel";
 }
 
 

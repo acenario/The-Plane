@@ -37,17 +37,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
+    
+    self.viewForPicker.frame = CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.frame.size.height - 112);
     
     if (self.gracePeriod == 0) {
         self.timeLabel.text = @"No delay";
     } else if (self.gracePeriod < 60 * 60) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+        self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {
         self.timeLabel.text = [NSString stringWithFormat:@"1 hour"];
     } else if (self.gracePeriod < 1440 * 60) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+        self.timeLabel.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 3600];
     } else {
-        self.timeLabel.text = @"1 Day";
+        self.timeLabel.text = @"1 day";
     }
     
     self.times = [[NSArray alloc] initWithObjects:@"No delay", @"5 minutes", @"10 minutes", @"15 minutes", @"30 minutes", @"1 hour", @"2 hours", @"6 hours", @"12 hours", @"1 day", nil];
@@ -55,6 +58,16 @@
     self.pickerView.delegate = self;
     int row = [self.times indexOfObject:self.timeLabel.text];
     [self.pickerView selectRow:row inComponent:0 animated:NO];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
 }
 
 // returns the number of 'columns' to display.
@@ -72,6 +85,28 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component
 {
     return [self.times objectAtIndex:row];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    self.timeLabel.font = [UIFont flatFontOfSize:16];
+    
+    return cell;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -158,13 +193,13 @@
     if (self.gracePeriod == 0) {
         self.timeLabel.text = @"No delay";
     } else if (self.gracePeriod < 60 * 60) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+        self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {
         self.timeLabel.text = [NSString stringWithFormat:@"1 hour"];
     } else if (self.gracePeriod < 1440 * 60) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+        self.timeLabel.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 3600];
     } else {
-        self.timeLabel.text = @"1 Day";
+        self.timeLabel.text = @"1 day";
     }
 }
 

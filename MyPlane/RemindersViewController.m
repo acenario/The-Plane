@@ -258,13 +258,14 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         
     }
-    
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
     PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
+    int grace = sharedManager.currentUser.gracePeriod;
     
     NSDate *currentDate = [NSDate date];
     NSComparisonResult result;
     
-    result = [currentDate compare:[[object objectForKey:@"date"] dateByAddingTimeInterval:7200]];
+    result = [currentDate compare:[[object objectForKey:@"date"] dateByAddingTimeInterval:grace]];
     
     if (result == NSOrderedDescending) {
         [self checkDateforCell:cell withReminder:reminder];
@@ -349,10 +350,23 @@
     for (Comments *comment in deleteReminder.comments) {
         [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
     }
+    
+    SocialPosts *post;
+    if ((deleteReminder.socialPost)) {
+         post = (SocialPosts *)deleteReminder.socialPost;
+        if (post.claimerUsernames.count == 1) {
+            [post setIsClaimed:NO];
+        }
+        [post removeObject:[Reminders objectWithoutDataWithObjectId:deleteReminder.objectId] forKey:@"reminder"];
+        [post removeObject:deleteReminder.user forKey:@"claimerUsernames"];
+        [post removeObject:[UserInfo objectWithoutDataWithObjectId:deleteReminder.recipient.objectId] forKey:@"claimers"];
+    }
 
     [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [Comments deleteAllInBackground:commentsToDelete];
+            [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
+                [post saveInBackground];
+            }];
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
             [self loadObjects];
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
@@ -414,6 +428,8 @@
     [query includeKey:@"fromFriend"];
     [query includeKey:@"recipient"];
     [query includeKey:@"comments"];
+    [query includeKey:@"socialPost"];
+    [query includeKey:@"circle"];
     
     [query orderByAscending:@"date"];
     
@@ -471,33 +487,52 @@
     if (reachability.currentReachabilityStatus == NotReachable) {
         NSLog(@"No internet connection!");
     } else {
-    Reminders *receivedReminder = (Reminders *)reminder;
+        Reminders *receivedReminder = (Reminders *)reminder;
 
-        [SVProgressHUD showWithStatus:@"Cleanup..."];
-    
-    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
-    
-    if (receivedReminder.comments.count > 0) {
-    for (Comments *comment in [reminder objectForKey:@"comments"]) {
-        NSLog(@"comment: %@", comment);
-        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
-        }
-    }
-
-    [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            [Comments deleteAllInBackground:commentsToDelete];
-            [SVProgressHUD dismiss];
-            [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
-            //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
-        } else {
-            NSLog(@"There was an error deleting an old reminder!");
-            [SVProgressHUD dismiss];
+            [SVProgressHUD showWithStatus:@"Cleanup..."];
+        
+        NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
+        
+        if (receivedReminder.comments.count > 0) {
+        for (Comments *comment in [reminder objectForKey:@"comments"]) {
+            NSLog(@"comment: %@", comment);
+            [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+            }
         }
         
-    }];
+        SocialPosts *post;
+        if ((receivedReminder.socialPost)) {
+            post = (SocialPosts *)receivedReminder.socialPost;
+            if (post.claimerUsernames.count == 1) {
+                [post setIsClaimed:NO];
+            }
+            [post removeObject:[Reminders objectWithoutDataWithObjectId:receivedReminder.objectId] forKey:@"reminder"];
+            [post removeObject:receivedReminder.user forKey:@"claimerUsernames"];
+            [post removeObject:[UserInfo objectWithoutDataWithObjectId:receivedReminder.recipient.objectId] forKey:@"claimers"];
+        }
         
-    }
+        
+        
+//        
+//        [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            if (succeeded) {
+//                [Comments deleteAllInBackground:commentsToDelete];
+        [receivedReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
+                    [post saveInBackground];
+                }];
+                [SVProgressHUD dismiss];
+                [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
+                //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
+            } else {
+                NSLog(@"There was an error deleting an old reminder!");
+                [SVProgressHUD dismiss];
+            }
+            
+        }];
+            
+        }
     
 }
 

@@ -87,13 +87,13 @@
     if (self.gracePeriod == 0) {
         self.gracePeriodField.placeholder = @"No delay";
     } else if (self.gracePeriod < 60 * 60) {
-        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {
         self.gracePeriodField.placeholder = [NSString stringWithFormat:@"1 hour"];
     } else if (self.gracePeriod < 1440 * 60) {
-        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 3600];
     } else {
-        self.gracePeriodField.placeholder = @"1 Day";
+        self.gracePeriodField.placeholder = @"1 day";
     }
 }
 
@@ -102,13 +102,13 @@
     if (self.gracePeriod == 0) {
         self.gracePeriodField.text = @"No delay";
     } else if (self.gracePeriod < 60 * 60) {
-        self.gracePeriodField.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+        self.gracePeriodField.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {
         self.gracePeriodField.text = [NSString stringWithFormat:@"1 hour"];
     } else if (self.gracePeriod < 1440 * 60) {
-        self.gracePeriodField.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+        self.gracePeriodField.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 3600];
     } else {
-        self.gracePeriodField.text = @"1 Day";
+        self.gracePeriodField.text = @"1 day";
     }
 }
 
@@ -572,9 +572,16 @@
     UIImage *background = [UIImage imageWithColor:color cornerRadius:1.0f];
     av.image = background;
     cell.backgroundView = av;
-
     
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
 
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    
     
     return cell;
     

@@ -17,6 +17,7 @@
 @end
 
 @interface EditExpiryTimeViewController : UITableViewController <UIPickerViewDelegate>
+@property (strong, nonatomic) IBOutlet UIView *viewForPicker;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 - (IBAction)cancel:(id)sender;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;

@@ -19,5 +19,6 @@
 @property (retain) NSDate *date;
 @property (retain) PFObject *fromFriend;
 @property (retain) PFObject *recipient;
+@property (retain) PFObject *socialPost;
 
 @end

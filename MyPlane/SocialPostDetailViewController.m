@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UITextField *commentTextField;
 @property (nonatomic, strong) UIButton *addCommentButton;
 @property (nonatomic, strong) UILabel *limitLabel;
+@property (nonatomic, strong) UIButton *claimButton;
 
 @end
 
@@ -74,6 +75,23 @@
     
     self.tableView.backgroundView = av;
 }
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:YES];
+//    
+//    NSLog(@"HEU");
+//    
+//    if ([self.socialPost.claimerUsernames containsObject:currentUserObject.user]) {
+//        [self setButtonTitle:self.claimButton withTitle:@"Unclaim"];
+//        [self.claimButton removeTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.claimButton addTarget:self action:@selector(unclaim:) forControlEvents:UIControlEventTouchUpInside];
+//    } else {
+//        [self setButtonTitle:self.claimButton withTitle:@"Claim"];
+//        [self.claimButton removeTarget:self action:@selector(unclaim:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.claimButton addTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -178,7 +196,6 @@
             UILabel *task = (UILabel *)[cell viewWithTag:1];
             UILabel *date = (UILabel *)[cell viewWithTag:2];
             UIButton *claim = (UIButton *)[cell viewWithTag:11];
-            
             NSDateFormatter *displayDateFormat = [[NSDateFormatter alloc] init];
             [displayDateFormat setDateStyle:NSDateFormatterShortStyle];
             [displayDateFormat setTimeStyle:NSDateFormatterShortStyle];
@@ -191,10 +208,12 @@
                 [self setButtonTitle:claim withTitle:@"Unclaim"];
                 [claim removeTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
                 [claim addTarget:self action:@selector(unclaim:) forControlEvents:UIControlEventTouchUpInside];
+                self.claimButton = claim;
             } else {
                 [self setButtonTitle:claim withTitle:@"Claim"];
                 [claim removeTarget:self action:@selector(unclaim:) forControlEvents:UIControlEventTouchUpInside];
                 [claim addTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
+                self.claimButton = claim;
             }
             return cell;
         } else {
@@ -207,6 +226,7 @@
             self.commentTextField = commentTextfield;
             self.addCommentButton = addCommentButton;
             self.limitLabel = (UILabel *)[cell viewWithTag:1337];
+            self.limitLabel.hidden = YES;
             
             commentTextfield.delegate = self;
             //        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
@@ -348,13 +368,16 @@
         circleLabel.font = [UIFont flatFontOfSize:14];
         dateLabel.font = [UIFont flatFontOfSize:14];
         
+        nameLabel.adjustsFontSizeToFitWidth = YES;
+        dateLabel.adjustsFontSizeToFitWidth = YES;
+        circleLabel.adjustsFontSizeToFitWidth = YES;
+        
         int i;
         
         for(i = 16; i > 10; i=i-2)
         {
             // Set the new font size.
             postFont = [UIFont flatFontOfSize:i];
-            NSLog(@"Trying size: %u", i);
             // You can log the size you're trying: NSLog(@"Trying size: %u", i);
             
             /* This step is important: We make a constraint box
@@ -372,18 +395,61 @@
             if(labelSize.height <= 49.0f)
                 break;
         }
-        NSLog(@"Best size: %u", i);
-        
         postLabel.font = postFont;
         
         
         
     } else if (indexPath.section == 1) {
         if (self.socialPost.reminderTask.length > 0) {
+            UILabel *task = (UILabel *)[cell viewWithTag:1];
+            UILabel *dateTask = (UILabel *)[cell viewWithTag:2];
+            FUIButton *claimBtn = (FUIButton *)[cell viewWithTag:11];
+            UIFont *taskFont = [UIFont flatFontOfSize:16];
+            
+            claimBtn.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+            claimBtn.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+            claimBtn.shadowHeight = 2.0f;
+            claimBtn.cornerRadius = 3.0f;
+            claimBtn.titleLabel.font = [UIFont boldFlatFontOfSize:15];
+            
+            [claimBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [claimBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            dateTask.font = [UIFont flatFontOfSize:14];
+            
+            int i;
+            
+            for(i = 16; i > 10; i=i-2)
+            {
+                // Set the new font size.
+                taskFont = [UIFont flatFontOfSize:i];
+                // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+                
+                /* This step is important: We make a constraint box
+                 using only the fixed WIDTH of the UILabel. The height will
+                 be checked later. */
+                CGSize constraintSize = CGSizeMake(199.0f, MAXFLOAT);
+                
+                // This step checks how tall the label would be with the desired font.
+                CGSize labelSize = [self.socialPost.reminderTask sizeWithFont:taskFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+                
+                /* Here is where you use the height requirement!
+                 Set the value in the if statement to the height of your UILabel
+                 If the label fits into your required height, it will break the loop
+                 and use that font size. */
+                if(labelSize.height <= 43.0f)
+                    break;
+            }
+            task.font = taskFont;
+            
             //// ARJUN IMPLEMENT REMINDER STYLE HERE
         } else {
             UITextField *postComment = (UITextField *)[cell viewWithTag:5241];
+            UILabel *limit = (UILabel *)[cell viewWithTag:1337];
             postComment.font = [UIFont flatFontOfSize:14];
+            
+            limit.font = [UIFont flatFontOfSize:14];
+            limit.adjustsFontSizeToFitWidth = YES;
         }
     } else if (indexPath.section == 2) {
         
@@ -394,12 +460,39 @@
             UILabel *commentDate = (UILabel *)[cell viewWithTag:1];
             UILabel *userNameLabel = (UILabel *)[cell viewWithTag:110];
             UILabel *commentText = (UILabel *)[cell viewWithTag:5204];
+            UIFont *commentFont = [UIFont flatFontOfSize:16];
             
-            commentText.font = [UIFont flatFontOfSize:15];
             commentDate.font = [UIFont flatFontOfSize:14];
             userNameLabel.font = [UIFont flatFontOfSize:14];
             
             [cell.contentView addSubview:imgView];
+            
+            int i;
+            
+            for(i = 16; i > 10; i=i-2)
+            {
+                // Set the new font size.
+                commentFont = [UIFont flatFontOfSize:i];
+                // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+                
+                /* This step is important: We make a constraint box
+                 using only the fixed WIDTH of the UILabel. The height will
+                 be checked later. */
+                CGSize constraintSize = CGSizeMake(222.0f, MAXFLOAT);
+                
+                // This step checks how tall the label would be with the desired font.
+                CGSize labelSize = [commentText.text sizeWithFont:commentFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+                
+                /* Here is where you use the height requirement!
+                 Set the value in the if statement to the height of your UILabel
+                 If the label fits into your required height, it will break the loop
+                 and use that font size. */
+                if(labelSize.height <= 36.0f)
+                    break;
+            }
+            
+            commentText.font = commentFont;
+
             
             if (indexPath.row != 0) {
                 [cell.contentView addSubview:bottomView];
@@ -411,12 +504,38 @@
         UILabel *commentDate = (UILabel *)[cell viewWithTag:1];
         UILabel *userNameLabel = (UILabel *)[cell viewWithTag:110];
         UILabel *commentText = (UILabel *)[cell viewWithTag:5204];
+        UIFont *commentFont = [UIFont flatFontOfSize:16];
         
-        commentText.font = [UIFont flatFontOfSize:15];
         commentDate.font = [UIFont flatFontOfSize:14];
         userNameLabel.font = [UIFont flatFontOfSize:14];
         
         [cell.contentView addSubview:imgView];
+        
+        int i;
+        
+        for(i = 16; i > 10; i=i-2)
+        {
+            // Set the new font size.
+            commentFont = [UIFont flatFontOfSize:i];
+            // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+            
+            /* This step is important: We make a constraint box
+             using only the fixed WIDTH of the UILabel. The height will
+             be checked later. */
+            CGSize constraintSize = CGSizeMake(222.0f, MAXFLOAT);
+            
+            // This step checks how tall the label would be with the desired font.
+            CGSize labelSize = [commentText.text sizeWithFont:commentFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+            
+            /* Here is where you use the height requirement!
+             Set the value in the if statement to the height of your UILabel
+             If the label fits into your required height, it will break the loop
+             and use that font size. */
+            if(labelSize.height <= 36.0f)
+                break;
+        }
+        
+        commentText.font = commentFont;
         
         if (indexPath.row != 0) {
             [cell.contentView addSubview:bottomView];
@@ -531,16 +650,21 @@
 
 - (IBAction)checkTextField:(id)sender
 {
+    self.limitLabel.hidden = NO;
     UITextField *textField = (UITextField *)sender;
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 70 - textField.text.length;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
+        self.limitLabel.textColor = [UIColor redColor];
     }
     
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
+    }
     
 }
 
@@ -660,9 +784,6 @@
         }
     } else {
         if (buttonIndex == 0) {
-            [self.socialPost setIsClaimed:YES];
-            [self.socialPost addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
-            [self.socialPost addObject:currentUserObject.user forKey:@"claimerUsernames"];
             
             Reminders *reminder = [Reminders object];
             
@@ -674,15 +795,24 @@
             
             [reminder setDate:self.socialPost.reminderDate];
             [reminder setDescription:self.socialPost.reminderDescription];
-            
+            [reminder setSocialPost:self.socialPost];
             [reminder setTitle:self.socialPost.reminderTask];
             
+            [self.socialPost setIsClaimed:YES];
+            [self.socialPost addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
+            [self.socialPost addObject:currentUserObject.user forKey:@"claimerUsernames"];
+            
             [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
                 [self.socialPost addObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
                 [self.socialPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [self.tableView reloadData];
                     [SVProgressHUD showSuccessWithStatus:@"Done"];
                 }];
+                } else {
+                    NSLog(@"%@", error);
+                    [SVProgressHUD showSuccessWithStatus:@"Done"];
+                }
             }];
             
         }
@@ -694,10 +824,6 @@
     [SVProgressHUD showWithStatus:@"Claiming..."];
     
     if (self.socialPost.claimers.count > 0) {
-        [self.socialPost setIsClaimed:YES];
-        [self.socialPost addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
-        [self.socialPost addObject:currentUserObject.user forKey:@"claimerUsernames"];
-        
         Reminders *reminder = [Reminders object];
         
         [reminder setRecipient:currentUserObject];
@@ -705,11 +831,15 @@
         
         [reminder setFromFriend:self.socialPost.user];
         [reminder setFromUser:self.socialPost.username];
-        
         [reminder setDate:self.socialPost.reminderDate];
         [reminder setDescription:self.socialPost.reminderDescription];
         
         [reminder setTitle:self.socialPost.reminderTask];
+        [reminder setSocialPost:self.socialPost];
+        
+        [self.socialPost setIsClaimed:YES];
+        [self.socialPost addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
+        [self.socialPost addObject:currentUserObject.user forKey:@"claimerUsernames"];
         
         [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [self.socialPost addObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
@@ -754,10 +884,6 @@
                 
                 [alertView show];
             } else {
-                [post setIsClaimed:YES];
-                [post addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
-                [post addObject:currentUserObject.user forKey:@"claimerUsernames"];
-                
                 Reminders *reminder = [Reminders object];
                 
                 [reminder setRecipient:currentUserObject];
@@ -768,8 +894,12 @@
                 
                 [reminder setDate:self.socialPost.reminderDate];
                 [reminder setDescription:self.socialPost.reminderDescription];
-                
+                [reminder setSocialPost:self.socialPost];
                 [reminder setTitle:self.socialPost.reminderTask];
+                
+                [post setIsClaimed:YES];
+                [post addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
+                [post addObject:currentUserObject.user forKey:@"claimerUsernames"];
                 
                 [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [post addObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
@@ -797,35 +927,40 @@
     [query getObjectInBackgroundWithId:self.socialPost.objectId block:^(PFObject *object, NSError *error) {
         SocialPosts *post = (SocialPosts *)object;
         self.socialPost = post;
-        if (post.claimers.count > 1) {
-            int indexPath = [post.claimers indexOfObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId]];
-            [post removeObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
-            [post removeObject:currentUserObject.user forKey:@"claimerUsernames"];
-            
-            Reminders *reminder = [post.reminder objectAtIndex:indexPath];
-            [post removeObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
-            
-            [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [self.tableView reloadData];
-                    [SVProgressHUD showSuccessWithStatus:@"Done"];
+        if ([self.socialPost.claimerUsernames containsObject:currentUserObject.user]) {
+            if (post.claimers.count > 1) {
+                int indexPath = [post.claimers indexOfObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId]];
+                [post removeObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
+                [post removeObject:currentUserObject.user forKey:@"claimerUsernames"];
+                
+                Reminders *reminder = [post.reminder objectAtIndex:indexPath];
+                [post removeObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
+                
+                [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [self.tableView reloadData];
+                        [SVProgressHUD showSuccessWithStatus:@"Done"];
+                    }];
                 }];
-            }];
-            
+                
+            } else {
+                [post setIsClaimed:NO];
+                int indexPath = [post.claimerUsernames indexOfObject:currentUserObject.user];
+                [post removeObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
+                [post removeObject:currentUserObject.user forKey:@"claimerUsernames"];
+                Reminders *reminder = [post.reminder objectAtIndex:indexPath];
+                [post removeObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
+                
+                [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [self.tableView reloadData];
+                        [SVProgressHUD showSuccessWithStatus:@"Done"];
+                    }];
+                }];
+            }
         } else {
-            [post setIsClaimed:NO];
-            int indexPath = [post.claimerUsernames indexOfObject:currentUserObject.user];
-            [post removeObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
-            [post removeObject:currentUserObject.user forKey:@"claimerUsernames"];
-            Reminders *reminder = [post.reminder objectAtIndex:indexPath];
-            [post removeObject:[Reminders objectWithoutDataWithObjectId:reminder.objectId] forKey:@"reminder"];
-            
-            [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [self.tableView reloadData];
-                    [SVProgressHUD showSuccessWithStatus:@"Done"];
-                }];
-            }];
+            [self.tableView reloadData];
+            [SVProgressHUD showSuccessWithStatus:@"Done"];
         }
     }];
 }

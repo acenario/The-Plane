@@ -54,7 +54,7 @@
     public = YES;
         
     privacy = @"closed";
-        
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
@@ -130,6 +130,7 @@
             
             UITextField *name = (UITextField *)[cell viewWithTag:6221];
             self.limitLabel = (UILabel *)[cell viewWithTag:1337];
+            self.limitLabel.hidden = YES;
             name.delegate = self;
             
             self.textField = name;
@@ -365,12 +366,13 @@
 
 - (void)checkTextField:(id)sender
 {
+    self.limitLabel.hidden = NO;
     UITextField *textField = (UITextField *)sender;
     
     circleName = textField.text;
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 35 - textField.text.length;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.doneBarButton.enabled = YES;
     } else {

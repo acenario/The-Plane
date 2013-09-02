@@ -934,16 +934,12 @@
 				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
 				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
 				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
-				DCECC6C1179F07E600D084D0 /* ProfileEditViewController.h */,
-				DCECC6C2179F07E600D084D0 /* ProfileEditViewController.m */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
 				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
 				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
-				DCECC6BE179DB26D00D084D0 /* ProfileQueryViewController.h */,
-				DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */,
 				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
 				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
@@ -964,6 +960,10 @@
 				DCE1FE5D178910D60012478B /* Default-568h@2x.png */,
 				DCF891EF178A348E00A89F6E /* DeprecatedFriendsViewController.h */,
 				DCF891F0178A348E00A89F6E /* DeprecatedFriendsViewController.m */,
+				DCECC6BE179DB26D00D084D0 /* ProfileQueryViewController.h */,
+				DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */,
+				DCECC6C1179F07E600D084D0 /* ProfileEditViewController.h */,
+				DCECC6C2179F07E600D084D0 /* ProfileEditViewController.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

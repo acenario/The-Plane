@@ -22,6 +22,9 @@
 @interface AttachReminderViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, ReminderDateViewControllerDelegate, CommonTasksViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 - (IBAction)commonTasks:(id)sender;
+@property (strong, nonatomic) IBOutlet FUIButton *commonTasks;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *taskLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarItem;

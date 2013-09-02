@@ -42,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *segmentView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *circleCell;
+@property (strong, nonatomic) IBOutlet FUIButton *commonTasks;
 
 #pragma mark Labels, Text Views, and Text Fields
 @property (strong, nonatomic) IBOutlet UILabel *circleName;

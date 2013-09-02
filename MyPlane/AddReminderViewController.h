@@ -27,6 +27,7 @@
 - (IBAction)textValidation:(id)sender;
 -(IBAction)showCommon:(id)sender;
 
+@property (strong, nonatomic) IBOutlet FUIButton *commonTasks;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarItem;
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;

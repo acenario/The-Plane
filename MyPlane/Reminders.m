@@ -22,5 +22,6 @@
 @dynamic comments;
 @dynamic recipient;
 @dynamic date;
+@dynamic socialPost;
 
 @end

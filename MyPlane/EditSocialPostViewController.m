@@ -45,7 +45,7 @@
     
     self.socialPostTextView.text = self.post.text;
     int limit = 140 - self.socialPostTextView.text.length;
-    self.postLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.postLimit.text = [NSString stringWithFormat:@"%d", limit];
     
     if (self.post.reminderTask.length > 0) {
         self.reminderTextField.text = self.post.reminderTask;
@@ -53,7 +53,8 @@
         self.dateLabel.text = [mainFormatter stringFromDate:reminderDate];
         
         limit = 35 - self.reminderTextField.text.length;
-        self.reminderLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+        self.reminderLimit.text = [NSString stringWithFormat:@"%d", limit];
+//        self.reminderLimit.hidden = YES;
         
         self.reminderTextField.delegate = self;
         self.descriptionTextView.delegate = self;
@@ -146,7 +147,7 @@
 - (void)taskValidation:(id)sender
 {
     int limit = 35 - self.reminderTextField.text.length;
-    self.reminderLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.reminderLimit.text = [NSString stringWithFormat:@"%d", limit];
     if (limit >= 0) {
         taskCheck = YES;
     } else {
@@ -172,7 +173,7 @@
 - (void)descValidation:(id)sender
 {
     int limit = 250 - self.descriptionTextView.text.length;
-    self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.descLimit.text = [NSString stringWithFormat:@"%d", limit];
     if (limit >= 0) {
         descCheck = YES;
     } else {
@@ -186,7 +187,7 @@
 {
     if (textView.tag == 1) {
         int limit = 140 - self.socialPostTextView.text.length;
-        self.postLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+        self.postLimit.text = [NSString stringWithFormat:@"%d", limit];
         if (limit >= 0) {
             postCheck = YES;
         } else {
@@ -196,7 +197,7 @@
         [self configureDoneButton];
     } else if (textView.tag == 2) {
         int limit = 250 - self.descriptionTextView.text.length;
-        self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+        self.descLimit.text = [NSString stringWithFormat:@"%d", limit];
         if (limit >= 0) {
             descCheck = YES;
         } else {

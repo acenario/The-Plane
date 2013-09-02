@@ -39,7 +39,8 @@
     reminderDate = self.reminder.date;
     self.taskTextField.text = self.reminder.title;
     self.dateLabel.text = [mainFormatter stringFromDate:reminderDate];
-    self.taskLimit.text = [NSString stringWithFormat:@"%d characters left", 35 - self.taskTextField.text.length];
+    self.taskLimit.hidden = YES;
+    self.taskLimit.text = [NSString stringWithFormat:@"%d", 35 - self.taskTextField.text.length];
     if ([[self.reminder objectForKey:@"description"] length] > 0) {
         //        NSLog(@"%@", self.reminder.description);
         self.descTextView.text = [self.reminder objectForKey:@"description"];
@@ -74,6 +75,7 @@
 
 - (IBAction)taskValidation:(id)sender
 {
+    self.taskLimit.hidden = NO;
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 35 - self.taskTextField.text.length;
     self.taskLimit.text = [NSString stringWithFormat:@"%d characters left", limit];

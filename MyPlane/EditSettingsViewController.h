@@ -27,6 +27,9 @@
 
 @property (nonatomic, weak) id <EditSettingsViewControllerDelegate> delegate;
  
+@property (strong, nonatomic) IBOutlet UILabel *firstnameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lastNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *emailLabel;
 @property (nonatomic, strong) NSString *firstname;
 @property (nonatomic, strong) NSString *lastname;
 @property (nonatomic, strong) NSString *email;

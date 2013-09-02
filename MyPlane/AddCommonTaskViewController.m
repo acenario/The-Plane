@@ -38,11 +38,12 @@
     if (!(self.task)) {
         editing = NO;
         self.doneButton.enabled = NO;
+        self.limitLabel.hidden = YES;
     } else {
         editing = YES;
         self.textField.text = self.task.text;
         [self.navigationItem setTitle:@"Edit Task"];
-        self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", 35 - self.task.text.length];
+        self.limitLabel.text = [NSString stringWithFormat:@"%d", 35 - self.task.text.length];
         self.doneButton.enabled = YES;
     }
     
@@ -74,14 +75,20 @@
 
 - (void)textValidation:(id)sender
 {
+    self.limitLabel.hidden = NO;
     NSString *removedSpaces = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 35 - self.textField.text.length;
     
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = NO;
+        self.limitLabel.textColor = [UIColor redColor];
+    }
+    
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
     }
 }
 
@@ -106,6 +113,9 @@
     
     self.taskLabel.font = [UIFont boldFlatFontOfSize:17];
     self.textField.font = [UIFont flatFontOfSize:16];
+    
+    self.limitLabel.font = [UIFont flatFontOfSize:14];
+    self.limitLabel.adjustsFontSizeToFitWidth = YES;
 
     
     return cell;

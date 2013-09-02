@@ -24,6 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     self.dataArray = [NSArray arrayWithObjects:@"Date", nil];
     
@@ -35,6 +36,17 @@
     self.dateDetail.text = self.displayDate;
     
     [self datePicker];
+}
+
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +114,30 @@
     [self.delegate reminderDateViewController:self didFinishSelectingDate:self.dateIvar];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    cell.textLabel.font = [UIFont flatFontOfSize:16];
+    cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+    
+    return cell;
+}
+
 
 - (IBAction)cancel:(id)sender
 {

@@ -40,7 +40,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    NSString *placeholderText = @"Write a post here... \n (140 character limit)";
+    NSString *placeholderText = @"Write a post here...";
     
     self.postTextField.text = placeholderText;
     self.postTextField.textColor = [UIColor grayColor];
@@ -52,6 +52,8 @@
         self.pickCircleCell.userInteractionEnabled = NO;
         self.pickCircleCell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+//    self.limitLabel.hidden = YES;
     
     [self configureDoneButton];
     [self configureViewController];
@@ -114,20 +116,31 @@
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
+    if (indexPath.section == 0) {
     if (indexPath.row == 0) {
         
         self.postTextField.font = [UIFont flatFontOfSize:14];
+        self.limitLabel.font = [UIFont flatFontOfSize:14];
+        self.limitLabel.adjustsFontSizeToFitWidth = YES;
         
         [cell.contentView addSubview:imgView];
         
-    } else {
+    } else if (indexPath.row == 1) {
         
         self.circleName.font = [UIFont flatFontOfSize:16];
         self.circleLabel.font = [UIFont flatFontOfSize:16];
         self.circleLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         self.circleLabel.backgroundColor = [UIColor whiteColor];
         self.circleName.backgroundColor = [UIColor whiteColor];
+        }
+    } else {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
     }
+    
     
     
     return cell;
@@ -204,6 +217,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
+//    self.limitLabel.hidden = NO;
     NSString *removedSpaces = [self.postTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 140 - self.postTextField.text.length;
     self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
@@ -211,6 +225,11 @@
         textCheck = YES;
     } else {
         textCheck = NO;
+        self.limitLabel.textColor = [UIColor redColor];
+    }
+    
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
     }
     
     [self configureDoneButton];

@@ -79,6 +79,7 @@
     self.taskTextField.delegate = self;
     self.descriptionTextView.delegate = self;
     
+    self.limitLabel.hidden = YES;
     textCheck = NO;
     descCheck = YES;
 
@@ -177,14 +178,21 @@
 }
 
 - (IBAction)textValidation:(id)sender {
+    self.limitLabel.hidden = NO;
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 35 - self.taskTextField.text.length;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         textCheck = YES;
     } else {
         textCheck = NO;
+        self.limitLabel.textColor = [UIColor redColor];
     }
+    
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
+    }
+    
     [self configureDoneButton];
 }
 
@@ -275,6 +283,19 @@
             
             self.taskInd.font = [UIFont flatFontOfSize:16];
             self.taskTextField.font = [UIFont flatFontOfSize:14];
+            self.limitLabel.font = [UIFont flatFontOfSize:14];
+            
+            self.limitLabel.adjustsFontSizeToFitWidth = YES;
+            
+            self.commonTasks.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+            self.commonTasks.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+            self.commonTasks.shadowHeight = 2.0f;
+            self.commonTasks.cornerRadius = 3.0f;
+            self.commonTasks.titleLabel.font = [UIFont boldFlatFontOfSize:15];
+            
+            [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+
             
             
             [cell.contentView addSubview:imgView];
@@ -295,6 +316,8 @@
     } else {
         self.descriptionLabel.font = [UIFont boldFlatFontOfSize:16];
         self.descriptionTextView.font = [UIFont flatFontOfSize:14];
+        self.descLabel.font = [UIFont flatFontOfSize:14];
+        self.descLabel.adjustsFontSizeToFitWidth = YES;
     }
     
     return cell;
@@ -342,7 +365,7 @@
 - (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task
 {
     self.taskTextField.text = task;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", 35 - task.length];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", 35 - task.length];
     textCheck = YES;
     [self configureDoneButton];
 }
@@ -365,8 +388,10 @@
     self.descLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
     if ((limit >= 0)) {
         descCheck = YES;
+        self.descLabel.textColor = [UIColor lightGrayColor];
     } else {
         descCheck = NO;
+        self.descLabel.textColor = [UIColor redColor];
     }
     
     [self configureDoneButton];

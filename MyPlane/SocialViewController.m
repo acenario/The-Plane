@@ -253,13 +253,16 @@
         circleNameLabel.font = socialFont;
         dateLabel.font = socialFont;
         
+        nameLabel.adjustsFontSizeToFitWidth = YES;
+        dateLabel.adjustsFontSizeToFitWidth = YES;
+        circleNameLabel.adjustsFontSizeToFitWidth = YES;
+        
         int i;
         
-        for(i = 16; i > 10; i=i-2)
+        for(i = 16; i > 12; i=i-2)
         {
             // Set the new font size.
             postFont = [UIFont flatFontOfSize:i];
-            NSLog(@"Trying size: %u", i);
             // You can log the size you're trying: NSLog(@"Trying size: %u", i);
             
             /* This step is important: We make a constraint box
@@ -277,7 +280,6 @@
             if(labelSize.height <= 49.0f)
                 break;
         }
-        NSLog(@"Best size: %u", i);
         
         postLabel.font = postFont;
         

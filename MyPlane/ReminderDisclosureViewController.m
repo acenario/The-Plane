@@ -68,6 +68,7 @@
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
     
+    
 }
 
 -(void)configureViewController {
@@ -205,6 +206,7 @@
         self.commentTextField = commentTextField;
         self.addCommentButton = addCommentButton;
         self.limitLabel = (UILabel *)[cell viewWithTag:1337];
+        self.limitLabel.hidden = YES;
         
         commentTextField.delegate = self;
         [commentTextField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
@@ -289,19 +291,48 @@
         cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         cell.textLabel.backgroundColor = [UIColor whiteColor];
     } else if (indexPath.section == 2) {
-            UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
-            commentText.font = [UIFont flatFontOfSize:14];        
+        UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
+        UILabel *limit = (UILabel *)[cell viewWithTag:1337];
+        commentText.font = [UIFont flatFontOfSize:14];
+        limit.font = [UIFont flatFontOfSize:14];
+        limit.adjustsFontSizeToFitWidth = YES;
     } else {
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1301];
         UILabel *postLabel = (UILabel *)[cell viewWithTag:1302];
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:1];
+        UIFont *postFont = [UIFont flatFontOfSize:16];
         
         nameLabel.font = [UIFont flatFontOfSize:14];
-        postLabel.font = [UIFont flatFontOfSize:15];
         timeLabel.font = [UIFont flatFontOfSize:14];
         
         [cell.contentView addSubview:imgView];
         [cell.contentView addSubview:bottomView];
+        
+        int i;
+        
+        for(i = 16; i > 10; i=i-2)
+        {
+            // Set the new font size.
+            postFont = [UIFont flatFontOfSize:i];
+            // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+            
+            /* This step is important: We make a constraint box
+             using only the fixed WIDTH of the UILabel. The height will
+             be checked later. */
+            CGSize constraintSize = CGSizeMake(222.0f, MAXFLOAT);
+            
+            // This step checks how tall the label would be with the desired font.
+            CGSize labelSize = [postLabel.text sizeWithFont:postFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+            
+            /* Here is where you use the height requirement!
+             Set the value in the if statement to the height of your UILabel
+             If the label fits into your required height, it will break the loop
+             and use that font size. */
+            if(labelSize.height <= 36.0f)
+                break;
+        }
+        
+        postLabel.font = postFont;
     }
     
     return cell;
@@ -408,17 +439,22 @@
 
 - (IBAction)checkTextField:(id)sender
 {
+    self.limitLabel.hidden = NO;
     UITextField *textField = (UITextField *)sender;
     //NSLog(@"%@", textField.text);
     NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 70 - textField.text.length;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.addCommentButton.enabled = YES;
     } else {
         self.addCommentButton.enabled = NO;
+        self.limitLabel.textColor = [UIColor redColor];
     }
     
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
+    }
     
 }
 

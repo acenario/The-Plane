@@ -60,6 +60,8 @@
         self.inviteCell.hidden = YES;
         self.inviteCell.frame = CGRectMake(0, 0, 0, 0);
         isAdmin = NO;
+    } else {
+        isAdmin = YES;
     }
     
     [self userQuery];
@@ -84,7 +86,7 @@
         } else {
             self.inviteCell.hidden = NO;
 //            self.inviteCell.frame = CGRectMake(0, 0, 0, 0);
-            isAdmin = NO;
+            isAdmin = YES;
         }
     }];
     
@@ -102,8 +104,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if ((!isAdmin) && (section == 1)) {
-        return 1;
+    if ((!isAdmin) && (section < 2)) {
+        if (section == 0) {
+            return 7;
+        }
+        return 2;
     } else {
         return 10;
     }
@@ -111,7 +116,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ((!isAdmin) && (section == 1)) {
+    if ((!isAdmin) && (section > 0) && (section < 3)) {
+        if (section == 2) {
+            return 7;
+        }
         return 1;
     } else {
         return 10;
