@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordReEnter;
+@property (strong, nonatomic) IBOutlet UITextField *gracePeriodField;
 
 
 @end
@@ -40,6 +41,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    self.gracePeriod = self.cu;
     
     self.firstNameField.delegate = self;
 //    [self.firstNameField addTarget:self action:@selector(textFieldValidate:) forControlEvents:UIControlEventEditingChanged];
@@ -79,7 +82,34 @@
     
     [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+//    [self configureGracePeriod];
     
+    if (self.gracePeriod == 0) {
+        self.gracePeriodField.placeholder = @"No delay";
+    } else if (self.gracePeriod < 60 * 60) {
+        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+    } else if (self.gracePeriod == 60 * 60) {
+        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"1 hour"];
+    } else if (self.gracePeriod < 1440 * 60) {
+        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+    } else {
+        self.gracePeriodField.placeholder = @"1 Day";
+    }
+}
+
+- (void)configureGracePeriod
+{
+    if (self.gracePeriod == 0) {
+        self.gracePeriodField.text = @"No delay";
+    } else if (self.gracePeriod < 60 * 60) {
+        self.gracePeriodField.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod];
+    } else if (self.gracePeriod == 60 * 60) {
+        self.gracePeriodField.text = [NSString stringWithFormat:@"1 hour"];
+    } else if (self.gracePeriod < 1440 * 60) {
+        self.gracePeriodField.text = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 60];
+    } else {
+        self.gracePeriodField.text = @"1 Day";
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,6 +158,7 @@
         NSString *lastName = nil;
         NSString *email = nil;
         NSString *password = nil;
+        NSNumber *grace = [NSNumber numberWithInt:1];
         PFFile *imageFile = nil;
         
         //PROFILE PICTURE
@@ -245,17 +276,21 @@
 //            NSLog(@"EMPTY!");
         }
         
+        if (![self.gracePeriodField.text isEqualToString:@""]) {
+            check = YES;
+            grace = [NSNumber numberWithInt:self.gracePeriod];
+        }
         
         if (check) {
-            [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user];
+            [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user withGrace:grace];
         } else {
-            //[self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     }];
 }
 
-- (void)saveAllFieldswithObject:(PFObject *)object withFirstName:(NSString *)firstName withLastName:(NSString *)lastName withEmail:(NSString *)email withPassword:(NSString *)password withImageFile:(PFFile *)imageFile withUser:(PFUser *)user
+- (void)saveAllFieldswithObject:(PFObject *)object withFirstName:(NSString *)firstName withLastName:(NSString *)lastName withEmail:(NSString *)email withPassword:(NSString *)password withImageFile:(PFFile *)imageFile withUser:(PFUser *)user withGrace:(NSNumber *)gracePeriod;
 {
     BOOL usersave = NO;
     BOOL objectsave = NO;
@@ -283,6 +318,11 @@
     if (imageFile != nil) {
         objectsave = YES;
         [object setObject:imageFile forKey:@"profilePicture"];
+    }
+
+    if (![gracePeriod isEqualToNumber:[NSNumber numberWithInt:1]]) {
+        objectsave = YES;
+        [object setObject:gracePeriod forKey:@"gracePeriod"];
     }
     
     if ((usersave) && (objectsave)) {
@@ -540,6 +580,22 @@
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"EditGrace"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        EditExpiryTimeViewController *controller = (EditExpiryTimeViewController *)nav.topViewController;
+        controller.gracePeriod = self.gracePeriod;
+        controller.delegate = self;
+    }
+}
+
+- (void)editExpiryTimeViewController:(EditExpiryTimeViewController *)controller withGracePeriod:(int)gracePeriod
+{
+    self.gracePeriod = gracePeriod;
+    [self configureGracePeriod];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 @end

@@ -65,7 +65,10 @@
         textCheck = NO;
     }
     
+    descCheck = YES;
+    
     self.taskTextField.delegate = self;
+    self.descriptionTextView.delegate = self;
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];

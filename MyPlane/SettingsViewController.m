@@ -324,6 +324,7 @@
         controller.lastname = self.lastNameField.text;
         controller.email = self.emailField.text;
         controller.profilePicture = self.profilePicture.image;
+        controller.gracePeriod = self.sharedManager.currentUser.gracePeriod;
     } else if ([segue.identifier isEqualToString:@"EditCommonTasks"]) {
         CommonTasksViewController *controller = [segue destinationViewController];
         controller.isFromSettings = YES;

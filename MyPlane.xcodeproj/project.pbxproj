@@ -21,6 +21,7 @@
 		AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64217D3992E007F3532 /* EditReminderViewController.m */; };
 		AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */; };
 		AEAAE65217D40A0B007F3532 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAAE65117D40A0A007F3532 /* 1.png */; };
+		AEAAE65517D43361007F3532 /* EditExpiryTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */; };
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
@@ -207,6 +208,8 @@
 		AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		AEAAE65117D40A0A007F3532 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpiryTimeViewController.h; sourceTree = "<group>"; };
+		AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpiryTimeViewController.m; sourceTree = "<group>"; };
 		AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedMembersViewController.h; sourceTree = "<group>"; };
 		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
@@ -929,6 +932,8 @@
 				DCE1FE67178910D60012478B /* first@2x.png */,
 				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
 				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
+				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
+				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
 				DCECC6C1179F07E600D084D0 /* ProfileEditViewController.h */,
 				DCECC6C2179F07E600D084D0 /* ProfileEditViewController.m */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
@@ -1226,6 +1231,7 @@
 				AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */,
 				AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */,
 				AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */,
+				AEAAE65517D43361007F3532 /* EditExpiryTimeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
