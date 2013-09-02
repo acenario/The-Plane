@@ -194,7 +194,7 @@
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        NSLog(@"Present tutorials!");
+        [self performSegueWithIdentifier:@"Tutorial" sender:nil];
     }
 }
 
@@ -317,7 +317,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
-    
+//    [self performSegueWithIdentifier:@"Tutorial" sender:nil];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -504,8 +504,6 @@
         UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
         firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)navController.topViewController;
         controller.delegate = self;
-        
-        
     }
     
     else if ([segue.identifier isEqualToString:@"ReminderDisclosure"]) {

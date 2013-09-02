@@ -19,6 +19,8 @@
 		AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
 		AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64217D3992E007F3532 /* EditReminderViewController.m */; };
+		AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */; };
+		AEAAE65217D40A0B007F3532 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAAE65117D40A0A007F3532 /* 1.png */; };
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
@@ -202,6 +204,9 @@
 		AE89177D17AF115E00DD2DC0 /* Requests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Requests.m; sourceTree = "<group>"; };
 		AEAAE64117D3992E007F3532 /* EditReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditReminderViewController.h; sourceTree = "<group>"; };
 		AEAAE64217D3992E007F3532 /* EditReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditReminderViewController.m; sourceTree = "<group>"; };
+		AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		AEAAE65117D40A0A007F3532 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedMembersViewController.h; sourceTree = "<group>"; };
 		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
@@ -899,6 +904,9 @@
 				DCDA4291179048A600E14D50 /* FlatUIKit */,
 				DCF891DF178A1E7800A89F6E /* TabBarImages */,
 				DCE1FE5F178910D60012478B /* MainStoryboard.storyboard */,
+				AEAAE65117D40A0A007F3532 /* 1.png */,
+				AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */,
+				AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */,
 				DCAA086E17C7EFE000F992A1 /* FCContainerViewController.h */,
 				DCAA086F17C7EFE000F992A1 /* FCContainerViewController.m */,
 				DC11C1D517944EA60059FC27 /* Placeholder.png */,
@@ -1127,6 +1135,7 @@
 				DCD4368317D319DA00ACAA71 /* Icon@2x.png in Resources */,
 				DCD4368417D319DA00ACAA71 /* iTunesArtwork.png in Resources */,
 				DCD4368517D319DA00ACAA71 /* iTunesArtwork@2x.png in Resources */,
+				AEAAE65217D40A0B007F3532 /* 1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,6 +1225,7 @@
 				AE7692A317D10A5A004D3129 /* AttachReminderViewController.m in Sources */,
 				AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */,
 				AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */,
+				AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -189,7 +189,7 @@
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        NSLog(@"Present tutorials!");
+        [self performSegueWithIdentifier:@"Tutorial" sender:nil];
     }
 }
 
@@ -336,7 +336,7 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)nav.topViewController;
         controller.delegate = self;
-    }
+    } 
 }
 
 - (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
