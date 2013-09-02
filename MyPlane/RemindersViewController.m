@@ -228,10 +228,12 @@
     UILabel *reminderLabel = (UILabel *)[cell viewWithTag:1001];
     UILabel *usernameLabel = (UILabel *)[cell viewWithTag:1002];
     UILabel *dateLabel = (UILabel *)[cell viewWithTag:1003];
-
-    reminderLabel.font = [UIFont flatFontOfSize:16];
+    
+    
     usernameLabel.font = [UIFont flatFontOfSize:14];
     dateLabel.font = [UIFont flatFontOfSize:14];
+    reminderLabel.font = [UIFont flatFontOfSize:16];
+
     
     reminderLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
     
@@ -477,8 +479,6 @@
         [SVProgressHUD showSuccessWithStatus:@"Received Reminder!"];
     }
 }
-
-
 
 - (void)checkDateforCell:(UITableViewCell *)cell withReminder:(PFObject *)reminder
 {

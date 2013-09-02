@@ -192,20 +192,53 @@
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
     if (indexPath.row == 0) {
+        SocialPosts *object = [self.objects objectAtIndex:indexPath.section];
+        
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:6403];
         UILabel *postLabel = (UILabel *)[cell viewWithTag:6404];
         UILabel *circleLabel = (UILabel *)[cell viewWithTag:640];
         UILabel *circleNameLabel = (UILabel *)[cell viewWithTag:641];
         UILabel *dateLabel = (UILabel *)[cell viewWithTag:642];
         UIFont *socialFont = [UIFont flatFontOfSize:14];
+        UIFont *postFont = [UIFont flatFontOfSize:16];
         
         nameLabel.font = socialFont;
         nameLabel.textColor = [UIColor asbestosColor];
-        postLabel.font = [UIFont flatFontOfSize:16];
         postLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         circleLabel.font = socialFont;
         circleNameLabel.font = socialFont;
         dateLabel.font = socialFont;
+        
+        nameLabel.adjustsFontSizeToFitWidth = YES;
+        dateLabel.adjustsFontSizeToFitWidth = YES;
+        circleNameLabel.adjustsFontSizeToFitWidth = YES;
+        
+        int i;
+        
+        for(i = 16; i > 12; i=i-2)
+        {
+            // Set the new font size.
+            postFont = [UIFont flatFontOfSize:i];
+            // You can log the size you're trying: NSLog(@"Trying size: %u", i);
+            
+            /* This step is important: We make a constraint box
+             using only the fixed WIDTH of the UILabel. The height will
+             be checked later. */
+            CGSize constraintSize = CGSizeMake(214.0f, MAXFLOAT);
+            
+            // This step checks how tall the label would be with the desired font.
+            CGSize labelSize = [object.text sizeWithFont:postFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+            
+            /* Here is where you use the height requirement!
+             Set the value in the if statement to the height of your UILabel
+             If the label fits into your required height, it will break the loop
+             and use that font size. */
+            if(labelSize.height <= 49.0f)
+                break;
+        }
+        
+        
+        postLabel.font = postFont;
         
         
         [cell.contentView addSubview:imgView];
