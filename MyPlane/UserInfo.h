@@ -21,6 +21,7 @@
 @property (retain) NSArray *blockedUsers;
 @property (retain) NSArray *blockedUsernames;
 @property (retain) PFFile *profilePicture;
+@property int gracePeriod;
 @property int circleRequestsCount;
 
 @end

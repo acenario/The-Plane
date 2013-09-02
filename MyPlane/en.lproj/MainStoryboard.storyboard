@@ -1043,7 +1043,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <items>
-                                <navigationItem title="Reminder Time" id="QZL-HR-sGH">
+                                <navigationItem title="Set Time" id="QZL-HR-sGH">
                                     <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="40u-QN-6pE">
                                         <connections>
                                             <action selector="cancel:" destination="M1V-vV-Liq" id="kQ5-nf-1lh"/>
@@ -2032,6 +2032,36 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Change Reminder Grace Period" id="z8y-sL-oXa">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6lu-yb-Jrc">
+                                        <rect key="frame" x="0.0" y="467" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="15 minutes" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RpY-xO-7Pz">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="260" id="T7c-hF-A0k"/>
+                                                        <constraint firstAttribute="height" constant="21" id="heN-Hu-RSt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="RpY-xO-7Pz" firstAttribute="centerY" secondItem="6lu-yb-Jrc" secondAttribute="centerY" type="default" id="XQK-5n-Qos"/>
+                                            <constraint firstItem="RpY-xO-7Pz" firstAttribute="centerX" secondItem="6lu-yb-Jrc" secondAttribute="centerX" type="default" id="yaY-gG-rH9"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="BRE-t9-87W" kind="modal" identifier="EditGrace" id="QPy-RE-6Hc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="m8n-OA-TAG" id="NO4-t6-5MW"/>
@@ -2054,6 +2084,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="done" destination="C9R-3N-YWS" id="BL1-sM-uSh"/>
                         <outlet property="emailField" destination="NwU-9K-Hza" id="vT6-IB-5XC"/>
                         <outlet property="firstNameField" destination="9hc-UK-cnW" id="ahP-TB-8zs"/>
+                        <outlet property="gracePeriodField" destination="RpY-xO-7Pz" id="eiA-b7-EdK"/>
                         <outlet property="lastNameField" destination="zAC-Xe-DIE" id="gB1-s8-14S"/>
                         <outlet property="passwordField" destination="FYq-gw-z93" id="w4z-Vm-FPA"/>
                         <outlet property="passwordReEnter" destination="dx1-lx-Z0h" id="Aq9-f7-AfC"/>
@@ -2064,6 +2095,87 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pz4-lR-drA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2434" y="2876"/>
+        </scene>
+        <!--Edit Expiry Time View Controller - Grace Period-->
+        <scene sceneID="zjW-26-fSD">
+            <objects>
+                <tableViewController id="KXk-iG-V4w" customClass="EditExpiryTimeViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="r2p-2I-aPA">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="9ZX-Av-yyh">
+                            <rect key="frame" x="0.0" y="66" width="320" height="352"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwo-L4-OA9">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="216" id="0F9-we-c5S"/>
+                                    </constraints>
+                                </pickerView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Jwo-L4-OA9" firstAttribute="bottom" secondItem="9ZX-Av-yyh" secondAttribute="bottom" type="default" id="IUO-8N-6ag"/>
+                                <constraint firstItem="Jwo-L4-OA9" firstAttribute="leading" secondItem="9ZX-Av-yyh" secondAttribute="leading" type="default" id="a3B-sX-J5Y"/>
+                                <constraint firstItem="Jwo-L4-OA9" firstAttribute="trailing" secondItem="9ZX-Av-yyh" secondAttribute="trailing" type="default" id="qIs-i8-mJn"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection id="loW-mD-piS">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="EOu-Yp-i5B">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="15 minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpl-JA-YPU">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="260" id="aGG-Bu-FsB"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="fpl-JA-YPU" firstAttribute="top" secondItem="EOu-Yp-i5B" secondAttribute="top" constant="12" id="VAP-yN-PT0"/>
+                                            <constraint firstItem="fpl-JA-YPU" firstAttribute="centerX" secondItem="EOu-Yp-i5B" secondAttribute="centerX" type="default" id="bi9-ma-h87"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="KXk-iG-V4w" id="WYm-P4-x7y"/>
+                            <outlet property="delegate" destination="KXk-iG-V4w" id="DmJ-aY-lCd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Grace Period" id="whY-jP-gnj">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Jdb-7l-PID">
+                            <connections>
+                                <action selector="cancel:" destination="KXk-iG-V4w" id="oEQ-RO-oDa"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="MmY-r6-pcA">
+                            <connections>
+                                <action selector="done:" destination="KXk-iG-V4w" id="RQG-gs-ZHa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="MmY-r6-pcA" id="1ie-1b-LO5"/>
+                        <outlet property="pickerView" destination="Jwo-L4-OA9" id="BuW-FE-dq9"/>
+                        <outlet property="timeLabel" destination="fpl-JA-YPU" id="t6Y-jG-Bh3"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dFd-e2-c8N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3513" y="2876"/>
         </scene>
         <!--Social View Controller - Social-->
         <scene sceneID="esr-bk-S9G">
@@ -5295,6 +5407,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="3031" y="-687"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5dY-xo-Pkh">
+            <objects>
+                <navigationController id="BRE-t9-87W" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NfU-oo-EEb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KXk-iG-V4w" kind="relationship" relationship="rootViewController" id="qKj-0H-dLI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bEc-bd-qju" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2987" y="2876"/>
+        </scene>
     </scenes>
     <resources>
         <image name="09-chat-2.png" width="24" height="22"/>
@@ -5472,6 +5602,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="doneBarButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
+        <class className="EditExpiryTimeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditExpiryTimeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="EditReminderViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EditReminderViewController.h"/>
             <relationships>
@@ -5496,6 +5636,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="done" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="gracePeriodField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="passwordReEnter" candidateClass="UITextField"/>

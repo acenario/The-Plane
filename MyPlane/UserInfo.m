@@ -24,5 +24,6 @@
 @dynamic blockedUsernames;
 @dynamic profilePicture;
 @dynamic circleRequestsCount;
+@dynamic gracePeriod;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UserInfo.h"
+#import "EditExpiryTimeViewController.h"
 
 @class EditSettingsViewController;
 
@@ -15,11 +16,9 @@
 
 - (void)updateUserInfo:(EditSettingsViewController *)controller;
 
-
-
 @end
 
-@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate,UITextFieldDelegate, UINavigationControllerDelegate>
+@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate,UITextFieldDelegate, UINavigationControllerDelegate, EditExpiryTimeViewControllerDelegate>
 
 - (IBAction)doneButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;
@@ -31,6 +30,7 @@
 @property (nonatomic, strong) NSString *firstname;
 @property (nonatomic, strong) NSString *lastname;
 @property (nonatomic, strong) NSString *email;
+@property int gracePeriod;
 @property (nonatomic, strong) UIImage *profilePicture;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *done;
 @property (strong, nonatomic) IBOutlet FUIButton *setPic;

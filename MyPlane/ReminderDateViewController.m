@@ -62,10 +62,10 @@
     
     [self.view addSubview:self.pickerView];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:kPickerAnimationDuration];
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:kPickerAnimationDuration];
     self.pickerView.frame = endFrame;
-    [UIView commitAnimations];
+//    [UIView commitAnimations];
     
     // add the "Done" button to the nav bar
     
