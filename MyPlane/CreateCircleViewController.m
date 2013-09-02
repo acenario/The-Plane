@@ -62,7 +62,7 @@
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.doneBarButton.enabled = NO;
     } else {
-        self.doneBarButton.enabled = YES;
+        [self checkTextField:nil];
     }
 }
 
@@ -71,7 +71,7 @@
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.doneBarButton.enabled = NO;
     } else {
-        self.doneBarButton.enabled = YES;
+        [self checkTextField:nil];
     }
 }
 
@@ -135,7 +135,7 @@
             
             self.textField = name;
             
-            [name addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
+            [self.textField addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
             
         } else if (indexPath.row == 1){ // Bool Cell
             static NSString *CellIdentifier = @"BoolCell";
@@ -367,11 +367,10 @@
 - (void)checkTextField:(id)sender
 {
     self.limitLabel.hidden = NO;
-    UITextField *textField = (UITextField *)sender;
     
-    circleName = textField.text;
-    NSString *removedSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    int limit = 35 - textField.text.length;
+    circleName = self.textField.text;
+    NSString *removedSpaces = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    int limit = 35 - self.textField.text.length;
     self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
     if ((removedSpaces.length > 0) && (limit >= 0)) {
         self.doneBarButton.enabled = YES;
