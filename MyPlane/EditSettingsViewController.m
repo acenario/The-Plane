@@ -20,7 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordReEnter;
-@property (strong, nonatomic) IBOutlet UITextField *gracePeriodField;
+@property (strong, nonatomic) IBOutlet UILabel *gracePeriodField;
 
 
 @end
@@ -84,17 +84,8 @@
     [self.setPic setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 //    [self configureGracePeriod];
     
-    if (self.gracePeriod == 0) {
-        self.gracePeriodField.placeholder = @"No delay";
-    } else if (self.gracePeriod < 60 * 60) {
-        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
-    } else if (self.gracePeriod == 60 * 60) {
-        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"1 hour"];
-    } else if (self.gracePeriod < 1440 * 60) {
-        self.gracePeriodField.placeholder = [NSString stringWithFormat:@"%d hours", self.gracePeriod / 3600];
-    } else {
-        self.gracePeriodField.placeholder = @"1 day";
-    }
+    self.gracePeriodField.textColor = [UIColor lightGrayColor];
+    [self configureGracePeriod];
 }
 
 - (void)configureGracePeriod
@@ -276,9 +267,10 @@
 //            NSLog(@"EMPTY!");
         }
         
-        if (![self.gracePeriodField.text isEqualToString:@""]) {
+        if (![self.gracePeriodField.textColor isEqual:[UIColor lightGrayColor]]) {
             check = YES;
             grace = [NSNumber numberWithInt:self.gracePeriod];
+//            NSLog(@"test");
         }
         
         if (check) {
@@ -599,6 +591,7 @@
 
 - (void)editExpiryTimeViewController:(EditExpiryTimeViewController *)controller withGracePeriod:(int)gracePeriod
 {
+    self.gracePeriodField.textColor = [UIColor colorFromHexCode:@"324F85"];
     self.gracePeriod = gracePeriod;
     [self configureGracePeriod];
 //    [self dismissViewControllerAnimated:YES completion:nil];
