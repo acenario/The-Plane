@@ -142,6 +142,70 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    Reminders *deleteReminder = [self.objects objectAtIndex:indexPath.row];
+    NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
+    NSString *tempName = [deleteReminder objectForKey:@"user"];
+    NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
+    
+    for (Comments *comment in deleteReminder.comments) {
+        [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
+    }
+    
+    SocialPosts *post;
+    if ((deleteReminder.socialPost)) {
+        post = (SocialPosts *)deleteReminder.socialPost;
+        if (post.claimerUsernames.count == 1) {
+            [post setIsClaimed:NO];
+        }
+        [post removeObject:[Reminders objectWithoutDataWithObjectId:deleteReminder.objectId] forKey:@"reminder"];
+        [post removeObject:deleteReminder.user forKey:@"claimerUsernames"];
+        [post removeObject:[UserInfo objectWithoutDataWithObjectId:deleteReminder.recipient.objectId] forKey:@"claimers"];
+    }
+    
+    [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
+                [post saveInBackground];
+            }];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self loadObjects];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [SVProgressHUD showSuccessWithStatus:@"Denied Reminder"];
+            
+            if (![deleteName isEqualToString:[PFUser currentUser].username]) {
+                NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
+                NSDictionary *data = @{
+                                       @"r": @"d"
+                                       };
+                
+                PFQuery *pushQuery = [PFInstallation query];
+                [pushQuery whereKey:@"user" equalTo:deleteName];
+                
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery];
+                [push setMessage:message];
+                [push setData:data];
+                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        NSString *message = [NSString stringWithFormat:@"%@ has been notified", deleteName];
+                        [SVProgressHUD showSuccessWithStatus:message];
+                    } else {
+                        NSLog(@"%@", error);
+                    }
+                }];
+            }
+            
+        }
+    }];
+    
+    
+    
+    
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"AddReminder"]) {
