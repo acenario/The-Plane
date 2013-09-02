@@ -86,6 +86,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
         
     }
+
     
     if ([PFUser currentUser]) {
         CurrentUser *sharedManager = [CurrentUser sharedManager];
@@ -127,7 +128,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     NSString *friendAdd = [userInfo objectForKey:@"f"];
     NSString *reminderAdd = [userInfo objectForKey:@"r"];
-    
+    NSString *alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+        
     if ([friendAdd isEqualToString:@"add"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
         
@@ -143,6 +145,11 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
             [currentInstallation saveEventually];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
+    }
+    
+    if ([reminderAdd isEqualToString:@"d"]) {
+        [SVProgressHUD showErrorWithStatus:alertValue];
+        
     }
 }
 

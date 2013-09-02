@@ -67,6 +67,7 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+    
 }
 
 -(void)configureViewController {
@@ -144,7 +145,7 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             static NSString *CellIdentifier = @"UserCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
             PFImageView *userImage = (PFImageView *)[cell viewWithTag:1312];
             UILabel *name = (UILabel *)[cell viewWithTag:13101];
@@ -191,7 +192,7 @@
     } else if (indexPath.section == 1) {
         static NSString *CellIdentifier = @"RemindAgainCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
+    
         return cell;
     } else if (indexPath.section == 2) {
         // This is the comment text input cell

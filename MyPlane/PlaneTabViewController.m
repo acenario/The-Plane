@@ -79,8 +79,10 @@
 
 //- (void)registerDefaults
 //{
+//     NSNumber *startingPoints = [NSNumber numberWithInt:100];
+//    
 //    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                [NSNumber numberWithBool:YES], @"FirstTime",
+//                                startingPoints, @"points",
 //                                nil];
 //    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
 //}
