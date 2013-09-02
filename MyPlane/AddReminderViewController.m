@@ -338,6 +338,7 @@
 - (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task
 {
     self.taskTextField.text = task;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", 35 - task.length];
     textCheck = YES;
     [self configureDoneButton];
 }

@@ -173,6 +173,7 @@
 {
     self.taskTextField.text = task;
     textCheck = YES;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d characters left", 35 - task.length];
     [self configureDoneButton];
 }
 
