@@ -61,6 +61,7 @@
         self.editButton.enabled = NO;
     }
     
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
@@ -245,7 +246,8 @@
             self.commentTextField = commentTextfield;
             self.addCommentButton = addCommentButton;
             self.limitLabel = (UILabel *)[cell viewWithTag:1337];
-            
+            self.limitLabel.hidden = YES;
+
             commentTextfield.delegate = self;
             //        [commentTextfield addTarget:self action:@selector(checkTextField:) forControlEvents:UIControlEventEditingChanged];
             

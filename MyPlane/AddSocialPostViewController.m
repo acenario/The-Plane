@@ -7,6 +7,7 @@
 //
 
 #import "AddSocialPostViewController.h"
+#import "Reachability.h"
 
 @interface AddSocialPostViewController ()
 
@@ -19,6 +20,7 @@
     NSString *taskText;
     NSString *descriptionText;
     NSDate *reminderDate;
+    Reachability *reachability;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -39,6 +41,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
     
     NSString *placeholderText = @"Write a post here...";
     
@@ -77,6 +83,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)reachabilityChanged:(NSNotification*) notification
+{
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        self.doneButton.enabled = NO;
+    } else {
+        [self configureDoneButton];
+    }
 }
 
 
