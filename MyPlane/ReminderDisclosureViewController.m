@@ -332,7 +332,7 @@
             reRemind.shadowColor = [UIColor whiteColor];
             reRemind.shadowHeight = 0.0f;
             reRemind.cornerRadius = 0.0f;
-            reRemind.titleLabel.font = [UIFont flatFontOfSize:20];
+            reRemind.titleLabel.font = [UIFont flatFontOfSize:18];
             
             [reRemind setTitleColor:[UIColor colorFromHexCode:@"A62A00"] forState:UIControlStateNormal];
             [reRemind setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
@@ -349,7 +349,7 @@
             halfUpdate.shadowColor = [UIColor whiteColor];
             halfUpdate.shadowHeight = 0.0f;
             halfUpdate.cornerRadius = 0.0f;
-            halfUpdate.titleLabel.font = [UIFont flatFontOfSize:20];
+            halfUpdate.titleLabel.font = [UIFont flatFontOfSize:18];
             
             [halfUpdate setTitleColor:[UIColor colorFromHexCode:@"A62A00"] forState:UIControlStateNormal];
             [halfUpdate setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];

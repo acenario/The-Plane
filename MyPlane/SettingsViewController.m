@@ -63,10 +63,10 @@
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
-    }];
-    item0.tag = 1;
+//    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+//        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
+//    }];
+//    item0.tag = 1;
     
     UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
         [self logOut];
@@ -79,7 +79,7 @@
     item0.tag = 3;
     
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;

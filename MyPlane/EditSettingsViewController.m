@@ -91,7 +91,7 @@
 - (void)configureGracePeriod
 {
     if (self.gracePeriod == 0) {
-        self.gracePeriodField.text = @"No delay";
+        self.gracePeriodField.text = @"Instantly";
     } else if (self.gracePeriod < 60 * 60) {
         self.gracePeriodField.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {

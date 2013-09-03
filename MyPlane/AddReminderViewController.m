@@ -278,6 +278,10 @@
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
     
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
+
+    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             
@@ -306,6 +310,7 @@
             cell.textLabel.backgroundColor = [UIColor whiteColor];
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
             
+            [cell.contentView addSubview:bottomView];
             [cell.contentView addSubview:imgView];
             
         } else {

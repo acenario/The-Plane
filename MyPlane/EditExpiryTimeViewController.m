@@ -42,7 +42,7 @@
     self.viewForPicker.frame = CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.frame.size.height - 112);
     
     if (self.gracePeriod == 0) {
-        self.timeLabel.text = @"No delay";
+        self.timeLabel.text = @"Instantly";
     } else if (self.gracePeriod < 60 * 60) {
         self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {
@@ -53,7 +53,7 @@
         self.timeLabel.text = @"1 day";
     }
     
-    self.times = [[NSArray alloc] initWithObjects:@"No delay", @"5 minutes", @"10 minutes", @"15 minutes", @"30 minutes", @"1 hour", @"2 hours", @"6 hours", @"12 hours", @"1 day", nil];
+    self.times = [[NSArray alloc] initWithObjects:@"Instantly", @"5 minutes", @"10 minutes", @"15 minutes", @"30 minutes", @"1 hour", @"2 hours", @"6 hours", @"12 hours", @"1 day", nil];
     
     self.pickerView.delegate = self;
     int row = [self.times indexOfObject:self.timeLabel.text];
@@ -191,7 +191,7 @@
 - (void)updateLabel
 {
     if (self.gracePeriod == 0) {
-        self.timeLabel.text = @"No delay";
+        self.timeLabel.text = @"Instantly";
     } else if (self.gracePeriod < 60 * 60) {
         self.timeLabel.text = [NSString stringWithFormat:@"%d minutes", self.gracePeriod / 60];
     } else if (self.gracePeriod == 60 * 60) {

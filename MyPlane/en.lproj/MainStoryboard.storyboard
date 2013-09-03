@@ -263,7 +263,7 @@
                                     </constraints>
                                     <segments>
                                         <segment title="To a Friend"/>
-                                        <segment title="To a Circle"/>
+                                        <segment title="To a Group"/>
                                     </segments>
                                     <connections>
                                         <action selector="segmentChanged:" destination="0d1-kQ-2Gn" eventType="valueChanged" id="hUq-I9-KGZ"/>
@@ -603,7 +603,7 @@
             <objects>
                 <tableViewController id="Dcc-nQ-kd2" customClass="ReminderDisclosureViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="1Sb-Ds-KwH">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="303"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -763,6 +763,9 @@
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TkM-FN-sy9" customClass="FUIButton">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="6ZJ-NV-ZhE"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                             <state key="normal" title="Send Update">
                                                 <color key="titleColor" red="0.60784313729999995" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
@@ -777,16 +780,14 @@
                                 </view>
                                 <constraints>
                                     <constraint firstItem="eoC-zG-kb6" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="1nQ-PR-sUM"/>
-                                    <constraint firstItem="eoC-zG-kb6" firstAttribute="baseline" secondItem="ZgQ-uN-cA7" secondAttribute="baseline" type="default" id="2d3-Xy-K8U"/>
-                                    <constraint firstItem="ZgQ-uN-cA7" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="B3h-4n-axd"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="centerX" secondItem="T33-eD-393" secondAttribute="centerX" type="default" id="Gev-Jb-PNY"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="VaU-9e-Rcx"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="trailing" secondItem="eoC-zG-kb6" secondAttribute="trailing" type="default" id="aqR-m5-oA7"/>
-                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="j7q-Qc-7eQ"/>
                                     <constraint firstItem="eoC-zG-kb6" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="msD-Kd-gUC"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="oP5-xF-rgp"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="centerX" secondItem="TkM-FN-sy9" secondAttribute="centerX" type="default" id="qK7-F0-dF8"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="leading" secondItem="ZgQ-uN-cA7" secondAttribute="leading" type="default" id="rwL-nX-Rj2"/>
+                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="ZgQ-uN-cA7" secondAttribute="bottom" type="default" id="s6H-K5-uEe"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="ulu-7f-2rH"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="trailing" secondItem="AW2-ui-nMc" secondAttribute="trailing" type="default" id="vtO-CQ-R9N"/>
                                 </constraints>
@@ -1296,7 +1297,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Friends"/>
-                                <segment title="Circles"/>
+                                <segment title="Groups"/>
                             </segments>
                             <connections>
                                 <action selector="segmentChanged:" destination="bo1-BX-yHR" eventType="valueChanged" id="PbZ-v0-OBJ"/>
@@ -2091,7 +2092,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Change Reminder Grace Period" id="z8y-sL-oXa">
+                            <tableViewSection headerTitle="Cleanup Old Reminders" id="z8y-sL-oXa">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6lu-yb-Jrc">
                                         <rect key="frame" x="0.0" y="467" width="320" height="46"/>
@@ -2159,7 +2160,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2434" y="2876"/>
         </scene>
-        <!--Edit Expiry Time View Controller - Grace Period-->
+        <!--Edit Expiry Time View Controller - Cleanup Time-->
         <scene sceneID="zjW-26-fSD">
             <objects>
                 <tableViewController id="KXk-iG-V4w" customClass="EditExpiryTimeViewController" sceneMemberID="viewController">
@@ -2218,7 +2219,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="KXk-iG-V4w" id="DmJ-aY-lCd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Grace Period" id="whY-jP-gnj">
+                    <navigationItem key="navigationItem" title="Cleanup Time" id="whY-jP-gnj">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Jdb-7l-PID">
                             <connections>
                                 <action selector="cancel:" destination="KXk-iG-V4w" id="oEQ-RO-oDa"/>
@@ -2299,7 +2300,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="302" contentMode="left" text="Circle:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ny5-60-Kt4">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="302" contentMode="left" text="Group:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ny5-60-Kt4">
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2308,15 +2309,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="ny5-60-Kt4" firstAttribute="leading" secondItem="Dow-Ix-fK0" secondAttribute="leading" type="default" id="9Ke-CJ-0HH"/>
+                                    <constraint firstItem="pNC-QG-mY4" firstAttribute="leading" secondItem="ny5-60-Kt4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="1VY-GZ-cdQ"/>
                                     <constraint firstItem="OJv-Ao-QOD" firstAttribute="top" secondItem="N8U-Yl-aky" secondAttribute="top" type="default" id="CYC-qK-EwB"/>
                                     <constraint firstItem="OJv-Ao-QOD" firstAttribute="leading" secondItem="N8U-Yl-aky" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="MIN-Gp-ote"/>
-                                    <constraint firstAttribute="trailing" secondItem="GNQ-of-gCh" secondAttribute="trailing" constant="14" id="QpA-k0-uFA"/>
+                                    <constraint firstAttribute="trailing" secondItem="GNQ-of-gCh" secondAttribute="trailing" constant="14" id="Mfg-Ht-12R"/>
                                     <constraint firstItem="pNC-QG-mY4" firstAttribute="baseline" secondItem="ny5-60-Kt4" secondAttribute="baseline" type="default" id="QxS-b6-3LV"/>
                                     <constraint firstItem="pNC-QG-mY4" firstAttribute="baseline" secondItem="GNQ-of-gCh" secondAttribute="baseline" type="default" id="TNA-45-tfw"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="top" secondItem="iXh-WC-Wrs" secondAttribute="top" constant="3" id="YKH-2m-djT"/>
                                     <constraint firstItem="ftt-VX-WaM" firstAttribute="centerY" secondItem="iXh-WC-Wrs" secondAttribute="centerY" type="default" id="bcs-NK-7tE"/>
-                                    <constraint firstItem="pNC-QG-mY4" firstAttribute="leading" secondItem="iXh-WC-Wrs" secondAttribute="leading" constant="60" id="bpG-nX-Qfp"/>
+                                    <constraint firstItem="ny5-60-Kt4" firstAttribute="leading" secondItem="N8U-Yl-aky" secondAttribute="leading" type="default" id="cw8-Pp-7hV"/>
                                     <constraint firstItem="ftt-VX-WaM" firstAttribute="trailing" secondItem="OJv-Ao-QOD" secondAttribute="trailing" type="default" id="ju3-0V-MhZ"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="centerX" secondItem="Dow-Ix-fK0" secondAttribute="centerX" type="default" id="nL9-Cg-3XP"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="leading" secondItem="iXh-WC-Wrs" secondAttribute="leading" constant="12" id="swE-ev-3Bm"/>
@@ -2490,7 +2491,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Friends"/>
-                                <segment title="Circles"/>
+                                <segment title="Groups"/>
                             </segments>
                             <connections>
                                 <action selector="segmentChanged:" destination="Rph-vb-JUr" eventType="valueChanged" id="jHi-ze-g44"/>
@@ -2584,12 +2585,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Circle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBM-oi-yIW">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Group" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBM-oi-yIW">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Select a Circle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aiv-Jc-jMA">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Select a Group" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aiv-Jc-jMA">
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2838,12 +2839,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2960" y="4162"/>
         </scene>
-        <!--Social Post Detail View Controller - Social Post Detail-->
+        <!--Social Post Detail View Controller - Comments-->
         <scene sceneID="TFW-UX-G1c">
             <objects>
                 <tableViewController id="UAg-mc-Kmn" customClass="SocialPostDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yQV-Sf-spq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="303"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -2891,7 +2892,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="520" contentMode="left" text="Circle:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKY-0N-FYJ">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="520" contentMode="left" text="Group:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKY-0N-FYJ">
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2909,13 +2910,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstItem="XyH-YY-cEJ" firstAttribute="baseline" secondItem="rOf-2g-zxI" secondAttribute="baseline" type="default" id="7ZL-j7-ExK"/>
                                     <constraint firstItem="4NC-2K-kMm" firstAttribute="centerY" secondItem="XRi-T4-Aob" secondAttribute="centerY" type="default" id="BNa-Vb-LcF"/>
                                     <constraint firstItem="4hq-tg-zeI" firstAttribute="leading" secondItem="Jjf-uD-S1l" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="DtV-LE-gUY"/>
-                                    <constraint firstItem="XyH-YY-cEJ" firstAttribute="leading" secondItem="XRi-T4-Aob" secondAttribute="leading" constant="60" id="ISZ-lc-ikY"/>
                                     <constraint firstItem="fgG-mp-2se" firstAttribute="centerY" secondItem="Jjf-uD-S1l" secondAttribute="centerY" type="default" id="J4n-8K-20S"/>
-                                    <constraint firstItem="xKY-0N-FYJ" firstAttribute="leading" secondItem="fgG-mp-2se" secondAttribute="leading" type="default" id="Jrm-xY-ANd"/>
+                                    <constraint firstAttribute="trailing" secondItem="rOf-2g-zxI" secondAttribute="trailing" constant="14" id="KQX-QZ-LL1"/>
                                     <constraint firstItem="4NC-2K-kMm" firstAttribute="trailing" secondItem="4hq-tg-zeI" secondAttribute="trailing" type="default" id="OVN-dG-49b"/>
-                                    <constraint firstAttribute="trailing" secondItem="rOf-2g-zxI" secondAttribute="trailing" constant="14" id="PdH-ve-k8t"/>
+                                    <constraint firstItem="XyH-YY-cEJ" firstAttribute="leading" secondItem="xKY-0N-FYJ" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="RvG-Ws-B8F"/>
                                     <constraint firstItem="XyH-YY-cEJ" firstAttribute="baseline" secondItem="xKY-0N-FYJ" secondAttribute="baseline" type="default" id="Yt0-ff-d39"/>
                                     <constraint firstItem="4hq-tg-zeI" firstAttribute="top" secondItem="XRi-T4-Aob" secondAttribute="top" constant="3" id="dhU-7C-M9o"/>
+                                    <constraint firstItem="Jjf-uD-S1l" firstAttribute="leading" secondItem="xKY-0N-FYJ" secondAttribute="leading" type="default" id="iOa-8w-QkI"/>
                                     <constraint firstItem="Jjf-uD-S1l" firstAttribute="top" secondItem="XRi-T4-Aob" secondAttribute="top" constant="5" id="k4i-xS-6e7"/>
                                     <constraint firstAttribute="bottom" secondItem="xKY-0N-FYJ" secondAttribute="bottom" constant="1" id="nze-X4-nyS"/>
                                     <constraint firstItem="4NC-2K-kMm" firstAttribute="leading" secondItem="Jjf-uD-S1l" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="sVN-HB-0KH"/>
@@ -3036,7 +3037,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReminderCell" rowHeight="70" id="rcv-fr-dkN">
-                                <rect key="frame" x="0.0" y="266" width="320" height="71"/>
+                                <rect key="frame" x="0.0" y="266" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="69"/>
@@ -3089,7 +3090,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="UAg-mc-Kmn" id="YxP-Dj-Ngv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Social Post Detail" id="qkQ-Pc-5Dn">
+                    <navigationItem key="navigationItem" title="Comments" id="qkQ-Pc-5Dn">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="bKx-VW-yxc">
                             <connections>
                                 <segue destination="VbV-gr-Uy1" kind="modal" identifier="EditPost" id="M4a-oY-NKa"/>
@@ -3273,7 +3274,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2960" y="4818"/>
         </scene>
-        <!--Pick Circle View Controller - Pick Circle-->
+        <!--Pick Circle View Controller - Pick Group-->
         <scene sceneID="qrb-8F-4t3">
             <objects>
                 <tableViewController id="3Qe-xs-Hky" customClass="PickCircleViewController" sceneMemberID="viewController">
@@ -3309,7 +3310,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="3Qe-xs-Hky" id="vHW-re-mg0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Pick Circle" id="MZk-Nf-hTp">
+                    <navigationItem key="navigationItem" title="Pick Group" id="MZk-Nf-hTp">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="ao3-UO-Ek4">
                             <connections>
                                 <action selector="cancel:" destination="3Qe-xs-Hky" id="qnC-WB-68Q"/>
@@ -3853,7 +3854,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Creator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNY-xB-16E">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Started By" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNY-xB-16E">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4123,7 +4124,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" red="0.60784313729999995" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="640" contentMode="left" text="Circle:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L5p-FX-mqo">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="640" contentMode="left" text="Group:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L5p-FX-mqo">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="49" id="mzQ-CU-SoD"/>
                                             </constraints>
@@ -4311,7 +4312,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </constraints>
                                     <segments>
                                         <segment title="To a Friend"/>
-                                        <segment title="To a Circle"/>
+                                        <segment title="To a Group"/>
                                     </segments>
                                     <connections>
                                         <action selector="segmentChange:" destination="eaa-N2-ADR" eventType="valueChanged" id="jba-rC-3IA"/>
@@ -4426,7 +4427,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Circle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5R-Lp-KvE">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Group" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5R-Lp-KvE">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4531,7 +4532,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="3442" y="7382"/>
         </scene>
-        <!--Pick Circle View Controller - Pick Circle-->
+        <!--Pick Circle View Controller - Pick Group-->
         <scene sceneID="2Nl-Vb-CjX">
             <objects>
                 <tableViewController id="vyz-uX-TPk" customClass="ACRPickCircleViewController" sceneMemberID="viewController">
@@ -4567,7 +4568,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="vyz-uX-TPk" id="thJ-xC-dft"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Pick Circle" id="rlB-N1-yvd"/>
+                    <navigationItem key="navigationItem" title="Pick Group" id="rlB-N1-yvd"/>
                     <connections>
                         <segue destination="sfe-de-P5Z" kind="modal" identifier="PickMembers" id="ALS-KN-DIo"/>
                     </connections>
@@ -4835,7 +4836,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2964" y="8182"/>
         </scene>
-        <!--Join Circle View Controller - Join Circle-->
+        <!--Join Circle View Controller - Join Group-->
         <scene sceneID="1jo-fu-xBw">
             <objects>
                 <tableViewController id="9Ki-FT-SPu" customClass="JoinCircleViewController" sceneMemberID="viewController">
@@ -4843,7 +4844,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search for a circle..." id="uEr-Fa-7GV">
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search for a group..." id="uEr-Fa-7GV">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
@@ -4906,7 +4907,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="9Ki-FT-SPu" id="U96-K9-J2Z"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Join Circle" id="bYa-q2-R4a">
+                    <navigationItem key="navigationItem" title="Join Group" id="bYa-q2-R4a">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="hiD-rD-zKz">
                             <connections>
                                 <action selector="cancel:" destination="9Ki-FT-SPu" id="7L7-vC-4rq"/>
@@ -4944,7 +4945,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="1887" y="6002"/>
         </scene>
-        <!--Create Circle View Controller - Create Circle-->
+        <!--Create Circle View Controller - Create Group-->
         <scene sceneID="1gY-06-eoT">
             <objects>
                 <tableViewController id="W9L-Uy-dDd" customClass="CreateCircleViewController" sceneMemberID="viewController">
@@ -5123,7 +5124,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="W9L-Uy-dDd" id="cdf-hz-ivQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Create Circle" id="o5e-aR-kR5">
+                    <navigationItem key="navigationItem" title="Create Group" id="o5e-aR-kR5">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="N6d-Yf-1Ey">
                             <connections>
                                 <action selector="cancel:" destination="W9L-Uy-dDd" id="NmA-zH-SJ6"/>
@@ -5917,18 +5918,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="nx5-Dy-vwJ"/>
         <segue reference="7p7-Gb-VJp"/>
+        <segue reference="d1z-oJ-MYo"/>
         <segue reference="clu-AU-b0I"/>
         <segue reference="U7Z-W4-19C"/>
-        <segue reference="zNQ-I4-gIZ"/>
-        <segue reference="d1z-oJ-MYo"/>
-        <segue reference="GfZ-it-DUs"/>
-        <segue reference="6cG-gq-PK8"/>
-        <segue reference="7cf-9Z-bI4"/>
-        <segue reference="nx5-Dy-vwJ"/>
-        <segue reference="OGa-b0-0On"/>
-        <segue reference="hB8-tL-UEI"/>
-        <segue reference="std-vO-s0Z"/>
+        <segue reference="ERg-Kc-26H"/>
+        <segue reference="1cS-jb-Zdb"/>
+        <segue reference="6iM-6d-iGd"/>
         <segue reference="azN-Uw-T1Q"/>
+        <segue reference="GfZ-it-DUs"/>
+        <segue reference="std-vO-s0Z"/>
+        <segue reference="ueR-b5-QFZ"/>
+        <segue reference="ALS-KN-DIo"/>
     </inferredMetricsTieBreakers>
 </document>
