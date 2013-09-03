@@ -348,7 +348,11 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)nav.topViewController;
         controller.delegate = self;
-    } 
+    } else if ([segue.identifier isEqualToString:@"Mail"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        ShareMailViewController *controller = (ShareMailViewController *)nav.topViewController;
+        controller.dictionary = sender;
+    }
 }
 
 - (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original
@@ -589,34 +593,75 @@
     }
 }
 
+
+
 - (void)showEmail
 {
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);
-    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:CFArrayGetCount(people)];
-    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
-    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+//    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSArray *abContactArray = [[NSArray alloc] init];
+    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+        
+        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+        
+        NSComparisonResult result = [lastName1 compare:lastName2];
+        if (result != NSOrderedSame)
+            return result;
+        else
+            return [firstName1 compare:firstName2];
+    }];
+    
+    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:abContactArray.count];
     [dictionary setObject:allEmails forKey:@"email"];
     [dictionary setObject:allFirsts forKey:@"first"];
     [dictionary setObject:allLasts forKey:@"last"];
     
-    for (CFIndex i = 0; i < CFArrayGetCount(people); i++) {
-        ABRecordRef person = CFArrayGetValueAtIndex(people, i);
-        ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-        ABRecordRef firsts = ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        ABRecordRef lasts = ABRecordCopyValue(person, kABPersonLastNameProperty);
+    for (id object in abContactArray) {
+        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+//        NSString *email = CFBridgingRelease(ABRecordCopyValue(record, kABPersonEmailProperty));
+//        NSLog(@"person = %@, %@", lastname, record);
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
             NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
             [[dictionary objectForKey:@"email"] addObject:email];
-            [[dictionary objectForKey:@"first"] addObject:(__bridge id)(firsts)];
-            [[dictionary objectForKey:@"last"] addObject:(__bridge id)(lasts)];
+            [[dictionary objectForKey:@"first"] addObject:firstname];
+            [[dictionary objectForKey:@"last"] addObject:lastname];
         }
         CFRelease(emails);
     }
-    NSLog(@"All Mails:%@",dictionary);
-    CFRelease(addressBook);
-    CFRelease(people);
+
+    
+//    for (CFIndex i = 0; i < CFArrayGetCount(people); i++) {
+//        ABRecordRef person = CFArrayGetValueAtIndex(people, i);
+//        ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+//        ABRecordRef firsts = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+//        ABRecordRef lasts = ABRecordCopyValue(person, kABPersonLastNameProperty);
+//        NSLog(@"%@", firsts);
+//        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+//            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+//            [[dictionary objectForKey:@"email"] addObject:email];
+//            [[dictionary objectForKey:@"first"] addObject:(__bridge id)(firsts)];
+//            [[dictionary objectForKey:@"last"] addObject:(__bridge id)(lasts)];
+//        }
+//        CFRelease(emails);
+//    }
+////    NSLog(@"All Mails:%@",dictionary);
+//    CFRelease(addressBook);
+//    CFRelease(people);
+
+    
+    [self performSegueWithIdentifier:@"Mail" sender:dictionary];
     
 //    ABPeoplePickerNavigationController *picker =
 //    [[ABPeoplePickerNavigationController alloc] init];

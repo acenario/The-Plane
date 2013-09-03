@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface ShareMailViewController : UITableViewController
 
-@property (nonatomic, strong) NSDictionary *dictionary;
+@interface ShareMailViewController : UITableViewController <MFMailComposeViewControllerDelegate>
+
+@property (nonatomic, retain) NSDictionary *dictionary;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+- (IBAction)cancel:(id)sender;
+- (IBAction)done:(id)sender;
 
 @end
