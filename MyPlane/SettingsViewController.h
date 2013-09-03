@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MessageUI/MessageUI.h>
+//#import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
@@ -19,7 +19,7 @@
 #import "firstTimeSettingsViewController.h"
 
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, MFMailComposeViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
