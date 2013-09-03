@@ -14,6 +14,8 @@
 #import "AddReminderViewController.h"
 #import "Reachability.h"
 
+#import "ShareMailViewController.h"
+
 
 @interface SettingsViewController ()
 
@@ -63,11 +65,11 @@
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
-    }];
-    item0.tag = 1;
-    
+//    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+//        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
+//    }];
+//    item0.tag = 1;
+//    
     UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
         [self logOut];
     }];
@@ -78,8 +80,13 @@
     }];
     item0.tag = 3;
     
+    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Share" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {        
+        [self showEmail];
+    }];
+    item0.tag = 4;
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
+    
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item4,item2,]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -580,6 +587,96 @@
             [controller popToRootViewControllerAnimated:NO];
         }
     }
+}
+
+- (void)showEmail
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);
+    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:CFArrayGetCount(people)];
+    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
+    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
+    [dictionary setObject:allEmails forKey:@"email"];
+    [dictionary setObject:allFirsts forKey:@"first"];
+    [dictionary setObject:allLasts forKey:@"last"];
+    
+    for (CFIndex i = 0; i < CFArrayGetCount(people); i++) {
+        ABRecordRef person = CFArrayGetValueAtIndex(people, i);
+        ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+        ABRecordRef firsts = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        ABRecordRef lasts = ABRecordCopyValue(person, kABPersonLastNameProperty);
+        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+            [[dictionary objectForKey:@"email"] addObject:email];
+            [[dictionary objectForKey:@"first"] addObject:(__bridge id)(firsts)];
+            [[dictionary objectForKey:@"last"] addObject:(__bridge id)(lasts)];
+        }
+        CFRelease(emails);
+    }
+    NSLog(@"All Mails:%@",dictionary);
+    CFRelease(addressBook);
+    CFRelease(people);
+    
+//    ABPeoplePickerNavigationController *picker =
+//    [[ABPeoplePickerNavigationController alloc] init];
+//    picker.peoplePickerDelegate = self;
+//    
+//    [self presentViewController:picker animated:YES completion:nil];
+//    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+//    mViewController.mailComposeDelegate = self;
+//    [mViewController setSubject:@"Try out Hey! Heads Up"];
+//    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
+//    [mViewController setToRecipients:nil];
+//    [self presentViewController:mViewController animated:YES completion:nil];
+}
+
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+    
+//    NSMutableArray *phone = [[NSMutableArray alloc] init];
+//    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+//                                                     kABPersonEmailProperty);
+//    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+//        int i;
+//        for (i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+//            [phone addObject:(__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(phoneNumbers, i)];
+//        }
+//    }
+//    
+//    NSLog(@"%@", phone);
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    return YES;
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    // Only inspect the value if it’s an email
+    // Obtains the email addres ana localized label from a PeoplePicker
+    if (property == kABPersonEmailProperty) {
+        ABMultiValueRef emails = ABRecordCopyValue(person, property);
+        CFStringRef emailValueSelected = ABMultiValueCopyValueAtIndex(emails, identifier);
+        CFStringRef emailLabelSelected = ABMultiValueCopyLabelAtIndex(emails, identifier);
+        CFStringRef emailLabelSelectedLocalized = ABAddressBookCopyLocalizedLabel(ABMultiValueCopyLabelAtIndex(emails, identifier));
+        NSLog(@"\n EmailValueSelected = %@ \n EmailLabelSelected = %@ \n \EmailLabeSelectedlLocalized = %@", emailValueSelected, emailLabelSelected, emailLabelSelectedLocalized);
+//        self.emailLabel.text = (__bridge NSString *)emailLabelSelectedLocalized;
+//        self.emailValue.text = (__bridge NSString *)emailValueSelected;
+        // Return to the main view controller.
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return NO;
+    }
+    return YES;
+    
 }
 
 @end

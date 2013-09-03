@@ -7,13 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
+
 #import "EditSettingsViewController.h"
 #import "UzysSlideMenu.h"
 #import "CommonTasksViewController.h"
 #import "MZFormSheetController.h"
 #import "firstTimeSettingsViewController.h"
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate>
+
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, MFMailComposeViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
