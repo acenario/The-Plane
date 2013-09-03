@@ -163,6 +163,7 @@
         UILabel *date = (UILabel *)[cell viewWithTag:1];
         UILabel *circle = (UILabel *)[cell viewWithTag:5104];
         PFImageView *ownerImage = (PFImageView *)[cell viewWithTag:5111];
+        UIImageView *clippy = (UIImageView *)[cell viewWithTag:109];
         
         name.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
         text.text = object.text;
@@ -170,6 +171,12 @@
         ownerImage.file = userObject.profilePicture;
         date.text = [dateFormatter stringFromDate:object.createdAt];
         [ownerImage loadInBackground];
+        
+        if (object.reminderTask.length > 0) {
+            clippy.hidden = NO;
+        } else {
+            clippy.hidden = YES;
+        }
         
         return cell;
     } else {

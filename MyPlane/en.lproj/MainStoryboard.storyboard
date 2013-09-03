@@ -2275,8 +2275,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5101" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="OJv-Ao-QOD">
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="186" id="jUd-ji-wN2"/>
                                                 <constraint firstAttribute="height" constant="21" id="sDr-6H-HJg"/>
-                                                <constraint firstAttribute="width" constant="214" id="saW-b0-6qr"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2308,20 +2308,28 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="109" contentMode="center" image="70-paperclip.png" translatesAutoresizingMaskIntoConstraints="NO" id="Exv-Vw-ces">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="YyD-B9-1iC"/>
+                                                <constraint firstAttribute="width" constant="20" id="xe8-w2-S6y"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="pNC-QG-mY4" firstAttribute="leading" secondItem="ny5-60-Kt4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="1VY-GZ-cdQ"/>
                                     <constraint firstItem="OJv-Ao-QOD" firstAttribute="top" secondItem="N8U-Yl-aky" secondAttribute="top" type="default" id="CYC-qK-EwB"/>
+                                    <constraint firstItem="Exv-Vw-ces" firstAttribute="bottom" secondItem="OJv-Ao-QOD" secondAttribute="bottom" type="default" id="Gsv-fI-7eu"/>
+                                    <constraint firstItem="Exv-Vw-ces" firstAttribute="leading" secondItem="OJv-Ao-QOD" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Gxq-Cr-nOi"/>
                                     <constraint firstItem="OJv-Ao-QOD" firstAttribute="leading" secondItem="N8U-Yl-aky" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="MIN-Gp-ote"/>
                                     <constraint firstAttribute="trailing" secondItem="GNQ-of-gCh" secondAttribute="trailing" constant="14" id="Mfg-Ht-12R"/>
                                     <constraint firstItem="pNC-QG-mY4" firstAttribute="baseline" secondItem="ny5-60-Kt4" secondAttribute="baseline" type="default" id="QxS-b6-3LV"/>
                                     <constraint firstItem="pNC-QG-mY4" firstAttribute="baseline" secondItem="GNQ-of-gCh" secondAttribute="baseline" type="default" id="TNA-45-tfw"/>
+                                    <constraint firstItem="Exv-Vw-ces" firstAttribute="trailing" secondItem="ftt-VX-WaM" secondAttribute="trailing" type="default" id="VZa-bY-dkQ"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="top" secondItem="iXh-WC-Wrs" secondAttribute="top" constant="3" id="YKH-2m-djT"/>
                                     <constraint firstItem="ftt-VX-WaM" firstAttribute="centerY" secondItem="iXh-WC-Wrs" secondAttribute="centerY" type="default" id="bcs-NK-7tE"/>
                                     <constraint firstItem="ny5-60-Kt4" firstAttribute="leading" secondItem="N8U-Yl-aky" secondAttribute="leading" type="default" id="cw8-Pp-7hV"/>
-                                    <constraint firstItem="ftt-VX-WaM" firstAttribute="trailing" secondItem="OJv-Ao-QOD" secondAttribute="trailing" type="default" id="ju3-0V-MhZ"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="centerX" secondItem="Dow-Ix-fK0" secondAttribute="centerX" type="default" id="nL9-Cg-3XP"/>
                                     <constraint firstItem="N8U-Yl-aky" firstAttribute="leading" secondItem="iXh-WC-Wrs" secondAttribute="leading" constant="12" id="swE-ev-3Bm"/>
                                     <constraint firstAttribute="bottom" secondItem="ny5-60-Kt4" secondAttribute="bottom" constant="1" id="wal-Jl-Dbx"/>
@@ -3040,7 +3048,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReminderCell" rowHeight="70" id="rcv-fr-dkN">
-                                <rect key="frame" x="0.0" y="266" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="266" width="320" height="71"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="69"/>
@@ -5604,6 +5612,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="112-group.png" width="32" height="21"/>
         <image name="123-id-card.png" width="24" height="17"/>
         <image name="58-todo.png" width="26" height="27"/>
+        <image name="70-paperclip.png" width="7" height="13"/>
         <image name="Placeholder.png" width="60" height="60"/>
         <image name="first" width="16" height="16"/>
         <image name="separatorVertical.png" width="1" height="44"/>
