@@ -121,6 +121,7 @@
         self.uzysSMenu.hidden = YES;
         self.sharedManager = [CurrentUser sharedManager];
         userObject = self.sharedManager.currentUser;
+        [self loadObjects];
         self.requestButton.title = [NSString stringWithFormat:@"%d Pending", userObject.circleRequestsCount];
         [self loadObjects];
         
