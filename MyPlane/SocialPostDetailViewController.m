@@ -183,7 +183,7 @@
         
         name.text = fullName;
         text.text = self.socialPost.text;
-        circle.text = [self.socialPost.circle objectForKey:@"name"];
+        circle.text = [self.socialPost.circle objectForKey:@"displayName"];
         date.text = [displayDateFormat stringFromDate:self.socialPost.createdAt];
         ownerImage.file = userObject.profilePicture;
         [ownerImage loadInBackground];
@@ -777,7 +777,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == TAG_ONE) {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
             if (![self.socialPost.claimerUsernames containsObject:currentUserObject.user]) {
                 [self claimMethod];
             } else {
@@ -785,7 +785,7 @@
             }
         }
     } else {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
             
             Reminders *reminder = [Reminders object];
             

@@ -212,6 +212,7 @@
         NSString *message = @"Are you sure you want to leave this circle?";
         
         UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+//        UIColor *barColor = [UIColor wetAsphaltColor];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
                                    initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
@@ -238,6 +239,7 @@
         NSString *message = @"You are the last member of this circle. By leaving you will disband this circle. Are you sure you want leave?";
         
         UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+//        UIColor *barColor = [UIColor wetAsphaltColor];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
                                    initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
@@ -357,11 +359,11 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == TAG_LEAVE) {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
             [self leave];
         }
     } else {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
             [self disband];
         }
     }

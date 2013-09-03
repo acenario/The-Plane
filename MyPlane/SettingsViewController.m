@@ -188,7 +188,7 @@
 }
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
+    if (buttonIndex == 1) {
         [self performSegueWithIdentifier:@"Tutorial" sender:nil];
     }
 }
@@ -504,7 +504,7 @@
     [userObject setObject:displayName forKey:@"user"];
     [userObject setObject:displayName forKey:@"displayName"];
     [userObject setObject:imageupload forKey:@"profilePicture"];
-    [userObject setObject:0 forKey:@"gracePeriod"];
+    [userObject setObject:[NSNumber numberWithInt:0] forKey:@"gracePeriod"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
         
