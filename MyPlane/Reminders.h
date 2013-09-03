@@ -20,5 +20,8 @@
 @property (retain) PFObject *fromFriend;
 @property (retain) PFObject *recipient;
 @property (retain) PFObject *socialPost;
+@property (retain) NSDate *recipientUpdateTime;
+@property (retain) NSDate *senderUpdateTime;
+@property (retain) NSDate *reRemindTime;
 
 @end
