@@ -134,6 +134,8 @@
     
     cell.textLabel.font = [UIFont flatFontOfSize:16];
     cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+    cell.textLabel.backgroundColor = [UIColor whiteColor];
+    cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }

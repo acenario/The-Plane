@@ -32,16 +32,13 @@
 
 }
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:coder];
     if (self) {
         self.pullToRefreshEnabled = YES;
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
-        
         
     }
     return self;
@@ -108,6 +105,12 @@
 	// Do any additional setup after loading the view.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (![PFUser currentUser]) { // No user logged in
@@ -127,7 +130,7 @@
         [logInViewController setSignUpController:signUpViewController];
         
         // Present the log in view controller
-        [self presentViewController:logInViewController animated:YES completion:nil];
+        [self presentViewController:logInViewController animated:NO completion:nil];
     } else {
         //CurrentUser *sharedManager = [CurrentUser sharedManager];
         
@@ -435,9 +438,10 @@
     
     [query orderByAscending:@"date"];
     
-    
+    if([PFUser currentUser]) {
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        }
     }
     
     [KGStatusBar dismiss];
