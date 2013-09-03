@@ -23,5 +23,8 @@
 @dynamic recipient;
 @dynamic date;
 @dynamic socialPost;
+@dynamic recipientUpdateTime;
+@dynamic senderUpdateTime;
+@dynamic reRemindTime;
 
 @end

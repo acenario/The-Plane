@@ -41,7 +41,7 @@
 {
     [super viewDidLoad];
     [self configureViewController];
-
+    
     reachability = [Reachability reachabilityForInternetConnection];
 	// Do any additional setup after loading the view.
     //    self.tableView.rowHeight = 60;
@@ -137,7 +137,7 @@
     }else if (section == 2) {
         return 1;
     } else {
-            return ([self.objects count]);
+        return ([self.objects count]);
     }
 }
 
@@ -200,12 +200,12 @@
         UIButton *sendUpdate2 = (UIButton *)[cell viewWithTag:4];
         UIImageView *line = (UIImageView *)[cell viewWithTag:3];
         
-//        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"user"];
+        //        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"user"];
         
         if ([[PFUser currentUser].username isEqualToString:[self.reminderObject objectForKey:@"user"]]) {
             reRemind.hidden = YES;
             sendUpdate.hidden = YES;
-            line.hidden = YES;            
+            line.hidden = YES;
             [sendUpdate2 addTarget:self action:@selector(update:) forControlEvents:UIControlEventTouchUpInside];
         } else {
             sendUpdate2.hidden = YES;
@@ -305,7 +305,7 @@
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
         }
         
-    } else if (indexPath.section == 1) {        
+    } else if (indexPath.section == 1) {
         cell.textLabel.font = [UIFont boldFlatFontOfSize:16];
         cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         cell.textLabel.backgroundColor = [UIColor whiteColor];
@@ -368,21 +368,21 @@
     if (reachability.currentReachabilityStatus == NotReachable) {
         return UITableViewCellEditingStyleNone;
     } else {
-    
-    if (indexPath.section == 3)
-    {
         
-        Comments *post = (Comments *)[self.objects objectAtIndex:indexPath.row];
-        UserInfo *selectedUser = (UserInfo *)post.user;
-        
-        if ([selectedUser.user isEqualToString:[PFUser currentUser].username]) {
-            return UITableViewCellEditingStyleDelete;
-        } else {
-            return UITableViewCellEditingStyleNone;
+        if (indexPath.section == 3)
+        {
+            
+            Comments *post = (Comments *)[self.objects objectAtIndex:indexPath.row];
+            UserInfo *selectedUser = (UserInfo *)post.user;
+            
+            if ([selectedUser.user isEqualToString:[PFUser currentUser].username]) {
+                return UITableViewCellEditingStyleDelete;
+            } else {
+                return UITableViewCellEditingStyleNone;
+            }
+            
         }
-
-    }
-    
+        
         return UITableViewCellEditingStyleNone;
     }
 }
@@ -404,9 +404,9 @@
                     [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
                     
                     [SVProgressHUD showSuccessWithStatus:@"Deleted comment!"];
-
+                    
                 }];
-                                
+                
             } else {
                 NSLog(@"error: %@", error);
             }
@@ -441,9 +441,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//    if ((self.objects.count > 0) && (section == 2)) {
-//        return @"Comments";
-//    }
+    //    if ((self.objects.count > 0) && (section == 2)) {
+    //        return @"Comments";
+    //    }
     return nil;
 }
 
@@ -504,58 +504,106 @@
 }
 
 - (void)remindAgain:(id)sender {
-//    NSLog(@"test");
-    if (reachability.currentReachabilityStatus == NotReachable) {
-        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
-    } else {
-    UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
-    PFQuery *pushQuery = [PFInstallation query];
-    [pushQuery whereKey:@"user" equalTo:recipient.user];
-
-    if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
-        [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
-        
-        
-    } else {
-        
-        // Send push notification to query
-        PFPush *push = [[PFPush alloc] init];
-        [push setQuery:pushQuery]; // Set our Installation query
-        [push setMessage:[self.reminderObject objectForKey:@"title"]];
-        [push sendPushInBackground];
+    Reminders *reminder = (Reminders *)self.reminderObject;
+    if ([reminder.fromUser isEqualToString:[PFUser currentUser].username]) {
+        NSDate *currentDate = [NSDate date];
+        NSComparisonResult result;
+        result = [currentDate compare:[reminder.reRemindTime dateByAddingTimeInterval:60]];
+        if ((result == NSOrderedDescending) || !(reminder.reRemindTime)) {            
+            if (reachability.currentReachabilityStatus == NotReachable) {
+                [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+            } else {
+                UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+                PFQuery *pushQuery = [PFInstallation query];
+                [pushQuery whereKey:@"user" equalTo:recipient.user];
+                reminder.reRemindTime = [NSDate date];
+                
+                if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
+                    [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
+                } else {
+                    PFPush *push = [[PFPush alloc] init];
+                    [push setQuery:pushQuery]; // Set our Installation query
+                    [push setMessage:[self.reminderObject objectForKey:@"title"]];
+                    [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [push sendPushInBackground];
+                    }];
+                }
+            }
+        } else {
+            [self showAlert:@"You have to wait some time before reminder again" title:@"Try again later"];
         }
     }
-    
 }
 
 - (void)update:(id)sender
 {
-    
-    if (reachability.currentReachabilityStatus == NotReachable) {
-        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
-    } else {
-        
-        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
-        NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
-        PFQuery *pushQuery = [PFInstallation query];
-        NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
-        
-        if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
-        [pushQuery whereKey:@"user" equalTo:sender];
-            
+    Reminders *reminder = (Reminders *)self.reminderObject;
+    if ([reminder.user isEqualToString:[PFUser currentUser].username]) {
+        NSDate *currentDate = [NSDate date];
+        NSComparisonResult result;
+        result = [currentDate compare:[reminder.recipientUpdateTime dateByAddingTimeInterval:60]];
+        if ((result == NSOrderedDescending) || !(reminder.recipientUpdateTime)) {
+            if (reachability.currentReachabilityStatus == NotReachable) {
+                [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+            } else {
+                
+                UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+                NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
+                PFQuery *pushQuery = [PFInstallation query];
+                NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
+                reminder.recipientUpdateTime = [NSDate date];
+                if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
+                    [pushQuery whereKey:@"user" equalTo:sender];
+                    
+                } else {
+                    [pushQuery whereKey:@"user" equalTo:recipient.user];
+                    
+                }
+                
+                // Send push notification to query
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery]; // Set our Installation query
+                [push setMessage:message];
+                [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [push sendPushInBackground];
+                }];
+            }
         } else {
-        [pushQuery whereKey:@"user" equalTo:recipient.user];
-            
+            [self showAlert:@"You have to wait some time before updating again" title:@"Try again later"];
         }
-        
-        // Send push notification to query
-        PFPush *push = [[PFPush alloc] init];
-        [push setQuery:pushQuery]; // Set our Installation query
-        [push setMessage:message];
-        [push sendPushInBackground];
+    } else if ([reminder.fromUser isEqualToString:[PFUser currentUser].username]) {
+        NSDate *currentDate = [NSDate date];
+        NSComparisonResult result;
+        result = [currentDate compare:[reminder.senderUpdateTime dateByAddingTimeInterval:60]];
+        if ((result == NSOrderedDescending) || !(reminder.senderUpdateTime)) {
+            if (reachability.currentReachabilityStatus == NotReachable) {
+                [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+            } else {
+                
+                UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+                NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
+                PFQuery *pushQuery = [PFInstallation query];
+                NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
+                reminder.senderUpdateTime = [NSDate date];
+                if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
+                    [pushQuery whereKey:@"user" equalTo:sender];
+                    
+                } else {
+                    [pushQuery whereKey:@"user" equalTo:recipient.user];
+                    
+                }
+                
+                // Send push notification to query
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery]; // Set our Installation query
+                [push setMessage:message];
+                [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [push sendPushInBackground];
+                }];            }
+        } else {
+            [self showAlert:@"You have to wait some time before updating again" title:@"Try again later"];
+        }
     }
-
-    
 }
 
 -(void)showAlert:(NSString *)message title:(NSString *)title {
