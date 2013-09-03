@@ -22,6 +22,10 @@
 		AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */; };
 		AEAAE65217D40A0B007F3532 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAAE65117D40A0A007F3532 /* 1.png */; };
 		AEAAE65517D43361007F3532 /* EditExpiryTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */; };
+		AEAAE65817D5B4BB007F3532 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAAE65617D5B4AC007F3532 /* MessageUI.framework */; };
+		AEAAE65B17D5B794007F3532 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAAE65917D5B78B007F3532 /* AddressBook.framework */; };
+		AEAAE65E17D5B83D007F3532 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAAE65C17D5B830007F3532 /* AddressBookUI.framework */; };
+		AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */; };
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
@@ -232,6 +236,11 @@
 		AEAAE65117D40A0A007F3532 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpiryTimeViewController.h; sourceTree = "<group>"; };
 		AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpiryTimeViewController.m; sourceTree = "<group>"; };
+		AEAAE65617D5B4AC007F3532 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		AEAAE65917D5B78B007F3532 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		AEAAE65C17D5B830007F3532 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMailViewController.h; sourceTree = "<group>"; };
+		AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMailViewController.m; sourceTree = "<group>"; };
 		AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedMembersViewController.h; sourceTree = "<group>"; };
 		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
@@ -490,12 +499,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEAAE65E17D5B83D007F3532 /* AddressBookUI.framework in Frameworks */,
+				AEAAE65B17D5B794007F3532 /* AddressBook.framework in Frameworks */,
 				DC4B2A5517D5659600703EC2 /* Accelerate.framework in Frameworks */,
 				DCE1FE89178912510012478B /* SystemConfiguration.framework in Frameworks */,
 				DCE1FE8A178912510012478B /* StoreKit.framework in Frameworks */,
 				DCE1FE8B178912510012478B /* Security.framework in Frameworks */,
 				DCE1FE8C178912510012478B /* QuartzCore.framework in Frameworks */,
 				DCE1FE8D178912510012478B /* MobileCoreServices.framework in Frameworks */,
+				AEAAE65817D5B4BB007F3532 /* MessageUI.framework in Frameworks */,
 				DCDA42D017904D5200E14D50 /* CoreText.framework in Frameworks */,
 				DCE1FE8E178912510012478B /* libz.1.1.3.dylib in Frameworks */,
 				DCE1FE8F178912510012478B /* CoreLocation.framework in Frameworks */,
@@ -955,6 +967,9 @@
 		DCE1FE46178910D60012478B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AEAAE65C17D5B830007F3532 /* AddressBookUI.framework */,
+				AEAAE65917D5B78B007F3532 /* AddressBook.framework */,
+				AEAAE65617D5B4AC007F3532 /* MessageUI.framework */,
 				DC4B2A5317D5657900703EC2 /* Accelerate.framework */,
 				DCDA42CF17904D5100E14D50 /* CoreText.framework */,
 				DCE1FE87178912400012478B /* SystemConfiguration.framework */,
@@ -1017,6 +1032,8 @@
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
+				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
+				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
 				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
 				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
 				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
@@ -1334,6 +1351,7 @@
 				DC4B2A4C17D5634900703EC2 /* MZFormSheetBackgroundWindow.m in Sources */,
 				DC4B2A5117D563C200703EC2 /* MZAppearance.m in Sources */,
 				DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */,
+				AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

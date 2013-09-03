@@ -787,9 +787,10 @@
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="oP5-xF-rgp"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="centerX" secondItem="TkM-FN-sy9" secondAttribute="centerX" type="default" id="qK7-F0-dF8"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="leading" secondItem="ZgQ-uN-cA7" secondAttribute="leading" type="default" id="rwL-nX-Rj2"/>
-                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="ZgQ-uN-cA7" secondAttribute="bottom" type="default" id="s6H-K5-uEe"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="ulu-7f-2rH"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="trailing" secondItem="AW2-ui-nMc" secondAttribute="trailing" type="default" id="vtO-CQ-R9N"/>
+                                    <constraint firstItem="ZgQ-uN-cA7" firstAttribute="centerY" secondItem="AW2-ui-nMc" secondAttribute="centerY" type="default" id="wKj-Bz-1Lc"/>
+                                    <constraint firstItem="ZgQ-uN-cA7" firstAttribute="baseline" secondItem="TkM-FN-sy9" secondAttribute="baseline" type="default" id="wul-uB-Y6Y"/>
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="KuZ-1w-w07">
@@ -1203,7 +1204,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N3q-Gy-G0g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1804" y="718"/>
+            <point key="canvasLocation" x="1796" y="342"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fPh-z2-2De">
@@ -1318,7 +1319,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZi-nY-zvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2385" y="1418"/>
+            <point key="canvasLocation" x="2377" y="1042"/>
         </scene>
         <!--Add Friend View Controller - Add Friends-->
         <scene sceneID="In2-zx-V61">
@@ -1433,7 +1434,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5S-mN-aK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3458" y="718"/>
+            <point key="canvasLocation" x="3450" y="342"/>
         </scene>
         <!--Settings View Controller - My Profile-->
         <scene sceneID="Vjq-k0-IAt">
@@ -1478,6 +1479,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <segue destination="KNl-wt-YJu" kind="modal" identifier="Mail" id="mg4-nA-nkd"/>
+                                                    </connections>
                                                 </textField>
                                                 <textField hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="buk-6b-NAi">
                                                     <constraints>
@@ -1628,7 +1632,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-BT-o7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="1362"/>
+            <point key="canvasLocation" x="775" y="986"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="Acc-gP-Efp">
@@ -1687,7 +1691,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6G-kl-IxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1359" y="1362"/>
+            <point key="canvasLocation" x="1351" y="986"/>
         </scene>
         <!--My Sent Reminders View Controller - Sent-->
         <scene sceneID="fIW-oB-RvU">
@@ -1791,7 +1795,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l5f-9S-JRM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2917" y="718"/>
+            <point key="canvasLocation" x="2909" y="342"/>
         </scene>
         <!--Received Friend Requests View Controller - Friend Requests-->
         <scene sceneID="6DT-n1-E3u">
@@ -1871,7 +1875,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsl-X5-Rfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2928" y="1402"/>
+            <point key="canvasLocation" x="2920" y="1026"/>
         </scene>
         <!--Edit Settings View Controller - Edit My Info-->
         <scene sceneID="TOK-AJ-qUg">
@@ -5409,7 +5413,44 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OFa-dh-lww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1914" y="1418"/>
+            <point key="canvasLocation" x="1906" y="1042"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="Zvb-ls-bIZ">
+            <objects>
+                <tableViewController id="VSw-fX-6B3" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xhM-yw-hom">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="SWI-Md-zyN" style="IBUITableViewCellStyleDefault" id="qf8-VL-qyG">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWI-Md-zyN">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="VSw-fX-6B3" id="4pK-5M-E0n"/>
+                            <outlet property="delegate" destination="VSw-fX-6B3" id="Nrl-Tk-aSt"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Rp1-5R-wy2"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qcR-qs-Kw4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2434" y="1559"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="C4N-ve-liN">
@@ -5500,6 +5541,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bEc-bd-qju" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2987" y="2876"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PGT-uT-U5X">
+            <objects>
+                <navigationController id="KNl-wt-YJu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YH7-lq-ae6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VSw-fX-6B3" kind="relationship" relationship="rootViewController" id="ivc-pp-rUW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mDY-C3-DWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="1559"/>
         </scene>
     </scenes>
     <resources>
@@ -5811,6 +5870,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
+        <class className="PFImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFImageView.h"/>
+        </class>
         <class className="PFQueryTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
         </class>
@@ -5851,7 +5913,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDisclosureViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addComment:"/>
-                <relationship kind="action" name="checkTextField:"/>
                 <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -5918,18 +5979,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nx5-Dy-vwJ"/>
+        <segue reference="PjU-TI-goZ"/>
         <segue reference="7p7-Gb-VJp"/>
-        <segue reference="d1z-oJ-MYo"/>
-        <segue reference="clu-AU-b0I"/>
-        <segue reference="U7Z-W4-19C"/>
-        <segue reference="ERg-Kc-26H"/>
+        <segue reference="hJj-bG-PN9"/>
+        <segue reference="ODM-E9-Ohb"/>
+        <segue reference="8lv-Fg-cjF"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="ALS-KN-DIo"/>
         <segue reference="1cS-jb-Zdb"/>
+        <segue reference="ERg-Kc-26H"/>
         <segue reference="6iM-6d-iGd"/>
-        <segue reference="azN-Uw-T1Q"/>
-        <segue reference="GfZ-it-DUs"/>
+        <segue reference="hes-Yo-V4N"/>
         <segue reference="std-vO-s0Z"/>
         <segue reference="ueR-b5-QFZ"/>
-        <segue reference="ALS-KN-DIo"/>
     </inferredMetricsTieBreakers>
 </document>

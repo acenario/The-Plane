@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
+
 #import "EditSettingsViewController.h"
 #import "UzysSlideMenu.h"
 #import "CommonTasksViewController.h"
