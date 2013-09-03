@@ -354,9 +354,7 @@
         presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
     };
     
-    
-    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-    
+    [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
         
     }];
     

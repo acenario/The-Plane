@@ -75,6 +75,10 @@
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
 		DC4B2A4817D55EB400703EC2 /* separatorVertical.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4B2A4617D55EB400703EC2 /* separatorVertical.png */; };
 		DC4B2A4917D55EB400703EC2 /* separatorVertical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */; };
+		DC4B2A4C17D5634900703EC2 /* MZFormSheetBackgroundWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4B2A4B17D5634900703EC2 /* MZFormSheetBackgroundWindow.m */; };
+		DC4B2A5117D563C200703EC2 /* MZAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4B2A4E17D563C200703EC2 /* MZAppearance.m */; };
+		DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4B2A5017D563C200703EC2 /* NSInvocation+Copy.m */; };
+		DC4B2A5517D5659600703EC2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4B2A5317D5657900703EC2 /* Accelerate.framework */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */; };
 		DC4F2A4717CBDCE000ED30BB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4617CBDCDF00ED30BB /* Reachability.m */; };
@@ -290,6 +294,13 @@
 		DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstTimeSettingsViewController.m; sourceTree = "<group>"; };
 		DC4B2A4617D55EB400703EC2 /* separatorVertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separatorVertical.png; sourceTree = "<group>"; };
 		DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separatorVertical@2x.png"; sourceTree = "<group>"; };
+		DC4B2A4A17D5634900703EC2 /* MZFormSheetBackgroundWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetBackgroundWindow.h; sourceTree = "<group>"; };
+		DC4B2A4B17D5634900703EC2 /* MZFormSheetBackgroundWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetBackgroundWindow.m; sourceTree = "<group>"; };
+		DC4B2A4D17D563C200703EC2 /* MZAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZAppearance.h; sourceTree = "<group>"; };
+		DC4B2A4E17D563C200703EC2 /* MZAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZAppearance.m; sourceTree = "<group>"; };
+		DC4B2A4F17D563C200703EC2 /* NSInvocation+Copy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Copy.h"; sourceTree = "<group>"; };
+		DC4B2A5017D563C200703EC2 /* NSInvocation+Copy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Copy.m"; sourceTree = "<group>"; };
+		DC4B2A5317D5657900703EC2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
@@ -447,6 +458,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC4B2A5517D5659600703EC2 /* Accelerate.framework in Frameworks */,
 				DCE1FE89178912510012478B /* SystemConfiguration.framework in Frameworks */,
 				DCE1FE8A178912510012478B /* StoreKit.framework in Frameworks */,
 				DCE1FE8B178912510012478B /* Security.framework in Frameworks */,
@@ -763,6 +775,12 @@
 		DC73AEF217BD7F0F0049AF50 /* MZFormSheetController */ = {
 			isa = PBXGroup;
 			children = (
+				DC4B2A4D17D563C200703EC2 /* MZAppearance.h */,
+				DC4B2A4E17D563C200703EC2 /* MZAppearance.m */,
+				DC4B2A4F17D563C200703EC2 /* NSInvocation+Copy.h */,
+				DC4B2A5017D563C200703EC2 /* NSInvocation+Copy.m */,
+				DC4B2A4A17D5634900703EC2 /* MZFormSheetBackgroundWindow.h */,
+				DC4B2A4B17D5634900703EC2 /* MZFormSheetBackgroundWindow.m */,
 				DC73AEF317BD7F100049AF50 /* MZFormSheetController.h */,
 				DC73AEF417BD7F100049AF50 /* MZFormSheetController.m */,
 				DC73AEF517BD7F100049AF50 /* MZFormSheetSegue.h */,
@@ -882,6 +900,7 @@
 		DCE1FE46178910D60012478B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC4B2A5317D5657900703EC2 /* Accelerate.framework */,
 				DCDA42CF17904D5100E14D50 /* CoreText.framework */,
 				DCE1FE87178912400012478B /* SystemConfiguration.framework */,
 				DCE1FE851789123A0012478B /* StoreKit.framework */,
@@ -1240,6 +1259,9 @@
 				AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */,
 				AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */,
 				AEAAE65517D43361007F3532 /* EditExpiryTimeViewController.m in Sources */,
+				DC4B2A4C17D5634900703EC2 /* MZFormSheetBackgroundWindow.m in Sources */,
+				DC4B2A5117D563C200703EC2 /* MZAppearance.m in Sources */,
+				DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

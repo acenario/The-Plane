@@ -128,9 +128,10 @@
         self.task.lastUsed = [NSDate date];
         
         [self.task saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+            [self dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
                 [self.delegate didFinish];
             }];
+            
         }];
     } else {
         
@@ -141,17 +142,19 @@
         task.lastUsed = [NSDate date];
         
         [task saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+            [self dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
                 [self.delegate didFinish];
             }];
+
         }];
     }
 }
 
 - (IBAction)cancel:(id)sender {
-    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+    [self dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
         
     }];
+
 }
 
 @end

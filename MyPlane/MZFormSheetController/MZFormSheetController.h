@@ -24,13 +24,16 @@
 //  THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "MZAppearance.h"
+#import "MZFormSheetBackgroundWindow.h"
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define MZ_DEPRECATED_ATTRIBUTE(message) __attribute__((deprecated(message)))
+#else
+#define MZ_DEPRECATED_ATTRIBUTE(message)
+#endif
 
 extern CGFloat const MZFormSheetControllerDefaultAnimationDuration;
-
-typedef NS_ENUM(NSInteger, MZFormSheetBackgroundStyle) {
-    MZFormSheetBackgroundStyleTransparent = 0,
-    MZFormSheetBackgroundStyleSolid,
-};
 
 typedef NS_ENUM(NSInteger, MZFormSheetTransitionStyle) {
     MZFormSheetTransitionStyleSlideFromTop = 0,
@@ -64,31 +67,38 @@ extern NSString *const MZFormSheetDidDismissNotification;
 typedef void(^MZFormSheetCompletionHandler)(UIViewController *presentedFSViewController);
 typedef void(^MZFormSheetBackgroundViewTapCompletionHandler)(CGPoint location);
 typedef void(^MZFormSheetPresentationCompletionHandler)(MZFormSheetController *formSheetController);
+typedef void(^MZFormSheetTransitionCompletionHandler)();
 
-@interface MZFormSheetController : UIViewController
+@interface MZFormSheetController : UIViewController <MZAppearance>
+
+/**
+ Returns the window that is displayed below form sheet controller
+ */
++ (MZFormSheetBackgroundWindow *)sharedBackgroundWindow;
+
+/**
+ Returns copy of formSheetController stack, last object in array (form sheet controller) is on top
+ */
++ (NSArray *)formSheetControllersStack;
 
 /**
  The view controller that is presented by this form sheet controller.
+ MZFormSheetController (self) --> presentedFSViewController
  */
 @property (nonatomic, readonly, strong) UIViewController *presentedFSViewController;
+
+/**
+ The view controller that is presenting this form sheet controller.
+ This is only set up if you use UIViewController (MZFormSheet) category to present form sheet controller.
+ presentingViewController --> MZFormSheetController (self) --> presentedFSViewController
+ */
+@property (nonatomic, readonly, weak) UIViewController *presentingViewController;
 
 /**
  The transition style to use when presenting the receiver.
  By default, this is MZFormSheetTransitionStyleSlideFromTop.
  */
-@property (nonatomic, assign) MZFormSheetTransitionStyle transitionStyle;
-
-/**
- Background view style.
- By default, this is MZFormSheetBackgroundStyleSolid.
- */
-@property (nonatomic, assign) MZFormSheetBackgroundStyle backgroundStyle;
-
-/**
- The opacity of the background view.
- By default, this is 0.5
- */
-@property (nonatomic, assign) CGFloat backgroundOpacity;
+@property (nonatomic, assign) MZFormSheetTransitionStyle transitionStyle MZ_APPEARANCE_SELECTOR;
 
 /**
  The handler to call when presented form sheet is before entry transition and its view will show on window.
@@ -116,54 +126,60 @@ typedef void(^MZFormSheetPresentationCompletionHandler)(MZFormSheetController *f
 @property (nonatomic, copy) MZFormSheetBackgroundViewTapCompletionHandler didTapOnBackgroundViewCompletionHandler;
 
 /**
+ Center form sheet vertically.
+ By default, this is NO
+ */
+@property (nonatomic, assign) BOOL centerFormSheetVertically MZ_APPEARANCE_SELECTOR;
+
+/**
  Distance that the presented form sheet view is inset from the status bar in landscape orientation.
  By default, this is 66.0
  */
-@property (nonatomic, assign) CGFloat landscapeTopInset;
+@property (nonatomic, assign) CGFloat landscapeTopInset MZ_APPEARANCE_SELECTOR;
 
 /**
  Distance that the presented form sheet view is inset from the status bar in portrait orientation.
  By default, this is 6.0
  */
-@property (nonatomic, assign) CGFloat portraitTopInset;
+@property (nonatomic, assign) CGFloat portraitTopInset MZ_APPEARANCE_SELECTOR;
 
 /**
  The radius to use when drawing rounded corners for the layer’s presented form sheet view background.
  By default, this is 6.0
  */
-@property (nonatomic, assign) CGFloat cornerRadius;
+@property (nonatomic, assign) CGFloat cornerRadius MZ_APPEARANCE_SELECTOR;
 
 /**
  The blur radius (in points) used to render the layer’s shadow.
  By default, this is 6.0
  */
-@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic, assign) CGFloat shadowRadius MZ_APPEARANCE_SELECTOR;
 
 /**
  The opacity of the layer’s shadow.
  By default, this is 0.5
  */
-@property (nonatomic, assign) CGFloat shadowOpacity;
+@property (nonatomic, assign) CGFloat shadowOpacity MZ_APPEARANCE_SELECTOR;
 
 /**
  Size for presented form sheet controller
  By default, this is CGSizeMake(284.0,284.0)
  */
-@property (nonatomic, assign) CGSize presentedFormSheetSize;
+@property (nonatomic, assign) CGSize presentedFormSheetSize MZ_APPEARANCE_SELECTOR;
 
 /**
  Returns whether the form sheet controller should dismiss after background view tap.
  By default, this is NO
  */
-@property (nonatomic, assign) BOOL shouldDismissOnBackgroundViewTap;
+@property (nonatomic, assign) BOOL shouldDismissOnBackgroundViewTap MZ_APPEARANCE_SELECTOR;
 
 /**
  Subclasses may override to add custom transition animation.
  You need to setup transitionStyle to MZFormSheetTransitionStyleCustom to call this method.
- When animation is finished you should must call super method or completionBlock to keep view life cycle.
+ When animation is finished you must call super method or completionBlock to keep view life cycle.
  */
-- (void)customTransitionEntryWithCompletionBlock:(void(^)())completionBlock;
-- (void)customTransitionOutWithCompletionBlock:(void(^)())completionBlock;
+- (void)customTransitionEntryWithCompletionBlock:(MZFormSheetTransitionCompletionHandler)completionBlock;
+- (void)customTransitionOutWithCompletionBlock:(MZFormSheetTransitionCompletionHandler)completionBlock;
 
 /**
  Initializes and returns a newly created form sheet controller.
@@ -183,38 +199,50 @@ typedef void(^MZFormSheetPresentationCompletionHandler)(MZFormSheetController *f
 /**
  Presents a form sheet controller.
  
+ @param animated Pass YES to animate the transition.
  @param completionHandler A completion handler (didPresentCompletionHandler) or NULL.
  */
-- (void)presentWithCompletionHandler:(MZFormSheetCompletionHandler)completionHandler;
+- (void)presentAnimated:(BOOL)animated completionHandler:(MZFormSheetCompletionHandler)completionHandler;
 
 /**
  Dismisses a form sheet controller.
  
+ @param animated Pass YES to animate the transition.
  @param completionHandler A completion handler (didDismissCompletionHandler) or NULL.
  */
-- (void)dismissWithCompletionHandler:(MZFormSheetCompletionHandler)completionHandler;
+- (void)dismissAnimated:(BOOL)animated completionHandler:(MZFormSheetCompletionHandler)completionHandler;
 
 @end
 
-/*
+/**
  Category on UIViewController to provide access to the formSheetController.
  */
 @interface UIViewController (MZFormSheet)
-@property(nonatomic, readonly) MZFormSheetController *formSheetController;
+@property (nonatomic, readonly) MZFormSheetController *formSheetController;
 
 /**
- Presents a form sheet controller.
- 
- @param viewController The view controller that is presented by form sheet controller.
+ Presents a form sheet cotnroller
+ @param formSheetController The form sheet controller or a subclass of MZFormSheetController.
  @param completionHandler A completion handler or NULL.
  */
-- (void)presentFormSheetWithViewController:(UIViewController *)viewController completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
+- (void)presentFormSheetController:(MZFormSheetController *)formSheetController animated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
+
+/**
+ Creates a new form sheet controller and presents it.
+ 
+ @param viewController The view controller that is presented by form sheet controller.
+ @param transitionStyle he transition style to use when presenting the receiver.
+ @param completionHandler A completion handler or NULL.
+ */
+- (void)presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated transitionStyle:(MZFormSheetTransitionStyle)transitionStyle completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
+
+- (void)presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
 
 /**
  Dismisses the form sheet controller that was presented by the receiver. If not find, last form sheet will be dismissed.
- 
+ @param animated Pass YES to animate the transition.
  @param completionHandler A completion handler (didDismissCompletionHandler) or NULL.
  */
-- (void)dismissFormSheetControllerWithCompletionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
+- (void)dismissFormSheetControllerAnimated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler;
 
 @end
