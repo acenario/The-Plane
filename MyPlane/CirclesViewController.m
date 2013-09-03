@@ -135,6 +135,12 @@
     
 }
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.uzysSMenu openIconMenu];
+    menuCheck = YES;
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -261,12 +267,12 @@
     self.uzysSMenu.hidden = NO;
     if (menuCheck == YES) {
         [self.uzysSMenu toggleMenu];
-//        NSLog(@"open");
+        NSLog(@"open");
         menuCheck = NO;
     } else {
         [self.uzysSMenu openIconMenu];
         menuCheck = YES;
-//        NSLog(@"close");
+        NSLog(@"close");
         
     }
     
