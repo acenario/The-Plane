@@ -65,7 +65,7 @@
     
     NSArray *members = [object objectForKey:@"members"];
     
-    cell.textLabel.text = [object objectForKey:@"name"];
+    cell.textLabel.text = [object objectForKey:@"displayName"];
     cell.detailTextLabel.text = [NSString stringWithFormat: @"%d member(s)", members.count];
     
     return cell;
