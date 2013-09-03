@@ -32,6 +32,7 @@
     NSString *theUsername;
     UIImage *defaultPic;
     BOOL menuCheck;
+    BOOL isForMessages;
     Reachability *reachability;
 }
 
@@ -81,12 +82,12 @@
     item0.tag = 3;
     
     UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Share" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {        
-        [self showEmail];
+        [self showTexts];
     }];
     item0.tag = 4;
     
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item4,item2,]];
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2,item4,]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -352,6 +353,7 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         ShareMailViewController *controller = (ShareMailViewController *)nav.topViewController;
         controller.dictionary = sender;
+        controller.isForMessages = isForMessages;
     }
 }
 
@@ -593,7 +595,68 @@
     }
 }
 
-
+- (void)showTexts
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSArray *abContactArray = [[NSArray alloc] init];
+    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+        
+        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+        
+        NSComparisonResult result = [lastName1 compare:lastName2];
+        if (result != NSOrderedSame)
+            return result;
+        else
+            return [firstName1 compare:firstName2];
+    }];
+    
+    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:abContactArray.count];
+    [dictionary setObject:allEmails forKey:@"email"];
+    [dictionary setObject:allFirsts forKey:@"first"];
+    [dictionary setObject:allLasts forKey:@"last"];
+    
+    for (id object in abContactArray) {
+        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
+        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+        //        NSString *email = CFBridgingRelease(ABRecordCopyValue(record, kABPersonEmailProperty));
+        //        NSLog(@"person = %@, %@", lastname, record);
+        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+            [[dictionary objectForKey:@"email"] addObject:email];
+            [[dictionary objectForKey:@"first"] addObject:firstname];
+            [[dictionary objectForKey:@"last"] addObject:lastname];
+        }
+        CFRelease(emails);
+    }
+    
+    isForMessages = YES;
+    
+    [self performSegueWithIdentifier:@"Mail" sender:dictionary];
+    
+    //    ABPeoplePickerNavigationController *picker =
+    //    [[ABPeoplePickerNavigationController alloc] init];
+    //    picker.peoplePickerDelegate = self;
+    //
+    //    [self presentViewController:picker animated:YES completion:nil];
+    //    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+    //    mViewController.mailComposeDelegate = self;
+    //    [mViewController setSubject:@"Try out Hey! Heads Up"];
+    //    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
+    //    [mViewController setToRecipients:nil];
+    //    [self presentViewController:mViewController animated:YES completion:nil];
+}
 
 - (void)showEmail
 {
@@ -640,26 +703,8 @@
         }
         CFRelease(emails);
     }
-
     
-//    for (CFIndex i = 0; i < CFArrayGetCount(people); i++) {
-//        ABRecordRef person = CFArrayGetValueAtIndex(people, i);
-//        ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-//        ABRecordRef firsts = ABRecordCopyValue(person, kABPersonFirstNameProperty);
-//        ABRecordRef lasts = ABRecordCopyValue(person, kABPersonLastNameProperty);
-//        NSLog(@"%@", firsts);
-//        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
-//            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
-//            [[dictionary objectForKey:@"email"] addObject:email];
-//            [[dictionary objectForKey:@"first"] addObject:(__bridge id)(firsts)];
-//            [[dictionary objectForKey:@"last"] addObject:(__bridge id)(lasts)];
-//        }
-//        CFRelease(emails);
-//    }
-////    NSLog(@"All Mails:%@",dictionary);
-//    CFRelease(addressBook);
-//    CFRelease(people);
-
+    isForMessages = NO;
     
     [self performSegueWithIdentifier:@"Mail" sender:dictionary];
     

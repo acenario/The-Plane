@@ -11,10 +11,11 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 
-@interface ShareMailViewController : UITableViewController <MFMailComposeViewControllerDelegate>
+@interface ShareMailViewController : UITableViewController <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, retain) NSDictionary *dictionary;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property BOOL isForMessages;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 
