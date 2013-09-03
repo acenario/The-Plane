@@ -73,6 +73,8 @@
 		DC38B1F01793195400304619 /* MyLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1EF1793195400304619 /* MyLoginViewController.m */; };
 		DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F21793196400304619 /* MySignUpViewController.m */; };
 		DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */; };
+		DC4B2A4817D55EB400703EC2 /* separatorVertical.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4B2A4617D55EB400703EC2 /* separatorVertical.png */; };
+		DC4B2A4917D55EB400703EC2 /* separatorVertical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */; };
 		DC4D6C9C1789185D00823DC4 /* PlaneTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */; };
 		DC4F2A4117CA56FF00ED30BB /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */; };
 		DC4F2A4717CBDCE000ED30BB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4F2A4617CBDCDF00ED30BB /* Reachability.m */; };
@@ -286,6 +288,8 @@
 		DC38B1F21793196400304619 /* MySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySignUpViewController.m; sourceTree = "<group>"; };
 		DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firstTimeSettingsViewController.h; sourceTree = "<group>"; };
 		DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstTimeSettingsViewController.m; sourceTree = "<group>"; };
+		DC4B2A4617D55EB400703EC2 /* separatorVertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separatorVertical.png; sourceTree = "<group>"; };
+		DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separatorVertical@2x.png"; sourceTree = "<group>"; };
 		DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaneTabViewController.h; sourceTree = "<group>"; };
 		DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaneTabViewController.m; sourceTree = "<group>"; };
 		DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
@@ -971,6 +975,8 @@
 		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
 			isa = PBXGroup;
 			children = (
+				DC4B2A4617D55EB400703EC2 /* separatorVertical.png */,
+				DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */,
 				DC4F2A4C17CC082B00ED30BB /* favrMockup.png */,
 				DC4F2A4D17CC082B00ED30BB /* favrMockup@2x.png */,
 				DC4F2A4817CC058000ED30BB /* 09-chat-2.png */,
@@ -1141,6 +1147,8 @@
 				DCD4368417D319DA00ACAA71 /* iTunesArtwork.png in Resources */,
 				DCD4368517D319DA00ACAA71 /* iTunesArtwork@2x.png in Resources */,
 				AEAAE65217D40A0B007F3532 /* 1.png in Resources */,
+				DC4B2A4817D55EB400703EC2 /* separatorVertical.png in Resources */,
+				DC4B2A4917D55EB400703EC2 /* separatorVertical@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
