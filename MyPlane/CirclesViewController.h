@@ -25,7 +25,7 @@
 
 @end
 
-@interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate, CreateCircleViewControllerDelegate>
+@interface CirclesViewController : PFQueryTableViewController <JoinCircleViewController, CircleRequestsViewControllerDelegate, CircleDetailViewControllerDelegate, CreateCircleViewControllerDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedController;
 @property (strong, nonatomic) id <CirclesDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *requestButton;
