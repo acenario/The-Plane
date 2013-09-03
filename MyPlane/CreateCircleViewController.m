@@ -316,14 +316,14 @@
 {
     NSString *message;
     if ([privacy isEqualToString:@"private"]) {
-        message = @"'Invite-Only' circles are not searchable. In order for others to join they must be invited by a current member. \n Recommended for families and other small groups";
+        message = @"'Invite-Only' groups are not searchable. \n Recommended for families and other small groups.";
     } else if ([privacy isEqualToString:@"closed"]) {
-        message = @"Circles that aren't invite-only are searchable. \n Others can join by either searching and sending a request, or by receiving an invition from a current member.";
+        message = @"Searchable groups that require others to request to join unless invited.";
     } else if ([privacy isEqualToString:@"open"]) {
         message = @"Open Circles are searchable. You can join within the search menu, and can receive a request to join. Open Circles are not managed by any single entity.";
     }
     
-    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
     
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Privacy Description"
                                                           message:message
@@ -332,15 +332,15 @@
                                                 otherButtonTitles:nil];
     
     alertView.titleLabel.textColor = [UIColor cloudsColor];
-    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
-    alertView.messageLabel.textColor = [UIColor cloudsColor];
-    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
-    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    alertView.messageLabel.textColor = [UIColor whiteColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
     alertView.alertContainer.backgroundColor = barColor;
-    alertView.defaultButtonColor = [UIColor cloudsColor];
-    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    alertView.defaultButtonTitleColor = [UIColor whiteColor];
     
     
     [alertView show];

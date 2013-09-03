@@ -96,25 +96,20 @@
 
 -(void)showAlertwithString:(NSString *)message {
     
-    NSInteger red   = 178;
-    NSInteger green = 8;
-    NSInteger blue  = 56;
-    
-    
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Error!"
                                                           message:message
                                                          delegate:nil cancelButtonTitle:@"Okay"
                                                 otherButtonTitles:nil];
     alertView.titleLabel.textColor = [UIColor cloudsColor];
-    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
-    alertView.messageLabel.textColor = [UIColor cloudsColor];
-    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
-    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
-    alertView.alertContainer.backgroundColor = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:1.0];
-    alertView.defaultButtonColor = [UIColor cloudsColor];
-    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    alertView.messageLabel.textColor = [UIColor whiteColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+    alertView.alertContainer.backgroundColor = [UIColor colorFromHexCode:@"A62A00"];
+    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    alertView.defaultButtonTitleColor = [UIColor whiteColor];
     
     
     [alertView show];

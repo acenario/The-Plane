@@ -113,22 +113,31 @@
     
     check = NO;
     
-    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    //UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+    
+    //NSInteger red   = 178;
+    //NSInteger green = 8;
+    //NSInteger blue  = 56;
+    
+    //UIColor *barColor = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:1.0];
     
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Error!"
                                                           message:message
                                                          delegate:nil cancelButtonTitle:@"Okay"
                                                 otherButtonTitles:nil];
+    
+    
     alertView.titleLabel.textColor = [UIColor cloudsColor];
-    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
-    alertView.messageLabel.textColor = [UIColor cloudsColor];
-    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
-    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    alertView.messageLabel.textColor = [UIColor whiteColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
     alertView.alertContainer.backgroundColor = barColor;
-    alertView.defaultButtonColor = [UIColor cloudsColor];
-    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    alertView.defaultButtonTitleColor = [UIColor whiteColor];
     
     
     [alertView show];
@@ -142,7 +151,8 @@
     personQuery.cachePolicy = kPFCachePolicyNetworkOnly;
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         check = NO;
-        
+        BOOL errorCheck;
+        errorCheck = NO;
 //        UserInfo *userObject = (UserInfo *)object;
         
         NSString *firstName = nil;
@@ -187,9 +197,11 @@
                     
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
+                    errorCheck = YES;
                 }
             } else {
                 [self showAlertwithString:@"Your name must be greater than one character!"];
+                errorCheck = YES;
             }
             
         } else {
@@ -209,9 +221,11 @@
 //                    NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
+                    errorCheck = YES;
                 }
             } else {
                 [self showAlertwithString:@"Your name must be greater than one character!"];
+                errorCheck = YES;
             }
             
         } else {
@@ -231,6 +245,7 @@
             } else {
                 NSLog(@"NOT VALID EMAIL");
                 [self showAlertwithString:@"You have entered an invalid email!"];
+                errorCheck = YES;
             }
             
         } else {
@@ -253,14 +268,17 @@
 //                        NSLog(@"SUCCESS!");
                     } else {
                         [self showAlertwithString:@"Your passwords do not match"];
+                        errorCheck = YES;
                     }
                     
                 } else {
                     [self showAlertwithString:@"Your password must be less than 32 characters!"];
+                    errorCheck = YES;
                 }
                 
             } else {
                 [self showAlertwithString:@"Your password must be 8 character or more!"];
+                errorCheck = YES;
             }
 
         } else {
@@ -273,11 +291,12 @@
 //            NSLog(@"test");
         }
         
-        if (check) {
+        if (check && !errorCheck) {
             [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user withGrace:grace];
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
         }
+//        else {
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }
         
     }];
 }

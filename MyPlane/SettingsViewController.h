@@ -18,7 +18,7 @@
 #import "MZFormSheetController.h"
 #import "firstTimeSettingsViewController.h"
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, UIScrollViewDelegate>
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, MFMailComposeViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;

@@ -710,7 +710,7 @@
 }
 
 - (IBAction)claim:(id)sender {
-    UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+    UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
     
     NSString *title;
     NSString *message;
@@ -730,15 +730,15 @@
                                otherButtonTitles:@"Yes", nil];
     
     alertView.titleLabel.textColor = [UIColor cloudsColor];
-    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
-    alertView.messageLabel.textColor = [UIColor cloudsColor];
-    alertView.messageLabel.font = [UIFont flatFontOfSize:14];
-    alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    alertView.messageLabel.textColor = [UIColor whiteColor];
+    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
     alertView.alertContainer.backgroundColor = barColor;
-    alertView.defaultButtonColor = [UIColor cloudsColor];
-    alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    alertView.defaultButtonTitleColor = [UIColor whiteColor];
     alertView.tag = TAG_ONE;
     
     [alertView show];
