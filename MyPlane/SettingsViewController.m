@@ -31,7 +31,7 @@
     NSString *displayName;
     NSString *theUsername;
     UIImage *defaultPic;
-    BOOL menuCheck;
+    //BOOL menuCheck;
     BOOL isForMessages;
     Reachability *reachability;
 }
@@ -124,8 +124,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    menuCheck = YES;
-    self.uzysSMenu.hidden = YES;
+    //menuCheck = YES;
+    //self.uzysSMenu.hidden = YES;
     if (![PFUser currentUser]) { // No user logged in
         
         // Create the log in view controller
@@ -227,16 +227,37 @@
     
 }
 
-- (IBAction)showMenu:(id)sender {
-    self.uzysSMenu.hidden = NO;
-    if (menuCheck == YES) {
-        [self.uzysSMenu toggleMenu];
-        menuCheck = NO;
-    } else {
-        [self.uzysSMenu openIconMenu];
-        menuCheck = YES;
-        
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
     }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    }
+}
+
+- (IBAction)showMenu:(id)sender {
+    //self.uzysSMenu.hidden = NO;
+    
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    } else {
+        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
+    }
+    
+//    if (menuCheck == YES) {
+//        //[self.uzysSMenu toggleMenu];
+//        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
+//        menuCheck = NO;
+//    } else {
+//        //[self.uzysSMenu openIconMenu];
+//        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+//        menuCheck = YES;
+//        
+//    }
     
 }
 
@@ -400,10 +421,23 @@
     [cell setSelectedBackgroundView:bgView];
     
     
-
+    if (indexPath.section == 2) {
+        cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
+        cell.textLabel.backgroundColor = [UIColor whiteColor];
+    }
     
     return cell;
 
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            [self showTexts];
+        }
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Log In/Out Code

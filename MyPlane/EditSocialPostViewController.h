@@ -30,6 +30,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *reminderTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descDisplayLabel;
 @property (strong, nonatomic) IBOutlet UITableViewCell *taskCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *dateCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *descCell;

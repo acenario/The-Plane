@@ -212,7 +212,7 @@
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
         }
     } else {
-        self.descriptionLabel.font = [UIFont boldFlatFontOfSize:16];
+        self.descriptionLabel.font = [UIFont flatFontOfSize:16];
         self.descriptionTextView.font = [UIFont flatFontOfSize:14];
         
         self.descLimit.font = [UIFont flatFontOfSize:14];

@@ -17,7 +17,7 @@
 
 @implementation CircleMembersViewController {
     NSMutableArray *selectedUsers;
-    BOOL optionToggle;
+    //BOOL optionToggle;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,10 +35,10 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
-    optionToggle = YES;
+    //optionToggle = YES;
     self.sharedManager = [CurrentUser sharedManager];
     self.currentUser = self.sharedManager.currentUser;
-    self.uzysSMenu.hidden = YES;
+    //self.uzysSMenu.hidden = YES;
     
 }
 
@@ -162,8 +162,15 @@
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.uzysSMenu openIconMenu];
-    optionToggle = YES;
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -236,7 +243,8 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    optionToggle = YES;
+    self.uzysSMenu.hidden = YES;
+    //optionToggle = YES;
 }
 
 - (void)promoteSelectedUsers
@@ -272,7 +280,9 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    optionToggle = YES;
+    self.uzysSMenu.hidden = YES;
+
+    //optionToggle = YES;
 }
 
 - (void)blockUsers
@@ -300,7 +310,9 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    optionToggle = YES;
+    self.uzysSMenu.hidden = YES;
+
+    //optionToggle = YES;
 }
 
 - (void)createReminder
@@ -310,22 +322,32 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"No Users Selected"];
     }
-    optionToggle = YES;
+
+    self.uzysSMenu.hidden = YES;
+    
+    
 }
 
 - (IBAction)options:(id)sender
 {
     self.uzysSMenu.hidden = NO;
-    if (optionToggle) {
-        [self.uzysSMenu toggleMenu];
-        //        NSLog(@"open");
-        optionToggle = NO;
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
     } else {
-        [self.uzysSMenu openIconMenu];
-        optionToggle = YES;
-        //        NSLog(@"close");
-        
+        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
     }
+    
+//    self.uzysSMenu.hidden = NO;
+//    if (optionToggle) {
+//        [self.uzysSMenu toggleMenu];
+//        //        NSLog(@"open");
+//        optionToggle = NO;
+//    } else {
+//        [self.uzysSMenu openIconMenu];
+//        optionToggle = YES;
+//        //        NSLog(@"close");
+//        
+//    }
     
 }
 

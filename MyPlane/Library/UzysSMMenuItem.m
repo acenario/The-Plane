@@ -10,11 +10,9 @@
 
 @implementation UzysSMMenuItem
 
--(id)initWithTitle:(NSString *)title image:(UIImage *)image action:(actionBlock)block;
-{
+-(id)initWithTitle:(NSString *)title image:(UIImage *)image action:(actionBlock)block; {
     self = [super init];
-    if(self)
-    {
+    if(self) {
         self.title = title;
         self.image = image;
         self.block = block;
@@ -22,16 +20,16 @@
     
     return self;
 }
--(void)dealloc
-{
-    [_title release];
-    [_image release];
-    [_block release];
+
+-(void)dealloc {
+    [self.title release];
+    [self.image release];
+    [self.block release];
     [super ah_dealloc];
 }
+
 #pragma mark - For debug
--(NSString *)description
-{
+-(NSString *)description {
     return [NSString stringWithFormat:@"Title:%@, tag:%d",self.title,self.tag];
 }
 @end
