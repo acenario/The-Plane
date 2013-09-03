@@ -17,7 +17,7 @@
 
 @end
 
-@interface CircleMembersViewController : PFQueryTableViewController <AddCircleReminderViewControllerDelegate>
+@interface CircleMembersViewController : PFQueryTableViewController <AddCircleReminderViewControllerDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, weak) id <CircleMembersViewControllerDelegate> delegate;
 

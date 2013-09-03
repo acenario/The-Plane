@@ -161,6 +161,11 @@
     return cell;
 }
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.uzysSMenu openIconMenu];
+    optionToggle = YES;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     
