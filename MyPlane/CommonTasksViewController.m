@@ -154,7 +154,7 @@
     CommonTasks *task = [self.objects objectAtIndex:indexPath.row];
     task.lastUsed = [NSDate date];
     [task saveInBackground];
-    [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+    [self dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
         [self.delegate commonTasksViewControllerDidFinishWithTask:task.text];
     }];
     
@@ -181,9 +181,7 @@
             presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
         };
         
-        
-        [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-            
+        [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
             
         }];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -213,9 +211,7 @@
         presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
     };
     
-    
-    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-        
+    [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
         
     }];
 }
@@ -240,9 +236,7 @@
         presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
     };
     
-    
-    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-        
+    [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
         
     }];
 }
@@ -250,7 +244,7 @@
 - (void)cancel:(id)sender
 {
     if (!self.isFromSettings) {
-        [self dismissFormSheetControllerWithCompletionHandler:^(MZFormSheetController *formSheetController) {
+        [self dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
             
         }];
     } else {

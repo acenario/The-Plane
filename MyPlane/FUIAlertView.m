@@ -17,6 +17,14 @@
 
 @implementation FUIAlertView
 
++ (void)initialize {
+    if (self == [FUIAlertView class]) {
+        FUIAlertView *appearance = [self appearance];
+        [appearance setButtonSpacing:10.0f];
+        [appearance setAnimationDuration:0.2f];
+    }
+}
+
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
            delegate:(id<FUIAlertViewDelegate>)delegate
@@ -27,9 +35,9 @@
         self.title = title;
         self.message = message;
         self.delegate = delegate;
-        
-        self.buttonSpacing = 10;
-        self.animationDuration = 0.2f;
+
+        // This mask is set to force lay out of subviews when superview's bounds change
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         UIView *backgroundOverlay = [[UIView alloc] init];
         backgroundOverlay.backgroundColor = [UIColor blueColor];
@@ -64,14 +72,17 @@
         messageLabel.text = self.message;
         [alertContentContainer addSubview:messageLabel];
         _messageLabel = messageLabel;
-        
+
+        if (cancelButtonTitle) {
+            [self addButtonWithTitle:cancelButtonTitle];
+            [self setHasCancelButton:YES];
+        }
         va_list args;
         va_start(args, otherButtonTitles);
         for (NSString *arg = otherButtonTitles; arg != nil; arg = va_arg(args, NSString*)) {
             [self addButtonWithTitle:arg];
         }
         va_end(args);
-        [self addButtonWithTitle:cancelButtonTitle];
     }
     return self;
 }
@@ -105,20 +116,27 @@
         CGPoint messageOrigin = CGPointMake((self.alertContentContainer.frame.size.width - self.messageLabel.frame.size.width)/2, CGRectGetMaxY(titleFrame) + 10);
         messageFrame.origin = messageOrigin;
         self.messageLabel.frame = messageFrame;
-        
-        CGFloat startingButtonY = self.alertContentContainer.frame.size.height - [self totalButtonHeight];
-        for (UIButton *button in self.buttons) {
-            CGRect buttonFrame = button.frame;
-            buttonFrame.origin = CGPointMake(0, startingButtonY);
-            buttonFrame.size.width = self.alertContentContainer.frame.size.width;
-            button.frame = buttonFrame;
-            startingButtonY += (button.frame.size.height + self.buttonSpacing);
-        }
 
+        __block CGFloat startingButtonY = self.alertContentContainer.frame.size.height - [self totalButtonHeight];
+        [self.buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            UIButton *button = obj;
+            if (self.hasCancelButton && idx == 0) {
+                CGFloat lastButtonY = self.alertContentContainer.frame.size.height - button.frame.size.height;
+                [self setButton:obj atHeight:lastButtonY];
+            } else {
+                [self setButton:obj atHeight:startingButtonY];
+                startingButtonY += (button.frame.size.height + self.buttonSpacing);
+            }
+        }];
     }
 }
 
-
+- (void)setButton:(UIButton *)button atHeight:(CGFloat)height {
+    CGRect buttonFrame = button.frame;
+    buttonFrame.origin = CGPointMake(0, height);
+    buttonFrame.size.width = self.alertContentContainer.frame.size.width;
+    button.frame = buttonFrame;
+}
 
 - (CGFloat) totalButtonHeight {
     __block CGFloat buttonHeight = 0;
@@ -138,7 +156,7 @@
 }
 
 - (NSInteger) numberOfButtons {
-    return self.buttons.count;
+    return (NSInteger)self.buttons.count;
 }
 
 - (void)show {
@@ -162,11 +180,11 @@
                      completion:^(BOOL finished) {
                          
                          [UIView animateWithDuration:self.animationDuration/2 animations:^{
-                             self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);} completion:^(BOOL finished) {
+                             self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9f, 0.9f);} completion:^(BOOL finished0) {
                                  
                                  [UIView animateWithDuration:self.animationDuration/2 animations:^{
                                      self.alertContainer.transform = CGAffineTransformIdentity;
-                                 } completion:^(BOOL finished) {
+                                 } completion:^(BOOL finished1) {
                                      _visible = YES;
                                      if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
                                          [self.delegate didPresentAlertView:self];
@@ -177,10 +195,10 @@
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex < 0 || buttonIndex > self.buttons.count) {
+    if (buttonIndex < 0 || buttonIndex > (NSInteger)self.buttons.count) {
         return nil;
     }
-    return [[self.buttons objectAtIndex:buttonIndex] titleForState:UIControlStateNormal];
+    return [[self.buttons objectAtIndex:(NSUInteger)buttonIndex] titleForState:UIControlStateNormal];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated {
@@ -216,19 +234,19 @@
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.alertContentContainer addSubview:button];
     [self.buttons addObject:button];
-    return self.buttons.count-1;
+    return (NSInteger)self.buttons.count-1;
 }
 
 - (void) buttonPressed:(FUIButton *)sender {
-    NSInteger index = [self.buttons indexOfObject:sender];
+    NSUInteger index = [self.buttons indexOfObject:sender];
     if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
-        [self.delegate alertView:self clickedButtonAtIndex:index];
+        [self.delegate alertView:self clickedButtonAtIndex:(NSInteger)index];
     }
-    [self dismissWithClickedButtonIndex:index animated:YES];
+    [self dismissWithClickedButtonIndex:(NSInteger)index animated:YES];
 }
 
 - (void)clickButtonAtIndex:(NSInteger)buttonIndex {
-    [[self.buttons objectAtIndex:buttonIndex] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [[self.buttons objectAtIndex:(NSUInteger)buttonIndex] sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) setDefaultButtonFont:(UIFont *)defaultButtonFont {
@@ -256,6 +274,20 @@
     _defaultButtonShadowColor = defaultButtonShadowColor;
     [self.buttons enumerateObjectsUsingBlock:^(FUIButton *button, NSUInteger idx, BOOL *stop) {
         button.shadowColor = defaultButtonShadowColor;
+    }];
+}
+
+- (void) setDefaultButtonCornerRadius:(CGFloat)defaultButtonCornerRadius {
+    _defaultButtonCornerRadius = defaultButtonCornerRadius;
+    [self.buttons enumerateObjectsUsingBlock:^(FUIButton *button, NSUInteger idx, BOOL *stop) {
+        button.cornerRadius = defaultButtonCornerRadius;
+    }];
+}
+
+- (void) setDefaultButtonShadowHeight:(CGFloat)defaultButtonShadowHeight {
+    _defaultButtonShadowHeight = defaultButtonShadowHeight;
+    [self.buttons enumerateObjectsUsingBlock:^(FUIButton *button, NSUInteger idx, BOOL *stop) {
+        button.shadowHeight = defaultButtonShadowHeight;
     }];
 }
 
