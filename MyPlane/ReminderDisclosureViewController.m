@@ -193,7 +193,26 @@
     } else if (indexPath.section == 1) {
         static NSString *CellIdentifier = @"RemindAgainCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+        
+        
+        UIButton *reRemind = (UIButton *)[cell viewWithTag:1];
+        UIButton *sendUpdate = (UIButton *)[cell viewWithTag:2];
+        UIButton *sendUpdate2 = (UIButton *)[cell viewWithTag:4];
+        UIImageView *line = (UIImageView *)[cell viewWithTag:3];
+        
+//        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"user"];
+        
+        if ([[PFUser currentUser].username isEqualToString:[self.reminderObject objectForKey:@"user"]]) {
+            reRemind.hidden = YES;
+            sendUpdate.hidden = YES;
+            line.hidden = YES;            
+            [sendUpdate2 addTarget:self action:@selector(update:) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            sendUpdate2.hidden = YES;
+            [reRemind addTarget:self action:@selector(remindAgain:) forControlEvents:UIControlEventTouchUpInside];
+            [sendUpdate addTarget:self action:@selector(update:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
         return cell;
     } else if (indexPath.section == 2) {
         // This is the comment text input cell
@@ -286,7 +305,7 @@
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
         }
         
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 1) {        
         cell.textLabel.font = [UIFont boldFlatFontOfSize:16];
         cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
         cell.textLabel.backgroundColor = [UIColor whiteColor];
@@ -341,13 +360,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
-        [self remindAgain:nil];
-        
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
-        nil;
-    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -491,13 +504,14 @@
 }
 
 - (void)remindAgain:(id)sender {
+//    NSLog(@"test");
     if (reachability.currentReachabilityStatus == NotReachable) {
         [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
     } else {
     UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
     PFQuery *pushQuery = [PFInstallation query];
     [pushQuery whereKey:@"user" equalTo:recipient.user];
-    
+
     if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
         [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
         
@@ -512,6 +526,11 @@
         }
     }
     
+}
+
+- (void)update:(id)sender
+{
+    NSLog(@"test");
 }
 
 -(void)showAlert:(NSString *)message title:(NSString *)title {
