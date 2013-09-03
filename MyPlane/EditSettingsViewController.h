@@ -18,7 +18,7 @@
 
 @end
 
-@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate,UITextFieldDelegate, UINavigationControllerDelegate, EditExpiryTimeViewControllerDelegate>
+@interface EditSettingsViewController : UITableViewController <UIImagePickerControllerDelegate,UITextFieldDelegate, UINavigationControllerDelegate, EditExpiryTimeViewControllerDelegate, FUIAlertViewDelegate>
 
 - (IBAction)doneButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;

@@ -109,7 +109,7 @@
     NSArray *lastNames = [self.lastNames filteredArrayUsingPredicate:predicate];
     lastname.text = [lastNames objectAtIndex:indexPath.row];
     int path = [self.lastNames indexOfObject:lastname.text];
-        
+    
     firstname.text = [self.firstNames objectAtIndex:path];
     email.text = [self.emails objectAtIndex:path];
     
@@ -119,7 +119,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-//    self.doneButton.enabled = ([self.selectedEmails containsObject:email.text]);
+    //    self.doneButton.enabled = ([self.selectedEmails containsObject:email.text]);
     
     return cell;
 }
@@ -168,7 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-
+    
     NSString *alphabet = [self.lastNameIndex objectAtIndex:indexPath.section];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
@@ -178,7 +178,7 @@
     int index = [self.lastNames indexOfObject:lastname];
     NSString *email = [self.emails objectAtIndex:index];
     int path = [self.selectedEmails indexOfObject:email];
-
+    
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         [self.selectedEmails removeObjectAtIndex:path];
@@ -186,7 +186,7 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         [self.selectedEmails addObject:[self.emails objectAtIndex:index]];
     }
-//    NSLog(@"%@", self.selectedEmails);
+    //    NSLog(@"%@", self.selectedEmails);
     [self configureDoneButton];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -209,6 +209,55 @@
     [[mViewController navigationBar] sendSubviewToBack:iv];
 }
 
+- (void)showTexts
+{
+    MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
+    mViewController.messageComposeDelegate = self;
+    [mViewController setBody:@"Insert sample promotion code"];
+    [mViewController setRecipients:self.selectedEmails];
+    if ([MFMessageComposeViewController canSendText]) {
+        [self presentViewController:mViewController animated:YES completion:nil];
+    } else {
+//        UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+//        
+//        //NSInteger red   = 178;
+//        //NSInteger green = 8;
+//        //NSInteger blue  = 56;
+//        
+//        //UIColor *barColor = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:1.0];
+//        
+//        FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Error!"
+//                                                              message:@"You are unable to send text messages"
+//                                   
+//                                                    delegate:nil
+//                                                    cancelButtonTitle:@"Okay"
+//                                                    otherButtonTitles:nil];
+//        
+//        
+//        alertView.titleLabel.textColor = [UIColor cloudsColor];
+//        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+//        alertView.messageLabel.textColor = [UIColor whiteColor];
+//        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+//        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+//        alertView.alertContainer.backgroundColor = barColor;
+//        alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+//        alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+//        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+//        alertView.defaultButtonTitleColor = [UIColor whiteColor];
+//        
+//        
+//        [alertView show];
+    }
+    
+    [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+    UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+    UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeCenter;
+    [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+    [[mViewController navigationBar] sendSubviewToBack:iv];
+}
+
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -219,10 +268,21 @@
 }
 
 - (IBAction)done:(id)sender {
-    [self showMail];
+    if (self.isForMessages) {
+        [self showTexts];
+    } else {
+        [self showMail];
+    }
 }
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
     [self becomeFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

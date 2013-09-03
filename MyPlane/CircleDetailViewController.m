@@ -281,6 +281,7 @@
             UserInfo *sender = (UserInfo *)request.receiver;
             [sender incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
             [self.circle removeObject:request.receiverUsername forKey:@"pendingMembers"];
+            [self.circle removeObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
             [usersToSave addObject:sender];
             [requestsToDelete addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
         } else if ([self.circle.admins containsObject:[PFUser currentUser].username]) {
@@ -322,7 +323,6 @@
     }
     
     for (Requests *request in self.circle.requestsArray) {
-        NSLog(@"LOOK HERE THIS IS A PROPER NSLOG: requesrt: %@", request);
         if ((request.sender)) {
             UserInfo *sender = (UserInfo *)request.receiver;
             [sender incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:-1]];
