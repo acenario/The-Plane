@@ -306,9 +306,64 @@
         }
         
     } else if (indexPath.section == 1) {
-        cell.textLabel.font = [UIFont boldFlatFontOfSize:16];
-        cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
-        cell.textLabel.backgroundColor = [UIColor whiteColor];
+        FUIButton *reRemind = (FUIButton *)[cell viewWithTag:1];
+        FUIButton *halfUpdate = (FUIButton *)[cell viewWithTag:2];
+        FUIButton *fullUpdate = (FUIButton *)[cell viewWithTag:4];
+        
+        if ([[PFUser currentUser].username isEqualToString:[self.reminderObject objectForKey:@"user"]]) {
+            fullUpdate.buttonColor = [UIColor whiteColor];
+            fullUpdate.shadowColor = [UIColor whiteColor];
+            fullUpdate.shadowHeight = 0.0f;
+            fullUpdate.cornerRadius = 0.0f;
+            fullUpdate.titleLabel.font = [UIFont flatFontOfSize:18];
+            
+            [fullUpdate setTitleColor:[UIColor colorFromHexCode:@"A62A00"] forState:UIControlStateNormal];
+            [fullUpdate setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [fullUpdate addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDown];
+            [fullUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpOutside];
+            [fullUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpInside];
+            //        [fullUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchDragOutside];
+            //        [fullUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:uic];
+            [fullUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchDragExit];
+            [fullUpdate addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDragEnter];
+        } else {
+            reRemind.buttonColor = [UIColor whiteColor];
+            reRemind.shadowColor = [UIColor whiteColor];
+            reRemind.shadowHeight = 0.0f;
+            reRemind.cornerRadius = 0.0f;
+            reRemind.titleLabel.font = [UIFont flatFontOfSize:20];
+            
+            [reRemind setTitleColor:[UIColor colorFromHexCode:@"A62A00"] forState:UIControlStateNormal];
+            [reRemind setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [reRemind addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDown];
+            [reRemind addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpOutside];
+            [reRemind addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpInside];
+            [reRemind addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchDragExit];
+            [reRemind addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDragEnter];
+            
+            ////
+            
+            halfUpdate.buttonColor = [UIColor whiteColor];
+            halfUpdate.shadowColor = [UIColor whiteColor];
+            halfUpdate.shadowHeight = 0.0f;
+            halfUpdate.cornerRadius = 0.0f;
+            halfUpdate.titleLabel.font = [UIFont flatFontOfSize:20];
+            
+            [halfUpdate setTitleColor:[UIColor colorFromHexCode:@"A62A00"] forState:UIControlStateNormal];
+            [halfUpdate setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [halfUpdate addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDown];
+            [halfUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpOutside];
+            [halfUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchUpInside];
+            //        [halfUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchDragOutside];
+            //        [halfUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:uic];
+            [halfUpdate addTarget:self action:@selector(buttonOut:) forControlEvents:UIControlEventTouchDragExit];
+            [halfUpdate addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDragEnter];
+        }
+        
+        
     } else if (indexPath.section == 2) {
         UITextField *commentText = (UITextField *)[cell viewWithTag:1341];
         UILabel *limit = (UILabel *)[cell viewWithTag:1337];
@@ -357,6 +412,22 @@
     return cell;
 }
 
+//- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    FUIButton *fullUpdate = (FUIButton *)[cell viewWithTag:4];
+//    fullUpdate.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+//}
+
+-(void)buttonDown:(id)sender {
+    FUIButton *button = (FUIButton *)sender;
+    button.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+}
+
+-(void)buttonOut:(id)sender {
+    FUIButton *button = (FUIButton *)sender;
+    button.buttonColor = [UIColor whiteColor];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -525,7 +596,13 @@
                     [push setQuery:pushQuery]; // Set our Installation query
                     [push setMessage:[self.reminderObject objectForKey:@"title"]];
                     [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        [push sendPushInBackground];
+                        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (succeeded) {
+                                [SVProgressHUD showSuccessWithStatus:@"Re-Reminded!"];
+                            } else {
+                                NSLog(@"ERROR NO PUSH");
+                            }
+                        }];
                     }];
                 }
             }
@@ -565,7 +642,13 @@
                 [push setQuery:pushQuery]; // Set our Installation query
                 [push setMessage:message];
                 [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [push sendPushInBackground];
+                    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            [SVProgressHUD showSuccessWithStatus:@"Sent an Update!"];
+                        } else {
+                            NSLog(@"ERROR NO PUSH");
+                        }
+                    }];
                 }];
             }
         } else {
@@ -598,8 +681,15 @@
                 [push setQuery:pushQuery]; // Set our Installation query
                 [push setMessage:message];
                 [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [push sendPushInBackground];
-                }];            }
+                    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            [SVProgressHUD showSuccessWithStatus:@"Sent an Update!"];
+                        } else {
+                            NSLog(@"ERROR NO PUSH");
+                        }
+                    }];
+                }];
+            }
         } else {
             [self showAlert:@"You have to wait some time before updating again" title:@"Try again later"];
         }

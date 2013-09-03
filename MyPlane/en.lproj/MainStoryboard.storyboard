@@ -731,34 +731,41 @@
                                     <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgQ-uN-cA7">
+                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgQ-uN-cA7" customClass="FUIButton">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="151" id="d1O-df-F6l"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Re-Remind">
-                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" red="0.60784313729999995" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="highlighted">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoC-zG-kb6">
+                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoC-zG-kb6" customClass="FUIButton">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="150" id="N8Y-Wh-4Wd"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Send Update">
-                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" red="0.60784313729999995" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="highlighted">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="separatorVertical.png" translatesAutoresizingMaskIntoConstraints="NO" id="AW2-ui-nMc"/>
-                                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TkM-FN-sy9">
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="separatorVertical.png" translatesAutoresizingMaskIntoConstraints="NO" id="AW2-ui-nMc">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="1" id="yO6-MA-KnT"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TkM-FN-sy9" customClass="FUIButton">
+                                            <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                             <state key="normal" title="Send Update">
-                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" red="0.60784313729999995" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="highlighted">
@@ -770,17 +777,17 @@
                                 </view>
                                 <constraints>
                                     <constraint firstItem="eoC-zG-kb6" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="1nQ-PR-sUM"/>
-                                    <constraint firstAttribute="trailing" secondItem="eoC-zG-kb6" secondAttribute="trailing" constant="9" id="52A-MF-ELs"/>
+                                    <constraint firstItem="eoC-zG-kb6" firstAttribute="baseline" secondItem="ZgQ-uN-cA7" secondAttribute="baseline" type="default" id="2d3-Xy-K8U"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="B3h-4n-axd"/>
-                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="centerX" secondItem="T33-eD-393" secondAttribute="centerX" type="default" id="Ixz-bj-lvB"/>
-                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="O0l-Uu-qLU"/>
-                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="leading" secondItem="T33-eD-393" secondAttribute="leading" constant="10" id="S5a-Rf-Hln"/>
+                                    <constraint firstItem="AW2-ui-nMc" firstAttribute="centerX" secondItem="T33-eD-393" secondAttribute="centerX" type="default" id="Gev-Jb-PNY"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="VaU-9e-Rcx"/>
+                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="trailing" secondItem="eoC-zG-kb6" secondAttribute="trailing" type="default" id="aqR-m5-oA7"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="j7q-Qc-7eQ"/>
                                     <constraint firstItem="eoC-zG-kb6" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="msD-Kd-gUC"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="top" secondItem="T33-eD-393" secondAttribute="top" type="default" id="oP5-xF-rgp"/>
                                     <constraint firstItem="AW2-ui-nMc" firstAttribute="centerX" secondItem="TkM-FN-sy9" secondAttribute="centerX" type="default" id="qK7-F0-dF8"/>
                                     <constraint firstItem="TkM-FN-sy9" firstAttribute="leading" secondItem="ZgQ-uN-cA7" secondAttribute="leading" type="default" id="rwL-nX-Rj2"/>
+                                    <constraint firstItem="TkM-FN-sy9" firstAttribute="bottom" secondItem="T33-eD-393" secondAttribute="bottom" type="default" id="ulu-7f-2rH"/>
                                     <constraint firstItem="ZgQ-uN-cA7" firstAttribute="trailing" secondItem="AW2-ui-nMc" secondAttribute="trailing" type="default" id="vtO-CQ-R9N"/>
                                 </constraints>
                             </tableViewCell>
@@ -5504,6 +5511,406 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="separatorVertical.png" width="1" height="44"/>
         <image name="user-frame.png" width="154" height="117"/>
     </resources>
+    <classes>
+        <class className="ACRPickCircleViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ACRPickCircleViewController.h"/>
+        </class>
+        <class className="AddCircleReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddCircleReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="segmentChange:"/>
+                <relationship kind="action" name="showCommon:"/>
+                <relationship kind="action" name="unwindToAddCircleReminder:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="circleCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="circleName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="commonTasks" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="commonTasksButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="dateTextLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="limitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="memberCountDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="segmentView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="FUISegmentedControl"/>
+                <relationship kind="outlet" name="taskInd" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="AddCommonTaskViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddCommonTaskViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="limitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="AddFriendViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="adjustButtonState:"/>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="AddReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="segmentChanged:"/>
+                <relationship kind="action" name="showCommon:"/>
+                <relationship kind="action" name="textValidation:"/>
+                <relationship kind="outlet" name="commonTasks" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="friendCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="limitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="segmentUIView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="FUISegmentedControl"/>
+                <relationship kind="outlet" name="selectAFriendLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskInd" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userFrame" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userImage" candidateClass="PFImageView"/>
+                <relationship kind="outlet" name="username" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="AddSocialPostViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddSocialPostViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="circleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="circleName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="limitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pickCircleCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="postTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="reminderSubtitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="reminderTextLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="AttachReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AttachReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="commonTasks:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="commonTasks" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneBarItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="limitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="BlockedMembersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BlockedMembersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="unblock:"/>
+                <relationship kind="outlet" name="unblockButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="CircleDetailViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CircleDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="leaveCircle:"/>
+                <relationship kind="outlet" name="inviteCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="membersCount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ownerName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CircleMembersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CircleMembersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="options:"/>
+            </relationships>
+        </class>
+        <class className="CirclePostsViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CirclePostsViewController.h"/>
+        </class>
+        <class className="CircleRemindersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CircleRemindersViewController.h"/>
+        </class>
+        <class className="CircleRequestsViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CircleRequestsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="segmentedChange:"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="FUISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="CirclesViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CirclesViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="circleMenu:"/>
+                <relationship kind="action" name="segmentChanged:"/>
+                <relationship kind="action" name="unwindToCircles:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="addBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="requestButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="segmentedController" candidateClass="FUISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="CommonTasksViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommonTasksViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addTask:"/>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="addBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="CreateCircleViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateCircleViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneBarButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="EditExpiryTimeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditExpiryTimeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewForPicker" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="EditReminderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditReminderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="commonTasks:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="taskValidation:"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="taskLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taskTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="EditSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButton:"/>
+                <relationship kind="action" name="doneButton:"/>
+                <relationship kind="action" name="imagePicker:"/>
+                <relationship kind="outlet" name="done" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="firstnameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="gracePeriodField" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordReEnter" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profilePictureSet" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="setPic" candidateClass="FUIButton"/>
+            </relationships>
+        </class>
+        <class className="EditSocialPostViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditSocialPostViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="dateCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="descLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="postLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="reminderLimit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="reminderTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="socialPostTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="taskCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="FCContainerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FCContainerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changePage:"/>
+                <relationship kind="outlet" name="FCContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="circContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="FUISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="FUIButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FUIButton.h"/>
+        </class>
+        <class className="FUISegmentedControl" superclassName="UISegmentedControl">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FUISegmentedControl.h"/>
+        </class>
+        <class className="FriendsForRemindersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsForRemindersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+            </relationships>
+        </class>
+        <class className="FriendsQueryViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsQueryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addFriend:"/>
+                <relationship kind="action" name="segmentChanged:"/>
+                <relationship kind="outlet" name="requestsBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="segmentedController" candidateClass="FUISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="IndependentInviteMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IndependentInviteMenuViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="InviteMembersToCircleViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteMembersToCircleViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="JoinCircleViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JoinCircleViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="MySentRemindersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MySentRemindersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButton:"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PFQueryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
+        </class>
+        <class className="PickCircleViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PickCircleViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+            </relationships>
+        </class>
+        <class className="PickMembersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PickMembersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="checkAll:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="checkAllButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="doneBarButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="PlaneTabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaneTabViewController.h"/>
+        </class>
+        <class className="ReceivedFriendRequestsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReceivedFriendRequestsViewController.h"/>
+        </class>
+        <class className="ReminderDateViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDateViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="dateAction:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="dateDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIDatePicker"/>
+            </relationships>
+        </class>
+        <class className="ReminderDisclosureViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderDisclosureViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addComment:"/>
+                <relationship kind="action" name="checkTextField:"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="RemindersViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemindersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addReminder:"/>
+                <relationship kind="action" name="unwindToReminders:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="sentReminders" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+                <relationship kind="action" name="unwindToSettings:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="fullNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="PFImageView"/>
+                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="SocialPostDetailViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SocialPostDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addComment:"/>
+                <relationship kind="action" name="checkTextField:"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="SocialViewController" superclassName="PFQueryTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SocialViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addComment:"/>
+            </relationships>
+        </class>
+        <class className="TutorialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TutorialViewController.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+        <class className="firstTimeSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButton:"/>
+                <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="firstTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lastTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePictureSet" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="setPic" candidateClass="FUIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
