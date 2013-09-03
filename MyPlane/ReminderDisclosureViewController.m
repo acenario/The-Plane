@@ -530,7 +530,32 @@
 
 - (void)update:(id)sender
 {
-    NSLog(@"test");
+    
+    if (reachability.currentReachabilityStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+    } else {
+        
+        UserInfo *recipient = (UserInfo *)[self.reminderObject objectForKey:@"recipient"];
+        NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
+        PFQuery *pushQuery = [PFInstallation query];
+        NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
+        
+        if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
+        [pushQuery whereKey:@"user" equalTo:sender];
+            
+        } else {
+        [pushQuery whereKey:@"user" equalTo:recipient.user];
+            
+        }
+        
+        // Send push notification to query
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery]; // Set our Installation query
+        [push setMessage:message];
+        [push sendPushInBackground];
+    }
+
+    
 }
 
 -(void)showAlert:(NSString *)message title:(NSString *)title {
