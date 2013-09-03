@@ -209,13 +209,13 @@
 - (IBAction)leaveCircle:(id)sender {
     
     if (self.circle.members.count > 1) {
-        NSString *message = @"Are you sure you want to leave this circle?";
+        NSString *message = @"Are you sure you want to leave this group?";
         
         UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
 //        UIColor *barColor = [UIColor wetAsphaltColor];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
-                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
+                                   initWithTitle:@"Leaving Group"
                                    message:message
                                    delegate:self
                                    cancelButtonTitle:@"No"
@@ -236,13 +236,13 @@
         
         [alertView show];
     } else {
-        NSString *message = @"You are the last member of this circle. By leaving you will disband this circle. Are you sure you want leave?";
+        NSString *message = @"You are the last member of this group. By leaving you will disband this group. Are you sure you want leave?";
         
-        UIColor *barColor = [UIColor colorFromHexCode:@"FF4100"];
+        UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
 //        UIColor *barColor = [UIColor wetAsphaltColor];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
-                                   initWithTitle:[NSString stringWithFormat:@"Leaving %@", self.circle.displayName]
+                                   initWithTitle:@"Leaving Group"
                                    message:message
                                    delegate:self
                                    cancelButtonTitle:@"No"
@@ -250,15 +250,15 @@
         
         alertView.tag = TAG_DISBAND;
         alertView.titleLabel.textColor = [UIColor cloudsColor];
-        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
-        alertView.messageLabel.textColor = [UIColor cloudsColor];
-        alertView.messageLabel.font = [UIFont flatFontOfSize:14];
-        alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
         alertView.alertContainer.backgroundColor = barColor;
-        alertView.defaultButtonColor = [UIColor cloudsColor];
-        alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+        alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+        alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
         alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        alertView.defaultButtonTitleColor = [UIColor whiteColor];
         
         
         [alertView show];
