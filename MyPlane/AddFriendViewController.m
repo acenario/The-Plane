@@ -256,6 +256,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.searchBar resignFirstResponder];
     nil;
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (IBAction)adjustButtonState:(id)sender
