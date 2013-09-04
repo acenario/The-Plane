@@ -66,11 +66,11 @@
     }];
     item0.tag = 0;
     
-//    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-//        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
-//    }];
-//    item0.tag = 1;
-//    
+    //    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    //        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
+    //    }];
+    //    item0.tag = 1;
+    //
     UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
         [self logOut];
     }];
@@ -81,8 +81,8 @@
     }];
     item0.tag = 3;
     
-    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Share" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {        
-        [self showTexts];
+    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Share" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+        [self showActionSheet];
     }];
     item0.tag = 4;
     
@@ -112,13 +112,13 @@
     
     
     /*self.infoCell = [UITableViewCell configureFlatCellWithColor:[UIColor greenSeaColor]
-                                         selectedColor:[UIColor cloudsColor]
-                                                 style:UITableViewCellStyleDefault
-                                       reuseIdentifier:@"Cell"];
-    
-    self.infoCell.cornerRadius = 5.0f;
-
-    self.infoCell.separatorHeight = 2.0f; // optional*/
+     selectedColor:[UIColor cloudsColor]
+     style:UITableViewCellStyleDefault
+     reuseIdentifier:@"Cell"];
+     
+     self.infoCell.cornerRadius = 5.0f;
+     
+     self.infoCell.separatorHeight = 2.0f; // optional*/
     
 }
 
@@ -148,7 +148,7 @@
     } else {
         self.sharedManager = [CurrentUser sharedManager];
     }
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
                                                  name:@"reloadProfile"
@@ -156,7 +156,7 @@
     
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.editButton.enabled = NO;
-    } 
+    }
 }
 
 - (void)reachabilityChanged:(NSNotification*) notification
@@ -205,7 +205,7 @@
     UIFont *myFont = [UIFont flatFontOfSize:16];
     UIColor *myColor = [UIColor colorFromHexCode:@"FF7140"];
     UIColor *unColor = [UIColor colorFromHexCode:@"A62A00"];
-
+    
     
     self.fullNameField.font = myFont;
     self.fullNameField.textColor = unColor;
@@ -246,14 +246,14 @@
     // unless you use this method for observation of other notifications
     // as well.
     
-     if ([[notification name] isEqualToString:@"reloadProfile"]) {
+    if ([[notification name] isEqualToString:@"reloadProfile"]) {
         NSLog (@"Successfully received the reload command!");
-         [self reloadInfo];
-     } else if ([[notification name] isEqualToString:@"settingsCenterTabbarItemTapped"]) {
-         
-         [self performSegueWithIdentifier:@"AddReminder" sender:nil];
-         
-     }
+        [self reloadInfo];
+    } else if ([[notification name] isEqualToString:@"settingsCenterTabbarItemTapped"]) {
+        
+        [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+        
+    }
 }
 
 
@@ -309,7 +309,7 @@
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.editButton.enabled = NO;
     } else {
-    self.editButton.enabled = YES;
+        self.editButton.enabled = YES;
     }
     [self.profilePicture loadInBackground];
 }
@@ -400,10 +400,10 @@
     [cell setSelectedBackgroundView:bgView];
     
     
-
+    
     
     return cell;
-
+    
 }
 
 #pragma mark - Log In/Out Code
@@ -557,27 +557,27 @@
 
 - (void)showCommon
 {
-//    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
-//    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
-//    cVC.isFromSettings = YES;
-//    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
-//    formSheet.shouldDismissOnBackgroundViewTap = YES;
-//    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
-//    formSheet.cornerRadius = 9.0;
-//    formSheet.portraitTopInset = 6.0;
-//    formSheet.landscapeTopInset = 6.0;
-//    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
-//    
-//    
-//    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
-//        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
-//    };
-//    
-//    
-//    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
-//        
-//        
-//    }];
+    //    UINavigationController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"commonTasks"];
+    //    CommonTasksViewController *cVC = (CommonTasksViewController *)[vc topViewController];
+    //    cVC.isFromSettings = YES;
+    //    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    //    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    //    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    //    formSheet.cornerRadius = 9.0;
+    //    formSheet.portraitTopInset = 6.0;
+    //    formSheet.landscapeTopInset = 6.0;
+    //    formSheet.presentedFormSheetSize = CGSizeMake(320, 200);
+    //
+    //
+    //    formSheet.willPresentCompletionHandler = ^(UIViewController *presentedFSViewController){
+    //        presentedFSViewController.view.autoresizingMask = presentedFSViewController.view.autoresizingMask | UIViewAutoresizingFlexibleWidth;
+    //    };
+    //
+    //
+    //    [formSheet presentWithCompletionHandler:^(UIViewController *presentedFSViewController) {
+    //
+    //
+    //    }];
     [self performSegueWithIdentifier:@"EditCommonTasks" sender:nil];
 }
 
@@ -617,51 +617,38 @@
             return [firstName1 compare:firstName2];
     }];
     
-    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:abContactArray.count];
-    [dictionary setObject:allEmails forKey:@"email"];
-    [dictionary setObject:allFirsts forKey:@"first"];
-    [dictionary setObject:allLasts forKey:@"last"];
+//    NSMutableArray *array1 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+//    NSMutableArray *array2 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+//    NSMutableArray *array3 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    
+    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
     
     for (id object in abContactArray) {
         ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
         ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
         NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
         NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-        //        NSString *email = CFBridgingRelease(ABRecordCopyValue(record, kABPersonEmailProperty));
-        //        NSLog(@"person = %@, %@", lastname, record);
+        
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
-            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
-            [[dictionary objectForKey:@"email"] addObject:email];
-            [[dictionary objectForKey:@"first"] addObject:firstname];
-            [[dictionary objectForKey:@"last"] addObject:lastname];
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(emails, j));
+            [dictionary setObject:email forKey:@"email"];
+            [dictionary setObject:firstname forKey:@"first"];
+            [dictionary setObject:lastname forKey:@"last"];            
+            [allObjects addObject:dictionary];
         }
         CFRelease(emails);
     }
     
     isForMessages = YES;
     
-    [self performSegueWithIdentifier:@"Mail" sender:dictionary];
-    
-    //    ABPeoplePickerNavigationController *picker =
-    //    [[ABPeoplePickerNavigationController alloc] init];
-    //    picker.peoplePickerDelegate = self;
-    //
-    //    [self presentViewController:picker animated:YES completion:nil];
-    //    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
-    //    mViewController.mailComposeDelegate = self;
-    //    [mViewController setSubject:@"Try out Hey! Heads Up"];
-    //    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
-    //    [mViewController setToRecipients:nil];
-    //    [self presentViewController:mViewController animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"Mail" sender:allObjects];
 }
 
 - (void)showEmail
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-//    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
     abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -680,45 +667,39 @@
             return [firstName1 compare:firstName2];
     }];
     
-    NSMutableArray *allEmails = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableArray *allFirsts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableArray *allLasts = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:abContactArray.count];
-    [dictionary setObject:allEmails forKey:@"email"];
-    [dictionary setObject:allFirsts forKey:@"first"];
-    [dictionary setObject:allLasts forKey:@"last"];
+    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
     
     for (id object in abContactArray) {
         ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
         ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
         NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
         NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-//        NSString *email = CFBridgingRelease(ABRecordCopyValue(record, kABPersonEmailProperty));
-//        NSLog(@"person = %@, %@", lastname, record);
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
             NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
-            [[dictionary objectForKey:@"email"] addObject:email];
-            [[dictionary objectForKey:@"first"] addObject:firstname];
-            [[dictionary objectForKey:@"last"] addObject:lastname];
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+            [dictionary setObject:email forKey:@"email"];
+            [dictionary setObject:firstname forKey:@"first"];
+            [dictionary setObject:lastname forKey:@"last"];
+            [allObjects addObject:dictionary];
         }
         CFRelease(emails);
     }
     
     isForMessages = NO;
     
-    [self performSegueWithIdentifier:@"Mail" sender:dictionary];
+    [self performSegueWithIdentifier:@"Mail" sender:allObjects];
     
-//    ABPeoplePickerNavigationController *picker =
-//    [[ABPeoplePickerNavigationController alloc] init];
-//    picker.peoplePickerDelegate = self;
-//    
-//    [self presentViewController:picker animated:YES completion:nil];
-//    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
-//    mViewController.mailComposeDelegate = self;
-//    [mViewController setSubject:@"Try out Hey! Heads Up"];
-//    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
-//    [mViewController setToRecipients:nil];
-//    [self presentViewController:mViewController animated:YES completion:nil];
+    //    ABPeoplePickerNavigationController *picker =
+    //    [[ABPeoplePickerNavigationController alloc] init];
+    //    picker.peoplePickerDelegate = self;
+    //
+    //    [self presentViewController:picker animated:YES completion:nil];
+    //    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+    //    mViewController.mailComposeDelegate = self;
+    //    [mViewController setSubject:@"Try out Hey! Heads Up"];
+    //    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
+    //    [mViewController setToRecipients:nil];
+    //    [self presentViewController:mViewController animated:YES completion:nil];
 }
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
@@ -730,20 +711,41 @@
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
-//    NSMutableArray *phone = [[NSMutableArray alloc] init];
-//    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
-//                                                     kABPersonEmailProperty);
-//    if (ABMultiValueGetCount(phoneNumbers) > 0) {
-//        int i;
-//        for (i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
-//            [phone addObject:(__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(phoneNumbers, i)];
-//        }
-//    }
-//    
-//    NSLog(@"%@", phone);
-//    [self dismissViewControllerAnimated:YES completion:nil];
+    //    NSMutableArray *phone = [[NSMutableArray alloc] init];
+    //    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+    //                                                     kABPersonEmailProperty);
+    //    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+    //        int i;
+    //        for (i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+    //            [phone addObject:(__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(phoneNumbers, i)];
+    //        }
+    //    }
+    //
+    //    NSLog(@"%@", phone);
+    //    [self dismissViewControllerAnimated:YES completion:nil];
     
     return YES;
+}
+
+- (void)showActionSheet
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
+    actionSheet.title = @"Tell friends about Heads Up via";
+    actionSheet.delegate = self;
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    [actionSheet addButtonWithTitle:@"Mail"];
+    [actionSheet addButtonWithTitle:@"Text"];
+    [actionSheet addButtonWithTitle:@"I'll do it later"];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self showEmail];
+    } else if (buttonIndex == 1) {
+        [self showTexts];
+    }
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
@@ -759,8 +761,8 @@
         CFStringRef emailLabelSelected = ABMultiValueCopyLabelAtIndex(emails, identifier);
         CFStringRef emailLabelSelectedLocalized = ABAddressBookCopyLocalizedLabel(ABMultiValueCopyLabelAtIndex(emails, identifier));
         NSLog(@"\n EmailValueSelected = %@ \n EmailLabelSelected = %@ \n \EmailLabeSelectedlLocalized = %@", emailValueSelected, emailLabelSelected, emailLabelSelectedLocalized);
-//        self.emailLabel.text = (__bridge NSString *)emailLabelSelectedLocalized;
-//        self.emailValue.text = (__bridge NSString *)emailValueSelected;
+        //        self.emailLabel.text = (__bridge NSString *)emailLabelSelectedLocalized;
+        //        self.emailValue.text = (__bridge NSString *)emailValueSelected;
         // Return to the main view controller.
         [self dismissViewControllerAnimated:YES completion:nil];
         return NO;

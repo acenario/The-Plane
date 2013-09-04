@@ -14,12 +14,15 @@
 @property (nonatomic, strong) NSMutableArray *lastNames;
 @property (nonatomic, strong) NSMutableArray *emails;
 @property (nonatomic, strong) NSMutableArray *lastNameIndex;
+@property (nonatomic, strong) NSMutableArray *lastNameFullIndex;
 @property (nonatomic, strong) NSMutableArray *selectedEmails;
 
 
 @end
 
-@implementation ShareMailViewController
+@implementation ShareMailViewController {
+    int TrueCellCount;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,21 +36,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.firstNames = [[NSMutableArray alloc] initWithArray:[self.dictionary objectForKey:@"first"]];
-    self.lastNames = [[NSMutableArray alloc] initWithArray:[self.dictionary objectForKey:@"last"]];
-    self.emails = [[NSMutableArray alloc] initWithArray:[self.dictionary objectForKey:@"email"]];
+//    self.firstNames = [[NSMutableArray alloc] initWithArray:[self.dictionary objectForKey:@"first"]];
     //    NSLog(@"%@", self.lastNames);
+    //    self.emails = [[NSMutableArray alloc] initWithArray:[self.dictionary objectForKey:@"email"]];
+    
+    
+    self.lastNames = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
+    self.lastNameFullIndex = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
+    self.emails = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
+    
+    for (NSDictionary *dict in self.dictionary) {
+        [self.lastNames addObject:[dict objectForKey:@"last"]];
+        [self.emails addObject:[dict objectForKey:@"email"]];
+    }
+    self.selectedEmails = [[NSMutableArray alloc] initWithArray:self.emails];
     
     self.lastNameIndex = [[NSMutableArray alloc] init];
-    self.selectedEmails = [[NSMutableArray alloc] initWithArray:self.emails];
     self.doneButton.enabled = YES;
+    self.doneButton.title = [NSString stringWithFormat:@"Done (Send %d invites)", self.selectedEmails.count];
     
     for (NSString *lastName in self.lastNames){
-        //---get the first char of each state---
         char alphabet = [lastName characterAtIndex:0];
         NSString *uniChar = [NSString stringWithFormat:@"%c", alphabet];
-        
-        //---add each letter to the index array---
+        [self.lastNameFullIndex addObject:uniChar];
         if (![self.lastNameIndex containsObject:uniChar])
         {
             [self.lastNameIndex addObject:uniChar];
@@ -68,7 +79,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return self.lastNameIndex.count;
 }
 
@@ -79,17 +89,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    //---get the letter in each section; e.g., A, B, C, etc.---
     NSString *alphabet = [self.lastNameIndex objectAtIndex:section];
+        
+    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
+    NSArray *count = [self.lastNames filteredArrayUsingPredicate:predicate];
     
-    //---get all states beginning with the letter---
-    NSPredicate *predicate =
-    [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
-    NSArray *states = [self.lastNames filteredArrayUsingPredicate:predicate];
-    
-    //---return the number of states beginning with the letter---
-    return [states count];
+    return [count count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,67 +106,28 @@
     UILabel *firstname = (UILabel *)[cell viewWithTag:1];
     UILabel *lastname = (UILabel *)[cell viewWithTag:2];
     UILabel *email = (UILabel *)[cell viewWithTag:3];
-    //---get the letter in the current section---
+    
     NSString *alphabet = [self.lastNameIndex objectAtIndex:indexPath.section];
-    
-    //---get all states beginning with the letter---
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
-    NSArray *lastNames = [self.lastNames filteredArrayUsingPredicate:predicate];
-    lastname.text = [lastNames objectAtIndex:indexPath.row];
-    int path = [self.lastNames indexOfObject:lastname.text];
+    NSArray *lastNames = [self.lastNameFullIndex filteredArrayUsingPredicate:predicate];
     
-    firstname.text = [self.firstNames objectAtIndex:path];
-    email.text = [self.emails objectAtIndex:path];
+//    NSLog(@"OBJECT AT INDEX %@", [self.dictionary objectAtIndex:[self.lastNameFullIndex indexOfObject:[lastNames objectAtIndex:indexPath.row]] + indexPath.row]);
+    
+    int path = [self.lastNameFullIndex indexOfObject:[lastNames objectAtIndex:indexPath.row]] + indexPath.row;
+    NSDictionary *dict = [self.dictionary objectAtIndex:path];
+    
+    firstname.text = [dict objectForKey:@"first"];
+    lastname.text = [dict objectForKey:@"last"];
+    email.text = [dict objectForKey:@"email"];
     
     if ([self.selectedEmails containsObject:email.text]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
+     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    //    self.doneButton.enabled = ([self.selectedEmails containsObject:email.text]);
-    
     return cell;
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
@@ -170,23 +136,22 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     NSString *alphabet = [self.lastNameIndex objectAtIndex:indexPath.section];
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
-    NSArray *lastNames = [self.lastNames filteredArrayUsingPredicate:predicate];
-    NSString *lastname = [lastNames objectAtIndex:indexPath.row];
+    NSArray *lastNames = [self.lastNameFullIndex filteredArrayUsingPredicate:predicate];
     
-    int index = [self.lastNames indexOfObject:lastname];
-    NSString *email = [self.emails objectAtIndex:index];
-    int path = [self.selectedEmails indexOfObject:email];
+    //    NSLog(@"OBJECT AT INDEX %@", [self.dictionary objectAtIndex:[self.lastNameFullIndex indexOfObject:[lastNames objectAtIndex:indexPath.row]] + indexPath.row]);
+    
+    int path = [self.lastNameFullIndex indexOfObject:[lastNames objectAtIndex:indexPath.row]] + indexPath.row;
+    NSDictionary *dict = [self.dictionary objectAtIndex:path];
     
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        [self.selectedEmails removeObjectAtIndex:path];
+        [self.selectedEmails removeObjectAtIndex:[self.selectedEmails indexOfObject:[dict objectForKey:@"email"]]];
     } else {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [self.selectedEmails addObject:[self.emails objectAtIndex:index]];
+        [self.selectedEmails addObject:[dict objectForKey:@"email"]];
     }
-    //    NSLog(@"%@", self.selectedEmails);
+    
     [self configureDoneButton];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -264,6 +229,7 @@
 
 - (void)configureDoneButton
 {
+    self.doneButton.title = [NSString stringWithFormat:@"Done (Send %d invites)", self.selectedEmails.count];
     self.doneButton.enabled = (self.selectedEmails.count > 0);
 }
 
@@ -278,13 +244,36 @@
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
     [self becomeFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];}
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
     [self becomeFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
+
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+//    return [NSArray arrayWithObjects:@"🔍", @"A", @"B", @"C", @"D", @"D", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+//}
+- (IBAction)deselectAll:(id)sender {
+    
+    if (self.selectedEmails.count == 0) {
+        [self.selectedEmails removeAllObjects];
+        for (NSString *email in self.emails) {
+            [self.selectedEmails addObject:email];
+        }
+        self.deselectAllButton.title = @"Deselect All";
+    } else {
+        [self.selectedEmails removeAllObjects];
+        self.deselectAllButton.title = @"Select All";
+    }
+    
+    [self.tableView reloadData];
+    [self configureDoneButton];
 }
 
 @end
