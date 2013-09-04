@@ -430,7 +430,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            [self showTexts];
+            [self showActionSheet];
         }
     }
     
@@ -763,11 +763,11 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
     actionSheet.title = @"Tell friends about Heads Up via";
     actionSheet.delegate = self;
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     [actionSheet addButtonWithTitle:@"Mail"];
     [actionSheet addButtonWithTitle:@"Text"];
     [actionSheet addButtonWithTitle:@"I'll do it later"];
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    [actionSheet showInView:self.tabBarController.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

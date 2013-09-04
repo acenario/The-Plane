@@ -256,9 +256,9 @@
     }];
 }
 
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//    return [NSArray arrayWithObjects:@"🔍", @"A", @"B", @"C", @"D", @"D", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
-//}
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"D", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+}
 - (IBAction)deselectAll:(id)sender {
     
     if (self.selectedEmails.count == 0) {
