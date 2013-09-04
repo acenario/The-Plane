@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordReEnter;
+@property (strong, nonatomic) IBOutlet UITextField *phoneField;
 @property (strong, nonatomic) IBOutlet UILabel *gracePeriodField;
 
 
@@ -41,7 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    PFUser *user = [PFUser currentUser];
+    NSString *phone = [user objectForKey:@"phone"];
 //    self.gracePeriod = self.cu;
     
     self.firstNameField.delegate = self;
@@ -51,6 +53,9 @@
     self.lastNameField.placeholder = self.lastname;
     self.emailField.placeholder = self.email;
     self.profilePictureSet.image = self.profilePicture;
+    if (phone != nil){
+        self.phoneField.placeholder = phone;
+    }
     [self configureTable];
     
 //    check = YES;
@@ -158,6 +163,7 @@
         NSString *firstName = nil;
         NSString *lastName = nil;
         NSString *email = nil;
+        NSString *phone = nil;
         NSString *password = nil;
         NSNumber *grace = [NSNumber numberWithInt:1];
         PFFile *imageFile = nil;
@@ -181,7 +187,7 @@
         //FIRST NAME
         
         if (![self.firstNameField.text isEqualToString:@""]) {
-            if ([self.firstNameField.text length] > 1) {
+            if (([self.firstNameField.text length] > 1) && ([self.firstNameField.text length] < 33)) {
                 BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
                 if (isValid) {
 //                    [object setObject:self.firstNameField.text forKey:@"firstName"];
@@ -200,7 +206,7 @@
                     errorCheck = YES;
                 }
             } else {
-                [self showAlertwithString:@"Your name must be greater than one character!"];
+                [self showAlertwithString:@"Your name must be greater than one character and less than 32!"];
                 errorCheck = YES;
             }
             
@@ -211,7 +217,7 @@
         //LAST NAME
         
         if (![self.lastNameField.text isEqualToString:@""]) {
-            if ([self.lastNameField.text length] > 1) {
+            if (([self.lastNameField.text length] > 1) && ([self.lastNameField.text length] < 33)) {
                 BOOL isValid = [self NSStringIsNameValid:self.lastNameField.text];
                 if (isValid) {
 //                    [object setObject:self.lastNameField.text forKey:@"lastName"];
@@ -224,7 +230,7 @@
                     errorCheck = YES;
                 }
             } else {
-                [self showAlertwithString:@"Your name must be greater than one character!"];
+                [self showAlertwithString:@"Your name must be greater than one character and less than 32!"];
                 errorCheck = YES;
             }
             
@@ -252,6 +258,30 @@
 //            NSLog(@"EMPTY!");
         }
         
+        //PHONE
+        
+        if (![self.phoneField.text isEqualToString:@""]) {
+            if (([self.phoneField.text length] > 1) && ([self.phoneField.text length] < 33)) {
+                BOOL isValid = [self NSStringIsNumberValid:self.phoneField.text];
+                if (isValid) {
+                    //                    [object setObject:self.lastNameField.text forKey:@"lastName"];
+                    //                    [object saveInBackground];
+                    phone = self.phoneField.text;
+                    check = YES;
+                    //                    NSLog(@"SUCCESS!");
+                } else {
+                    [self showAlertwithString:@"Your number must only contain numbers!"];
+                    errorCheck = YES;
+                }
+            } else {
+                [self showAlertwithString:@"Your number must be greater than one character and less than 32!"];
+                errorCheck = YES;
+            }
+            
+        } else {
+            //            NSLog(@"EMPTY!");
+        }
+        
         //PASSWORD
         
         if (![self.passwordField.text isEqualToString:@""] && ![self.passwordReEnter.text isEqualToString:@""]) {
@@ -277,7 +307,7 @@
                 }
                 
             } else {
-                [self showAlertwithString:@"Your password must be 8 character or more!"];
+                [self showAlertwithString:@"Your password must be 8 characters or more!"];
                 errorCheck = YES;
             }
 
@@ -292,7 +322,7 @@
         }
         
         if (check && !errorCheck) {
-            [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user withGrace:grace];
+            [self saveAllFieldswithObject:object withFirstName:firstName withLastName:lastName withEmail:email withPassword:password withImageFile:imageFile withUser:user withGrace:grace withNumber:phone];
         }
 //        else {
 //            [self dismissViewControllerAnimated:YES completion:nil];
@@ -301,7 +331,7 @@
     }];
 }
 
-- (void)saveAllFieldswithObject:(PFObject *)object withFirstName:(NSString *)firstName withLastName:(NSString *)lastName withEmail:(NSString *)email withPassword:(NSString *)password withImageFile:(PFFile *)imageFile withUser:(PFUser *)user withGrace:(NSNumber *)gracePeriod;
+- (void)saveAllFieldswithObject:(PFObject *)object withFirstName:(NSString *)firstName withLastName:(NSString *)lastName withEmail:(NSString *)email withPassword:(NSString *)password withImageFile:(PFFile *)imageFile withUser:(PFUser *)user withGrace:(NSNumber *)gracePeriod withNumber:(NSString *)number;
 {
     BOOL usersave = NO;
     BOOL objectsave = NO;
@@ -319,6 +349,11 @@
     if (email != nil) {
         usersave = YES;
         [user setEmail:email];
+    }
+    
+    if (number != nil) {
+        usersave = YES;
+        [user setObject:number forKey:@"phone"];
     }
     
     if (password != nil) {
@@ -376,6 +411,16 @@
     return [myTest evaluateWithObject:checkString];
 
 }
+
+-(BOOL) NSStringIsNumberValid:(NSString *)checkString
+{
+    NSString *myRegex = @"[0-9]*";
+    NSPredicate *myTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", myRegex];
+    
+    return [myTest evaluateWithObject:checkString];
+    
+}
+
 
 
 -(BOOL) NSStringIsValidEmail:(NSString *)checkString

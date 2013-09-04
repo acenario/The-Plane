@@ -13,6 +13,8 @@
 #import "CurrentUser.h"
 #import "AddReminderViewController.h"
 #import "Reachability.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 #import "ShareMailViewController.h"
 
@@ -34,6 +36,7 @@
     //BOOL menuCheck;
     BOOL isForMessages;
     Reachability *reachability;
+    SLComposeViewController *mySLComposerSheet;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -766,6 +769,8 @@
     actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     [actionSheet addButtonWithTitle:@"Mail"];
     [actionSheet addButtonWithTitle:@"Text"];
+    [actionSheet addButtonWithTitle:@"Facebook"];
+    [actionSheet addButtonWithTitle:@"Twitter"];
     [actionSheet addButtonWithTitle:@"I'll do it later"];
     [actionSheet showInView:self.tabBarController.view];
 }
@@ -776,7 +781,72 @@
         [self showEmail];
     } else if (buttonIndex == 1) {
         [self showTexts];
+    } else if (buttonIndex == 2) {
+        [self showFacebook];
+    } else if (buttonIndex == 3) {
+        [self showTwitter];
     }
+    
+}
+
+-(void)showFacebook {
+    
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) //check if Facebook Account is linked
+    {
+        mySLComposerSheet = [[SLComposeViewController alloc] init]; //initiate the Social Controller
+        mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook]; //Tell him with what social plattform to use it, e.g. facebook or twitter
+        [mySLComposerSheet setInitialText:@""]; //the message you want to post
+        //[mySLComposerSheet addImage:yourimage]; //an image you could post
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://google.com"]];
+        //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+    }
+    [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+//        NSString *output;
+//        switch (result) {
+//            case SLComposeViewControllerResultCancelled:
+//                output = @"Post Unsuccessful";
+//                break;
+//            case SLComposeViewControllerResultDone:
+//                output = @"Post Successful";
+//                break;
+//            default:
+//                break;
+//        } //check if everythink worked properly. Give out a message on the state.
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+//        [alert show];
+    }];
+    
+}
+
+-(void)showTwitter {
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) //check if Facebook Account is linked
+    {
+        mySLComposerSheet = [[SLComposeViewController alloc] init]; //initiate the Social Controller
+        mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter]; //Tell him with what social plattform to use it, e.g. facebook or twitter
+        [mySLComposerSheet setInitialText:@"Check out Hey HeadsUp on the App Store! It lets people remind you so you won't need your own calendar!"];
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://google.com"]];
+        //the message you want to post
+        //[mySLComposerSheet addImage:yourimage]; //an image you could post
+        //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+    }
+    [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+//        NSString *output;
+//        switch (result) {
+//            case SLComposeViewControllerResultCancelled:
+//                output = @"Tweet Unsuccessful";
+//                break;
+//            case SLComposeViewControllerResultDone:
+//                output = @"Tweet Successful";
+//                break;
+//            default:
+//                break;
+//        } //check if everythink worked properly. Give out a message on the state.
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+//        [alert show];
+    }];
+    
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker

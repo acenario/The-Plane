@@ -2038,7 +2038,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <tableViewSection id="bNF-3J-ryb">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aYR-cP-dOf">
-                                        <rect key="frame" x="0.0" y="239" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="239" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -2064,8 +2064,39 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <constraint firstItem="NwU-9K-Hza" firstAttribute="leading" secondItem="kh2-Df-88Y" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="QAa-65-Crw"/>
                                             <constraint firstItem="kh2-Df-88Y" firstAttribute="leading" secondItem="aYR-cP-dOf" secondAttribute="leading" constant="30" id="UoB-SQ-Gsr"/>
                                             <constraint firstItem="NwU-9K-Hza" firstAttribute="baseline" secondItem="kh2-Df-88Y" secondAttribute="baseline" type="default" id="cCP-gb-AJe"/>
-                                            <constraint firstItem="NwU-9K-Hza" firstAttribute="centerY" secondItem="aYR-cP-dOf" secondAttribute="centerY" type="default" id="iaa-ac-UZg"/>
+                                            <constraint firstItem="NwU-9K-Hza" firstAttribute="bottom" secondItem="aYR-cP-dOf" secondAttribute="bottom" type="default" id="hWv-rB-uEV"/>
                                             <constraint firstItem="kh2-Df-88Y" firstAttribute="top" secondItem="aYR-cP-dOf" secondAttribute="top" constant="12" id="muz-1W-KVq"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5yT-GN-OmN">
+                                        <rect key="frame" x="0.0" y="284" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHf-Nx-Onz">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set Phone Number" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="TXl-MB-sgR">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="211" id="Q6u-Ze-piX"/>
+                                                        <constraint firstAttribute="height" constant="43" id="QUP-XW-MwE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="phonePad" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="TXl-MB-sgR" firstAttribute="centerY" secondItem="5yT-GN-OmN" secondAttribute="centerY" type="default" id="8qD-ET-wOz"/>
+                                            <constraint firstItem="TXl-MB-sgR" firstAttribute="baseline" secondItem="nHf-Nx-Onz" secondAttribute="baseline" type="default" id="Ava-ub-jZb"/>
+                                            <constraint firstItem="nHf-Nx-Onz" firstAttribute="top" secondItem="5yT-GN-OmN" secondAttribute="top" constant="11" id="WG2-rW-GFH"/>
+                                            <constraint firstItem="nHf-Nx-Onz" firstAttribute="leading" secondItem="5yT-GN-OmN" secondAttribute="leading" constant="30" id="sYT-yb-ZGn"/>
+                                            <constraint firstItem="TXl-MB-sgR" firstAttribute="leading" secondItem="nHf-Nx-Onz" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="uM7-4n-Mng"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -2073,7 +2104,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <tableViewSection headerTitle="Change Password" id="3de-Pa-S6S">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="acM-HD-zvG">
-                                        <rect key="frame" x="0.0" y="331" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="375" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -2096,7 +2127,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="FAl-ks-7f3">
-                                        <rect key="frame" x="0.0" y="376" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="420" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -2123,7 +2154,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <tableViewSection headerTitle="Cleanup Old Reminders" id="z8y-sL-oXa">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6lu-yb-Jrc">
-                                        <rect key="frame" x="0.0" y="467" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="511" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -2180,6 +2211,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="lastNameLabel" destination="p3z-1b-7rq" id="pJ1-hV-Gvj"/>
                         <outlet property="passwordField" destination="FYq-gw-z93" id="w4z-Vm-FPA"/>
                         <outlet property="passwordReEnter" destination="dx1-lx-Z0h" id="Aq9-f7-AfC"/>
+                        <outlet property="phoneField" destination="TXl-MB-sgR" id="2p1-Ff-uSk"/>
                         <outlet property="profilePictureSet" destination="dOQ-hY-Y9d" id="TcI-5R-7rH"/>
                         <outlet property="setPic" destination="VdW-lL-WgB" id="M3Z-XJ-g2s"/>
                     </connections>
@@ -3624,6 +3656,41 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="(Optional): Helps friends find you" id="Naz-QF-S7Z">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="O3P-ZF-OyY">
+                                        <rect key="frame" x="0.0" y="239" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set Phone Number (optional)" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="7b2-rP-wGz">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43" id="fnm-Os-XKc"/>
+                                                        <constraint firstAttribute="width" constant="210" id="fz3-ka-Otm"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="phonePad" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHe-p4-2zi">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="NHe-p4-2zi" firstAttribute="baseline" secondItem="7b2-rP-wGz" secondAttribute="baseline" type="default" id="92e-c0-fHa"/>
+                                            <constraint firstItem="NHe-p4-2zi" firstAttribute="centerY" secondItem="7b2-rP-wGz" secondAttribute="centerY" type="default" id="MOm-V2-ui7"/>
+                                            <constraint firstItem="7b2-rP-wGz" firstAttribute="leading" secondItem="NHe-p4-2zi" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="NAT-hD-k5K"/>
+                                            <constraint firstItem="7b2-rP-wGz" firstAttribute="centerY" secondItem="O3P-ZF-OyY" secondAttribute="centerY" type="default" id="g4D-il-0Bs"/>
+                                            <constraint firstItem="NHe-p4-2zi" firstAttribute="leading" secondItem="O3P-ZF-OyY" secondAttribute="leading" constant="30" id="pAi-Bo-tnZ"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="QRM-x3-lfl" id="b9I-kG-E1T"/>
@@ -3644,6 +3711,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="firstTitle" destination="SrL-13-GPi" id="yK2-nu-zIl"/>
                         <outlet property="lastNameField" destination="nhd-IB-iZk" id="633-dP-Jwa"/>
                         <outlet property="lastTitle" destination="yts-x1-eo2" id="fgg-uV-d8p"/>
+                        <outlet property="phoneField" destination="7b2-rP-wGz" id="7vm-69-PiC"/>
+                        <outlet property="phoneLabel" destination="NHe-p4-2zi" id="ric-Cu-aob"/>
                         <outlet property="profilePictureSet" destination="UPy-0X-Z9i" id="HAx-b2-7gc"/>
                         <outlet property="setPic" destination="9dh-Q1-Lir" id="XAK-3h-aCW"/>
                     </connections>

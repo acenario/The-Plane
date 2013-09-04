@@ -25,7 +25,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureSet;
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
+@property (strong, nonatomic) IBOutlet UITextField *phoneField;
 @property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *firstTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lastTitle;
 @property (weak, nonatomic) IBOutlet FUIButton *setPic;
