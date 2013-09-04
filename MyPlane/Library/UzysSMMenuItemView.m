@@ -10,8 +10,7 @@
 
 @implementation UzysSMMenuItemView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -20,35 +19,15 @@
     return self;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     //Add something to make some highlighted effect
-}
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-
+    [self performAssociatedAction];
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //Add something to make some highlighted effect
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //Add something to make some highlighted effect
-    if (_item.block) {
-        
-        if([self.delegate respondsToSelector:@selector(UzysSMMenuItemDidAction:)] && self.delegate)
-        {
-            [self.delegate UzysSMMenuItemDidAction:self];
-        }
-        _item.block(_item);
-    }
-}
-
--(void)setItem:(UzysSMMenuItem *)item
-{
+-(void)setItem:(UzysSMMenuItem *)item {
     [_item release];
     _item = [item ah_retain];
     _imageView.image = item.image;
@@ -66,8 +45,7 @@
 }
 
 #pragma mark - using gestureRecognizer
--(void)awakeFromNib
-{
+-(void)awakeFromNib {
     [super awakeFromNib];
     UITapGestureRecognizer *tapGesture;
     tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self
@@ -80,14 +58,19 @@
 
 - (void)gestureTapped:(UIGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"tapped");
-        if (_item.block) {
-            if([self.delegate respondsToSelector:@selector(UzysSMMenuItemDidAction:)] && self.delegate)
-            {
-                [self.delegate UzysSMMenuItemDidAction:self];
-            }
-            _item.block(_item);
+        [self performAssociatedAction];
+    }
+}
+
+#pragma mark - Private Methods
+
+- (void)performAssociatedAction {
+    if (self.item.block) {
+        self.item.block(self.item);
+        if([self.delegate respondsToSelector:@selector(uzysSMMenuItemDidAction:)] && self.delegate) {
+            [self.delegate uzysSMMenuItemDidAction:self];
         }
     }
 }
+
 @end

@@ -12,7 +12,7 @@
 @class UzysSMMenuItemView;
 @protocol UzysSMMenuItemViewActionDelegate <NSObject>
 @optional
-- (void) UzysSMMenuItemDidAction:(UzysSMMenuItemView *)itemView;
+- (void) uzysSMMenuItemDidAction:(UzysSMMenuItemView *)itemView;
 @end
 
 @interface UzysSMMenuItemView : UIView<UIGestureRecognizerDelegate>

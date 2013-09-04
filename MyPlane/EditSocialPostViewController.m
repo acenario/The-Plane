@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureViewController];
     
     mainFormatter = [[NSDateFormatter alloc] init];
     [mainFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -45,7 +46,7 @@
     
     self.socialPostTextView.text = self.post.text;
     int limit = 140 - self.socialPostTextView.text.length;
-    self.postLimit.text = [NSString stringWithFormat:@"%d", limit];
+    self.postLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
     
     if (self.post.reminderTask.length > 0) {
         self.reminderTextField.text = self.post.reminderTask;
@@ -93,6 +94,16 @@
     gestureRecognizer.cancelsTouchesInView = NO;
 }
 
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -106,11 +117,9 @@
     if ((indexPath.section == 0) && (indexPath.row == 0)) {
         [self.socialPostTextView becomeFirstResponder];
         
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if ((indexPath.section == 1) && (indexPath.row == 0)) {
         [self.reminderTextField becomeFirstResponder];
         
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if ((indexPath.section == 1) && (indexPath.row == 2)) {
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
@@ -120,11 +129,73 @@
         self.descriptionTextView.userInteractionEnabled = YES;
         [self.descriptionTextView becomeFirstResponder];
         
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
+    
+    
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            self.reminderTextField.font = [UIFont flatFontOfSize:14];
+            self.reminderLimit.font = [UIFont flatFontOfSize:14];
+            self.reminderLimit.adjustsFontSizeToFitWidth = YES;
+            
+            [cell.contentView addSubview:imgView];
+            
+        } else if(indexPath.row == 1) {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+            
+            [cell.contentView addSubview:bottomView];
+            [cell.contentView addSubview:imgView];
+        } else {
+            self.descDisplayLabel.font = [UIFont flatFontOfSize:16];
+            self.descriptionTextView.font = [UIFont flatFontOfSize:14];
+            self.descLimit.font = [UIFont flatFontOfSize:13];
+            self.descLimit.adjustsFontSizeToFitWidth = YES;
+            
+            [cell.contentView addSubview:bottomView];
+        }
+        
+    } else {
+        self.socialPostTextView.font = [UIFont flatFontOfSize:14];
+        self.postLimit.font = [UIFont flatFontOfSize:13];
+        
+        self.postLimit.adjustsFontSizeToFitWidth = YES;
+        
+    }
+    
+    return cell;
+    
+}
+
 
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -147,12 +218,20 @@
 - (void)taskValidation:(id)sender
 {
     int limit = 35 - self.reminderTextField.text.length;
+    NSString *removedSpaces = [self.reminderTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.reminderLimit.text = [NSString stringWithFormat:@"%d", limit];
-    if (limit >= 0) {
+    
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
         taskCheck = YES;
     } else {
         taskCheck = NO;
+        self.reminderLimit.textColor = [UIColor redColor];
     }
+    
+    if (limit >= 0) {
+        self.reminderLimit.textColor = [UIColor lightGrayColor];
+    }
+
     
     [self configureDoneButton];
 }
@@ -173,7 +252,7 @@
 - (void)descValidation:(id)sender
 {
     int limit = 250 - self.descriptionTextView.text.length;
-    self.descLimit.text = [NSString stringWithFormat:@"%d", limit];
+    self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
     if (limit >= 0) {
         descCheck = YES;
     } else {
@@ -187,21 +266,29 @@
 {
     if (textView.tag == 1) {
         int limit = 140 - self.socialPostTextView.text.length;
-        self.postLimit.text = [NSString stringWithFormat:@"%d", limit];
-        if (limit >= 0) {
+        NSString *removedSpaces = [self.socialPostTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.postLimit.text = [NSString stringWithFormat:@"%d charcters left", limit];
+        if ((removedSpaces.length > 0) && (limit >= 0)) {
             postCheck = YES;
         } else {
             postCheck = NO;
+            self.postLimit.textColor = [UIColor redColor];
+        }
+        
+        if (limit >= 0) {
+            self.postLimit.textColor = [UIColor lightGrayColor];
         }
         
         [self configureDoneButton];
     } else if (textView.tag == 2) {
         int limit = 250 - self.descriptionTextView.text.length;
-        self.descLimit.text = [NSString stringWithFormat:@"%d", limit];
+        self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
         if (limit >= 0) {
             descCheck = YES;
+            self.descLimit.textColor = [UIColor lightGrayColor];
         } else {
             descCheck = NO;
+            self.descLimit.textColor = [UIColor redColor];
         }
         
         [self configureDoneButton];

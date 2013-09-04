@@ -24,6 +24,12 @@
 
 @property (nonatomic, strong) Reminders *reminder;
 @property (nonatomic, strong) id <EditReminderViewControllerDelegate> delegate;
+
+@property (strong, nonatomic) IBOutlet UILabel *taskDisplayLabel;
+@property (strong, nonatomic) IBOutlet UILabel *DescDisplayLabel;
+@property (strong, nonatomic) IBOutlet FUIButton *commonTasks;
+
+
 @property (strong, nonatomic) IBOutlet UITextField *taskTextField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *descTextView;

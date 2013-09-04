@@ -61,6 +61,16 @@
     
 }
 
+-(void)configureViewController {
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageNamed:@"tableBackground"];
+    av.image = background;
+    
+    self.tableView.backgroundView = av;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -78,8 +88,19 @@
     self.taskLimit.hidden = NO;
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     int limit = 35 - self.taskTextField.text.length;
-    self.taskLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
-    textCheck = ((removedSpaces.length > 0) && (limit >= 0));
+    self.taskLimit.text = [NSString stringWithFormat:@"%d", limit];
+    //textCheck = ((removedSpaces.length > 0) && (limit >= 0));
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
+        textCheck = YES;
+    } else {
+        textCheck = NO;
+        self.taskLimit.textColor = [UIColor redColor];
+    }
+    
+    if (limit >= 0) {
+        self.taskLimit.textColor = [UIColor lightGrayColor];
+    }
+
     [self configureDoneButton];
 }
 
@@ -104,7 +125,15 @@
 {
     int limit = 250 - self.descTextView.text.length;
     self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
-    descCheck = ((limit >= 0));
+    //descCheck = ((limit >= 0));
+    if ((limit >= 0)) {
+        descCheck = YES;
+        self.descLimit.textColor = [UIColor lightGrayColor];
+    } else {
+        descCheck = NO;
+        self.descLimit.textColor = [UIColor redColor];
+    }
+    
     [self configureDoneButton];
 }
 
@@ -159,7 +188,77 @@
         self.descTextView.userInteractionEnabled = YES;
         [self.descTextView becomeFirstResponder];
     }
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
+    
+    UIImageView *av = [[UIImageView alloc] init];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:1.0f];
+    av.image = background;
+    cell.backgroundView = av;
+    
+    
+    UIView *bgView = [[UIView alloc]init];
+    bgView.backgroundColor = selectedColor;
+    
+    
+    [cell setSelectedBackgroundView:bgView];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    imgView.frame = CGRectMake(-1, (cell.frame.size.height - 1), 302, 1);
+    
+    UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
+    bottomView.frame = CGRectMake(-1, -1, 302, 1);
+    
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+            self.taskDisplayLabel.font = [UIFont flatFontOfSize:16];
+            self.taskTextField.font = [UIFont flatFontOfSize:14];
+            self.taskLimit.font = [UIFont flatFontOfSize:14];
+            
+            self.taskLimit.adjustsFontSizeToFitWidth = YES;
+            
+            self.commonTasks.buttonColor = [UIColor colorFromHexCode:@"FF7140"];
+            self.commonTasks.shadowColor = [UIColor colorFromHexCode:@"FF9773"];
+            self.commonTasks.shadowHeight = 2.0f;
+            self.commonTasks.cornerRadius = 3.0f;
+            self.commonTasks.titleLabel.font = [UIFont boldFlatFontOfSize:15];
+            
+            [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            
+            
+            [cell.contentView addSubview:imgView];
+            
+        } else {
+            cell.textLabel.font = [UIFont flatFontOfSize:16];
+            cell.detailTextLabel.font = [UIFont flatFontOfSize:16];
+            cell.textLabel.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
+            
+            [cell.contentView addSubview:bottomView];
+            [cell.contentView addSubview:imgView];
+            
+       }
+        
+    } else {
+        self.DescDisplayLabel.font = [UIFont flatFontOfSize:16];
+        self.descTextView.font = [UIFont flatFontOfSize:14];
+        self.descLimit.font = [UIFont flatFontOfSize:14];
+        self.descLimit.adjustsFontSizeToFitWidth = YES;
+    }
+    
+    return cell;
+    
 }
 
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date

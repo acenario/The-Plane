@@ -20,7 +20,7 @@
 @implementation CirclesViewController {
     PFQuery *userQuery;
     UserInfo *userObject;
-    BOOL menuCheck;
+    //BOOL menuCheck;
     Reachability *reachability;
 }
 
@@ -44,12 +44,12 @@
     reachability = [Reachability reachabilityForInternetConnection];
     [reachability startNotifier];
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Circle" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Group" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Create a Circle" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Create a Group" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"CreateCircle" sender:nil];
     }];
     item0.tag = 1;
@@ -97,7 +97,7 @@
                                                  name:@"showCircles"
                                                object:nil];
     
-    menuCheck = YES;
+    //menuCheck = YES;
     self.segmentedController.selectedSegmentIndex = 1;
     self.uzysSMenu.hidden = YES;
     self.sharedManager = [CurrentUser sharedManager];
@@ -116,7 +116,7 @@
 
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"showCircles"]) {
-        menuCheck = YES;
+        //menuCheck = YES;
         self.segmentedController.selectedSegmentIndex = 1;
         self.uzysSMenu.hidden = YES;
         self.sharedManager = [CurrentUser sharedManager];
@@ -137,10 +137,17 @@
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.uzysSMenu openIconMenu];
-    menuCheck = YES;
-
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    }
 }
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -162,7 +169,7 @@
     [query includeKey:@"requestsArray"];
     [query includeKey:@"adminPointers"];
     
-    [query orderByDescending:@"name"];
+    [query orderByAscending:@"name"];
     
     if (self.objects.count == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -266,16 +273,21 @@
 
 - (IBAction)circleMenu:(id)sender {
     self.uzysSMenu.hidden = NO;
-    if (menuCheck == YES) {
-        [self.uzysSMenu toggleMenu];
-        NSLog(@"open");
-        menuCheck = NO;
+    if (self.uzysSMenu.state == STATE_FULL_MENU) {
+        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
     } else {
-        [self.uzysSMenu openIconMenu];
-        menuCheck = YES;
-        NSLog(@"close");
-        
+        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
     }
+//    if (menuCheck == YES) {
+//        [self.uzysSMenu toggleMenu];
+//        NSLog(@"open");
+//        menuCheck = NO;
+//    } else {
+//        [self.uzysSMenu openIconMenu];
+//        menuCheck = YES;
+//        NSLog(@"close");
+//        
+//    }
     
 }
 
