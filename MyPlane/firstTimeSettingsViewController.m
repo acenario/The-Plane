@@ -20,6 +20,7 @@
 @implementation firstTimeSettingsViewController {
     BOOL checkFirstName;
     BOOL checkLastName;
+    BOOL overallCheck;
     NSArray *friendsArray;
     Reachability *reachability;
     UIImage *defaultimage;
@@ -148,18 +149,19 @@
         //FIRST NAME
         
         if (![self.firstNameField.text isEqualToString:@""]) {
-            if ([self.firstNameField.text length] > 1) {
+            if (([self.firstNameField.text length] > 1) && ([self.firstNameField.text length] < 33)) {
                 BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
                 if (isValid) {
                     [object setObject:self.firstNameField.text forKey:@"firstName"];
                     [object saveInBackground];
                     checkFirstName = YES;
+                    overallCheck = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
                 }
             } else {
-                [self showAlertwithString:@"Your name must be greater than one character!"];
+                [self showAlertwithString:@"Your name must be greater than one character and less than 32!"];
             }
             
         } else {
@@ -169,27 +171,52 @@
         //LAST NAME
         
         if (![self.lastNameField.text isEqualToString:@""]) {
-            if ([self.lastNameField.text length] > 1) {
-                BOOL isValid = [self NSStringIsNameValid:self.firstNameField.text];
+            if (([self.lastNameField.text length] > 1) && ([self.lastNameField.text length] < 33)) {
+                BOOL isValid = [self NSStringIsNameValid:self.lastNameField.text];
                 if (isValid) {
                     [object setObject:self.lastNameField.text forKey:@"lastName"];
                     [object saveInBackground];
                     checkLastName = YES;
+                    overallCheck = YES;
                     NSLog(@"SUCCESS!");
                 } else {
                     [self showAlertwithString:@"Your name must only contain letters!"];
                 }
             } else {
-                [self showAlertwithString:@"Your name must be greater than one character!"];
+                [self showAlertwithString:@"Your name must be greater than one character and less than 32!"];
             }
             
         } else {
             [self showAlertwithString:@"You must enter a last name!"];
         }
         
+        //PHONE
+        
+        if (![self.phoneField.text isEqualToString:@""]) {
+            if (([self.phoneField.text length] > 1) && ([self.phoneField.text length] < 33)) {
+                BOOL isValid = [self NSStringIsNumberValid:self.phoneField.text];
+                if (isValid) {
+                    PFUser *user = [PFUser currentUser];
+                    [user setObject:self.phoneField.text forKey:@"phone"];
+                    [user saveInBackground];
+                    overallCheck = YES;
+                    NSLog(@"SUCCESS!");
+                } else {
+                    overallCheck = NO;
+                    [self showAlertwithString:@"Your number must only contain numbers!"];
+                }
+            } else {
+                overallCheck = NO;
+                [self showAlertwithString:@"Your phone number must be more than one character and less than 32!"];
+            }
+            
+        } else {
+            NSLog(@"EMPTY PHONE!");
+        }
         
         
-        if ((checkFirstName) && (checkLastName)) {
+        
+        if ((checkFirstName) && (checkLastName) && (overallCheck)) {
             CurrentUser *sharedManager = [CurrentUser sharedManager];
             sharedManager.currentUser = (UserInfo *)object;
             [self dismissViewControllerAnimated:YES completion:^{
@@ -211,6 +238,15 @@
 -(BOOL) NSStringIsNameValid:(NSString *)checkString
 {
     NSString *myRegex = @"[A-Za-z]*";
+    NSPredicate *myTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", myRegex];
+    
+    return [myTest evaluateWithObject:checkString];
+    
+}
+
+-(BOOL) NSStringIsNumberValid:(NSString *)checkString
+{
+    NSString *myRegex = @"[0-9]*";
     NSPredicate *myTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", myRegex];
     
     return [myTest evaluateWithObject:checkString];
@@ -256,14 +292,19 @@
     
     self.firstTitle.font = [UIFont flatFontOfSize:16];
     self.lastTitle.font = [UIFont flatFontOfSize:16];
+    self.phoneLabel.font = [UIFont flatFontOfSize:16];
     self.firstTitle.textColor = [UIColor colorFromHexCode:@"A62A00"];
     self.lastTitle.textColor = [UIColor colorFromHexCode:@"A62A00"];
+    self.phoneLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
     self.firstTitle.backgroundColor = [UIColor whiteColor];
     self.lastTitle.backgroundColor = [UIColor whiteColor];
+    self.phoneLabel.backgroundColor = [UIColor whiteColor];
     self.firstNameField.font = [UIFont flatFontOfSize:14];
     self.lastNameField.font = [UIFont flatFontOfSize:14];
+    self.phoneField.font = [UIFont flatFontOfSize:14];
     self.firstNameField.backgroundColor = [UIColor whiteColor];
     self.lastNameField.backgroundColor = [UIColor whiteColor];
+    self.phoneField.backgroundColor = [UIColor whiteColor];
     
     if (indexPath.section == 1) {
         if (indexPath.row == 0)
