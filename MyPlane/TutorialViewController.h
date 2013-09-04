@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class TutorialViewController;
+
+@protocol TutorialViewControllerDelegate <NSObject>
+
+- (void)tutDidFinish:(TutorialViewController *)controller;
+
+@end
+
 @interface TutorialViewController : UIViewController <UIScrollViewDelegate> {
     
     BOOL pageControlBeingUsed;
@@ -16,5 +24,6 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIPageControl *pageViewController;
+@property (nonatomic, strong) id <TutorialViewControllerDelegate> delegate;
 
 @end

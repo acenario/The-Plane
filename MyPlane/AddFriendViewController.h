@@ -8,6 +8,9 @@
 
 #import <Parse/Parse.h>
 #import "UserInfo.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
 
 @class AddFriendViewController;
 
@@ -17,7 +20,7 @@
 
 @end
 
-@interface AddFriendViewController : PFQueryTableViewController <UISearchBarDelegate>
+@interface AddFriendViewController : PFQueryTableViewController <UISearchBarDelegate, FUIAlertViewDelegate, UIScrollViewDelegate>
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 @property (nonatomic, weak) id <AddFriendViewControllerDelegate> delegate;

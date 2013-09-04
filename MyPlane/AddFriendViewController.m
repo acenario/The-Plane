@@ -7,8 +7,11 @@
 //
 
 #import "AddFriendViewController.h"
+#import "NoFriendsViewController.h"
 #import "CurrentUser.h"
 #import "Reachability.h"
+
+#define TAG_NOFRIENDS 1
 
 @interface AddFriendViewController ()
 
@@ -76,6 +79,16 @@
         [self currentUserQuery];
     }
     
+//    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+//    [self.tableView addGestureRecognizer:gestureRecognizer];
+//    gestureRecognizer.cancelsTouchesInView = NO;
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self.tableView reloadData];
 }
 
 - (void)reachabilityChanged:(NSNotification*)notification
@@ -103,6 +116,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.searchBar resignFirstResponder];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)currentUserQuery
@@ -255,7 +276,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.searchBar resignFirstResponder];
-    nil;
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -304,10 +324,113 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self checkHasFriends];
 }
 
 - (IBAction)done:(id)sender {
     [self.delegate addFriendViewControllerDidFinishAddingFriends:self];
 }
+
+- (void)checkHasFriends
+{
+    [self.searchBar resignFirstResponder];
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:@"Add Friends"
+                                   message:@"Would you like to import friends from your contacts?"
+                                   delegate:self
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:@"Yes", nil];
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+        alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor whiteColor];
+        alertView.tag = TAG_NOFRIENDS;
+        
+        [alertView show];
+        
+}
+
+- (void)noFriends
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSArray *abContactArray = [[NSArray alloc] init];
+    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+        
+        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+        
+        NSComparisonResult result = [lastName1 compare:lastName2];
+        if (result != NSOrderedSame)
+            return result;
+        else
+            return [firstName1 compare:firstName2];
+    }];
+    
+    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    
+    for (id object in abContactArray) {
+        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+        //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+        //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+            //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+            //            [dictionary setObject:email forKey:@"email"];
+            //            [dictionary setObject:firstname forKey:@"first"];
+            //            [dictionary setObject:lastname forKey:@"last"];
+            [allObjects addObject:email];
+        }
+        
+        ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+        
+        for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+            email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            [allObjects addObject:email];
+        }
+        
+        
+        CFRelease(emails);
+        CFRelease(phones);
+    }
+    
+    [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+}
+
+- (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == TAG_NOFRIENDS) {
+        if (buttonIndex == 1) {
+            [self noFriends];
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"NoFriends"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        NoFriendsViewController *controller = (NoFriendsViewController *)nav.topViewController;
+        controller.emails = sender;
+    }
+}
+
 @end

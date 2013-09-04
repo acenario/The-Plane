@@ -224,7 +224,11 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:^{
+        if (self.isFromNoFriend) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+        }
+    }];
 }
 
 - (void)configureDoneButton
@@ -245,14 +249,24 @@
 {
     [self becomeFirstResponder];
     [self dismissViewControllerAnimated:YES completion:^{
-        [self dismissViewControllerAnimated:NO completion:nil];
-    }];}
+        [self dismissViewControllerAnimated:NO completion:^{
+            if (self.isFromNoFriend) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+            }
+        }];
+    }];
+    
+}
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
     [self becomeFirstResponder];
     [self dismissViewControllerAnimated:YES completion:^{
-        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:^{
+            if (self.isFromNoFriend) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+            }
+        }];
     }];
 }
 

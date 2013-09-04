@@ -17,9 +17,11 @@
 #import "CommonTasksViewController.h"
 #import "MZFormSheetController.h"
 #import "firstTimeSettingsViewController.h"
+#import "NoFriendsViewController.h"
+#import "TutorialViewController.h"
 
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate>
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate, TutorialViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;
