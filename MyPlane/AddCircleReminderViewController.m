@@ -44,7 +44,7 @@
         self.view.autoresizesSubviews = NO;
     } else {
         self.memberCountDisplay.hidden = YES;
-        self.circleName.text = @"Pick a circle...";
+        self.circleName.text = @"Pick a group...";
         isFromCircles = NO;
         currentUserQuery = [UserInfo query];
         [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];

@@ -528,9 +528,8 @@
                 }];
                 [SVProgressHUD dismiss];
                 [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
-                //[SVProgressHUD showErrorWithStatus:@"ARJUN IMPLEMENT SOME SORT OF INDICATOR TO RELOAD"];
             } else {
-                NSLog(@"There was an error deleting an old reminder!");
+                NSLog(@"There was an error deleting an old reminder!: %@", error);
                 [SVProgressHUD dismiss];
             }
             
