@@ -88,14 +88,18 @@
         [self performSegueWithIdentifier:@"BlockedUsers" sender:nil];
     }];
     item0.tag = 3;
-    
-//    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Report a user" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-////        [self ];
-//    }];
-//    item0.tag = 4;
-    
-    
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2]];
+    self.sharedManager = [CurrentUser sharedManager];
+    if (self.sharedManager.currentUser.adminRank > 0) {
+        UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+            [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
+        }];
+        item0.tag = 4;
+        
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2,item4]];
+    } else {
+        NSLog(@"%d", self.sharedManager.currentUser.adminRank);
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2]];
+    }
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -766,6 +770,8 @@
     actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     [actionSheet addButtonWithTitle:@"Mail"];
     [actionSheet addButtonWithTitle:@"Text"];
+    [actionSheet addButtonWithTitle:@"Facebook"];
+    [actionSheet addButtonWithTitle:@"Twitter"];
     [actionSheet addButtonWithTitle:@"I'll do it later"];
     [actionSheet showInView:self.tabBarController.view];
 }

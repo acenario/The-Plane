@@ -32,6 +32,8 @@
 		AED62A3117A1ED59002055ED /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3017A1ED59002055ED /* Comments.m */; };
 		AED62A3417A1ED65002055ED /* Circles.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3317A1ED65002055ED /* Circles.m */; };
 		AEE6EB7217D7149100A4D60C /* NoFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE6EB7117D7149100A4D60C /* NoFriendsViewController.m */; };
+		AEE6EB7517D826DB00A4D60C /* AdminPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE6EB7417D826DB00A4D60C /* AdminPanelViewController.m */; };
+		AEE6EB7917D8F12600A4D60C /* SearchAllMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE6EB7817D8F12600A4D60C /* SearchAllMembersViewController.m */; };
 		AEF4582917A1F65700AFF8D6 /* SocialPostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */; };
 		AEF4582A17A1F65700AFF8D6 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582817A1F65700AFF8D6 /* SocialViewController.m */; };
 		AEF4582D17A1F67E00AFF8D6 /* PickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582C17A1F67E00AFF8D6 /* PickCircleViewController.m */; };
@@ -262,6 +264,10 @@
 		AED62A3317A1ED65002055ED /* Circles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circles.m; sourceTree = "<group>"; };
 		AEE6EB7017D7149100A4D60C /* NoFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoFriendsViewController.h; sourceTree = "<group>"; };
 		AEE6EB7117D7149100A4D60C /* NoFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoFriendsViewController.m; sourceTree = "<group>"; };
+		AEE6EB7317D826DB00A4D60C /* AdminPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminPanelViewController.h; sourceTree = "<group>"; };
+		AEE6EB7417D826DB00A4D60C /* AdminPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminPanelViewController.m; sourceTree = "<group>"; };
+		AEE6EB7717D8F12600A4D60C /* SearchAllMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAllMembersViewController.h; sourceTree = "<group>"; };
+		AEE6EB7817D8F12600A4D60C /* SearchAllMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAllMembersViewController.m; sourceTree = "<group>"; };
 		AEF4582517A1F65700AFF8D6 /* SocialPostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPostDetailViewController.h; sourceTree = "<group>"; };
 		AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPostDetailViewController.m; sourceTree = "<group>"; };
 		AEF4582717A1F65700AFF8D6 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
@@ -754,6 +760,31 @@
 			name = Subclasses;
 			sourceTree = "<group>";
 		};
+		AEE6EB7617D8F09000A4D60C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */,
+				AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */,
+				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
+				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
+				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
+				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
+				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
+				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
+				AEE6EB7017D7149100A4D60C /* NoFriendsViewController.h */,
+				AEE6EB7117D7149100A4D60C /* NoFriendsViewController.m */,
+				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
+				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
+				AEE6EB7317D826DB00A4D60C /* AdminPanelViewController.h */,
+				AEE6EB7417D826DB00A4D60C /* AdminPanelViewController.m */,
+				AEE6EB7717D8F12600A4D60C /* SearchAllMembersViewController.h */,
+				AEE6EB7817D8F12600A4D60C /* SearchAllMembersViewController.m */,
+				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
+				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		AEF4582417A1F62400AFF8D6 /* Social */ = {
 			isa = PBXGroup;
 			children = (
@@ -1048,24 +1079,11 @@
 				AEB24DC6178CD5E900C7711D /* Friends */,
 				AEF4583117A1F69E00AFF8D6 /* Circle */,
 				AEF4582417A1F62400AFF8D6 /* Social */,
-				DCE1FE65178910D60012478B /* first.png */,
-				DCE1FE67178910D60012478B /* first@2x.png */,
-				AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */,
-				AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */,
-				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
-				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
-				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
-				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
+				AEE6EB7617D8F09000A4D60C /* Settings */,
 				DCE1FE62178910D60012478B /* FirstViewController.h */,
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
-				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
-				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
-				AEE6EB7017D7149100A4D60C /* NoFriendsViewController.h */,
-				AEE6EB7117D7149100A4D60C /* NoFriendsViewController.m */,
-				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
-				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
-				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
-				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
+				DCE1FE65178910D60012478B /* first.png */,
+				DCE1FE67178910D60012478B /* first@2x.png */,
 				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
 				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
@@ -1390,6 +1408,8 @@
 				DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */,
 				AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */,
 				AEE6EB7217D7149100A4D60C /* NoFriendsViewController.m in Sources */,
+				AEE6EB7517D826DB00A4D60C /* AdminPanelViewController.m in Sources */,
+				AEE6EB7917D8F12600A4D60C /* SearchAllMembersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

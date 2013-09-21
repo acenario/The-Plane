@@ -23,5 +23,6 @@
 @property (retain) PFFile *profilePicture;
 @property int gracePeriod;
 @property int circleRequestsCount;
+@property int adminRank;
 
 @end

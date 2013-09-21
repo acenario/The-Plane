@@ -12,6 +12,7 @@
 
 @interface ReceivedFriendRequestsViewController ()
 
+
 @end
 
 @implementation ReceivedFriendRequestsViewController {
