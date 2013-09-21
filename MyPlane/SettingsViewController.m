@@ -83,14 +83,9 @@
         [self performSegueWithIdentifier:@"BlockedUsers" sender:nil];
     }];
     item0.tag = 3;
+
     
-    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Share" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-        [self showActionSheet];
-    }];
-    item0.tag = 4;
-    
-    
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2,item4,]];
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -552,6 +547,7 @@
     [userObject setObject:displayName forKey:@"displayName"];
     [userObject setObject:imageupload forKey:@"profilePicture"];
     [userObject setObject:[NSNumber numberWithInt:0] forKey:@"gracePeriod"];
+    [userObject setObject:[NSNumber numberWithInt:0] forKey:@"adminRank"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
         

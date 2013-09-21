@@ -25,5 +25,6 @@
 @dynamic profilePicture;
 @dynamic circleRequestsCount;
 @dynamic gracePeriod;
+@dynamic adminRank;
 
 @end
