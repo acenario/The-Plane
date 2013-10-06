@@ -339,18 +339,24 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    CGSize newSize = CGSizeMake(120, 120);
-    UIImage *scaledImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:newSize];
     
-    /*CGSize newSize = CGSizeMake(88, 88);
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();*/
-    
-    
-    self.profilePictureSet.image = scaledImage;
-    
+    if ((image.size.height > 120) && (image.size.width > 120)) {
+        CGSize newSize = CGSizeMake(120, 120);
+        UIImage *scaledImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:newSize];
+        
+        self.profilePictureSet.image = scaledImage;
+    } else if((image.size.height > 120) || (image.size.width > 120)) {
+        CGSize newSize = CGSizeMake(120, 120);
+        UIGraphicsBeginImageContext(newSize);
+        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        self.profilePictureSet.image = newImage;
+        
+    } else {
+        self.profilePictureSet.image = image;
+    }
     self.imagePickerController = nil;
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -463,6 +469,7 @@
 {
     [self.firstNameField resignFirstResponder];
     [self.lastNameField resignFirstResponder];
+    [self.phoneField resignFirstResponder];
 }
 
 

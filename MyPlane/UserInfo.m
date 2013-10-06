@@ -26,5 +26,7 @@
 @dynamic circleRequestsCount;
 @dynamic gracePeriod;
 @dynamic adminRank;
+@dynamic fReason;
+@dynamic flagged;
 
 @end

@@ -35,6 +35,7 @@
     NSString *Username;
     NSString *displayName;
     NSString *theUsername;
+//    UITextField *flagUserTextField;
     UIImage *defaultPic;
     //BOOL menuCheck;
     BOOL isForMessages;
@@ -72,11 +73,11 @@
     }];
     item0.tag = 0;
     
-    //    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Favr Store" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
-    //        [SVProgressHUD showErrorWithStatus:@"Implement the Store!"];
-    //    }];
-    //    item0.tag = 1;
-    //
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Flag User" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        [self report];
+    }];
+    item0.tag = 1;
+
     UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
         [self logOut];
     }];
@@ -88,7 +89,7 @@
     item0.tag = 3;
 
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item2]];
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
@@ -197,16 +198,45 @@
     [alertView show];
 }
 
-- (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == TAG_WALKTHROUGH) {
         if (buttonIndex == 1) {
             [self performSegueWithIdentifier:@"Tutorial" sender:nil];
         } else {
             [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
         }
-    } else {
+    } else if (alertView.tag == TAG_NOFRIENDS){
         if (buttonIndex == 1) {
             [self noFriends];
+        }
+    } else if (alertView.tag == TAG_REPORT){
+        if (buttonIndex == 1) {
+            NSString *username = [alertView textFieldAtIndex:0].text;
+            NSString *strippedUserName = [username stringByReplacingOccurrencesOfString:@" " withString:@""];
+            NSString *reason = [alertView textFieldAtIndex:1].text;
+            if (strippedUserName.length > 0) {
+                PFQuery *userQuery = [UserInfo query];
+                [userQuery whereKey:@"user" equalTo:strippedUserName];
+                [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    [object setObject:[NSNumber numberWithBool:YES] forKey:@"flagged"];
+                    [object setObject:reason forKey:@"fReason"];
+                    
+                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            [SVProgressHUD showSuccessWithStatus:@"Reported User!"];
+                        } else {
+                            NSLog(@"%@",error);
+                        }
+                    }];
+                    
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:@"User does not exist!"];
+                    }
+                    
+                }];
+                
+            }
+            
         }
     }
 
@@ -976,9 +1006,16 @@
 
 - (void)report
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Report" message:@"Report a user for inappropriate behavior" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Report User For Inappropriate Content" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Report",nil];
+    alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     alert.tag = TAG_REPORT;
+    [[alert textFieldAtIndex:0] setPlaceholder:@"Username"];
+    [[alert textFieldAtIndex:1] setSecureTextEntry:NO];
+    [[alert textFieldAtIndex:1] setPlaceholder:@"Reason"];
+//    UITextField *textField = [alert textFieldAtIndex:0];
+    
+//    flagUserTextField = textField;
+    
     [alert show];
 }
 
