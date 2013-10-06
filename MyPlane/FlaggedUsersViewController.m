@@ -98,7 +98,7 @@
                                message:@"Pick an action."
                                delegate:self
                                cancelButtonTitle:@"Cancel"
-                               otherButtonTitles:@"Remove Picture", nil];
+                               otherButtonTitles:@"Remove Picture", @"Delete Flag", nil];
     
     UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
     alertView.titleLabel.textColor = [UIColor cloudsColor];
@@ -122,6 +122,8 @@
 {
     if (buttonIndex == 1) {
         [self removePicture];
+    } else if (buttonIndex == 2) {
+        [self deleteFlag];
     } else {
         [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     }
@@ -132,15 +134,32 @@
     
     UserInfo *user = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
     
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:@"Placeholder"];
+    UIImage *image = [UIImage imageNamed:@"inapropro"];
     NSData *data = UIImagePNGRepresentation(image);
-    PFFile *file = [PFFile fileWithName:@"Placeholder.png" data:data];
-    
+    PFFile *file = [PFFile fileWithName:@"Inappropriate.png" data:data];
+//    NSLog(@"%@",image);
     user.profilePicture = file;
+    user.flagged = NO;
+    user.fReason = @"";
+    [user incrementKey:@"flagCount" byAmount:[NSNumber numberWithInt:1]];
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self loadObjects];
         [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     }];
+}
+
+- (void)deleteFlag
+{
+    UserInfo *user = [self.objects objectAtIndex:[self.tableView indexPathForSelectedRow].section];
+    
+    user.flagged = NO;
+    user.fReason = @"";
+    
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self loadObjects];
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    }];
+
 }
 
 @end

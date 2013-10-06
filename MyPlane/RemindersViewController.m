@@ -169,31 +169,63 @@
 }
 
 - (void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller {
-    NSString *message = @"Would you like to a see a walkthrough of the app?";
+//    [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
     
-    UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
-    
-    FUIAlertView *alertView = [[FUIAlertView alloc]
-                               initWithTitle:@"Walkthrough"
-                               message:message
-                               delegate:self
-                               cancelButtonTitle:@"No"
-                               otherButtonTitles:@"Yes", nil];
-    
-    alertView.titleLabel.textColor = [UIColor cloudsColor];
-    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
-    alertView.messageLabel.textColor = [UIColor whiteColor];
-    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
-    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
-    alertView.alertContainer.backgroundColor = barColor;
-    alertView.defaultButtonColor = [UIColor cloudsColor];
-    alertView.defaultButtonShadowColor = [UIColor clearColor];
-    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
-    
-    
-    [alertView show];
+//    NSString *message = @"Would you like to a see a walkthrough of the app?";
+//    
+//    UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
+//    
+//    FUIAlertView *alertView = [[FUIAlertView alloc]
+//                               initWithTitle:@"Walkthrough"
+//                               message:message
+//                               delegate:self
+//                               cancelButtonTitle:@"No"
+//                               otherButtonTitles:@"Yes", nil];
+//    
+//    alertView.titleLabel.textColor = [UIColor cloudsColor];
+//    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+//    alertView.messageLabel.textColor = [UIColor whiteColor];
+//    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+//    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+//    alertView.alertContainer.backgroundColor = barColor;
+//    alertView.defaultButtonColor = [UIColor cloudsColor];
+//    alertView.defaultButtonShadowColor = [UIColor clearColor];
+//    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+//    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+//    
+//    
+//    [alertView show];
 }
+
+- (void)checkHasFriends
+{
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    if (sharedManager.currentUser.friends.count == 1) {
+        
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:@"Add Friends"
+                                   message:@"You currently have no friends. Would you like to import friends from your contacts?"
+                                   delegate:self
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:@"Yes", nil];
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor clearColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        
+        [alertView show];
+        
+    }
+}
+
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
