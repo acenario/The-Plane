@@ -323,7 +323,7 @@
         message = @"Open Circles are searchable. You can join within the search menu, and can receive a request to join. Open Circles are not managed by any single entity.";
     }
     
-    UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+    UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
     
     FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Privacy Description"
                                                           message:message
@@ -337,10 +337,10 @@
     alertView.messageLabel.font = [UIFont flatFontOfSize:15];
     alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
     alertView.alertContainer.backgroundColor = barColor;
-    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
-    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor clearColor];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor whiteColor];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
     
     
     [alertView show];
