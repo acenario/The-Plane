@@ -27,10 +27,8 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        self.pullToRefreshEnabled = YES;
-        self.paginationEnabled = YES;
-        self.objectsPerPage = 25;
-        self.loadingViewEnabled = NO;
+        self.pullToRefreshEnabled = NO;
+        self.loadingViewEnabled = YES;
     }
     return self;
 }
@@ -277,7 +275,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)showTexts
+- (void)showTexts //deprecated for now
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
@@ -333,7 +331,7 @@
         });
 }
 
-- (void)showEmail
+- (void)showEmail //deprecated for now
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {

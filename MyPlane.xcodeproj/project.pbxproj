@@ -204,6 +204,10 @@
 		DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */; };
 		DCE33D7E180136F000B24688 /* FUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE33D7D180136F000B24688 /* FUITextField.m */; };
 		DCE33D821801D16400B24688 /* inapropro.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE33D811801D16400B24688 /* inapropro.png */; };
+		DCE33D8D1802228C00B24688 /* addFriend3.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE33D8B1802228C00B24688 /* addFriend3.png */; };
+		DCE33D8E1802228C00B24688 /* addFriend3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE33D8C1802228C00B24688 /* addFriend3@2x.png */; };
+		DCE33D911802245600B24688 /* addPost.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE33D8F1802245600B24688 /* addPost.png */; };
+		DCE33D921802245600B24688 /* addPost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE33D901802245600B24688 /* addPost@2x.png */; };
 		DCE3B08F17921DD500A73714 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B08E17921DD500A73714 /* SettingsViewController.m */; };
 		DCE3B09217921DF700A73714 /* EditSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B09117921DF700A73714 /* EditSettingsViewController.m */; };
 		DCECC6C0179DB26D00D084D0 /* ProfileQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */; };
@@ -503,6 +507,10 @@
 		DCE33D7C180136F000B24688 /* FUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUITextField.h; sourceTree = "<group>"; };
 		DCE33D7D180136F000B24688 /* FUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUITextField.m; sourceTree = "<group>"; };
 		DCE33D811801D16400B24688 /* inapropro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inapropro.png; sourceTree = "<group>"; };
+		DCE33D8B1802228C00B24688 /* addFriend3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addFriend3.png; sourceTree = "<group>"; };
+		DCE33D8C1802228C00B24688 /* addFriend3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriend3@2x.png"; sourceTree = "<group>"; };
+		DCE33D8F1802245600B24688 /* addPost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPost.png; sourceTree = "<group>"; };
+		DCE33D901802245600B24688 /* addPost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addPost@2x.png"; sourceTree = "<group>"; };
 		DCE3B08D17921DD500A73714 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		DCE3B08E17921DD500A73714 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		DCE3B09017921DF700A73714 /* EditSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSettingsViewController.h; sourceTree = "<group>"; };
@@ -853,6 +861,8 @@
 				DC4B2A6417D5C3BA00703EC2 /* 28-star@2x.png */,
 				DC4B2A6517D5C3BA00703EC2 /* 57-power.png */,
 				DC4B2A6617D5C3BA00703EC2 /* 57-power@2x.png */,
+				DCE33D8F1802245600B24688 /* addPost.png */,
+				DCE33D901802245600B24688 /* addPost@2x.png */,
 			);
 			path = "mini-icons";
 			sourceTree = "<group>";
@@ -1109,6 +1119,8 @@
 		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
 			isa = PBXGroup;
 			children = (
+				DCE33D8B1802228C00B24688 /* addFriend3.png */,
+				DCE33D8C1802228C00B24688 /* addFriend3@2x.png */,
 				DCE33D811801D16400B24688 /* inapropro.png */,
 				DC4B2A4617D55EB400703EC2 /* separatorVertical.png */,
 				DC4B2A4717D55EB400703EC2 /* separatorVertical@2x.png */,
@@ -1308,6 +1320,10 @@
 				DC4B2A8317D6004A00703EC2 /* 70-paperclip.png in Resources */,
 				DC4B2A8417D6004A00703EC2 /* 70-paperclip@2x.png in Resources */,
 				DCE33D821801D16400B24688 /* inapropro.png in Resources */,
+				DCE33D8D1802228C00B24688 /* addFriend3.png in Resources */,
+				DCE33D8E1802228C00B24688 /* addFriend3@2x.png in Resources */,
+				DCE33D911802245600B24688 /* addPost.png in Resources */,
+				DCE33D921802245600B24688 /* addPost@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

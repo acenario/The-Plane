@@ -15,6 +15,7 @@
 #import "Reachability.h"
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "KGStatusBar.h"
 
 #import "ShareMailViewController.h"
 
@@ -35,7 +36,7 @@
     NSString *Username;
     NSString *displayName;
     NSString *theUsername;
-//    UITextField *flagUserTextField;
+    //    UITextField *flagUserTextField;
     UIImage *defaultPic;
     //BOOL menuCheck;
     BOOL isForMessages;
@@ -78,7 +79,7 @@
         [self report];
     }];
     item0.tag = 1;
-
+    
     UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
         [self logOut];
     }];
@@ -88,7 +89,7 @@
         [self performSegueWithIdentifier:@"BlockedUsers" sender:nil];
     }];
     item0.tag = 3;
-
+    
     if (self.sharedManager.currentUser.adminRank > 0) {
         UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
             [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
@@ -97,7 +98,7 @@
     } else {
         self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
     }
-
+    
     
     [self.view addSubview:self.uzysSMenu];
     
@@ -138,6 +139,7 @@
     //menuCheck = YES;
     //self.uzysSMenu.hidden = YES;
     if (![PFUser currentUser]) { // No user logged in
+        [KGStatusBar dismiss];
         
         // Create the log in view controller
         PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
@@ -182,31 +184,31 @@
 - (void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller {
     [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
     
-//    NSString *message = @"Would you like to a see a walkthrough of the app?";
-//    
-//    UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
-//    
-//    FUIAlertView *alertView = [[FUIAlertView alloc]
-//                               initWithTitle:@"Walkthrough"
-//                               message:message
-//                               delegate:self
-//                               cancelButtonTitle:@"No"
-//                               otherButtonTitles:@"Yes", nil];
-//    
-//    alertView.titleLabel.textColor = [UIColor cloudsColor];
-//    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
-//    alertView.messageLabel.textColor = [UIColor whiteColor];
-//    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
-//    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
-//    alertView.alertContainer.backgroundColor = barColor;
-//    alertView.defaultButtonColor = [UIColor cloudsColor];
-//    alertView.defaultButtonShadowColor = [UIColor clearColor];
-//    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-//    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
-//    
-//    alertView.tag = TAG_WALKTHROUGH;
-//    
-//    [alertView show];
+    //    NSString *message = @"Would you like to a see a walkthrough of the app?";
+    //
+    //    UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
+    //
+    //    FUIAlertView *alertView = [[FUIAlertView alloc]
+    //                               initWithTitle:@"Walkthrough"
+    //                               message:message
+    //                               delegate:self
+    //                               cancelButtonTitle:@"No"
+    //                               otherButtonTitles:@"Yes", nil];
+    //
+    //    alertView.titleLabel.textColor = [UIColor cloudsColor];
+    //    alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+    //    alertView.messageLabel.textColor = [UIColor whiteColor];
+    //    alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+    //    alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+    //    alertView.alertContainer.backgroundColor = barColor;
+    //    alertView.defaultButtonColor = [UIColor cloudsColor];
+    //    alertView.defaultButtonShadowColor = [UIColor clearColor];
+    //    alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+    //    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+    //
+    //    alertView.tag = TAG_WALKTHROUGH;
+    //
+    //    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -250,7 +252,7 @@
             
         }
     }
-
+    
 }
 
 -(void)configureFlatUI {
@@ -300,16 +302,16 @@
         [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
     }
     
-//    if (menuCheck == YES) {
-//        //[self.uzysSMenu toggleMenu];
-//        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
-//        menuCheck = NO;
-//    } else {
-//        //[self.uzysSMenu openIconMenu];
-//        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
-//        menuCheck = YES;
-//        
-//    }
+    //    if (menuCheck == YES) {
+    //        //[self.uzysSMenu toggleMenu];
+    //        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
+    //        menuCheck = NO;
+    //    } else {
+    //        //[self.uzysSMenu openIconMenu];
+    //        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    //        menuCheck = YES;
+    //
+    //    }
     
 }
 
@@ -687,79 +689,79 @@
     }
 }
 
-- (void)showTexts
+- (void)showTexts //deprecated for now
 {
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_async(queue, ^{
+    //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //    dispatch_async(queue, ^{
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
         if (granted) {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//    });
-    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSArray *abContactArray = [[NSArray alloc] init];
-    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
-        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
-        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
-        
-        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
-        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
-        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
-        
-        NSComparisonResult result = [lastName1 compare:lastName2];
-        if (result != NSOrderedSame)
-            return result;
-        else
-            return [firstName1 compare:firstName2];
-    }];
-    
-//    NSMutableArray *array1 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-//    NSMutableArray *array2 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-//    NSMutableArray *array3 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    
-    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    for (id object in abContactArray) {
-        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
-        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
-        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
-        
-        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
-            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
-            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(emails, j));
-                        
-            if (email == nil) {
-                email = @"No email";
-            }
+            //    dispatch_async(dispatch_get_main_queue(), ^{
+            //    });
+            //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+            NSArray *abContactArray = [[NSArray alloc] init];
+            NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+            abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+                NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+                NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+                
+                ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+                NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+                NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+                
+                NSComparisonResult result = [lastName1 compare:lastName2];
+                if (result != NSOrderedSame)
+                    return result;
+                else
+                    return [firstName1 compare:firstName2];
+            }];
             
-            if (firstname == nil) {
-                firstname = @"No Name";
-            }
+            //    NSMutableArray *array1 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+            //    NSMutableArray *array2 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+            //    NSMutableArray *array3 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
             
-            if (lastname == nil) {
-                lastname = @" ";
-            } 
-                        
-            [dictionary setObject:email forKey:@"email"];
-            [dictionary setObject:firstname forKey:@"first"];
-            [dictionary setObject:lastname forKey:@"last"];            
-            [allObjects addObject:dictionary];
-        }
-        CFRelease(emails);
-    }
-    isForMessages = YES;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-//            });
-    [self performSegueWithIdentifier:@"Mail" sender:allObjects];
+            NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+            for (id object in abContactArray) {
+                ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+                NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+                NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+                ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
+                
+                for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+                    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+                    NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(emails, j));
+                    
+                    if (email == nil) {
+                        email = @"No email";
+                    }
+                    
+                    if (firstname == nil) {
+                        firstname = @"No Name";
+                    }
+                    
+                    if (lastname == nil) {
+                        lastname = @" ";
+                    }
+                    
+                    [dictionary setObject:email forKey:@"email"];
+                    [dictionary setObject:firstname forKey:@"first"];
+                    [dictionary setObject:lastname forKey:@"last"];
+                    [allObjects addObject:dictionary];
+                }
+                CFRelease(emails);
+            }
+            isForMessages = YES;
+            //            dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            //            });
+            [self performSegueWithIdentifier:@"Mail" sender:allObjects];
             
         } else {
             NSLog(@"Address book error!!!: %@",error);
         }
     });
-//    });
+    //    });
 }
 
 - (void)composeMail
@@ -768,7 +770,7 @@
     mViewController.mailComposeDelegate = self;
     [mViewController setSubject:@"Try out Hey! Heads Up"];
     [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
-//    [mViewController setToRecipients:self.selectedEmails];
+    //    [mViewController setToRecipients:self.selectedEmails];
     [self presentViewController:mViewController animated:YES completion:nil];
     
     [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
@@ -784,7 +786,7 @@
     MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
     mViewController.messageComposeDelegate = self;
     [mViewController setBody:@"Insert sample promotion code"];
-//    [mViewController setRecipients:self.selectedEmails];
+    //    [mViewController setRecipients:self.selectedEmails];
     if ([MFMessageComposeViewController canSendText]) {
         [self presentViewController:mViewController animated:YES completion:nil];
     } else {
@@ -804,11 +806,11 @@
 {
     [self becomeFirstResponder];
     [self dismissViewControllerAnimated:YES completion:^{
-//        [self dismissViewControllerAnimated:NO completion:^{
-//            if (self.isFromNoFriend) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
-//            }
-//        }];
+        //        [self dismissViewControllerAnimated:NO completion:^{
+        //            if (self.isFromNoFriend) {
+        //                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+        //            }
+        //        }];
     }];
 }
 
@@ -816,11 +818,11 @@
 {
     [self becomeFirstResponder];
     [self dismissViewControllerAnimated:YES completion:^{
-//        [self dismissViewControllerAnimated:NO completion:^{
-//            if (self.isFromNoFriend) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
-//            }
-//        }];
+        //        [self dismissViewControllerAnimated:NO completion:^{
+        //            if (self.isFromNoFriend) {
+        //                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+        //            }
+        //        }];
     }];
 }
 
@@ -966,19 +968,19 @@
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-//        NSString *output;
-//        switch (result) {
-//            case SLComposeViewControllerResultCancelled:
-//                output = @"Post Unsuccessful";
-//                break;
-//            case SLComposeViewControllerResultDone:
-//                output = @"Post Successful";
-//                break;
-//            default:
-//                break;
-//        } //check if everythink worked properly. Give out a message on the state.
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//        [alert show];
+        //        NSString *output;
+        //        switch (result) {
+        //            case SLComposeViewControllerResultCancelled:
+        //                output = @"Post Unsuccessful";
+        //                break;
+        //            case SLComposeViewControllerResultDone:
+        //                output = @"Post Successful";
+        //                break;
+        //            default:
+        //                break;
+        //        } //check if everythink worked properly. Give out a message on the state.
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        //        [alert show];
     }];
     
 }
@@ -996,19 +998,19 @@
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-//        NSString *output;
-//        switch (result) {
-//            case SLComposeViewControllerResultCancelled:
-//                output = @"Tweet Unsuccessful";
-//                break;
-//            case SLComposeViewControllerResultDone:
-//                output = @"Tweet Successful";
-//                break;
-//            default:
-//                break;
-//        } //check if everythink worked properly. Give out a message on the state.
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//        [alert show];
+        //        NSString *output;
+        //        switch (result) {
+        //            case SLComposeViewControllerResultCancelled:
+        //                output = @"Tweet Unsuccessful";
+        //                break;
+        //            case SLComposeViewControllerResultDone:
+        //                output = @"Tweet Successful";
+        //                break;
+        //            default:
+        //                break;
+        //        } //check if everythink worked properly. Give out a message on the state.
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        //        [alert show];
     }];
     
 }
@@ -1068,58 +1070,139 @@
 - (void)noFriends
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        if (granted) {
-    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSArray *abContactArray = [[NSArray alloc] init];
-    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
-        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
-        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
-        
-        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
-        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
-        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
-        
-        NSComparisonResult result = [lastName1 compare:lastName2];
-        if (result != NSOrderedSame)
-            return result;
-        else
-            return [firstName1 compare:firstName2];
-    }];
-    
-    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    
-    for (id object in abContactArray) {
-        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
-        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
-        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
-            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
-            [allObjects addObject:email];
-        }
-        
-        ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
-        
-        for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
-            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
-            email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
-            [allObjects addObject:email];
-        }
-        
-        
-        CFRelease(emails);
-        CFRelease(phones);
-    }
-    
-    [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
-        } else {
-            NSLog(@"Address book error!!!: %@",error);
-        }
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            // First time access, request permission
+            if (granted) {
+                NSArray *abContactArray = [[NSArray alloc] init];
+                NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+                abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+                    NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+                    NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+                    
+                    ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+                    NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+                    NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+                    
+                    NSComparisonResult result = [lastName1 compare:lastName2];
+                    if (result != NSOrderedSame)
+                        return result;
+                    else
+                        return [firstName1 compare:firstName2];
+                }];
+                
+                NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+                
+                for (id object in abContactArray) {
+                    ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+                    ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+                    //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+                    //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+                    for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+                        NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+                        //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+                        //            [dictionary setObject:email forKey:@"email"];
+                        //            [dictionary setObject:firstname forKey:@"first"];
+                        //            [dictionary setObject:lastname forKey:@"last"];
+                        [allObjects addObject:email];
+                    }
+                    
+                    ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+                    
+                    for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+                        NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+                        email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                        [allObjects addObject:email];
+                    }
+                    
+                }
+                
+                [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"Please change your privacy settings to import!"];
+            }
+            
         });
+    }
+    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // The user has previously given access skip check
+        NSArray *abContactArray = [[NSArray alloc] init];
+        NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+        abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+            NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+            NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+            
+            ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+            NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+            NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+            
+            NSComparisonResult result = [lastName1 compare:lastName2];
+            if (result != NSOrderedSame)
+                return result;
+            else
+                return [firstName1 compare:firstName2];
+        }];
+        
+        NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+        
+        for (id object in abContactArray) {
+            ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+            ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+            //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+            //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+            for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+                NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+                //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+                //            [dictionary setObject:email forKey:@"email"];
+                //            [dictionary setObject:firstname forKey:@"first"];
+                //            [dictionary setObject:lastname forKey:@"last"];
+                [allObjects addObject:email];
+            }
+            
+            ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+            
+            for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+                NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+                email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                [allObjects addObject:email];
+            }
+            
+        }
+        
+        [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+    } else {
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:@"Error!"
+                                   message:@"Please change privacy settings in the Settings App to import!"
+                                   delegate:self
+                                   cancelButtonTitle:@"Okay"
+                                   otherButtonTitles:nil];
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor clearColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        
+        [alertView show];
+        // The user has previously denied access
+        // Send an alert telling user to change privacy setting in settings app
+    }
 }
 
 - (void)tutDidFinish:(TutorialViewController *)controller
@@ -1135,9 +1218,9 @@
     [[alert textFieldAtIndex:0] setPlaceholder:@"Username"];
     [[alert textFieldAtIndex:1] setSecureTextEntry:NO];
     [[alert textFieldAtIndex:1] setPlaceholder:@"Reason"];
-//    UITextField *textField = [alert textFieldAtIndex:0];
+    //    UITextField *textField = [alert textFieldAtIndex:0];
     
-//    flagUserTextField = textField;
+    //    flagUserTextField = textField;
     
     [alert show];
 }

@@ -114,6 +114,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (![PFUser currentUser]) { // No user logged in
+        [KGStatusBar dismiss];
         // Create the log in view controller
         PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
         logInViewController.delegate = self; // Set ourselves as the delegate

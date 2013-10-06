@@ -414,65 +414,139 @@
 - (void)noFriends
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        if (granted) {
-    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSArray *abContactArray = [[NSArray alloc] init];
-    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
-        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
-        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
-        
-        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
-        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
-        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
-        
-        NSComparisonResult result = [lastName1 compare:lastName2];
-        if (result != NSOrderedSame)
-            return result;
-        else
-            return [firstName1 compare:firstName2];
-    }];
-    
-    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    
-    for (id object in abContactArray) {
-        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
-        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
-        //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
-        //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
-            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
-            //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
-            //            [dictionary setObject:email forKey:@"email"];
-            //            [dictionary setObject:firstname forKey:@"first"];
-            //            [dictionary setObject:lastname forKey:@"last"];
-            [allObjects addObject:email];
-        }
-        
-        ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
-        
-        for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
-            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
-            email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
-            email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
-            [allObjects addObject:email];
-        }
-        
-        
-        CFRelease(emails);
-        CFRelease(phones);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            // First time access, request permission
+            if (granted) {
+                NSArray *abContactArray = [[NSArray alloc] init];
+                NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+                abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+                    NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+                    NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+                    
+                    ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+                    NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+                    NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+                    
+                    NSComparisonResult result = [lastName1 compare:lastName2];
+                    if (result != NSOrderedSame)
+                        return result;
+                    else
+                        return [firstName1 compare:firstName2];
+                }];
+                
+                NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+                
+                for (id object in abContactArray) {
+                    ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+                    ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+                    //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+                    //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+                    for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+                        NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+                        //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+                        //            [dictionary setObject:email forKey:@"email"];
+                        //            [dictionary setObject:firstname forKey:@"first"];
+                        //            [dictionary setObject:lastname forKey:@"last"];
+                        [allObjects addObject:email];
+                    }
+                    
+                    ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+                    
+                    for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+                        NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+                        email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+                        email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                        [allObjects addObject:email];
+                    }
+                    
+                }
+                
+                [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"Please change your privacy settings to import!"];
+            }
+            
+        });
     }
-    
-    [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
-        } else {
-            NSLog(@"Address book error!!!: %@",error);
+    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // The user has previously given access skip check
+        NSArray *abContactArray = [[NSArray alloc] init];
+        NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+        abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+            NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+            NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+            
+            ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+            NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+            NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+            
+            NSComparisonResult result = [lastName1 compare:lastName2];
+            if (result != NSOrderedSame)
+                return result;
+            else
+                return [firstName1 compare:firstName2];
+        }];
+        
+        NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+        
+        for (id object in abContactArray) {
+            ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+            ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+            //        NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+            //        NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+            for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+                NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+                //            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+                //            [dictionary setObject:email forKey:@"email"];
+                //            [dictionary setObject:firstname forKey:@"first"];
+                //            [dictionary setObject:lastname forKey:@"last"];
+                [allObjects addObject:email];
+            }
+            
+            ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+            
+            for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+                NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+                email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+                email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                [allObjects addObject:email];
+            }
             
         }
-    });
+        
+        [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+    } else {
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:@"Error!"
+                                   message:@"Please change privacy settings in the Settings App to import!"
+                                   delegate:self
+                                   cancelButtonTitle:@"Okay"
+                                   otherButtonTitles:nil];
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor clearColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+        
+        [alertView show];
+        // The user has previously denied access
+        // Send an alert telling user to change privacy setting in settings app
+    }
 }
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

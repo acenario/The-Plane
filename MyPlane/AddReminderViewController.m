@@ -160,7 +160,7 @@
         [push setMessage:message];
         [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-            NSString *success = [NSString stringWithFormat:@"%@ has Received the reminder", self.recipient.user];
+            NSString *success = [NSString stringWithFormat:@"%@ has Received the reminder", self.recipient.firstName];
             [SVProgressHUD showSuccessWithStatus:success];
             } else {
                 NSLog(@"%@", error);
