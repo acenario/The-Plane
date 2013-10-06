@@ -211,7 +211,7 @@
     if (self.circle.members.count > 1) {
         NSString *message = @"Are you sure you want to leave this group?";
         
-        UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+        UIColor *barColor = [UIColor colorFromHexCode:@"F87056"];
 //        UIColor *barColor = [UIColor wetAsphaltColor];
         
         FUIAlertView *alertView = [[FUIAlertView alloc]
@@ -228,10 +228,10 @@
         alertView.messageLabel.font = [UIFont flatFontOfSize:15];
         alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
         alertView.alertContainer.backgroundColor = barColor;
-        alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
-        alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor clearColor];
         alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-        alertView.defaultButtonTitleColor = [UIColor whiteColor];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
         
         
         [alertView show];

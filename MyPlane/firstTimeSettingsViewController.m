@@ -106,11 +106,11 @@
     alertView.messageLabel.textColor = [UIColor whiteColor];
     alertView.messageLabel.font = [UIFont flatFontOfSize:15];
     alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
-    alertView.alertContainer.backgroundColor = [UIColor colorFromHexCode:@"A62A00"];
-    alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
-    alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+    alertView.alertContainer.backgroundColor = [UIColor colorFromHexCode:@"F87056"];
+    alertView.defaultButtonColor = [UIColor cloudsColor];
+    alertView.defaultButtonShadowColor = [UIColor clearColor];
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
-    alertView.defaultButtonTitleColor = [UIColor whiteColor];
+    alertView.defaultButtonTitleColor = [UIColor asbestosColor];
     
     
     [alertView show];

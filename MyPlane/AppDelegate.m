@@ -20,13 +20,14 @@
     //UIColor *barButtonSelectedColor = [UIColor colorFromHexCode:@"FF7140"];
     UIColor *barButtonSelectedColor = [UIColor colorFromHexCode:@"FF9773"];
     UIImage *barImage = [UIImage imageWithColor:barColor cornerRadius:0];
+    UIColor *tintColor = [UIColor colorFromHexCode:@"FF4100"];
 
     
     UITabBar *tabBarAppearance = [UITabBar appearance];
     [tabBarAppearance setBackgroundImage:[UIImage imageNamed:@"tabbarBackground"]];
     [tabBarAppearance setSelectionIndicatorImage:[UIImage imageNamed:@"tabBarSelectionIndicator"]];
     //[tabBarAppearance setTintColor:barColor];
-    [tabBarAppearance setSelectedImageTintColor:barColor];
+    [tabBarAppearance setSelectedImageTintColor:tintColor];
     //UIImage *barImage = [UIImage imageNamed:@"navbar2"];
      [[UISearchBar appearance] setBackgroundImage:barImage];
     [[UINavigationBar appearance] configureFlatNavigationBarWithColor:barColor];
