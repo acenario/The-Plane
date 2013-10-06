@@ -5,69 +5,6 @@
 //  Created by Michał Zaborowski on 31.08.2013.
 //  Copyright (c) 2013 Michał Zaborowski. All rights reserved.
 //
-
-#import "MZFormSheetBackgroundWindow.h"
-#import <QuartzCore/QuartzCore.h>
-#import <Accelerate/Accelerate.h>
-
-CGFloat const MZFormSheetControllerDefaultBackgroundOpacity = 0.5;
-CGFloat const MZFormSheetControllerDefaultBackgroundBlurRadius = 2.0;
-CGFloat const MZFormSheetControllerDefaultBackgroundBlurSaturation = 1.0;
-
-UIWindowLevel const UIWindowLevelFormSheetBackground = 1990.0; // below the alert window
-
-static CGFloat const UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation) {
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortraitUpsideDown: return M_PI;
-        case UIInterfaceOrientationLandscapeLeft: return -M_PI_2;
-        case UIInterfaceOrientationLandscapeRight: return M_PI_2;
-        default: return 0.0f;
-    }
-}
-
-static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientation(UIInterfaceOrientation orientation) {
-    return 1 << orientation;
-}
-
-#pragma mark - UIImage (Screenshot)
-
-@implementation UIView (Screenshot)
-
-- (UIImage *)screenshotWithStatusBar:(BOOL)includeStatusBar
-{
-    UIGraphicsBeginImageContext(self.bounds.size);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.75);
-    image = [UIImage imageWithData:imageData];
-    
-    if (includeStatusBar) {
-        return image;
-    }
-
-    CGRect rect = self.bounds;
-
-    //Add status bar height
-    rect.origin.y += UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) ? [[UIApplication sharedApplication] statusBarFrame].size.width : [[UIApplication sharedApplication] statusBarFrame].size.height;
-
-    CGFloat scale = image.scale;
-
-    rect.origin.x *= scale;
-    rect.origin.y *= scale;
-    rect.size.width *= scale;
-    rect.size.height *= scale;
-
-    UIImage *croppedImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([image CGImage], rect) scale:image.scale orientation:image.imageOrientation];
-
-    return croppedImage;
-}
-
-@end
-
-//  Copyright (c) 2013 First Water Technologies Limited
-//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -86,149 +23,37 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#pragma mark - UIImage (Blur)
+#import "MZFormSheetBackgroundWindow.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UIImage+Additional.h"
 
-@implementation UIImage (Blur)
+CGFloat const MZFormSheetControllerDefaultBackgroundOpacity = 0.5;
+CGFloat const MZFormSheetControllerDefaultBackgroundBlurRadius = 2.0;
+CGFloat const MZFormSheetControllerDefaultBackgroundBlurSaturation = 1.0;
 
-- (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage
-{
-    // Check pre-conditions.
-    if (self.size.width < 1 || self.size.height < 1) {
-        NSLog (@"*** error: invalid size: (%.2f x %.2f). Both dimensions must be >= 1: %@", self.size.width, self.size.height, self);
-        return nil;
+UIWindowLevel const UIWindowLevelFormSheetBackground = 2;
+
+extern CGFloat MZFormSheetControllerWindowTag;
+
+static CGFloat const UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation) {
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortraitUpsideDown: return M_PI;
+        case UIInterfaceOrientationLandscapeLeft: return -M_PI_2;
+        case UIInterfaceOrientationLandscapeRight: return M_PI_2;
+        default: return 0.0f;
     }
-    if (!self.CGImage) {
-        NSLog (@"*** error: image must be backed by a CGImage: %@", self);
-        return nil;
-    }
-    if (maskImage && !maskImage.CGImage) {
-        NSLog (@"*** error: maskImage must be backed by a CGImage: %@", maskImage);
-        return nil;
-    }
-
-    CGRect imageRect = { CGPointZero, self.size };
-    UIImage *effectImage = self;
-
-    BOOL hasBlur = blurRadius > __FLT_EPSILON__;
-    BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) > __FLT_EPSILON__;
-    if (hasBlur || hasSaturationChange) {
-        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);
-        CGContextRef effectInContext = UIGraphicsGetCurrentContext();
-        CGContextScaleCTM(effectInContext, 1.0, -1.0);
-        CGContextTranslateCTM(effectInContext, 0, -self.size.height);
-        CGContextDrawImage(effectInContext, imageRect, self.CGImage);
-
-        vImage_Buffer effectInBuffer;
-        effectInBuffer.data     = CGBitmapContextGetData(effectInContext);
-        effectInBuffer.width    = CGBitmapContextGetWidth(effectInContext);
-        effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);
-        effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);
-
-        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);
-        CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
-        vImage_Buffer effectOutBuffer;
-        effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);
-        effectOutBuffer.width    = CGBitmapContextGetWidth(effectOutContext);
-        effectOutBuffer.height   = CGBitmapContextGetHeight(effectOutContext);
-        effectOutBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectOutContext);
-
-        if (hasBlur) {
-            // A description of how to compute the box kernel width from the Gaussian
-            // radius (aka standard deviation) appears in the SVG spec:
-            // http://www.w3.org/TR/SVG/filters.html#feGaussianBlurElement
-            //
-            // For larger values of 's' (s >= 2.0), an approximation can be used: Three
-            // successive box-blurs build a piece-wise quadratic convolution kernel, which
-            // approximates the Gaussian kernel to within roughly 3%.
-            //
-            // let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)
-            //
-            // ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
-            //
-            CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];
-            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
-            if (radius % 2 != 1) {
-                radius += 1; // force radius to be odd so that the three box-blur methodology works.
-            }
-            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
-            vImageBoxConvolve_ARGB8888(&effectOutBuffer, &effectInBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
-            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
-        }
-        BOOL effectImageBuffersAreSwapped = NO;
-        if (hasSaturationChange) {
-            CGFloat s = saturationDeltaFactor;
-            CGFloat floatingPointSaturationMatrix[] = {
-                0.0722 + 0.9278 * s,  0.0722 - 0.0722 * s,  0.0722 - 0.0722 * s,  0,
-                0.7152 - 0.7152 * s,  0.7152 + 0.2848 * s,  0.7152 - 0.7152 * s,  0,
-                0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,
-                0,                    0,                    0,  1,
-            };
-            const int32_t divisor = 256;
-            NSUInteger matrixSize = sizeof(floatingPointSaturationMatrix)/sizeof(floatingPointSaturationMatrix[0]);
-            int16_t saturationMatrix[matrixSize];
-            for (NSUInteger i = 0; i < matrixSize; ++i) {
-                saturationMatrix[i] = (int16_t)roundf(floatingPointSaturationMatrix[i] * divisor);
-            }
-            if (hasBlur) {
-                vImageMatrixMultiply_ARGB8888(&effectOutBuffer, &effectInBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);
-                effectImageBuffersAreSwapped = YES;
-            }
-            else {
-                vImageMatrixMultiply_ARGB8888(&effectInBuffer, &effectOutBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);
-            }
-        }
-        if (!effectImageBuffersAreSwapped)
-            effectImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-
-        if (effectImageBuffersAreSwapped)
-            effectImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-
-    // Set up output context.
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);
-    CGContextRef outputContext = UIGraphicsGetCurrentContext();
-    CGContextScaleCTM(outputContext, 1.0, -1.0);
-    CGContextTranslateCTM(outputContext, 0, -self.size.height);
-
-    // Draw base image.
-    CGContextDrawImage(outputContext, imageRect, self.CGImage);
-
-    // Draw effect image.
-    if (hasBlur) {
-        CGContextSaveGState(outputContext);
-        if (maskImage) {
-            CGContextClipToMask(outputContext, imageRect, maskImage.CGImage);
-        }
-        CGContextDrawImage(outputContext, imageRect, effectImage.CGImage);
-        CGContextRestoreGState(outputContext);
-    }
-
-    // Add in color tint.
-    if (tintColor) {
-        CGContextSaveGState(outputContext);
-        CGContextSetFillColorWithColor(outputContext, tintColor.CGColor);
-        CGContextFillRect(outputContext, imageRect);
-        CGContextRestoreGState(outputContext);
-    }
-
-    // Output image is ready.
-    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return outputImage;
 }
 
-@end
+static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientation(UIInterfaceOrientation orientation) {
+    return 1 << orientation;
+}
 
 #pragma mark - MZFormSheetBackgroundWindow
 
 @interface MZFormSheetBackgroundWindow()
-@property (nonatomic, weak) UIWindow *applicationWindow;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
-
-@property (nonatomic, assign) BOOL updatingBlur;
+@property (nonatomic, assign, getter = isUpdatingBlur) BOOL updatingBlur;
 @end
 
 @implementation MZFormSheetBackgroundWindow
@@ -253,13 +78,50 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
     return [MZAppearance appearanceForClass:[self class]];
 }
 
-+ (CGFloat)statusBarHeight
++ (UIImage *)screenshot
 {
-    if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-        return [UIApplication sharedApplication].statusBarFrame.size.width;
-    } else {
-        return [UIApplication sharedApplication].statusBarFrame.size.height;
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    // Iterate over every window from back to front
+    for (UIWindow *window in [[UIApplication sharedApplication] windows])
+    {
+        if ((![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen]) && window.tag != MZFormSheetControllerWindowTag && ![window isKindOfClass:[MZFormSheetBackgroundWindow class]])
+        {
+            // -renderInContext: renders in the coordinate space of the layer,
+            // so we must first apply the layer's geometry to the graphics context
+            CGContextSaveGState(context);
+            // Center the context around the window's anchor point
+            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            // Apply the window's transform about the anchor point
+            CGContextConcatCTM(context, [window transform]);
+            // Offset by the portion of the bounds left of and above the anchor point
+            CGContextTranslateCTM(context,
+                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
+                                  -[window bounds].size.height * [[window layer] anchorPoint].y);
+
+            // Render the layer hierarchy to the current context
+            [[window layer] renderInContext:context];
+
+            // Restore the context
+            CGContextRestoreGState(context);
+        }
     }
+
+    // Retrieve the screenshot image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 #pragma mark - Setters
@@ -267,13 +129,6 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 - (void)setSupportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     _supportedInterfaceOrientations = supportedInterfaceOrientations;
-
-    [self rotateWindow];
-}
-
-- (void)setShouldBackgroundImageOverlapStatusBar:(BOOL)shouldBackgroundImageOverlapStatusBar
-{
-    _shouldBackgroundImageOverlapStatusBar = shouldBackgroundImageOverlapStatusBar;
 
     [self rotateWindow];
 }
@@ -286,8 +141,12 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage
 {
-    _backgroundImage = backgroundImage;
-    self.backgroundImageView.image = backgroundImage;
+    if (self.backgroundImageView) {
+        self.backgroundImageView.image = backgroundImage;
+    } else {
+        _backgroundImage = backgroundImage;
+    }
+    
 }
 
 - (void)setBackgroundBlurEffect:(BOOL)backgroundBlurEffect
@@ -332,7 +191,6 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.opaque = NO;
         self.windowLevel = UIWindowLevelFormSheetBackground;
-        self.applicationWindow = [UIApplication sharedApplication].keyWindow;
 
         _supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
 
@@ -340,13 +198,17 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
         [appearance applyInvocationTo:self];
 
         _backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
-        _backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         _backgroundImageView.image = _backgroundImage;
 
         [self addSubview:_backgroundImageView];
 
+        [_backgroundImageView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+
         [self rotateWindow];
+
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didChangeStatusBarNotificationHandler:)
@@ -369,6 +231,14 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 
 #pragma mark - Notification handlers
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([object isEqual:self.backgroundImageView] && [keyPath isEqualToString:@"image"])
+    {
+        _backgroundImage = change[@"new"];
+    }
+}
+
 - (void)didOrientationChangeNotificationHandler:(NSNotification *)notification
 {
     [self rotateWindow];
@@ -382,34 +252,37 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 
 #pragma mark - Blur
 
+- (UIImage *)rotateImageToStatusBarOrientation:(UIImage *)image
+{
+    if ([self windowOrientation] == UIInterfaceOrientationLandscapeLeft) {
+        return [image imageRotatedByDegrees:90];
+    } else if ([self windowOrientation] == UIInterfaceOrientationLandscapeRight) {
+        return [image imageRotatedByDegrees:-90];
+    } else if ([self windowOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        return [image imageRotatedByDegrees:180];
+    }
+    return image;
+}
+
 - (void)updateBlur
 {
-    UIViewController *controller = self.applicationWindow.rootViewController;
-    while (controller.presentedViewController != nil) {
-        controller = controller.presentedViewController;
-    }
+    UIImage *blurredImage = [[MZFormSheetBackgroundWindow screenshot] blurredImageWithRadius:self.blurRadius tintColor:self.blurTintColor saturationDeltaFactor:self.blurSaturation maskImage:self.blurMaskImage];
 
-    UIImage *blurredImage = [[controller.view screenshotWithStatusBar:self.shouldBackgroundImageOverlapStatusBar] blurredImageWithRadius:self.blurRadius tintColor:self.blurTintColor saturationDeltaFactor:self.blurSaturation maskImage:nil];
-
-    self.backgroundImageView.image = blurredImage;
+    self.backgroundImageView.image = [self rotateImageToStatusBarOrientation:blurredImage];
 }
 
 
 - (void)updateBlurAsynchronously
 {
-    if (self.dynamicBlur && !self.updatingBlur && self.backgroundBlurEffect)
+    if (self.dynamicBlur && !self.isUpdatingBlur && self.backgroundBlurEffect)
     {
-        UIViewController *controller = self.applicationWindow.rootViewController;
-        while (controller.presentedViewController != nil) {
-            controller = controller.presentedViewController;
-        }
-
-        UIImage *snapshot = [controller.view screenshotWithStatusBar:self.shouldBackgroundImageOverlapStatusBar];
+        UIImage *snapshot = [self rotateImageToStatusBarOrientation:[MZFormSheetBackgroundWindow screenshot]];
 
         self.updatingBlur = YES;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
 
-            UIImage *blurredImage = [snapshot blurredImageWithRadius:self.blurRadius tintColor:self.blurTintColor saturationDeltaFactor:self.blurSaturation maskImage:nil];
+            UIImage *blurredImage = [snapshot blurredImageWithRadius:self.blurRadius tintColor:self.blurTintColor saturationDeltaFactor:self.blurSaturation maskImage:self.blurMaskImage];
+
             dispatch_sync(dispatch_get_main_queue(), ^{
 
                 self.updatingBlur = NO;
@@ -443,25 +316,7 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
     CGFloat angle = UIInterfaceOrientationAngleOfOrientation([self windowOrientation]);
     CGAffineTransform transform = CGAffineTransformMakeRotation(angle);
 
-    UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
-    CGRect windowRect = [self windowRectForStatusBarOrientation:statusBarOrientation];
-
-    if (self.shouldBackgroundImageOverlapStatusBar) 
-        windowRect = self.bounds;
-    
-    [self makeTransform:transform forView:self.backgroundImageView inFrame:windowRect];
-}
-
-- (CGRect)windowRectForStatusBarOrientation:(UIInterfaceOrientation)statusBarOrientation
-{
-    CGFloat statusBarHeight = [MZFormSheetBackgroundWindow statusBarHeight];
-    
-    CGRect frame = self.bounds;
-    frame.origin.x += statusBarOrientation == UIInterfaceOrientationLandscapeLeft ? statusBarHeight : 0;
-    frame.origin.y += statusBarOrientation == UIInterfaceOrientationPortrait ? statusBarHeight : 0;
-    frame.size.width -= UIInterfaceOrientationIsLandscape(statusBarOrientation) ? statusBarHeight : 0;
-    frame.size.height -= UIInterfaceOrientationIsPortrait(statusBarOrientation) ? statusBarHeight : 0;
-    return frame;
+    [self makeTransform:transform forView:self.backgroundImageView inFrame:self.bounds];
 }
 
 - (void)makeTransform:(CGAffineTransform)transform forView:(UIView *)view inFrame:(CGRect)frame
@@ -503,9 +358,13 @@ static UIInterfaceOrientationMask const UIInterfaceOrientationMaskFromOrientatio
 
 - (void)dealloc
 {
+    [self.backgroundImageView removeObserver:self forKeyPath:@"image"];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 @end
