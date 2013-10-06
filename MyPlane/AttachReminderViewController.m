@@ -54,7 +54,7 @@
     } else {
         reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:1800];
         self.dateLabel.text = [mainFormatter stringFromDate:reminderDate];
-        descriptionPlaceholderText = @"Enter more information about the reminder.";
+        descriptionPlaceholderText = @"Enter more information about the reminder...";
         self.descriptionTextView.text = descriptionPlaceholderText;
         self.descriptionTextView.textColor = [UIColor lightGrayColor];
         textCheck = NO;

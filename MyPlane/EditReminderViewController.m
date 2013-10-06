@@ -46,7 +46,7 @@
         self.descTextView.text = [self.reminder objectForKey:@"description"];
         self.descLimit.text = [NSString stringWithFormat:@"%d", 250 - self.descTextView.text.length ];
     } else {
-        descriptionPlaceholderText = @"Enter more information about the reminder";
+        descriptionPlaceholderText = @"Enter more information about the reminder...";
         self.descTextView.text = descriptionPlaceholderText;
         self.descTextView.textColor = [UIColor lightGrayColor];
         self.descTextView.userInteractionEnabled = NO;

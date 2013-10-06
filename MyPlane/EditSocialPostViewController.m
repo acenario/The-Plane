@@ -66,7 +66,7 @@
             limit = 250 - self.descriptionTextView.text.length;
             self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
         } else {
-            descriptionPlaceholderText = @"Enter more information about the reminder.";
+            descriptionPlaceholderText = @"Enter more information about the reminder...";
             self.descriptionTextView.text = descriptionPlaceholderText;
             self.descriptionTextView.textColor = [UIColor lightGrayColor];
             self.descriptionTextView.userInteractionEnabled = NO;
