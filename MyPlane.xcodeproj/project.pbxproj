@@ -31,6 +31,7 @@
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
 		AED62A3117A1ED59002055ED /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3017A1ED59002055ED /* Comments.m */; };
 		AED62A3417A1ED65002055ED /* Circles.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3317A1ED65002055ED /* Circles.m */; };
+		AEDF62461801BDE50034496F /* FlaggedUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */; };
 		AEF4582917A1F65700AFF8D6 /* SocialPostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */; };
 		AEF4582A17A1F65700AFF8D6 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582817A1F65700AFF8D6 /* SocialViewController.m */; };
 		AEF4582D17A1F67E00AFF8D6 /* PickCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF4582C17A1F67E00AFF8D6 /* PickCircleViewController.m */; };
@@ -261,6 +262,8 @@
 		AED62A3017A1ED59002055ED /* Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comments.m; sourceTree = "<group>"; };
 		AED62A3217A1ED65002055ED /* Circles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circles.h; sourceTree = "<group>"; };
 		AED62A3317A1ED65002055ED /* Circles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circles.m; sourceTree = "<group>"; };
+		AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlaggedUsersViewController.h; sourceTree = "<group>"; };
+		AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlaggedUsersViewController.m; sourceTree = "<group>"; };
 		AEF4582517A1F65700AFF8D6 /* SocialPostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPostDetailViewController.h; sourceTree = "<group>"; };
 		AEF4582617A1F65700AFF8D6 /* SocialPostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPostDetailViewController.m; sourceTree = "<group>"; };
 		AEF4582717A1F65700AFF8D6 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
@@ -1067,6 +1070,8 @@
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
 				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
+				AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */,
+				AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */,
 				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
 				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
 				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
@@ -1396,6 +1401,7 @@
 				AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */,
 				DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */,
 				DCE33D7E180136F000B24688 /* FUITextField.m in Sources */,
+				AEDF62461801BDE50034496F /* FlaggedUsersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1492,7 +1498,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "DE4540B8-339B-4989-A88B-85A3798D7F64";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DE4540B8-339B-4989-A88B-85A3798D7F64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

@@ -56,6 +56,7 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    self.sharedManager = [CurrentUser sharedManager];
     reachability = [Reachability reachabilityForInternetConnection];
     [reachability startNotifier];
     
@@ -73,7 +74,7 @@
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Flag User" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Report User" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
         [self report];
     }];
     item0.tag = 1;
@@ -88,8 +89,16 @@
     }];
     item0.tag = 3;
 
+    if (self.sharedManager.currentUser.adminRank > 0) {
+        UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+            [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
+        }];
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2,item4]];
+    } else {
+        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
+    }
+
     
-    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
     [self.view addSubview:self.uzysSMenu];
     
     self.editButton.enabled = NO;
