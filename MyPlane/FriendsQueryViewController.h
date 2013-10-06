@@ -10,6 +10,9 @@
 #import "UserInfo.h"
 #import "ReceivedFriendRequestsViewController.h"
 #import "AddReminderViewController.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "NoFriendsViewController.h"
 //#import "FCContainerViewController.h"
 
 @class FriendsQueryViewController;
@@ -20,7 +23,7 @@
 
 @end
 
-@interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate>
+@interface FriendsQueryViewController : PFQueryTableViewController <AddFriendViewControllerDelegate, RecievedFriendRequestsDelegate, FUIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedController;
 @property (nonatomic, strong) id <FriendsQueryViewControllerDelegate> delegate;

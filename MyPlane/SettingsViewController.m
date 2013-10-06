@@ -18,6 +18,9 @@
 
 #import "ShareMailViewController.h"
 
+#define TAG_WALKTHROUGH 1
+#define TAG_NOFRIENDS 2
+#define TAG_REPORT 3
 
 @interface SettingsViewController ()
 
@@ -189,14 +192,24 @@
     alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
     alertView.defaultButtonTitleColor = [UIColor whiteColor];
     
+    alertView.tag = TAG_WALKTHROUGH;
     
     [alertView show];
 }
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self performSegueWithIdentifier:@"Tutorial" sender:nil];
+    if (alertView.tag == TAG_WALKTHROUGH) {
+        if (buttonIndex == 1) {
+            [self performSegueWithIdentifier:@"Tutorial" sender:nil];
+        } else {
+            [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
+        }
+    } else {
+        if (buttonIndex == 1) {
+            [self noFriends];
+        }
     }
+
 }
 
 -(void)configureFlatUI {
@@ -373,6 +386,14 @@
         ShareMailViewController *controller = (ShareMailViewController *)nav.topViewController;
         controller.dictionary = sender;
         controller.isForMessages = isForMessages;
+    }else if ([segue.identifier isEqualToString:@"NoFriends"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        NoFriendsViewController *controller = (NoFriendsViewController *)nav.topViewController;
+        controller.emails = sender;
+        //        controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"Tutorial"]) {
+        TutorialViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
     }
 }
 
@@ -655,9 +676,9 @@
     
     for (id object in abContactArray) {
         ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
-        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
         NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
         NSString *lastname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonPhoneProperty);
         
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
@@ -867,5 +888,99 @@
     return YES;
     
 }
+
+- (void)checkHasFriends
+{
+    if (self.sharedManager.currentUser.friends.count == 1) {
+        
+        FUIAlertView *alertView = [[FUIAlertView alloc]
+                                   initWithTitle:@"Add Friends"
+                                   message:@"You currently have no friends. Would you like to import friends from your contacts?"
+                                   delegate:self
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:@"Yes", nil];
+        
+        UIColor *barColor = [UIColor colorFromHexCode:@"A62A00"];
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:17];
+        alertView.messageLabel.textColor = [UIColor whiteColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:15];
+        alertView.backgroundOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+        alertView.alertContainer.backgroundColor = barColor;
+        alertView.defaultButtonColor = [UIColor colorFromHexCode:@"FF9773"];
+        alertView.defaultButtonShadowColor = [UIColor colorFromHexCode:@"BF5530"];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor whiteColor];
+        alertView.tag = TAG_NOFRIENDS;
+        
+        [alertView show];
+        
+    }
+}
+
+- (void)noFriends
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSArray *abContactArray = [[NSArray alloc] init];
+    NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        ABRecordRef record1 = (__bridge ABRecordRef)obj1; // get address book record
+        NSString *firstName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonFirstNameProperty));
+        NSString *lastName1 = CFBridgingRelease(ABRecordCopyValue(record1, kABPersonLastNameProperty));
+        
+        ABRecordRef record2 = (__bridge ABRecordRef)obj2; // get address book record
+        NSString *firstName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonFirstNameProperty));
+        NSString *lastName2 = CFBridgingRelease(ABRecordCopyValue(record2, kABPersonLastNameProperty));
+        
+        NSComparisonResult result = [lastName1 compare:lastName2];
+        if (result != NSOrderedSame)
+            return result;
+        else
+            return [firstName1 compare:firstName2];
+    }];
+    
+    NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
+    
+    for (id object in abContactArray) {
+        ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
+        ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+        for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
+            NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+            [allObjects addObject:email];
+        }
+        
+        ABMultiValueRef phones = ABRecordCopyValue(record, kABPersonPhoneProperty);
+        
+        for (CFIndex j=0; j < ABMultiValueGetCount(phones); j++) {
+            NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
+            email = [email stringByReplacingOccurrencesOfString:@" " withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@")" withString:@""];
+            email = [email stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            [allObjects addObject:email];
+        }
+        
+        
+        CFRelease(emails);
+        CFRelease(phones);
+    }
+    
+    [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+}
+
+- (void)tutDidFinish:(TutorialViewController *)controller
+{
+    [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
+}
+
+- (void)report
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Report" message:@"Report a user for inappropriate behavior" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = TAG_REPORT;
+    [alert show];
+}
+
 
 @end

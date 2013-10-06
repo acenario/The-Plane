@@ -10,8 +10,8 @@
 //#import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-
-
+#import "TutorialViewController.h"
+#import "NoFriendsViewController.h"
 #import "EditSettingsViewController.h"
 #import "UzysSlideMenu.h"
 #import "CommonTasksViewController.h"
@@ -19,7 +19,7 @@
 #import "firstTimeSettingsViewController.h"
 
 
-@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate>
+@interface SettingsViewController : UITableViewController <EditSettingsViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, firstTimeSettingsViewControllerDelegate, FUIAlertViewDelegate, TutorialViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *firstNameField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameField;

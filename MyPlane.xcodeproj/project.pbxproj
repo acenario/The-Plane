@@ -200,6 +200,7 @@
 		DCE1FE8F178912510012478B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE7B178912100012478B /* CoreLocation.framework */; };
 		DCE1FE90178912510012478B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE79178912020012478B /* CFNetwork.framework */; };
 		DCE1FE91178912510012478B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE77178911FA0012478B /* AudioToolbox.framework */; };
+		DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */; };
 		DCE3B08F17921DD500A73714 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B08E17921DD500A73714 /* SettingsViewController.m */; };
 		DCE3B09217921DF700A73714 /* EditSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B09117921DF700A73714 /* EditSettingsViewController.m */; };
 		DCECC6C0179DB26D00D084D0 /* ProfileQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */; };
@@ -492,6 +493,8 @@
 		DCE1FE83178912340012478B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DCE1FE851789123A0012478B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DCE1FE87178912400012478B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DCE33D791800DFFF00B24688 /* NoFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoFriendsViewController.h; sourceTree = "<group>"; };
+		DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoFriendsViewController.m; sourceTree = "<group>"; };
 		DCE3B08D17921DD500A73714 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		DCE3B08E17921DD500A73714 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		DCE3B09017921DF700A73714 /* EditSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSettingsViewController.h; sourceTree = "<group>"; };
@@ -703,6 +706,8 @@
 				DCD4AE511796E5DD00F6C3FA /* FriendsQueryViewController.m */,
 				AE46DEA4178B73390080CB0A /* AddFriendViewController.h */,
 				AE46DEA5178B73390080CB0A /* AddFriendViewController.m */,
+				DCE33D791800DFFF00B24688 /* NoFriendsViewController.h */,
+				DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */,
 				DC2FE9FE1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.h */,
 				DC2FE9FF1793A1E9009EACD0 /* ReceivedFriendRequestsViewController.m */,
 			);
@@ -1384,6 +1389,7 @@
 				DC4B2A5117D563C200703EC2 /* MZAppearance.m in Sources */,
 				DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */,
 				AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */,
+				DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
