@@ -280,6 +280,8 @@
 - (void)showTexts
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
     //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
@@ -325,11 +327,17 @@
     isForMessages = YES;
     
     [self performSegueWithIdentifier:@"Mail" sender:allObjects];
+        } else {
+                NSLog(@"Address book error!!!: %@",error);
+            }
+        });
 }
 
 - (void)showEmail
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
     //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
@@ -382,6 +390,10 @@
     //    [mViewController setMessageBody:@"I am going to kill myself writing this" isHTML:NO];
     //    [mViewController setToRecipients:nil];
     //    [self presentViewController:mViewController animated:YES completion:nil];
+        } else {
+            NSLog(@"Address book error!!!: %@",error);
+        }
+    });
 }
 
 - (void)showActionSheet
@@ -399,9 +411,9 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self showEmail];
+        [self composeMail];
     } else if (buttonIndex == 1) {
-        [self showTexts];
+        [self composeTexts];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -426,6 +438,69 @@
 - (void)close
 {
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+
+- (void)composeMail
+{
+    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+    mViewController.mailComposeDelegate = self;
+    [mViewController setSubject:@"Try out Hey! Heads Up"];
+    [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
+    //    [mViewController setToRecipients:self.selectedEmails];
+    [self presentViewController:mViewController animated:YES completion:nil];
+    
+    [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+    UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+    UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeCenter;
+    [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+    [[mViewController navigationBar] sendSubviewToBack:iv];
+}
+
+- (void)composeTexts{
+    MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
+    mViewController.messageComposeDelegate = self;
+    [mViewController setBody:@"Insert sample promotion code"];
+    //    [mViewController setRecipients:self.selectedEmails];
+    if ([MFMessageComposeViewController canSendText]) {
+        [self presentViewController:mViewController animated:YES completion:nil];
+    } else {
+        
+    }
+    
+    [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+    UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+    UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeCenter;
+    [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+    [[mViewController navigationBar] sendSubviewToBack:iv];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+        //        [self dismissViewControllerAnimated:NO completion:^{
+        //            if (self.isFromNoFriend) {
+        //                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+        //            }
+        //        }];
+    }];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+        //        [self dismissViewControllerAnimated:NO completion:^{
+        //            if (self.isFromNoFriend) {
+        //                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+        //            }
+        //        }];
+    }];
 }
 
 @end

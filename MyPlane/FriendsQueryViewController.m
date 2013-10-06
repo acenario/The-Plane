@@ -211,8 +211,6 @@
 
 - (void)addFriendViewControllerDidFinishAddingFriends:(AddFriendViewController *)controller
 {
-    //[self loadObjects];
-    NSLog(@"TEST!");
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -415,6 +413,8 @@
 - (void)noFriends
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
     //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
@@ -467,6 +467,10 @@
     }
     
     [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+        } else {
+            NSLog(@"Address book error!!!: %@",error);
+        }
+    });
 }
 
 - (void)alertView:(FUIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

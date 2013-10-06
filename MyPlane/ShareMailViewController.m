@@ -43,6 +43,7 @@
     
     self.lastNames = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
     self.lastNameFullIndex = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
+    self.lastNameIndex = [[NSMutableArray alloc] init];
     self.emails = [[NSMutableArray alloc] initWithCapacity:self.dictionary.count];
     
     for (NSDictionary *dict in self.dictionary) {
@@ -90,7 +91,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSString *alphabet = [self.lastNameIndex objectAtIndex:section];
-        
+    NSLog(@"%@", alphabet);
     NSPredicate *predicate =[NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", alphabet];
     NSArray *count = [self.lastNames filteredArrayUsingPredicate:predicate];
     

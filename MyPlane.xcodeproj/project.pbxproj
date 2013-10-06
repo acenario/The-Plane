@@ -201,6 +201,7 @@
 		DCE1FE90178912510012478B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE79178912020012478B /* CFNetwork.framework */; };
 		DCE1FE91178912510012478B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE1FE77178911FA0012478B /* AudioToolbox.framework */; };
 		DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */; };
+		DCE33D7E180136F000B24688 /* FUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE33D7D180136F000B24688 /* FUITextField.m */; };
 		DCE3B08F17921DD500A73714 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B08E17921DD500A73714 /* SettingsViewController.m */; };
 		DCE3B09217921DF700A73714 /* EditSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE3B09117921DF700A73714 /* EditSettingsViewController.m */; };
 		DCECC6C0179DB26D00D084D0 /* ProfileQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCECC6BF179DB26D00D084D0 /* ProfileQueryViewController.m */; };
@@ -495,6 +496,8 @@
 		DCE1FE87178912400012478B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DCE33D791800DFFF00B24688 /* NoFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoFriendsViewController.h; sourceTree = "<group>"; };
 		DCE33D7A1800E00B00B24688 /* NoFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoFriendsViewController.m; sourceTree = "<group>"; };
+		DCE33D7C180136F000B24688 /* FUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUITextField.h; sourceTree = "<group>"; };
+		DCE33D7D180136F000B24688 /* FUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUITextField.m; sourceTree = "<group>"; };
 		DCE3B08D17921DD500A73714 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		DCE3B08E17921DD500A73714 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		DCE3B09017921DF700A73714 /* EditSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSettingsViewController.h; sourceTree = "<group>"; };
@@ -948,6 +951,8 @@
 				DCDA429C179048BA00E14D50 /* FUISegmentedControl.m */,
 				DCDA429D179048BA00E14D50 /* FUISwitch.h */,
 				DCDA429E179048BA00E14D50 /* FUISwitch.m */,
+				DCE33D7C180136F000B24688 /* FUITextField.h */,
+				DCE33D7D180136F000B24688 /* FUITextField.m */,
 				DCDA429F179048BA00E14D50 /* UIBarButtonItem+FlatUI.h */,
 				DCDA42A0179048BA00E14D50 /* UIBarButtonItem+FlatUI.m */,
 				DCDA42A1179048BA00E14D50 /* UIColor+FlatUI.h */,
@@ -1390,6 +1395,7 @@
 				DC4B2A5217D563C200703EC2 /* NSInvocation+Copy.m in Sources */,
 				AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */,
 				DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */,
+				DCE33D7E180136F000B24688 /* FUITextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,7 +1491,7 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
+				PROVISIONING_PROFILE = "DE4540B8-339B-4989-A88B-85A3798D7F64";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1505,8 +1511,8 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FAA75E0D-5FE4-49D9-8CD4-36ED3A68DD0A";
+				PROVISIONING_PROFILE = "DE4540B8-339B-4989-A88B-85A3798D7F64";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DE4540B8-339B-4989-A88B-85A3798D7F64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

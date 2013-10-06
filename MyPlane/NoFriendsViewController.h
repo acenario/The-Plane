@@ -13,7 +13,7 @@
 #import "ShareMailViewController.h"
 
 
-@interface NoFriendsViewController : PFQueryTableViewController <FUIAlertViewDelegate, UIActionSheetDelegate>
+@interface NoFriendsViewController : PFQueryTableViewController <FUIAlertViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, retain) NSArray *emails;
 - (IBAction)done:(id)sender;

@@ -678,7 +678,13 @@
 
 - (void)showTexts
 {
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_async(queue, ^{
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//    });
     //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
@@ -703,7 +709,6 @@
 //    NSMutableArray *array3 = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
     
     NSMutableArray *allObjects = [[NSMutableArray alloc] initWithCapacity:abContactArray.count];
-    
     for (id object in abContactArray) {
         ABRecordRef record = (__bridge ABRecordRef)object; // get address book record
         NSString *firstname = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
@@ -713,6 +718,19 @@
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
             NSString* email = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(emails, j));
+                        
+            if (email == nil) {
+                email = @"No email";
+            }
+            
+            if (firstname == nil) {
+                firstname = @"No Name";
+            }
+            
+            if (lastname == nil) {
+                lastname = @" ";
+            } 
+                        
             [dictionary setObject:email forKey:@"email"];
             [dictionary setObject:firstname forKey:@"first"];
             [dictionary setObject:lastname forKey:@"last"];            
@@ -720,11 +738,81 @@
         }
         CFRelease(emails);
     }
-    
     isForMessages = YES;
-    
+//            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+//            });
     [self performSegueWithIdentifier:@"Mail" sender:allObjects];
+            
+        } else {
+            NSLog(@"Address book error!!!: %@",error);
+        }
+    });
+//    });
 }
+
+- (void)composeMail
+{
+    MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+    mViewController.mailComposeDelegate = self;
+    [mViewController setSubject:@"Try out Hey! Heads Up"];
+    [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
+//    [mViewController setToRecipients:self.selectedEmails];
+    [self presentViewController:mViewController animated:YES completion:nil];
+    
+    [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+    UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+    UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeCenter;
+    [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+    [[mViewController navigationBar] sendSubviewToBack:iv];
+}
+
+- (void)composeTexts{
+    MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
+    mViewController.messageComposeDelegate = self;
+    [mViewController setBody:@"Insert sample promotion code"];
+//    [mViewController setRecipients:self.selectedEmails];
+    if ([MFMessageComposeViewController canSendText]) {
+        [self presentViewController:mViewController animated:YES completion:nil];
+    } else {
+        
+    }
+    
+    [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+    UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+    UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeCenter;
+    [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+    [[mViewController navigationBar] sendSubviewToBack:iv];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+//        [self dismissViewControllerAnimated:NO completion:^{
+//            if (self.isFromNoFriend) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+//            }
+//        }];
+    }];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+//        [self dismissViewControllerAnimated:NO completion:^{
+//            if (self.isFromNoFriend) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"closeNoFriend" object:nil];
+//            }
+//        }];
+    }];
+}
+
 
 - (void)showEmail
 {
@@ -758,6 +846,24 @@
         for (CFIndex j=0; j < ABMultiValueGetCount(emails); j++) {
             NSString* email = (__bridge NSString*)ABMultiValueCopyValueAtIndex(emails, j);
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:1];
+            
+            if ((firstname) && !(lastname)) {
+                lastname = firstname;
+                firstname = @" ";
+            }
+            
+            if (email == nil) {
+                email = @"No email";
+            }
+            
+            if (firstname == nil) {
+                firstname = @"No Name";
+            }
+            
+            if (lastname == nil) {
+                lastname = @" ";
+            }
+            
             [dictionary setObject:email forKey:@"email"];
             [dictionary setObject:firstname forKey:@"first"];
             [dictionary setObject:lastname forKey:@"last"];
@@ -825,9 +931,9 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self showEmail];
+        [self composeMail];
     } else if (buttonIndex == 1) {
-        [self showTexts];
+        [self composeTexts];
     } else if (buttonIndex == 2) {
         [self showFacebook];
     } else if (buttonIndex == 3) {
@@ -951,6 +1057,8 @@
 - (void)noFriends
 {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
     //    CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
     NSArray *abContactArray = [[NSArray alloc] init];
     NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
@@ -997,6 +1105,10 @@
     }
     
     [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+        } else {
+            NSLog(@"Address book error!!!: %@",error);
+        }
+        });
 }
 
 - (void)tutDidFinish:(TutorialViewController *)controller

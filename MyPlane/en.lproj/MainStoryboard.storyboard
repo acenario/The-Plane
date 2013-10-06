@@ -5251,12 +5251,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="lRX-sX-a6w" firstAttribute="leading" secondItem="GlG-Vl-ddd" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="2qt-qa-GfP"/>
-                                    <constraint firstItem="McQ-PK-06R" firstAttribute="leading" secondItem="lRX-sX-a6w" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="5Jd-Ic-sSP"/>
                                     <constraint firstItem="GlG-Vl-ddd" firstAttribute="centerY" secondItem="lRX-sX-a6w" secondAttribute="centerY" type="default" id="HYn-si-CQh"/>
                                     <constraint firstItem="lRX-sX-a6w" firstAttribute="centerY" secondItem="yhh-h6-w5n" secondAttribute="centerY" type="default" id="P47-5j-sLE"/>
+                                    <constraint firstItem="lRX-sX-a6w" firstAttribute="leading" secondItem="yhh-h6-w5n" secondAttribute="leading" constant="130" id="Q1f-2k-1Pq"/>
                                     <constraint firstItem="McQ-PK-06R" firstAttribute="baseline" secondItem="GlG-Vl-ddd" secondAttribute="baseline" type="default" id="QZs-lh-Y04"/>
                                     <constraint firstItem="McQ-PK-06R" firstAttribute="top" secondItem="yhh-h6-w5n" secondAttribute="top" constant="7" id="WPX-YN-wJF"/>
+                                    <constraint firstAttribute="trailing" secondItem="McQ-PK-06R" secondAttribute="trailing" constant="15" id="aes-CZ-0Rz"/>
                                     <constraint firstItem="GlG-Vl-ddd" firstAttribute="leading" secondItem="yhh-h6-w5n" secondAttribute="leading" constant="22" id="mcs-Tz-RBk"/>
                                 </constraints>
                             </tableViewCell>
@@ -6279,6 +6279,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doneButton:"/>
+                <relationship kind="action" name="imagePicker:"/>
                 <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
