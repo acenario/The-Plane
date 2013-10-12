@@ -660,6 +660,8 @@
     [userObject setObject:imageupload forKey:@"profilePicture"];
     [userObject setObject:[NSNumber numberWithInt:0] forKey:@"gracePeriod"];
     [userObject setObject:[NSNumber numberWithInt:0] forKey:@"adminRank"];
+    [userObject setObject:@"New" forKey:@"firstName"];
+    [userObject setObject:@"User" forKey:@"lastName"];
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
         
