@@ -49,7 +49,7 @@
         self.paginationEnabled = YES;
         self.objectsPerPage = 25;
         self.parseClassName = @"UserInfo";
-        
+        self.loadingViewEnabled = YES;
         
     }
     return self;

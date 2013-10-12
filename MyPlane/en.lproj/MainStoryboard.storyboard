@@ -1583,6 +1583,28 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="YQG-7l-Igv">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Support" textLabel="AcH-Tb-lYt" style="IBUITableViewCellStyleDefault" id="glH-Qr-2l4">
+                                        <rect key="frame" x="0.0" y="261" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Contact Support" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AcH-Tb-lYt">
+                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="viF-zF-QRg" id="bqP-TE-8RS"/>
@@ -1716,11 +1738,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="segmentedControl" destination="xba-7u-rxM" id="n5v-2h-fqF"/>
                         <segue destination="dgd-8a-PU9" kind="modal" identifier="containerAddFriend" id="PjU-TI-goZ"/>
                         <segue destination="ZXC-f5-R6F" kind="modal" identifier="containerCreateCircle" id="hes-Yo-V4N"/>
+                        <segue destination="CWe-JA-5Yf" kind="modal" identifier="addReminder" id="d9k-lF-JUn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6G-kl-IxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1351" y="986"/>
+            <point key="canvasLocation" x="1151" y="986"/>
         </scene>
         <!--My Sent Reminders View Controller - Sent-->
         <scene sceneID="fIW-oB-RvU">
@@ -1839,7 +1862,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="WZA-jc-cg9">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="WZA-jc-cg9">
                                 <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2404,7 +2427,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="3513" y="2876"/>
         </scene>
-        <!--Social View Controller - Social-->
+        <!--Social View Controller - Group Feed-->
         <scene sceneID="esr-bk-S9G">
             <objects>
                 <tableViewController id="2oa-SY-4dU" customClass="SocialViewController" sceneMemberID="viewController">
@@ -2601,13 +2624,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="2oa-SY-4dU" id="HOD-YW-TWD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Social" id="opB-OC-djL">
+                    <navigationItem key="navigationItem" title="Group Feed" id="opB-OC-djL">
                         <barButtonItem key="rightBarButtonItem" image="addPost.png" id="DMG-eY-Jg9">
                             <connections>
                                 <segue destination="GYT-ji-P2B" kind="modal" identifier="AddSocialPost" id="ERg-Kc-26H"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="CWe-JA-5Yf" kind="modal" identifier="addReminder" id="zjC-VQ-i73"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oq8-qt-l0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2667,7 +2693,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <action selector="segmentChanged:" destination="Rph-vb-JUr" eventType="valueChanged" id="jHi-ze-g44"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" image="addFriend3.png" id="Yg3-ng-kLJ">
+                        <barButtonItem key="rightBarButtonItem" title="Menu" id="Yg3-ng-kLJ">
                             <connections>
                                 <action selector="circleMenu:" destination="Rph-vb-JUr" id="12n-kG-OKz"/>
                             </connections>
@@ -3014,7 +3040,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <tableViewController id="UAg-mc-Kmn" customClass="SocialPostDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yQV-Sf-spq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="303"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -4330,7 +4356,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6403" contentMode="left" text="Abhijay Bhatnagar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5yG-NY-UrT">
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="F9J-nv-ydO"/>
                                                 <constraint firstAttribute="width" constant="214" id="m2K-TJ-29m"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -4366,24 +4391,33 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="109" contentMode="center" image="70-paperclip.png" translatesAutoresizingMaskIntoConstraints="NO" id="crG-Bh-S1F">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="0qA-Qp-x0t"/>
+                                                <constraint firstAttribute="width" constant="20" id="eY3-Rw-lG3"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="gQE-Aj-iMg" firstAttribute="centerX" secondItem="OAd-5G-XBk" secondAttribute="centerX" type="default" id="27j-k5-R1n"/>
                                     <constraint firstItem="gQE-Aj-iMg" firstAttribute="top" secondItem="yvu-aI-9CY" secondAttribute="top" constant="3" id="DDD-KV-wBt"/>
+                                    <constraint firstItem="crG-Bh-S1F" firstAttribute="trailing" secondItem="6tI-Vv-GkR" secondAttribute="trailing" type="default" id="EkC-pp-7yH"/>
                                     <constraint firstItem="O09-eK-T06" firstAttribute="baseline" secondItem="hMY-d5-W2R" secondAttribute="baseline" type="default" id="FDQ-Zy-6aH"/>
                                     <constraint firstItem="L5p-FX-mqo" firstAttribute="baseline" secondItem="hMY-d5-W2R" secondAttribute="baseline" type="default" id="FIc-bd-vVZ"/>
+                                    <constraint firstItem="crG-Bh-S1F" firstAttribute="bottom" secondItem="5yG-NY-UrT" secondAttribute="bottom" type="default" id="GXr-Sj-TsR"/>
                                     <constraint firstItem="hMY-d5-W2R" firstAttribute="leading" secondItem="yvu-aI-9CY" secondAttribute="leading" constant="60" id="IH2-Bp-G6M"/>
                                     <constraint firstAttribute="trailing" secondItem="O09-eK-T06" secondAttribute="trailing" constant="14" id="Oz9-Dz-kVT"/>
                                     <constraint firstItem="gQE-Aj-iMg" firstAttribute="centerY" secondItem="OAd-5G-XBk" secondAttribute="centerY" type="default" id="T1J-9w-VtC"/>
                                     <constraint firstAttribute="bottom" secondItem="O09-eK-T06" secondAttribute="bottom" constant="1" id="ZxF-Ak-O1O"/>
                                     <constraint firstItem="5yG-NY-UrT" firstAttribute="top" secondItem="gQE-Aj-iMg" secondAttribute="top" type="default" id="caY-Jf-a9q"/>
                                     <constraint firstItem="6tI-Vv-GkR" firstAttribute="leading" secondItem="gQE-Aj-iMg" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="cn4-qV-SXn"/>
+                                    <constraint firstItem="crG-Bh-S1F" firstAttribute="trailing" secondItem="5yG-NY-UrT" secondAttribute="trailing" type="default" id="eav-Bl-ckT"/>
                                     <constraint firstItem="gQE-Aj-iMg" firstAttribute="leading" secondItem="yvu-aI-9CY" secondAttribute="leading" constant="12" id="k7U-17-dWq"/>
                                     <constraint firstItem="L5p-FX-mqo" firstAttribute="leading" secondItem="OAd-5G-XBk" secondAttribute="leading" type="default" id="o0z-n8-f8Q"/>
-                                    <constraint firstItem="6tI-Vv-GkR" firstAttribute="trailing" secondItem="5yG-NY-UrT" secondAttribute="trailing" type="default" id="r6L-pS-sU6"/>
                                     <constraint firstItem="5yG-NY-UrT" firstAttribute="leading" secondItem="gQE-Aj-iMg" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="wZ7-eL-YcN"/>
+                                    <constraint firstItem="crG-Bh-S1F" firstAttribute="top" secondItem="yvu-aI-9CY" secondAttribute="top" constant="4" id="xgt-DN-pz0"/>
                                     <constraint firstItem="6tI-Vv-GkR" firstAttribute="centerY" secondItem="yvu-aI-9CY" secondAttribute="centerY" type="default" id="xsr-cp-PiN"/>
                                 </constraints>
                             </tableViewCell>
@@ -4417,7 +4451,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Posts" id="u4c-3l-q4f">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sZt-F0-Lso">
+                        <barButtonItem key="rightBarButtonItem" image="addPost.png" id="sZt-F0-Lso">
                             <connections>
                                 <segue destination="GYT-ji-P2B" kind="modal" identifier="AddPost" id="6cG-gq-PK8"/>
                             </connections>
@@ -5597,7 +5631,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av1-Ux-X1M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2408" y="-1435"/>
+            <point key="canvasLocation" x="2568" y="-1427"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="udi-Ni-lTf">
@@ -5633,7 +5667,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OFa-dh-lww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1906" y="1042"/>
+            <point key="canvasLocation" x="1900" y="1034"/>
         </scene>
         <!--Share Mail View Controller - Contacts-->
         <scene sceneID="Zvb-ls-bIZ">
@@ -6000,20 +6034,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="azN-Uw-T1Q"/>
-        <segue reference="Qe9-Wk-uzJ"/>
-        <segue reference="RYe-tY-AK6"/>
-        <segue reference="VvN-4L-dlp"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="OGa-b0-0On"/>
-        <segue reference="GfZ-it-DUs"/>
-        <segue reference="std-vO-s0Z"/>
-        <segue reference="1cS-jb-Zdb"/>
-        <segue reference="ERg-Kc-26H"/>
-        <segue reference="8lv-Fg-cjF"/>
-        <segue reference="ODM-E9-Ohb"/>
-        <segue reference="mg4-nA-nkd"/>
+        <segue reference="zNQ-I4-gIZ"/>
         <segue reference="7p7-Gb-VJp"/>
-        <segue reference="8sh-ab-kA6"/>
+        <segue reference="mg4-nA-nkd"/>
+        <segue reference="ODM-E9-Ohb"/>
+        <segue reference="8lv-Fg-cjF"/>
+        <segue reference="hes-Yo-V4N"/>
+        <segue reference="Qe9-Wk-uzJ"/>
+        <segue reference="azN-Uw-T1Q"/>
+        <segue reference="RYe-tY-AK6"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="VvN-4L-dlp"/>
+        <segue reference="OGa-b0-0On"/>
+        <segue reference="std-vO-s0Z"/>
+        <segue reference="7cf-9Z-bI4"/>
+        <segue reference="6cG-gq-PK8"/>
     </inferredMetricsTieBreakers>
 </document>

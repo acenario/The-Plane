@@ -44,12 +44,12 @@
     reachability = [Reachability reachabilityForInternetConnection];
     [reachability startNotifier];
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Group" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Find a Group" image:[UIImage imageNamed:@"findGroup3"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"JoinCircle" sender:nil];
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Create a Group" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Create a Group" image:[UIImage imageNamed:@"createGroup3"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"CreateCircle" sender:nil];
     }];
     item0.tag = 1;

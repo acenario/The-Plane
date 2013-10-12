@@ -104,8 +104,14 @@
     return query;
 }
 
+-(void)objectsWillLoad {
+    [super objectsWillLoad];
+    
+}
+
 - (void)objectsDidLoad:(NSError *)error
 {
+    [super objectsDidLoad:error];
 //    [self.tableView reloadData];
     if (self.objects.count == 0) {
         FUIAlertView *alertView = [[FUIAlertView alloc]
@@ -443,7 +449,7 @@
 {
     MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
     mViewController.mailComposeDelegate = self;
-    [mViewController setSubject:@"Try out Hey! Heads Up"];
+    [mViewController setSubject:@"Hey! HeadsUp!"];
     [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
     //    [mViewController setToRecipients:self.selectedEmails];
     [self presentViewController:mViewController animated:YES completion:nil];
@@ -455,6 +461,7 @@
     iv.contentMode = UIViewContentModeCenter;
     [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
     [[mViewController navigationBar] sendSubviewToBack:iv];
+    
 }
 
 - (void)composeTexts{

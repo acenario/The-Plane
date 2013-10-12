@@ -76,23 +76,23 @@
     [super viewDidLoad];
     [self configureViewController];
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Create Reminder for Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Create Reminder for Selected Users" image:[UIImage imageNamed:@"createReminders3"] action:^(UzysSMMenuItem *item) {
         [self createReminder];
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Block Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Block Selected Users" image:[UIImage imageNamed:@"blocked3"] action:^(UzysSMMenuItem *item) {
         [self blockUsers];
     }];
     item0.tag = 3;
 
     if ([self.circle.admins containsObject:self.currentUser.user]) {
-        UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+        UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Promote Selected Users to Admin" image:[UIImage imageNamed:@"promoteUsers3"] action:^(UzysSMMenuItem *item) {
             [self promoteSelectedUsers];
         }];
         item0.tag = 1;
         
-        UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+        UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Kick Selected Users" image:[UIImage imageNamed:@"kickUsers3"] action:^(UzysSMMenuItem *item) {
             [self kickSelectedUsers];
         }];
         item0.tag = 2;

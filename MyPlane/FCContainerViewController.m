@@ -63,11 +63,12 @@
     
     if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add notification for friends or circles!");
-        if (self.segmentedControl.selectedSegmentIndex == 0) {
-        [self performSegueWithIdentifier:@"containerAddFriend" sender:nil];
-        } else {
-            [self performSegueWithIdentifier:@"containerCreateCircle" sender:nil];
-        }
+        [self performSegueWithIdentifier:@"addReminder" sender:nil];
+//        if (self.segmentedControl.selectedSegmentIndex == 0) {
+//        [self performSegueWithIdentifier:@"containerAddFriend" sender:nil];
+//        } else {
+//            [self performSegueWithIdentifier:@"containerCreateCircle" sender:nil];
+//        }
     }
     
 }

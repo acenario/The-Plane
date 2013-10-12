@@ -122,6 +122,7 @@
         
         
         PFImageView *ownerImage = (PFImageView *)[cell viewWithTag:6412];
+        UIImageView *clippy = (UIImageView *)[cell viewWithTag:109];
         
         name.text = [NSString stringWithFormat:@"%@ %@", userObject.firstName, userObject.lastName];
         text.text = object.text;
@@ -129,6 +130,12 @@
         dateLabel.text = [dateFormatter stringFromDate:object.createdAt];
         ownerImage.file = userObject.profilePicture;
         [ownerImage loadInBackground];
+        
+        if (object.reminderTask.length > 0) {
+            clippy.hidden = NO;
+        } else {
+            clippy.hidden = YES;
+        }
         
         return cell;
     } else {

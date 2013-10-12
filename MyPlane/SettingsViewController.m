@@ -26,6 +26,7 @@
 @interface SettingsViewController ()
 
 @property (nonatomic,strong) UzysSlideMenu *uzysSMenu;
+@property (nonatomic,strong) UzysSlideMenu *adminMenu;
 @property (nonatomic, strong) CurrentUser *sharedManager;
 
 @end
@@ -70,37 +71,49 @@
     self.tableView.backgroundView = av;
     [self configureFlatUI];
     
-    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Edit Common Tasks" image:[UIImage imageNamed:@"a0.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item0 = [[UzysSMMenuItem alloc] initWithTitle:@"Edit Common Tasks" image:[UIImage imageNamed:@"editTasks3"] action:^(UzysSMMenuItem *item) {
         [self showCommon];
     }];
     item0.tag = 0;
     
-    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Report User" image:[UIImage imageNamed:@"a1.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item1 = [[UzysSMMenuItem alloc] initWithTitle:@"Report User" image:[UIImage imageNamed:@"reportUsers3"] action:^(UzysSMMenuItem *item) {
         [self report];
     }];
     item0.tag = 1;
     
-    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item2 = [[UzysSMMenuItem alloc] initWithTitle:@"Log Out" image:[UIImage imageNamed:@"logout3"] action:^(UzysSMMenuItem *item) {
         [self logOut];
     }];
     item0.tag = 2;
     
-    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Blocked Users" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
+    UzysSMMenuItem *item3 = [[UzysSMMenuItem alloc] initWithTitle:@"Blocked Users" image:[UIImage imageNamed:@"blocked3"] action:^(UzysSMMenuItem *item) {
         [self performSegueWithIdentifier:@"BlockedUsers" sender:nil];
     }];
     item0.tag = 3;
     
-    if (self.sharedManager.currentUser.adminRank > 0) {
-        UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"a2.png"] action:^(UzysSMMenuItem *item) {
-            [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
-        }];
-        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2,item4]];
-    } else {
-        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
-    }
+    self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
+    
+    //Admin Code
+    UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"kickUsers3"] action:^(UzysSMMenuItem *item) {
+        [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
+    }];
+    
+    self.adminMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2,item4]];
+    //
+    
+    
+//    if (self.sharedManager.currentUser.adminRank > 0) {
+//        UzysSMMenuItem *item4 = [[UzysSMMenuItem alloc] initWithTitle:@"Admin Panel" image:[UIImage imageNamed:@"kickUsers3"] action:^(UzysSMMenuItem *item) {
+//            [self performSegueWithIdentifier:@"AdminPanel" sender:nil];
+//        }];
+//        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2,item4]];
+//    } else {
+//        self.uzysSMenu = [[UzysSlideMenu alloc] initWithItems:@[item0,item3,item1,item2]];
+//    }
     
     
     [self.view addSubview:self.uzysSMenu];
+    [self.view addSubview:self.adminMenu];
     
     self.editButton.enabled = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -160,6 +173,7 @@
         [self presentViewController:logInViewController animated:YES completion:nil];
     } else {
         self.sharedManager = [CurrentUser sharedManager];
+        [self reloadInfo];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -285,33 +299,38 @@
     if (self.uzysSMenu.state == STATE_FULL_MENU) {
         [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
     }
+    if (self.adminMenu.state == STATE_FULL_MENU) {
+        [self.adminMenu setState:STATE_ICON_MENU animated:YES];
+    }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.uzysSMenu.state == STATE_FULL_MENU) {
         [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
     }
+    if (self.adminMenu.state == STATE_FULL_MENU) {
+        [self.adminMenu setState:STATE_ICON_MENU animated:YES];
+    }
 }
 
 - (IBAction)showMenu:(id)sender {
     //self.uzysSMenu.hidden = NO;
     
-    if (self.uzysSMenu.state == STATE_FULL_MENU) {
-        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+    if (self.sharedManager.currentUser.adminRank != 0) {
+        self.adminMenu.hidden = NO;
+        if (self.adminMenu.state == STATE_FULL_MENU) {
+            [self.adminMenu setState:STATE_ICON_MENU animated:YES];
+        } else {
+            [self.adminMenu setState:STATE_FULL_MENU animated:YES];
+        }
     } else {
-        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
+        self.adminMenu.hidden = YES;
+        if (self.uzysSMenu.state == STATE_FULL_MENU) {
+            [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
+        } else {
+            [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
+        }
     }
-    
-    //    if (menuCheck == YES) {
-    //        //[self.uzysSMenu toggleMenu];
-    //        [self.uzysSMenu setState:STATE_FULL_MENU animated:YES];
-    //        menuCheck = NO;
-    //    } else {
-    //        //[self.uzysSMenu openIconMenu];
-    //        [self.uzysSMenu setState:STATE_ICON_MENU animated:YES];
-    //        menuCheck = YES;
-    //
-    //    }
     
 }
 
@@ -416,10 +435,12 @@
         CommonTasksViewController *controller = [segue destinationViewController];
         controller.isFromSettings = YES;
     } else if ([segue.identifier isEqualToString:@"AddReminder"]) {
-        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
-        controller.recipient = self.sharedManager.currentUser;
-        controller.currentUser = self.sharedManager.currentUser;
+        //ARJUN
+        //REMOVE CODE BELOW
+//        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+//        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+//        controller.recipient = self.sharedManager.currentUser;
+//        controller.currentUser = self.sharedManager.currentUser;
     } else if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         firstTimeSettingsViewController *controller = (firstTimeSettingsViewController *)nav.topViewController;
@@ -474,7 +495,11 @@
     UIImage *background = [UIImage imageWithColor:[UIColor whiteColor] cornerRadius:5.0f];
     av.image = background;
     cell.backgroundView = av;
+    cell.textLabel.font = [UIFont flatFontOfSize:17];
     
+    if (indexPath.section == 3) {
+        cell.textLabel.textColor = [UIColor pomegranateColor];
+    }
     
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = selectedColor;
@@ -496,7 +521,30 @@
         }
     }
     
+    if (indexPath.section == 3) {
+        [self contactSupport];
+    }
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)contactSupport {
+    NSString *message = [NSString stringWithFormat:@"Hey! It's %@, \n \n",self.sharedManager.currentUser.user];
+    NSArray *emailArray = [[NSArray alloc]initWithObjects:@"support@arjunb.com", nil];
+        MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
+        mViewController.mailComposeDelegate = self;
+        [mViewController setSubject:@"[SUPPORT REQUEST]"];
+        [mViewController setMessageBody:message isHTML:NO];
+        [mViewController setToRecipients:emailArray];
+        [self presentViewController:mViewController animated:YES completion:nil];
+        
+        [[mViewController navigationBar] setTintColor:[UIColor colorFromHexCode:@"FF4100"]];
+        UIImage *image = [UIImage imageNamed: @"custom_nav_background.png"];
+        UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,42)];
+        iv.image = image;
+        iv.contentMode = UIViewContentModeCenter;
+        [[[mViewController viewControllers] lastObject] navigationItem].titleView = iv;
+        [[mViewController navigationBar] sendSubviewToBack:iv];
 }
 
 #pragma mark - Log In/Out Code
@@ -572,7 +620,7 @@
     [[[UIAlertView alloc] initWithTitle:@"Missing Information"
                                 message:@"Make sure you fill out all of the information!"
                                delegate:nil
-                      cancelButtonTitle:@"ok"
+                      cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
     return NO; // Interrupt login process
 }
@@ -603,7 +651,7 @@
 #pragma mark - SignUpViewController Delegates
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    defaultPic = [UIImage imageNamed:@"first"];
+    defaultPic = [UIImage imageNamed:@"defaultPic"];
     UserInfo *userObject = [UserInfo object];
     NSData *data = UIImagePNGRepresentation(defaultPic);
     PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
@@ -633,19 +681,47 @@
 }
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
+    [logInViewController dismissViewControllerAnimated:NO completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)signUpViewController:(PFSignUpViewController *)signUpController
            shouldBeginSignUp:(NSDictionary *)info {
+    
     NSString *password = [info objectForKey:@"password"];
     NSString *username = [info objectForKey:@"username"];
+    NSString *email = [info objectForKey:@"email"];
     displayName = username;
     
     //    NSString *lowercaseUsername = [username lowercaseString];
     //    theUsername = lowercaseUsername;
     
-    return (BOOL)(password.length >= 8);
+    if (password.length >= 8 && username.length > 0 && email.length > 0) {
+        return YES;
+    }
+    
+    NSString *title;
+    NSString *message;
+    
+    if (password.length < 8 && username.length > 0 && email.length > 0) {
+        title = @"Pasword Too Short";
+        message = @"Your password must be at least 8 characters!";
+    } else {
+        title = @"Missing Information";
+        message = @"Make sure you fill out all of the information!";
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil] show];
+    
+    
+    return NO;
+    
+    //return (BOOL)(password.length >= 8);
     
 }
 

@@ -25,10 +25,10 @@
     [super viewDidLoad];
     [self configureViewController];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveAddNotification:)
-                                                 name:@"fCenterTabbarItemTapped"
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(receiveAddNotification:)
+//                                                 name:@"fCenterTabbarItemTapped"
+//                                               object:nil];
     
     [self queryForTable];
 	// Do any additional setup after loading the view.

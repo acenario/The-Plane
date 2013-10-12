@@ -23,7 +23,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.loadingViewEnabled = NO;
-        
+        self.pullToRefreshEnabled = NO;
     }
     return self;
 }
@@ -170,7 +170,11 @@
         
         MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
         formSheet.shouldDismissOnBackgroundViewTap = YES;
-        formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+        if (LESS_THAN_IPHONE5) {
+            formSheet.transitionStyle = MZFormSheetTransitionStyleNone;
+        } else {
+            formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+        }
         formSheet.cornerRadius = 9.0;
         formSheet.portraitTopInset = 6.0;
         formSheet.landscapeTopInset = 6.0;
@@ -200,7 +204,11 @@
     
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
     formSheet.shouldDismissOnBackgroundViewTap = YES;
-    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    if (LESS_THAN_IPHONE5) {
+        formSheet.transitionStyle = MZFormSheetTransitionStyleNone;
+    } else {
+        formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    }
     formSheet.cornerRadius = 9.0;
     formSheet.portraitTopInset = 6.0;
     formSheet.landscapeTopInset = 6.0;
@@ -225,7 +233,11 @@
     
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
     formSheet.shouldDismissOnBackgroundViewTap = YES;
-    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    if (LESS_THAN_IPHONE5) {
+        formSheet.transitionStyle = MZFormSheetTransitionStyleNone;
+    } else {
+        formSheet.transitionStyle = MZFormSheetTransitionStyleSlideAndBounceFromRight;
+    }
     formSheet.cornerRadius = 9.0;
     formSheet.portraitTopInset = 6.0;
     formSheet.landscapeTopInset = 6.0;

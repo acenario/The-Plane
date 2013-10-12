@@ -373,15 +373,32 @@
     
     if ((usersave) && (objectsave)) {
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 CurrentUser *sharedManager = [CurrentUser sharedManager];
                 sharedManager.currentUser = (UserInfo *)object;
                 [self.delegate updateUserInfo:self];
             }];
+                
+            } else {
+                if (error.code == 203) {
+                    [SVProgressHUD showErrorWithStatus:@"Email already taken!"];
+                } else {
+                    NSLog(@"Error editing user: %@",error);
+                }
+            }
         }];
     } else if (usersave) {
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
             [self.delegate updateUserInfo:self];
+            } else {
+                if (error.code == 203) {
+                [SVProgressHUD showErrorWithStatus:@"Email already taken!"];
+                } else {
+                    NSLog(@"Error editing user: %@",error);
+                }
+            }
         }];
     } else {
         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

@@ -267,7 +267,7 @@
     
     
     usernameLabel.font = [UIFont flatFontOfSize:14];
-    dateLabel.font = [UIFont flatFontOfSize:14];
+    dateLabel.font = [UIFont flatFontOfSize:13];
     reminderLabel.font = [UIFont flatFontOfSize:16];
 
     
@@ -662,8 +662,9 @@
     [[[UIAlertView alloc] initWithTitle:@"Missing Information"
                                 message:@"Make sure you fill out all of the information!"
                                delegate:nil
-                      cancelButtonTitle:@"ok"
+                      cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
+    
     return NO; // Interrupt login process
 }
 
@@ -695,7 +696,7 @@
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    defaultPic = [UIImage imageNamed:@"first"];
+    defaultPic = [UIImage imageNamed:@"defaultPic"];
     UserInfo *userObject = [UserInfo object];
     NSData *data = UIImagePNGRepresentation(defaultPic);
     PFFile *imageupload = [PFFile fileWithName:@"myProfilePicture.png" data:data];
@@ -724,19 +725,47 @@
 }
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    PFLogInViewController *logInViewController = [[MyLoginViewController alloc] init];
+    [logInViewController dismissViewControllerAnimated:NO completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)signUpViewController:(PFSignUpViewController *)signUpController
            shouldBeginSignUp:(NSDictionary *)info {
+    
     NSString *password = [info objectForKey:@"password"];
     NSString *username = [info objectForKey:@"username"];
+    NSString *email = [info objectForKey:@"email"];
     displayName = username;
     
     //    NSString *lowercaseUsername = [username lowercaseString];
     //    theUsername = lowercaseUsername;
     
-    return (BOOL)(password.length >= 8);
+    if (password.length >= 8 && username.length > 0 && email.length > 0) {
+        return YES;
+    }
+    
+    NSString *title;
+    NSString *message;
+    
+    if (password.length < 8 && username.length > 0 && email.length > 0) {
+        title = @"Pasword Too Short";
+        message = @"Your password must be at least 8 characters!";
+    } else {
+        title = @"Missing Information";
+        message = @"Make sure you fill out all of the information!";
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil] show];
+
+    
+    return NO;
+    
+    //return (BOOL)(password.length >= 8);
     
 }
 

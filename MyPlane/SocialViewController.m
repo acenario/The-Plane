@@ -88,7 +88,8 @@
     
     if ([[notification name] isEqualToString:@"spCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add Social Post command!");
-        [self performSegueWithIdentifier:@"AddSocialPost" sender:nil];
+        //[self performSegueWithIdentifier:@"AddSocialPost" sender:nil];
+        [self performSegueWithIdentifier:@"addReminder" sender:nil];
     }
 }
 
