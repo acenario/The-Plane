@@ -575,8 +575,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"AddReminder"]) {
-        AddReminderViewController *controller = [segue destinationViewController];
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
         controller.delegate = self;
+        controller.unwinder = 1;
     }
     
     else if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {

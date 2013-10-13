@@ -46,6 +46,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *limitLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descLabel;
+@property int unwinder; ///---- 1: Reminders  2: Social  3:Connect  4:Settings
+
 
 
 - (IBAction)segmentChanged:(id)sender;

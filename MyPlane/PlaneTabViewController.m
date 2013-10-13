@@ -117,7 +117,7 @@
 
 - (void)centerItemTapped {
 
-    if (self.tabBar.selectedItem.tag == 100) {
+    if (self.tabBar.selectedItem.tag == 100) {        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"mpCenterTabbarItemTapped" object:nil];
     }
     

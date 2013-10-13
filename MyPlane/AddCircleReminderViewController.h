@@ -37,6 +37,7 @@
 @property (nonatomic, strong) NSArray *invitedMembers;
 @property (nonatomic, strong) NSArray *invitedUsernames;
 @property BOOL circleCheck;
+@property int unwinder; ///---- 1: Reminders  2: Social  3:Connect  4:Settings
 
 #pragma mark - Storyboard Outlets
 @property (strong, nonatomic) IBOutlet FUISegmentedControl *segmentedControl;

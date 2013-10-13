@@ -88,6 +88,7 @@
     
     if ([[notification name] isEqualToString:@"spCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add Social Post command!");
+        
         //[self performSegueWithIdentifier:@"AddSocialPost" sender:nil];
         [self performSegueWithIdentifier:@"addReminder" sender:nil];
     }
@@ -454,6 +455,10 @@
         controller.delegate = self;
         controller.currentUser = currentUserObject;
         controller.userQuery = userQuery;
+    } else if ([segue.identifier isEqualToString:@"addReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        controller.unwinder = 2;
     }
 }
 
@@ -478,5 +483,8 @@
 //    NSLog(@"%@")
 //}
 
+- (IBAction)unwindToSocial:(UIStoryboardSegue *)unwindSegue {
+    
+}
 
 @end

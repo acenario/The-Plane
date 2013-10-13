@@ -10,10 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CurrentUser.h"
 #import "Reachability.h"
+#import "CurrentUser.h"
 
 #define TAG_NOFRIENDS 1
 
 @interface FriendsQueryViewController ()
+
+@property CurrentUser *sharedManager;
 
 @end
 
@@ -55,7 +58,7 @@
     reachability = [Reachability reachabilityForInternetConnection];
     [reachability startNotifier];
     
-    [self getUserInfo];
+    
     [self performSelector:@selector(checkHasFriends) withObject:nil afterDelay:1];
 	// Do any additional setup after loading the view.
 }
@@ -92,17 +95,18 @@
 }
 
 -(void)getUserInfo {
-    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-    [query includeKey:@"friends"];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        meObject = (UserInfo *)object;
-    }];
-    
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
+//    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+//    [query includeKey:@"friends"];
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        meObject = (UserInfo *)object;
+//    }];
+//    
+//    if (self.objects.count == 0) {
+//        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    }
+    meObject = self.sharedManager.currentUser;
     
 }
 
@@ -122,8 +126,8 @@
                                                  name:@"showFriends"
                                                object:nil];
     self.segmentedController.selectedSegmentIndex = 0;
-    CurrentUser *sharedManager = [CurrentUser sharedManager];
-    self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", sharedManager.currentUser.receivedFriendRequests.count];
+    self.sharedManager = [CurrentUser sharedManager];
+    self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
     
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.requestsBtn.enabled = NO;
@@ -132,7 +136,7 @@
         [self loadObjects];
     }
     
-    
+    [self getUserInfo];
 }
 
 - (void)receiveAddNotification:(NSNotification *) notification
@@ -153,8 +157,9 @@
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"showFriends"]) {
         self.segmentedController.selectedSegmentIndex = 0;
-        CurrentUser *sharedManager = [CurrentUser sharedManager];
-        self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", sharedManager.currentUser.receivedFriendRequests.count];
+        self.sharedManager = [CurrentUser sharedManager];
+        self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
+        [self getUserInfo];
         if (reachability.currentReachabilityStatus == NotReachable) {
             self.requestsBtn.enabled = NO;
         } else {
@@ -313,28 +318,28 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     PFObject *friendRemoved = [self.objects objectAtIndex:indexPath.row];
+    NSLog(@"deletion %@", [meObject objectForKey:@"user"]);
+    
     PFObject *friendRemovedData = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:[friendRemoved objectId]];
     
-        [friendRemoved removeObject:[UserInfo objectWithoutDataWithObjectId:meObject.objectId] forKey:@"friends"];
-        [friendRemoved saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            
-            
-            [meObject removeObject:friendRemovedData forKey:@"friends"];
-            [meObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                CurrentUser *sharedManager = [CurrentUser sharedManager];
-                sharedManager.currentUser = meObject;
-            }];
-            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-            indexPaths = [NSArray arrayWithObject:indexPath];
-            [self loadObjects];
-            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+    [friendRemoved removeObject:[UserInfo objectWithoutDataWithObjectId:meObject.objectId] forKey:@"friends"];
 
-
+    [friendRemoved saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [meObject removeObject:friendRemovedData forKey:@"friends"];
+        [meObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            CurrentUser *sharedManager = [CurrentUser sharedManager];
+            sharedManager.currentUser = meObject;
         }];
         
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    indexPaths = [NSArray arrayWithObject:indexPath];
+    [self loadObjects];
+    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+        
+        
+    }];
+    
     
 }
  
@@ -352,6 +357,7 @@
         AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
         controller.recipient = sender;
         controller.currentUser = meObject;
+        NSLog(@"%@", [meObject objectForKey:@"user"]);
     } else if ([segue.identifier isEqualToString:@"NoFriends"]) {
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         NoFriendsViewController *controller = (NoFriendsViewController *)nav.topViewController;
@@ -557,5 +563,6 @@
         }
     }
 }
+
 
 @end

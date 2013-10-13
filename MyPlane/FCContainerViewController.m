@@ -63,6 +63,7 @@
     
     if ([[notification name] isEqualToString:@"fCenterTabbarItemTapped"]) {
         NSLog (@"Successfully received the add notification for friends or circles!");
+        
         [self performSegueWithIdentifier:@"addReminder" sender:nil];
 //        if (self.segmentedControl.selectedSegmentIndex == 0) {
 //        [self performSegueWithIdentifier:@"containerAddFriend" sender:nil];
@@ -151,6 +152,10 @@
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         CreateCircleViewController *controller = (CreateCircleViewController *)nav.topViewController;
         controller.currentUser = self.sharedManager.currentUser;
+    } else if ([segue.identifier isEqualToString:@"addReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        controller.unwinder = 3;
     }
 }
 
@@ -172,6 +177,10 @@
         self.circContainer.hidden = YES;
         self.FCContainer.hidden = NO;
     }
+    
+}
+
+- (IBAction)unwindToConnect:(UIStoryboardSegue *)unwindSegue {
     
 }
 

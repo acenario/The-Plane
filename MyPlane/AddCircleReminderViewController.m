@@ -32,9 +32,37 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cancelR)
+//                                                 name:@"remindersUnwindNotification"
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cancelS)
+//                                                 name:@"socialUnwindNotification"
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cancelC)
+//                                                 name:@"connectUnwindNotification"
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cancelSe)
+//                                                 name:@"settingsUnwindNotification"
+//                                               object:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     if (self.circle != nil) {
         self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.text = @"Select members...";
@@ -74,6 +102,7 @@
     
     self.taskTextField.delegate = self;
     self.descriptionTextView.delegate = self;
+    
     
     self.limitLabel.hidden = YES;
     textCheck = NO;
@@ -301,12 +330,47 @@
 #pragma mark - Bar Button Methods
 
 - (IBAction)cancel:(id)sender {
-    if (isFromCircles) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        [self performSegueWithIdentifier:@"UnwindToReminders" sender:nil];
+
+    switch (self.unwinder) {
+        case 1:
+            [self performSegueWithIdentifier:@"UnwindToReminders" sender:nil];
+            break;
+            
+            case 2:
+            [self performSegueWithIdentifier:@"UnwindToSocial" sender:nil];
+            break;
+            
+            case 3:
+            [self performSegueWithIdentifier:@"UnwindToConnect" sender:nil];
+            break;
+            
+            case 4:
+            [self performSegueWithIdentifier:@"UnwindToSettings" sender:nil];
+            break;
+            
+        default:
+            NSLog(@"NO UNWINDER");
+            break;
     }
 }
+
+//- (void)cancelR {
+//    NSLog(@"test for notificaitons");
+//    unwinder = 1;
+//}
+//
+//- (void)cancelS {
+//    unwinder = 2;
+//}
+//
+//- (void)cancelC {
+//    unwinder = 3;
+//}
+//
+//
+//- (void)cancelSe {
+//    unwinder = 4;
+//}
 
 - (IBAction)done:(id)sender {
     if (isFromCircles) {
@@ -404,7 +468,7 @@
         [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
             wait((int *)1);
-            [self performSegueWithIdentifier:@"UnwindToReminders" sender:nil];
+            [self cancel:nil];
         }];
     }];
 }
@@ -417,7 +481,7 @@
 
 #pragma mark - Segue Methods
 
-- (IBAction)unwindToAddCircleReminder:(UIStoryboardSegue *)unwindSegue;
+- (IBAction)unwindToAddCircleReminder:(UIStoryboardSegue *)unwindSegue
 {
     //    UIViewController* sourceViewController = unwindSegue.sourceViewController;
     

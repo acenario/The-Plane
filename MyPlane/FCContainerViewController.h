@@ -17,5 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIView *circContainer;
 
 - (IBAction)changePage:(id)sender;
+- (IBAction)unwindToConnect:(UIStoryboardSegue *)unwindSegue;
 
 @end

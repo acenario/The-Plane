@@ -437,8 +437,9 @@
     } else if ([segue.identifier isEqualToString:@"AddReminder"]) {
         //ARJUN
         //REMOVE CODE BELOW
-//        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-//        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddReminderViewController *controller = (AddReminderViewController *)nav.topViewController;
+        controller.unwinder = 4;
 //        controller.recipient = self.sharedManager.currentUser;
 //        controller.currentUser = self.sharedManager.currentUser;
     } else if ([segue.identifier isEqualToString:@"firstTimeSettings"]) {

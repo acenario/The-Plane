@@ -664,7 +664,6 @@
 				AEF4583317A1F6DF00AFF8D6 /* CircleDetailViewController.m */,
 				AE017AEF17C1ED07005E2C45 /* CirclePosts */,
 				AE017AEC17C1EC31005E2C45 /* CircleMembers */,
-				AE017AEA17C1EBD0005E2C45 /* CircleReminders */,
 			);
 			name = CircleDetail;
 			sourceTree = "<group>";
@@ -866,6 +865,7 @@
 			children = (
 				AEF4583A17A1F6DF00AFF8D6 /* CirclesViewController.h */,
 				AEF4583B17A1F6DF00AFF8D6 /* CirclesViewController.m */,
+				AE017AEA17C1EBD0005E2C45 /* CircleReminders */,
 				AE017AEB17C1EBFE005E2C45 /* CircleDetail */,
 				AEC247FF17C29FB500381DEF /* InviteMembers */,
 				AE017AF217C1ED48005E2C45 /* JoinCircle */,

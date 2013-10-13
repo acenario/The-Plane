@@ -182,7 +182,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="YAw-ET-6KJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Task" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3M-Z6-nOn">
                                                     <constraints>
@@ -4622,7 +4622,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="width" constant="216" id="nZH-sK-bGW"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
                                                         <action selector="validateText:" destination="eaa-N2-ADR" eventType="editingChanged" id="q1d-d3-mx4"/>
                                                     </connections>
@@ -4780,6 +4780,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <segue destination="vyz-uX-TPk" kind="push" identifier="PickCircle" id="ZAW-VO-3lH"/>
                         <segue destination="bnp-Xa-BLA" kind="unwind" identifier="UnwindToReminders" unwindAction="unwindToReminders:" id="dt5-QG-GpY"/>
                         <segue destination="sfe-de-P5Z" kind="modal" identifier="PickMembers" id="OGa-b0-0On"/>
+                        <segue destination="bnp-Xa-BLA" kind="unwind" identifier="UnwindToConnect" unwindAction="unwindToConnect:" id="ort-TN-8mb"/>
+                        <segue destination="bnp-Xa-BLA" kind="unwind" identifier="UnwindToSocial" unwindAction="unwindToSocial:" id="Glf-b8-ajA"/>
+                        <segue destination="bnp-Xa-BLA" kind="unwind" identifier="UnwindToSettings" unwindAction="unwindToSettings:" id="Ejb-N1-jyd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I7y-ye-Byy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6034,20 +6037,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="OGa-b0-0On"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="zjC-VQ-i73"/>
         <segue reference="zNQ-I4-gIZ"/>
-        <segue reference="7p7-Gb-VJp"/>
-        <segue reference="mg4-nA-nkd"/>
-        <segue reference="ODM-E9-Ohb"/>
-        <segue reference="8lv-Fg-cjF"/>
         <segue reference="hes-Yo-V4N"/>
         <segue reference="Qe9-Wk-uzJ"/>
         <segue reference="azN-Uw-T1Q"/>
-        <segue reference="RYe-tY-AK6"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="VvN-4L-dlp"/>
-        <segue reference="OGa-b0-0On"/>
-        <segue reference="std-vO-s0Z"/>
+        <segue reference="3g2-qP-dX9"/>
         <segue reference="7cf-9Z-bI4"/>
         <segue reference="6cG-gq-PK8"/>
+        <segue reference="std-vO-s0Z"/>
+        <segue reference="8lv-Fg-cjF"/>
+        <segue reference="7p7-Gb-VJp"/>
+        <segue reference="ODM-E9-Ohb"/>
+        <segue reference="hB8-tL-UEI"/>
     </inferredMetricsTieBreakers>
 </document>

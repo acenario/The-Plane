@@ -34,9 +34,11 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"%@", self.currentUser.user);
     
     if (self.recipient) {
         friendCheck = YES;
@@ -211,7 +213,12 @@
     return YES;
 }
 
--(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username withName:(NSString *)name withProfilePicture:(UIImage *)image withObjectId:(PFObject *)objectID selfUserObject:(UserInfo *)userObject
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller
+didFinishSelectingContactWithUsername:(NSString *)username
+                             withName:(NSString *)name
+                    withProfilePicture:(UIImage *)image
+                         withObjectId:(PFObject *)objectID
+                       selfUserObject:(UserInfo *)userObject
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     self.name.text = name;
@@ -238,6 +245,10 @@
         ReminderDateViewController *controller = [segue destinationViewController];
         controller.delegate = self;
         controller.displayDate = self.dateDetail.text;
+    } if ([segue.identifier isEqualToString:@"CircleReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
+        controller.unwinder = self.unwinder;
     }
 }
 
@@ -402,6 +413,14 @@
     }
     
     [self configureDoneButton];
+}
+
+- (void)receiveAddNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
+        NSLog (@"Successfully received the add notification for Reminders!");
+        
+    }
 }
 
 @end
