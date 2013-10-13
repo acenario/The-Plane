@@ -133,6 +133,15 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         
     if ([friendAdd isEqualToString:@"add"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"increaseFriend" object:nil];
+        UILocalNotification *friendAddedNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        NSDate *dateToFire = [now dateByAddingTimeInterval:5];
+        
+        friendAddedNotification.fireDate = dateToFire;
+        friendAddedNotification.alertBody = @"New Friend Request!";
+        friendAddedNotification.soundName = @"alertSound.caf";
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:friendAddedNotification];
         
         
 //        NSLog(@"Friend Added! Time to Reload!");
@@ -146,6 +155,15 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
             [currentInstallation saveEventually];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadObjects" object:nil];
+        UILocalNotification *newReminderNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        NSDate *dateToFire = [now dateByAddingTimeInterval:5];
+        
+        newReminderNotification.fireDate = dateToFire;
+        newReminderNotification.alertBody = @"New Reminder!";
+        newReminderNotification.soundName = @"alertSound.caf";
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:newReminderNotification];
     }
     
     if ([reminderAdd isEqualToString:@"d"]) {

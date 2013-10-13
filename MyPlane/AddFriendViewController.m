@@ -171,11 +171,12 @@
 - (void)filterResults:(NSString *)searchTerm
 {
     NSString *newTerm = [searchTerm lowercaseString];
+    NSString *newTermNoSpaces = [newTerm stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     //[self.searchResults removeAllObjects];
     
     friendQuery = [UserInfo query];
-    [friendQuery whereKey:@"user" hasPrefix:newTerm];
+    [friendQuery whereKey:@"user" hasPrefix:newTermNoSpaces];
     
     if (searchResults.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -301,18 +302,18 @@
         
         [SVProgressHUD showSuccessWithStatus:@"Friend Request Sent"];
         
-//        NSDictionary *data = @{
-//                               @"f": @"add"
-//                               };
-//        
-//        PFQuery *pushQuery = [PFInstallation query];
-//        [pushQuery whereKey:@"user" equalTo:friendAddedName];
-//        
-//        PFPush *push = [[PFPush alloc] init];
-//        [push setQuery:pushQuery];
-//        [push setData:data];
-//        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        }];
+        NSDictionary *data = @{
+                               @"f": @"add"
+                               };
+        
+        PFQuery *pushQuery = [PFInstallation query];
+        [pushQuery whereKey:@"user" equalTo:friendAdded.user];
+        
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery];
+        [push setData:data];
+        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        }];
         
     }];    
     

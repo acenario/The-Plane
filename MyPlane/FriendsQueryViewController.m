@@ -106,8 +106,8 @@
 //    if (self.objects.count == 0) {
 //        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 //    }
+    self.sharedManager = [CurrentUser sharedManager];
     meObject = self.sharedManager.currentUser;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -126,8 +126,9 @@
                                                  name:@"showFriends"
                                                object:nil];
     self.segmentedController.selectedSegmentIndex = 0;
+    [self checkFriendRequests];
     self.sharedManager = [CurrentUser sharedManager];
-    self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
+    //self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
     
     if (reachability.currentReachabilityStatus == NotReachable) {
         self.requestsBtn.enabled = NO;
@@ -157,8 +158,9 @@
 -(void)viewDidAppearInContainer:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"showFriends"]) {
         self.segmentedController.selectedSegmentIndex = 0;
+        [self checkFriendRequests];
         self.sharedManager = [CurrentUser sharedManager];
-        self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
+        //self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", self.sharedManager.currentUser.receivedFriendRequests.count];
         [self getUserInfo];
         if (reachability.currentReachabilityStatus == NotReachable) {
             self.requestsBtn.enabled = NO;
@@ -211,7 +213,7 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         NSArray *array = [object objectForKey:@"receivedFriendRequests"];
         int count = array.count;
-        self.navigationItem.leftBarButtonItem.title = [NSString stringWithFormat:@"%d Pending", count];
+        self.requestsBtn.title = [NSString stringWithFormat:@"%d Pending", count];
     }];
 }
 
@@ -319,7 +321,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFObject *friendRemoved = [self.objects objectAtIndex:indexPath.row];
-    NSLog(@"deletion %@", [meObject objectForKey:@"user"]);
+    //NSLog(@"deletion %@", [meObject objectForKey:@"user"]);
     
     PFObject *friendRemovedData = [PFObject objectWithoutDataWithClassName:@"UserInfo" objectId:[friendRemoved objectId]];
     
@@ -384,7 +386,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"Defriend";
+    return @"Unfriend";
 }
 
 - (void)checkHasFriends

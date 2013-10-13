@@ -153,20 +153,40 @@
 }
 
 -(void)getIDs {
-    CurrentUser *sharedManager = [CurrentUser sharedManager];
-    userObject = sharedManager.currentUser;
-    
     friendsObjectId = [[NSMutableArray alloc]init];
     sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
     
-    for (PFObject *object in userObject.friends) {
-        [friendsObjectId addObject:[object objectId]];
-    }
-    for (PFObject *object in userObject.sentFriendRequests) {
-        [sentFriendRequestsObjectId addObject:[object objectId]];
-    }
+    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+    [query includeKey:@"friends"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        userObject = (UserInfo *)object;
+        
+        for (PFObject *object in userObject.friends) {
+            [friendsObjectId addObject:[object objectId]];
+        }
+        for (PFObject *object in userObject.sentFriendRequests) {
+            [sentFriendRequestsObjectId addObject:[object objectId]];
+        }
+        
+        [self.tableView reloadData];
+    }];
     
-    [self.tableView reloadData];
+    //CurrentUser *sharedManager = [CurrentUser sharedManager];
+    //userObject = sharedManager.currentUser;
+    
+//    friendsObjectId = [[NSMutableArray alloc]init];
+//    sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
+//    
+//    for (PFObject *object in userObject.friends) {
+//        [friendsObjectId addObject:[object objectId]];
+//    }
+//    for (PFObject *object in userObject.sentFriendRequests) {
+//        [sentFriendRequestsObjectId addObject:[object objectId]];
+//    }
+//    
+//    [self.tableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
