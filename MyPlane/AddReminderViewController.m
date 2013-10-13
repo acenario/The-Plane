@@ -38,7 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"%@", self.currentUser.user);
     
     if (self.recipient) {
         friendCheck = YES;
@@ -128,7 +127,6 @@
 {
     [self hideKeyboard];
     PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
-    
     //[reminder setObject:[NSDate date] forKey:@"date"];
     [reminder setObject:reminderDate forKey:@"date"];
     [reminder setObject:self.taskTextField.text forKey:@"title"];

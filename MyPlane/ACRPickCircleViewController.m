@@ -132,7 +132,6 @@
 
 - (void)pickMembersViewController:(PickMembersViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames withCircle:(Circles *)circle
 {
-    NSLog(@"test");
     [self.delegate acrPickCircleViewController:self
                        didFinishPickingMembers:members
                                  withUsernames:usernames

@@ -1685,8 +1685,8 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DE4540B8-339B-4989-A88B-85A3798D7F64";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DE4540B8-339B-4989-A88B-85A3798D7F64";
+				PROVISIONING_PROFILE = "567049C6-E5D9-45E2-A768-47567B2C1BA2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "567049C6-E5D9-45E2-A768-47567B2C1BA2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1694,8 +1694,8 @@
 		DCE1FE74178910D60012478B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Himanshu Bhatnagar";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Himanshu Bhatnagar";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Downloads\"",
@@ -1705,8 +1705,8 @@
 				INFOPLIST_FILE = "MyPlane/MyPlane-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DE4540B8-339B-4989-A88B-85A3798D7F64";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DE4540B8-339B-4989-A88B-85A3798D7F64";
+				PROVISIONING_PROFILE = "57BA2BE4-CC3F-43B0-A84F-AF6E21E768AD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57BA2BE4-CC3F-43B0-A84F-AF6E21E768AD";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
