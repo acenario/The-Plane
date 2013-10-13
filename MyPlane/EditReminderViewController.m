@@ -57,7 +57,7 @@
     self.descTextView.delegate = self;
     self.taskTextField.delegate = self;
     
-
+    [self configureViewController];
     
 }
 
