@@ -22,10 +22,10 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                                       push_time: reminderDate,
                                       data: {
                                       alert: "Remember: " + titleText + " " + "from: " + fromUserName,
-                                      badge: "Increment"
+                                      badge: "Increment",
                                       //r: "n"
                                       //reminder: titleText
-                                      //sound: "cheering.caf",
+                                      sound: "alertSound.caf"
     
                                       } //insert ,
                                       //push_time: new Date(reminderDate)

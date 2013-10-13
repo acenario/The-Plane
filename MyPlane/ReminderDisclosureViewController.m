@@ -593,8 +593,12 @@
                     [self showAlert:@"You can't re-remind yourself!" title:@"Error!"];
                 } else {
                     PFPush *push = [[PFPush alloc] init];
+                    NSDictionary *data = @{
+                                           @"sound": @"alertSound.caf"
+                                           };
                     [push setQuery:pushQuery]; // Set our Installation query
                     [push setMessage:[self.reminderObject objectForKey:@"title"]];
+                    [push setData:data];
                     [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if (succeeded) {
@@ -628,6 +632,9 @@
                 NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
                 PFQuery *pushQuery = [PFInstallation query];
                 NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
+                NSDictionary *data = @{
+                                       @"sound": @"alertSound.caf"
+                                       };
                 reminder.recipientUpdateTime = [NSDate date];
                 if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
                     [pushQuery whereKey:@"user" equalTo:sender];
@@ -641,6 +648,7 @@
                 PFPush *push = [[PFPush alloc] init];
                 [push setQuery:pushQuery]; // Set our Installation query
                 [push setMessage:message];
+                [push setData:data];
                 [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (succeeded) {
@@ -667,6 +675,9 @@
                 NSString *sender = [self.reminderObject objectForKey:@"fromUser"];
                 PFQuery *pushQuery = [PFInstallation query];
                 NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
+                NSDictionary *data = @{
+                                       @"sound": @"alertSound.caf"
+                                       };
                 reminder.senderUpdateTime = [NSDate date];
                 if ([[PFUser currentUser].username isEqualToString:recipient.user]) {
                     [pushQuery whereKey:@"user" equalTo:sender];
@@ -680,6 +691,7 @@
                 PFPush *push = [[PFPush alloc] init];
                 [push setQuery:pushQuery]; // Set our Installation query
                 [push setMessage:message];
+                [push setData:data];
                 [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (succeeded) {

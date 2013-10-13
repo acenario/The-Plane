@@ -413,7 +413,8 @@
             if (![deleteName isEqualToString:[PFUser currentUser].username]) {
             NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
             NSDictionary *data = @{
-                                    @"r": @"d"
+                                    @"r": @"d",
+                                    @"sound": @"alertSound.caf"
                                   };
             
             PFQuery *pushQuery = [PFInstallation query];

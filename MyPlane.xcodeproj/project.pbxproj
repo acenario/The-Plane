@@ -71,6 +71,7 @@
 		DC11C210179481270059FC27 /* 117-todo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC11C206179481270059FC27 /* 117-todo@2x.png */; };
 		DC11C211179481270059FC27 /* 123-id-card.png in Resources */ = {isa = PBXBuildFile; fileRef = DC11C207179481270059FC27 /* 123-id-card.png */; };
 		DC11C212179481270059FC27 /* 123-id-card@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC11C208179481270059FC27 /* 123-id-card@2x.png */; };
+		DC166F70180A3564000FBF26 /* alertSound.caf in Resources */ = {isa = PBXBuildFile; fileRef = DC166F6F180A3564000FBF26 /* alertSound.caf */; };
 		DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */; };
 		DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */; };
 		DC2FE9FC17939C1E009EACD0 /* ReminderDisclosureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F717939C1E009EACD0 /* ReminderDisclosureViewController.m */; };
@@ -360,6 +361,7 @@
 		DC11C206179481270059FC27 /* 117-todo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "117-todo@2x.png"; sourceTree = "<group>"; };
 		DC11C207179481270059FC27 /* 123-id-card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "123-id-card.png"; sourceTree = "<group>"; };
 		DC11C208179481270059FC27 /* 123-id-card@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "123-id-card@2x.png"; sourceTree = "<group>"; };
+		DC166F6F180A3564000FBF26 /* alertSound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alertSound.caf; sourceTree = "<group>"; };
 		DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySentRemindersViewController.h; sourceTree = "<group>"; };
 		DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySentRemindersViewController.m; sourceTree = "<group>"; };
 		DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDateViewController.h; sourceTree = "<group>"; };
@@ -1223,6 +1225,7 @@
 		DCF891DF178A1E7800A89F6E /* TabBarImages */ = {
 			isa = PBXGroup;
 			children = (
+				DC166F6F180A3564000FBF26 /* alertSound.caf */,
 				DC489D561809934F00556B03 /* defaultPic.png */,
 				DCE33DEA1804EAAD00B24688 /* cancelBtn.png */,
 				DCE33DE41804D88500B24688 /* cancelSelected.png */,
@@ -1488,6 +1491,7 @@
 				DCE33E1A1805093F00B24688 /* reportUsers3.png in Resources */,
 				DCE33E1B1805093F00B24688 /* reportUsers3@2x.png in Resources */,
 				DC489D571809934F00556B03 /* defaultPic.png in Resources */,
+				DC166F70180A3564000FBF26 /* alertSound.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

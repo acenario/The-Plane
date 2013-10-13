@@ -1017,6 +1017,14 @@
     [actionSheet addButtonWithTitle:@"Twitter"];
     [actionSheet addButtonWithTitle:@"I'll do it later"];
     [actionSheet showInView:self.tabBarController.view];
+//
+//    NSString* someText = @"Default Text";
+//    NSArray* dataToShare = @[someText]; 
+//    
+//    UIActivityViewController* activityViewController =
+//    [[UIActivityViewController alloc] initWithActivityItems:dataToShare
+//                                      applicationActivities:nil];
+//    [self presentViewController:activityViewController animated:YES completion:^{}];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
