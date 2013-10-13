@@ -335,18 +335,21 @@
     }
     
     if ([userObject.user isEqualToString:[PFUser currentUser].username]) {
-        [socialPost deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                [Comments deleteAllInBackground:commentsToDelete];
-                NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-                [self loadObjects];
-                [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
- 
-                [SVProgressHUD showSuccessWithStatus:@"Deleted Post!"];
-          
-            } else {
-                NSLog(@"error: %@", error);
-            }
+        [socialPost.circle removeObject:[SocialPosts objectWithoutDataWithObjectId:socialPost.objectId] forKey:@"posts"];
+        [socialPost.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [socialPost deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [Comments deleteAllInBackground:commentsToDelete];
+                    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+                    [self loadObjects];
+                    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+                    
+                    [SVProgressHUD showSuccessWithStatus:@"Deleted Post!"];
+                    
+                } else {
+                    NSLog(@"error: %@", error);
+                }
+            }];
         }];
     } else {
         [SVProgressHUD showErrorWithStatus:@"Can't delete try blocking instead!"];
