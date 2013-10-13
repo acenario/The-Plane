@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -426,7 +426,7 @@
                                             <constraint firstItem="6Q1-LV-Ytr" firstAttribute="leading" secondItem="aeS-63-gUa" secondAttribute="leading" constant="78" id="ucj-zR-YI7"/>
                                         </constraints>
                                         <connections>
-                                            <segue destination="Tmg-X9-bme" kind="modal" identifier="FriendsForReminders" id="z13-vb-7WB"/>
+                                            <segue destination="A48-vf-tjD" kind="modal" identifier="FriendsForReminders" id="z13-vb-7WB"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -520,30 +520,17 @@
             </objects>
             <point key="canvasLocation" x="3031" y="-1427"/>
         </scene>
-        <!--Friends For Reminders View Controller-->
+        <!--Friends For Reminders View Controller - My Friends-->
         <scene sceneID="uAW-jN-2Bz">
             <objects>
                 <tableViewController id="Tmg-X9-bme" customClass="FriendsForRemindersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="fBg-9n-BBF">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="uEt-wN-HCu">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <items>
-                                <navigationItem title="My Friends" id="akA-BU-ACy">
-                                    <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vN5-nE-mOW">
-                                        <connections>
-                                            <action selector="cancel:" destination="Tmg-X9-bme" id="9t9-Gq-LhP"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </navigationItem>
-                            </items>
-                        </navigationBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="dHJ-X1-DsA">
-                                <rect key="frame" x="0.0" y="66" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
@@ -596,10 +583,17 @@
                             <outlet property="delegate" destination="Tmg-X9-bme" id="Dao-Pq-xX0"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="My Friends" id="ipB-gM-7nS">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vN5-nE-mOW">
+                            <connections>
+                                <action selector="cancel:" destination="Tmg-X9-bme" id="9t9-Gq-LhP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvo-Hy-YSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3678" y="-2143"/>
+            <point key="canvasLocation" x="4204" y="-2143"/>
         </scene>
         <!--Reminder Disclosure View Controller - Reminder-->
         <scene sceneID="M0A-GH-NFN">
@@ -3236,7 +3230,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReminderCell" rowHeight="70" id="rcv-fr-dkN">
-                                <rect key="frame" x="0.0" y="266" width="320" height="71"/>
+                                <rect key="frame" x="0.0" y="266" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="69"/>
@@ -6020,6 +6014,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="4039" y="2201"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1g6-Af-Rz3">
+            <objects>
+                <navigationController id="A48-vf-tjD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1ci-YR-d2k">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Tmg-X9-bme" kind="relationship" relationship="rootViewController" id="SOf-YI-2Qp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dvi-4o-Zma" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3678" y="-2143"/>
+        </scene>
     </scenes>
     <resources>
         <image name="09-chat-2.png" width="24" height="22"/>
@@ -6450,6 +6462,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/firstTimeSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doneButton:"/>
+                <relationship kind="action" name="imagePicker:"/>
                 <relationship kind="outlet" name="doneBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
@@ -6469,20 +6482,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="zNQ-I4-gIZ"/>
         <segue reference="hes-Yo-V4N"/>
         <segue reference="std-vO-s0Z"/>
         <segue reference="azN-Uw-T1Q"/>
         <segue reference="7tr-Dc-RT9"/>
         <segue reference="3g2-qP-dX9"/>
-        <segue reference="7cf-9Z-bI4"/>
         <segue reference="6cG-gq-PK8"/>
+        <segue reference="7cf-9Z-bI4"/>
+        <segue reference="6iM-6d-iGd"/>
         <segue reference="zjC-VQ-i73"/>
-        <segue reference="VvN-4L-dlp"/>
         <segue reference="yEb-j2-o0N"/>
         <segue reference="OGa-b0-0On"/>
-        <segue reference="8lv-Fg-cjF"/>
         <segue reference="7p7-Gb-VJp"/>
         <segue reference="ODM-E9-Ohb"/>
-        <segue reference="zNQ-I4-gIZ"/>
+        <segue reference="8lv-Fg-cjF"/>
     </inferredMetricsTieBreakers>
 </document>

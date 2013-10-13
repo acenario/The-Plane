@@ -243,8 +243,9 @@ didFinishSelectingContactWithUsername:(NSString *)username
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
-        FriendsForRemindersViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
+            UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+            FriendsForRemindersViewController *controller = (FriendsForRemindersViewController *)nav.topViewController;
+            controller.delegate = self;
     } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
         ReminderDateViewController *controller = [segue destinationViewController];
         controller.delegate = self;
