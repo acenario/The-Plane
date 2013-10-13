@@ -395,7 +395,73 @@
 }
 
 - (IBAction)done:(id)sender {
-    [SVProgressHUD setStatus:@"Creating circles"];
+    [SVProgressHUD setStatus:@"Creating circle..."];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    Circles *circle = [Circles object];
+    circle.name = [circleName lowercaseString];
+    circle.displayName = circleName;
+    circle.user = [PFUser currentUser].username;
+    circle.owner = self.currentUser;
+    circle.public = public;
+    circle.privacy = privacy;
+    
+    
+    if (![privacy isEqualToString:@"open"]) {
+        [circle addObject:[PFUser currentUser].username forKey:@"admins"];
+        [circle addObject:[UserInfo objectWithoutDataWithObjectId:self.currentUser.objectId] forKey:@"adminPointers"];
+    }
+    
+    [circle addObject:self.currentUser forKey:@"members"];
+    [circle addObject:self.currentUser.user forKey:@"memberUsernames"];
+    
+    if (invitedMembers.count > 0) {
+        
+        PFRelation *relation = [circle relationforKey:@"requests"];
+        NSMutableArray *requestsToSave = [[NSMutableArray alloc] init];
+        //        NSMutableArray *requestsToSaveWOData = [[NSMutableArray alloc] init];
+        NSMutableArray *usersToSave = [[NSMutableArray alloc] init];
+        
+        for (UserInfo *user in invitedMembers) {
+            [user incrementKey:@"circleRequestsCount" byAmount:[NSNumber numberWithInt:1]];
+            [usersToSave addObject:user];
+            
+            Requests *request = [Requests object];
+            
+            [request setCircle:circle];
+            [request setSender:self.currentUser];
+            [request setSenderUsername:[PFUser currentUser].username];
+            [request setReceiver:user];
+            [request setReceiverUsername:user.user];
+            
+            [circle addObject:user.user forKey:@"pendingMembers"];
+            
+            [requestsToSave addObject:request];
+            //            [requestsToSaveWOData addObject:[Requests objectWithoutDataWithObjectId:request.objectId]];
+        };
+        
+        [UserInfo saveAllInBackground:usersToSave block:^(BOOL succeeded, NSError *error) {
+            [Requests saveAllInBackground:requestsToSave block:^(BOOL succeeded, NSError *error) {
+                for (Requests *request in requestsToSave) {
+                    [relation addObject:request];
+                    [circle addObject:[Requests objectWithoutDataWithObjectId:request.objectId] forKey:@"requestsArray"];
+                }
+                [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.displayName]];
+                    //[self dismissViewControllerAnimated:YES completion:nil];
+                }];
+            }];
+        }];
+    } else {
+        [circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.displayName]];
+            //[self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
+        
+    }];
+    
+    /*[SVProgressHUD setStatus:@"Creating circles..."];
     
     Circles *circle = [Circles object];
     circle.name = [circleName lowercaseString];
@@ -456,7 +522,7 @@
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ created", circle.displayName]];
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
-    }
+    }*/
 }
 
 - (void)hideKeyboard
