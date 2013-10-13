@@ -147,10 +147,15 @@
     [reminder saveEventually:^(BOOL succeeded, NSError *error) {
         [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
         NSString *message = [NSString stringWithFormat:@"New Reminder: %@ from: %@", self.taskTextField.text, self.currentUser.user];
-        NSDictionary *data = @{
-                               @"r": @"n",
-                               @"sound": @"alertSound.caf"
-                               };
+        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                              message, @"alert",
+                              @"n", @"r",
+                              @"alertSound.caf", @"sound",
+                              nil];
+//        NSDictionary *data = @{
+//                               @"r": @"n",
+//                               @"alertSound.caf": @"sound"
+//                               };
         
         PFQuery *pushQuery = [PFInstallation query];
         [pushQuery whereKey:@"user" equalTo:self.recipient.user];
@@ -158,7 +163,7 @@
         PFPush *push = [[PFPush alloc] init];
         [push setQuery:pushQuery];
         [push setData:data];
-        [push setMessage:message];
+        //[push setMessage:message];
         [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
             NSString *success = [NSString stringWithFormat:@"%@ has received the reminder", self.recipient.firstName];

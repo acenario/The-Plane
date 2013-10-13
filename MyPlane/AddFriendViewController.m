@@ -302,9 +302,12 @@
         
         [SVProgressHUD showSuccessWithStatus:@"Friend Request Sent"];
         
-        NSDictionary *data = @{
-                               @"f": @"add"
-                               };
+//        NSDictionary *data = @{
+//                               @"f": @"add"
+//                               };
+        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"add", @"f",
+                              nil];
         
         PFQuery *pushQuery = [PFInstallation query];
         [pushQuery whereKey:@"user" equalTo:friendAdded.user];

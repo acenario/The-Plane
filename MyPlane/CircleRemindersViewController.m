@@ -177,17 +177,22 @@
             
             if (![deleteName isEqualToString:[PFUser currentUser].username]) {
                 NSString *message = [NSString stringWithFormat:@"%@ has deleted your reminder", tempName];
-                NSDictionary *data = @{
-                                       @"r": @"d",
-                                       @"sound": @"alertSound.caf"
-                                       };
+                NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      message, @"alert",
+                                      @"d", @"r",
+                                      @"alertSound.caf", @"sound",
+                                      nil];
+//                NSDictionary *data = @{
+//                                       @"r": @"d",
+//                                       @"sound": @"alertSound.caf"
+//                                       };
                 
                 PFQuery *pushQuery = [PFInstallation query];
                 [pushQuery whereKey:@"user" equalTo:deleteName];
                 
                 PFPush *push = [[PFPush alloc] init];
                 [push setQuery:pushQuery];
-                [push setMessage:message];
+                //[push setMessage:message];
                 [push setData:data];
                 [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {

@@ -16,7 +16,7 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 #import "KGStatusBar.h"
-
+#import "PlaneTabViewController.h"
 #import "ShareMailViewController.h"
 
 #define TAG_WALKTHROUGH 1
@@ -531,7 +531,7 @@
 
 -(void)contactSupport {
     NSString *message = [NSString stringWithFormat:@"Hey! It's %@, \n \n",self.sharedManager.currentUser.user];
-    NSArray *emailArray = [[NSArray alloc]initWithObjects:@"support@arjunb.com", nil];
+    NSArray *emailArray = [[NSArray alloc]initWithObjects:@"support@hupapp.com", nil];
         MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
         mViewController.mailComposeDelegate = self;
         [mViewController setSubject:@"[SUPPORT REQUEST]"];
@@ -847,8 +847,8 @@
 {
     MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
     mViewController.mailComposeDelegate = self;
-    [mViewController setSubject:@"Try out Hey! Heads Up"];
-    [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
+    [mViewController setSubject:@"Hey! Heads Up"];
+    [mViewController setMessageBody:@"Check out Hey! HeadsUp! on the app store at http://www.hupapp.com" isHTML:NO];
     //    [mViewController setToRecipients:self.selectedEmails];
     [self presentViewController:mViewController animated:YES completion:nil];
     
@@ -864,7 +864,7 @@
 - (void)composeTexts{
     MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
     mViewController.messageComposeDelegate = self;
-    [mViewController setBody:@"Insert sample promotion code"];
+    [mViewController setBody:@"Check out Hey! HeadsUp! on the app store at http://www.hupapp.com"];
     //    [mViewController setRecipients:self.selectedEmails];
     if ([MFMessageComposeViewController canSendText]) {
         [self presentViewController:mViewController animated:YES completion:nil];
@@ -1048,9 +1048,9 @@
     {
         mySLComposerSheet = [[SLComposeViewController alloc] init]; //initiate the Social Controller
         mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook]; //Tell him with what social plattform to use it, e.g. facebook or twitter
-        [mySLComposerSheet setInitialText:@""]; //the message you want to post
+        [mySLComposerSheet setInitialText:@"Check out Hey! HeadsUp! on the app store at http://www.hupapp.com"]; //the message you want to post
         //[mySLComposerSheet addImage:yourimage]; //an image you could post
-        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://google.com"]];
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://hupapp.com"]];
         //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
     }
@@ -1077,8 +1077,8 @@
     {
         mySLComposerSheet = [[SLComposeViewController alloc] init]; //initiate the Social Controller
         mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter]; //Tell him with what social plattform to use it, e.g. facebook or twitter
-        [mySLComposerSheet setInitialText:@"Check out Hey HeadsUp on the App Store! It lets people remind you so you won't need your own calendar!"];
-        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://google.com"]];
+        [mySLComposerSheet setInitialText:@"Check out Hey! HeadsUp! on the App Store! It lets people remind you so you won't need your own calendar!"];
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://hupapp.com"]];
         //the message you want to post
         //[mySLComposerSheet addImage:yourimage]; //an image you could post
         //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205

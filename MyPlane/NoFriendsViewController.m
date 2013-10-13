@@ -470,7 +470,7 @@
     MFMailComposeViewController *mViewController = [[MFMailComposeViewController alloc] init];
     mViewController.mailComposeDelegate = self;
     [mViewController setSubject:@"Hey! HeadsUp!"];
-    [mViewController setMessageBody:@"Insert sample promotion code" isHTML:NO];
+    [mViewController setMessageBody:@"Check out Hey! HeadsUp! on the app store at http://www.hupapp.com" isHTML:NO];
     //    [mViewController setToRecipients:self.selectedEmails];
     [self presentViewController:mViewController animated:YES completion:nil];
     
@@ -487,7 +487,7 @@
 - (void)composeTexts{
     MFMessageComposeViewController *mViewController = [[MFMessageComposeViewController alloc] init];
     mViewController.messageComposeDelegate = self;
-    [mViewController setBody:@"Insert sample promotion code"];
+    [mViewController setBody:@"Check out Hey! HeadsUp! on the app store at http://www.hupapp.com"];
     //    [mViewController setRecipients:self.selectedEmails];
     if ([MFMessageComposeViewController canSendText]) {
         [self presentViewController:mViewController animated:YES completion:nil];
