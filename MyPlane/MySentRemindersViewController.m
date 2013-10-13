@@ -169,7 +169,7 @@
     
     reminderLabel.font = [UIFont flatFontOfSize:16];
     usernameLabel.font = [UIFont flatFontOfSize:14];
-    dateLabel.font = [UIFont flatFontOfSize:14];
+    dateLabel.font = [UIFont flatFontOfSize:13];
     
     reminderLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
 

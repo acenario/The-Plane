@@ -3193,7 +3193,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 <constraint firstAttribute="width" constant="241" id="vuL-va-ydK"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <connections>
                                                 <action selector="checkTextField:" destination="UAg-mc-Kmn" eventType="editingChanged" id="VEO-qr-jXC"/>
                                             </connections>
@@ -3233,7 +3233,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReminderCell" rowHeight="70" id="rcv-fr-dkN">
-                                <rect key="frame" x="0.0" y="266" width="320" height="71"/>
+                                <rect key="frame" x="0.0" y="266" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="69"/>
@@ -3368,7 +3368,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="width" constant="244" id="lj0-GG-7hf"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -3727,7 +3727,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="width" constant="177" id="eWO-3q-1IK"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="first name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrL-13-GPi">
                                                     <constraints>
@@ -3761,7 +3761,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                         <constraint firstAttribute="height" constant="43" id="t2w-N0-AUu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="last name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yts-x1-eo2">
                                                     <constraints>
@@ -6037,20 +6037,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="OGa-b0-0On"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="zjC-VQ-i73"/>
-        <segue reference="zNQ-I4-gIZ"/>
-        <segue reference="hes-Yo-V4N"/>
-        <segue reference="Qe9-Wk-uzJ"/>
-        <segue reference="azN-Uw-T1Q"/>
-        <segue reference="3g2-qP-dX9"/>
-        <segue reference="7cf-9Z-bI4"/>
         <segue reference="6cG-gq-PK8"/>
-        <segue reference="std-vO-s0Z"/>
+        <segue reference="zNQ-I4-gIZ"/>
+        <segue reference="zjC-VQ-i73"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="OGa-b0-0On"/>
         <segue reference="8lv-Fg-cjF"/>
-        <segue reference="7p7-Gb-VJp"/>
         <segue reference="ODM-E9-Ohb"/>
-        <segue reference="hB8-tL-UEI"/>
+        <segue reference="7p7-Gb-VJp"/>
+        <segue reference="hes-Yo-V4N"/>
+        <segue reference="azN-Uw-T1Q"/>
+        <segue reference="Qe9-Wk-uzJ"/>
+        <segue reference="3g2-qP-dX9"/>
+        <segue reference="std-vO-s0Z"/>
+        <segue reference="7cf-9Z-bI4"/>
+        <segue reference="6iM-6d-iGd"/>
     </inferredMetricsTieBreakers>
 </document>
