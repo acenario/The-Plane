@@ -114,7 +114,8 @@
         self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.hidden = NO;
         self.circleCell.userInteractionEnabled = NO;
-        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+        self.circleCell.accessoryType = UITableViewCellAccessoryNone;
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
     }
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
@@ -304,7 +305,7 @@
 {
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
     self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
-    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
     self.circleCheck = YES;
     
     [self configureDoneButton];
@@ -320,7 +321,7 @@
     self.circle = circle;
     self.circleName.text = circle.displayName;
     self.memberCountDisplay.hidden = NO;
-    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
     self.circleCheck = YES;
     
     [self configureDoneButton];
@@ -349,7 +350,7 @@
             break;
             
         default:
-            NSLog(@"NO UNWINDER");
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
     }
 }

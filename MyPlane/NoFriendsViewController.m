@@ -16,8 +16,10 @@
 @implementation NoFriendsViewController {
     NSMutableArray *friendsArray;
     NSMutableArray *sentFriendRequestsArray;
+    NSMutableArray *receivedFriendRequestsArray;
     NSMutableArray *friendsObjectId;
     NSMutableArray *sentFriendRequestsObjectId;
+    NSMutableArray *receivedFriendRequestsObjectId;
     Reachability *reachability;
     UserInfo *userObject;
     BOOL isForMessages;
@@ -155,6 +157,7 @@
 -(void)getIDs {
     friendsObjectId = [[NSMutableArray alloc]init];
     sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
+    receivedFriendRequestsObjectId = [[NSMutableArray alloc] init];
     
     PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
     [query whereKey:@"user" equalTo:[PFUser currentUser].username];
@@ -168,6 +171,10 @@
         }
         for (PFObject *object in userObject.sentFriendRequests) {
             [sentFriendRequestsObjectId addObject:[object objectId]];
+        }
+        
+        for (PFObject *object in userObject.receivedFriendRequests) {
+            [receivedFriendRequestsObjectId addObject:[object objectId]];
         }
         
         [self.tableView reloadData];
@@ -211,7 +218,7 @@
     
     [picImage loadInBackground];
     
-    if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId]) {
+    if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId] || [receivedFriendRequestsObjectId containsObject:searchedUser.objectId]) {
         addButton.enabled = NO;
     }
     

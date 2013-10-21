@@ -31,9 +31,11 @@
     //NSMutableArray *friendsUNArray;
     NSMutableArray *friendsArray;
     NSMutableArray *sentFriendRequestsArray;
+    NSMutableArray *receivedFriendRequestsArray;
     NSMutableArray *searchResults;
     NSMutableArray *friendsObjectId;
     NSMutableArray *sentFriendRequestsObjectId;
+    NSMutableArray *receivedFriendRequestsObjectId;
     PFQuery *currentUserQuery;
     PFQuery *friendQuery;
     UserInfo *userObject;
@@ -138,6 +140,7 @@
             userObject = object;
             friendsArray = [[NSMutableArray alloc]initWithArray:object.friends];
             sentFriendRequestsArray = [[NSMutableArray alloc]initWithArray: object.sentFriendRequests];
+            receivedFriendRequestsArray = [[NSMutableArray alloc]initWithArray: object.receivedFriendRequests];
         }
         [self getIDs];
     }];
@@ -147,13 +150,20 @@
     
     friendsObjectId = [[NSMutableArray alloc]init];
     sentFriendRequestsObjectId = [[NSMutableArray alloc] init];
+    receivedFriendRequestsObjectId = [[NSMutableArray alloc] init];
     
-    for (PFObject *object in userObject.friends) {
+    for (PFObject *object in friendsArray) {
         [friendsObjectId addObject:[object objectId]];
     }
-    for (PFObject *object in userObject.sentFriendRequests) {
+    for (PFObject *object in sentFriendRequestsArray) {
         [sentFriendRequestsObjectId addObject:[object objectId]];
     }
+    
+    for (PFObject *object in receivedFriendRequestsArray) {
+        [receivedFriendRequestsObjectId addObject:[object objectId]];
+    }
+    
+    NSLog(@"RECIEVED: %@", receivedFriendRequestsObjectId);
     
 }
 
@@ -227,7 +237,7 @@
         
         [picImage loadInBackground];
         
-        if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId]) {
+        if ([friendsObjectId containsObject:searchedUser.objectId] || [sentFriendRequestsObjectId containsObject:searchedUser.objectId] || [receivedFriendRequestsObjectId containsObject:searchedUser.objectId]) {
             addButton.enabled = NO;
         }
         
