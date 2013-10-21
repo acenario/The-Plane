@@ -129,6 +129,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     NSString *friendAdd = [userInfo objectForKey:@"f"];
     NSString *reminderAdd = [userInfo objectForKey:@"r"];
+    NSString *reminderUpdate = [userInfo objectForKey:@"u"];
     NSString *alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
         
     if ([friendAdd isEqualToString:@"add"]) {
@@ -170,6 +171,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         [SVProgressHUD showErrorWithStatus:alertValue];
         
     }
+    
+    if ([reminderUpdate isEqualToString:@"n"]) {
+        [SVProgressHUD showSuccessWithStatus:alertValue];
+    }
+    
+
 }
 
 
