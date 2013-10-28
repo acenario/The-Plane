@@ -134,6 +134,9 @@
             }
         [UserInfo saveAllInBackground:usersToSave];
     }
+    
+    [self.tableView reloadData];
+    [self loadObjects];
 }
 
 @end
