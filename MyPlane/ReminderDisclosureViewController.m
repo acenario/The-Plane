@@ -639,6 +639,7 @@
                 NSString *message = [NSString stringWithFormat:@"Update for: %@", [self.reminderObject objectForKey:@"title"]];
                 NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                       message, @"alert",
+                                      @"n", @"u",
                                       @"alertSound.caf", @"sound",
                                       nil];
 //                NSDictionary *data = @{

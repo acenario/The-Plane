@@ -122,7 +122,7 @@
     [personQuery includeKey:@"friends"];
     personQuery.cachePolicy = kPFCachePolicyNetworkOnly;
     
-    
+    [SVProgressHUD showWithStatus:@"Saving..."];
     [personQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {                
 //        //Add Self Friend
 //        
@@ -222,6 +222,7 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadProfile" object:nil];
                 [self.delegate firstTimePresentTutorial:self];
+                [SVProgressHUD dismiss];
             }];
             
         }

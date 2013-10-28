@@ -1161,6 +1161,7 @@
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
             // First time access, request permission
             if (granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
                 NSArray *abContactArray = [[NSArray alloc] init];
                 NSArray *originalArray = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
                 abContactArray = [originalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -1209,6 +1210,7 @@
                 }
                 
                 [self performSegueWithIdentifier:@"NoFriends" sender:allObjects];
+            });
                 
             } else {
                 [SVProgressHUD showErrorWithStatus:@"Please change your privacy settings to import!"];
