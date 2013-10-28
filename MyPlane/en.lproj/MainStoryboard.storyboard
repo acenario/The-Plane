@@ -5902,7 +5902,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <tableViewSection id="FSm-eV-mkT">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="4eW-7a-0ga" style="IBUITableViewCellStyleDefault" id="Ypn-JM-F9M">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -5918,6 +5918,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </view>
                                         <connections>
                                             <segue destination="7CR-UL-c6g" kind="push" id="HK9-TC-Fka"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="bbW-mn-HDS" style="IBUITableViewCellStyleDefault" id="U3b-8a-aD1">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Duplicate Friends" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bbW-mn-HDS">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="5iB-yU-Weg" kind="push" identifier="DuplicateFriends" id="5B7-pD-6fI"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -6031,6 +6051,75 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dvi-4o-Zma" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3678" y="-2143"/>
+        </scene>
+        <!--Duplicate Friends View Controller - Duplicate Friends-->
+        <scene sceneID="WSu-2S-Jk0">
+            <objects>
+                <tableViewController id="5iB-yU-Weg" customClass="DuplicateFriendsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="2fx-eS-JDC">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="lDv-iY-iiW">
+                                <rect key="frame" x="0.0" y="46" width="320" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="69"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleToFill" image="Placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="IkI-Rd-fbA" customClass="PFImageView">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="55" id="KJC-jY-9Nh"/>
+                                                <constraint firstAttribute="width" constant="55" id="qvE-Df-Ls9"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZg-bk-e4e">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="210" id="cx4-rF-AXZ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uj5-g5-OKp">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="IkI-Rd-fbA" firstAttribute="leading" secondItem="lDv-iY-iiW" secondAttribute="leading" constant="17" id="0pR-Ah-Rgq"/>
+                                    <constraint firstItem="gZg-bk-e4e" firstAttribute="leading" secondItem="IkI-Rd-fbA" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="1Wb-kc-7nv"/>
+                                    <constraint firstItem="Uj5-g5-OKp" firstAttribute="top" secondItem="gZg-bk-e4e" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="JVf-Bo-ldc"/>
+                                    <constraint firstItem="Uj5-g5-OKp" firstAttribute="leading" secondItem="IkI-Rd-fbA" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="aJJ-T7-92z"/>
+                                    <constraint firstItem="gZg-bk-e4e" firstAttribute="top" secondItem="IkI-Rd-fbA" secondAttribute="top" type="default" id="o0t-2I-VU9"/>
+                                    <constraint firstItem="IkI-Rd-fbA" firstAttribute="centerY" secondItem="lDv-iY-iiW" secondAttribute="centerY" type="default" id="ymN-ul-oWY"/>
+                                    <constraint firstItem="gZg-bk-e4e" firstAttribute="trailing" secondItem="Uj5-g5-OKp" secondAttribute="trailing" type="default" id="ywl-mJ-K6F"/>
+                                </constraints>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5iB-yU-Weg" id="suk-QY-Vsj"/>
+                            <outlet property="delegate" destination="5iB-yU-Weg" id="oNg-6u-RUK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Duplicate Friends" id="rXu-cl-NdN">
+                        <barButtonItem key="rightBarButtonItem" title="Fix It" id="4ca-kN-dkZ">
+                            <connections>
+                                <action selector="FixAll:" destination="5iB-yU-Weg" id="x3t-wk-hFw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="fixButton" destination="4ca-kN-dkZ" id="pi9-RE-I5U"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GC0-ee-Pjj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4039" y="2797"/>
         </scene>
     </scenes>
     <resources>

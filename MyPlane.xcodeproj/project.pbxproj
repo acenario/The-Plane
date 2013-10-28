@@ -28,6 +28,7 @@
 		AEAAE66117D5CE79007F3532 /* ShareMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */; };
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
+		AEB55224181E16630064EB1C /* DuplicateFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
 		AED62A3117A1ED59002055ED /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3017A1ED59002055ED /* Comments.m */; };
 		AED62A3417A1ED65002055ED /* Circles.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3317A1ED65002055ED /* Circles.m */; };
@@ -301,6 +302,8 @@
 		AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedMembersViewController.m; sourceTree = "<group>"; };
 		AEB24DC2178CD4B200C7711D /* FriendsForRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsForRemindersViewController.h; sourceTree = "<group>"; };
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; };
+		AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuplicateFriendsViewController.h; sourceTree = "<group>"; };
+		AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuplicateFriendsViewController.m; sourceTree = "<group>"; };
 		AED62A2C17A1ED42002055ED /* SocialPosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPosts.h; sourceTree = "<group>"; };
 		AED62A2D17A1ED42002055ED /* SocialPosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPosts.m; sourceTree = "<group>"; };
 		AED62A2F17A1ED59002055ED /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
@@ -1169,6 +1172,8 @@
 				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
 				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
 				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
+				AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */,
+				AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */,
 				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
 				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
@@ -1590,6 +1595,7 @@
 				DCE33D7B1800E00B00B24688 /* NoFriendsViewController.m in Sources */,
 				DCE33D7E180136F000B24688 /* FUITextField.m in Sources */,
 				AEDF62461801BDE50034496F /* FlaggedUsersViewController.m in Sources */,
+				AEB55224181E16630064EB1C /* DuplicateFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
