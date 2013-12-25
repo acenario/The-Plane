@@ -812,6 +812,31 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
+		AEC16086186B6161000CBC0B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DCE1FE62178910D60012478B /* FirstViewController.h */,
+				DCE1FE63178910D60012478B /* FirstViewController.m */,
+				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
+				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
+				AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */,
+				AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */,
+				AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */,
+				AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */,
+				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
+				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
+				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
+				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
+				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
+				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
+				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
+				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
+				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
+				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		AEC247FF17C29FB500381DEF /* InviteMembers */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,6 +860,10 @@
 		AED62A2B17A1ECA4002055ED /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				DC4F2A4517CBDCDE00ED30BB /* Reachability.h */,
+				DC4F2A4617CBDCDF00ED30BB /* Reachability.m */,
+				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
+				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AE017AD217C1D018005E2C45 /* Reminders.h */,
 				AE017AD317C1D018005E2C45 /* Reminders.m */,
 				DC935CD8178F013700C316A3 /* UserInfo.h */,
@@ -1135,47 +1164,13 @@
 				DC4B2A5617D5C3B900703EC2 /* mini-icons */,
 				DCF891DF178A1E7800A89F6E /* TabBarImages */,
 				DCE1FE5F178910D60012478B /* MainStoryboard.storyboard */,
-				AEAAE65117D40A0A007F3532 /* 1.png */,
-				AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */,
-				AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */,
-				DCAA086E17C7EFE000F992A1 /* FCContainerViewController.h */,
-				DCAA086F17C7EFE000F992A1 /* FCContainerViewController.m */,
-				DC11C1D517944EA60059FC27 /* Placeholder.png */,
-				DC11C1D617944EA60059FC27 /* Placeholder@2x.png */,
-				DCE1FE56178910D60012478B /* AppDelegate.h */,
-				DCE1FE57178910D60012478B /* AppDelegate.m */,
-				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
-				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
-				DC4F2A4517CBDCDE00ED30BB /* Reachability.h */,
-				DC4F2A4617CBDCDF00ED30BB /* Reachability.m */,
-				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
-				DC38B1F51793562400304619 /* firstTimeSettingsViewController.m */,
+				AEC16086186B6161000CBC0B /* Settings */,
 				DC38B1ED1793192600304619 /* LoginandSignUp */,
 				AE017ACB17BEF393005E2C45 /* CommonTasks */,
 				AEB24DC5178CD5E100C7711D /* Reminders */,
 				AEB24DC6178CD5E900C7711D /* Friends */,
 				AEF4583117A1F69E00AFF8D6 /* Circle */,
 				AEF4582417A1F62400AFF8D6 /* Social */,
-				DCE1FE65178910D60012478B /* first.png */,
-				DCE1FE67178910D60012478B /* first@2x.png */,
-				DCE3B09017921DF700A73714 /* EditSettingsViewController.h */,
-				DCE3B09117921DF700A73714 /* EditSettingsViewController.m */,
-				AEAAE65317D43360007F3532 /* EditExpiryTimeViewController.h */,
-				AEAAE65417D43361007F3532 /* EditExpiryTimeViewController.m */,
-				DCE1FE62178910D60012478B /* FirstViewController.h */,
-				DCE1FE63178910D60012478B /* FirstViewController.m */,
-				DCE3B08D17921DD500A73714 /* SettingsViewController.h */,
-				DCE3B08E17921DD500A73714 /* SettingsViewController.m */,
-				AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */,
-				AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */,
-				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
-				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
-				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
-				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
-				AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */,
-				AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */,
-				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
-				DC4F2A4017CA56FF00ED30BB /* CurrentUser.m */,
 				AED62A2B17A1ECA4002055ED /* Subclasses */,
 				DCE1FE4E178910D60012478B /* Supporting Files */,
 			);
@@ -1185,6 +1180,19 @@
 		DCE1FE4E178910D60012478B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AEAAE65117D40A0A007F3532 /* 1.png */,
+				DCAA086E17C7EFE000F992A1 /* FCContainerViewController.h */,
+				DCAA086F17C7EFE000F992A1 /* FCContainerViewController.m */,
+				DC11C1D517944EA60059FC27 /* Placeholder.png */,
+				DC11C1D617944EA60059FC27 /* Placeholder@2x.png */,
+				DCE1FE56178910D60012478B /* AppDelegate.h */,
+				DCE1FE57178910D60012478B /* AppDelegate.m */,
+				DC4D6C9A1789185D00823DC4 /* PlaneTabViewController.h */,
+				DC4D6C9B1789185D00823DC4 /* PlaneTabViewController.m */,
+				DCE1FE65178910D60012478B /* first.png */,
+				DCE1FE67178910D60012478B /* first@2x.png */,
+				AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */,
+				AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */,
 				DCE1FE4F178910D60012478B /* MyPlane-Info.plist */,
 				DCE1FE50178910D60012478B /* InfoPlist.strings */,
 				DCE1FE53178910D60012478B /* main.m */,
