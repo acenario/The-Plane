@@ -250,7 +250,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -280,7 +280,6 @@
     nameLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
     
     
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

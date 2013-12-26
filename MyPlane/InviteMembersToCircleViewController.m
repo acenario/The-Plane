@@ -206,7 +206,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -232,7 +232,7 @@
     usernameLabel.font = [UIFont flatFontOfSize:14];
     
     
-    return cell;
+
 }
 
 #pragma mark - Table view delegate

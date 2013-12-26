@@ -270,7 +270,7 @@
     
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
@@ -314,7 +314,6 @@
     }
     
     
-    return cell;
     
 }
 
@@ -408,7 +407,7 @@
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = kCGImageAlphaNoneSkipLast;
+        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
     }
     
     CGContextRef bitmap;

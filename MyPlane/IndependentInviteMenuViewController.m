@@ -98,7 +98,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
@@ -133,7 +133,7 @@
     [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     
-    return cell;
+
 }
 
 - (void)inviteMembersToCircleViewController:(InviteMembersToCircleViewController *)controller didFinishWithMembers:(NSMutableArray *)members andUsernames:(NSMutableArray *)usernames

@@ -581,7 +581,7 @@
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = kCGImageAlphaNoneSkipLast;
+        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
     }
     
     CGContextRef bitmap;
@@ -639,7 +639,7 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //UIColor *color = [UIColor colorFromHexCode:@"FF9773"];
     UIColor *color = [UIColor whiteColor];
@@ -663,7 +663,6 @@
     
     
     
-    return cell;
     
 }
 

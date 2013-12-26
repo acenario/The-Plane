@@ -115,7 +115,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -137,7 +137,6 @@
     cell.textLabel.backgroundColor = [UIColor whiteColor];
     cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
     
-    return cell;
 }
 
 

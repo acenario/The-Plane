@@ -104,7 +104,7 @@
     return [friendsArray count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -129,7 +129,6 @@
     usernameLabel.adjustsFontSizeToFitWidth = YES;
     
     
-    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {

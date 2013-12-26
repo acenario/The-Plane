@@ -149,7 +149,7 @@
     return imageView.image;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -179,7 +179,6 @@
      cell.detailTextLabel.highlightedTextColor = color;
      }*/
     
-    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {

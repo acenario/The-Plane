@@ -144,7 +144,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -187,7 +187,6 @@
      cell.detailTextLabel.highlightedTextColor = color;
      }*/
     
-    return cell;
 }
 
 
