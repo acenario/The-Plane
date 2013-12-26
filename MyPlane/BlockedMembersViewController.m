@@ -117,7 +117,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     
     av.backgroundColor = [UIColor clearColor];
@@ -142,7 +142,7 @@
     username.font = [UIFont flatFontOfSize:14];
     
     
-    return cell;
+
 }
 
 

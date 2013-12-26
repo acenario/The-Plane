@@ -157,7 +157,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -195,7 +195,7 @@
     [joinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     
-    return cell;
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

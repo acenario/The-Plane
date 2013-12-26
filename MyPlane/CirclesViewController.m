@@ -196,7 +196,7 @@
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     
     av.backgroundColor = [UIColor clearColor];
@@ -218,8 +218,10 @@
     cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
     cell.textLabel.textColor = [UIColor colorFromHexCode:@"A62A00"];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
-    return cell;
+
 }
 
 - (void)joinCircleViewControllerDidFinishAddingFriends:(JoinCircleViewController *)controller

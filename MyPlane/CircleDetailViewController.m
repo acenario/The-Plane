@@ -172,7 +172,7 @@
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
@@ -197,7 +197,7 @@
     cell.textLabel.backgroundColor = [UIColor whiteColor];
     cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
     
-    return cell;
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

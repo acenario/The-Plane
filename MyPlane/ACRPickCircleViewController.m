@@ -105,7 +105,7 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     
     av.backgroundColor = [UIColor clearColor];
@@ -126,7 +126,6 @@
     cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
     cell.detailTextLabel.font = [UIFont flatFontOfSize:14];
     
-    return cell;
 }
 
 

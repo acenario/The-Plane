@@ -222,7 +222,7 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     UILabel *nameLabel = (UILabel *)[cell viewWithTag:2001];
     UILabel *usernameLabel = (UILabel *)[cell viewWithTag:2002];
@@ -247,7 +247,6 @@
     nameLabel.adjustsFontSizeToFitWidth = YES;
     usernameLabel.adjustsFontSizeToFitWidth = YES;
     
-    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {

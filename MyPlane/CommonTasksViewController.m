@@ -122,7 +122,7 @@
 
 #pragma mark - Table view delegate
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -144,7 +144,7 @@
     cell.textLabel.font = [UIFont boldFlatFontOfSize:17];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
-    return cell;
+
 }
 
 

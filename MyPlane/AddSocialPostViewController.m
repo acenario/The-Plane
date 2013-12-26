@@ -110,7 +110,7 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
@@ -156,9 +156,6 @@
             cell.detailTextLabel.backgroundColor = [UIColor whiteColor];
     }
     
-    
-    
-    return cell;
     
 }
 

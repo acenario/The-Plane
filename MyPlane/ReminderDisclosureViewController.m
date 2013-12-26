@@ -255,7 +255,7 @@
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -409,7 +409,6 @@
         postLabel.font = postFont;
     }
     
-    return cell;
 }
 
 //- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath

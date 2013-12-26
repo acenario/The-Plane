@@ -87,7 +87,7 @@
     return [self.times objectAtIndex:row];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIColor *selectedColor = [UIColor colorFromHexCode:@"FF7140"];
     
     UIImageView *av = [[UIImageView alloc] init];
@@ -106,7 +106,7 @@
     
     self.timeLabel.font = [UIFont flatFontOfSize:16];
     
-    return cell;
+
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component

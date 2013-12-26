@@ -173,7 +173,7 @@
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView *av = [[UIImageView alloc] init];
     
     av.backgroundColor = [UIColor clearColor];
@@ -198,7 +198,7 @@
     nameLabel.adjustsFontSizeToFitWidth = YES;
     usernameLabel.adjustsFontSizeToFitWidth = YES;
     
-    return cell;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
