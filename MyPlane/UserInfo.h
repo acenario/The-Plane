@@ -26,5 +26,6 @@
 @property int circleRequestsCount;
 @property int adminRank;
 @property BOOL flagged;
+@property BOOL hidden;
 
 @end

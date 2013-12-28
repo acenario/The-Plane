@@ -14,17 +14,34 @@
     return @"Reminders";
 }
 
-@dynamic description;
-@dynamic title;
-@dynamic user;
-@dynamic fromFriend;
-@dynamic fromUser;
-@dynamic comments;
-@dynamic recipient;
+#pragma mark - Dates
 @dynamic date;
-@dynamic socialPost;
 @dynamic recipientUpdateTime;
 @dynamic senderUpdateTime;
 @dynamic reRemindTime;
+
+#pragma mark - Booleans
+@dynamic archived;
+@dynamic isParent;
+@dynamic isChild;
+
+#pragma mark - Pointers
+@dynamic fromFriend;
+@dynamic parent;
+@dynamic socialPost;
+@dynamic recipient;
+@dynamic comments;
+
+#pragma mark - Strings
+@dynamic description;
+@dynamic title;
+@dynamic user;
+@dynamic fromUser;
+
+#pragma mark - Integers
+@dynamic popularity;
+@dynamic state;
+@dynamic amountOfChildren;
+
 
 @end

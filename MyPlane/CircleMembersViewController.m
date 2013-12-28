@@ -368,6 +368,12 @@
         reminder.recipient = user;
         reminder.title = task;
         reminder.user = user.user;
+        reminder.archived = NO;
+        reminder.popularity = 0;
+        reminder.isChild = NO;
+        reminder.isParent = NO;
+        reminder.state = 0;
+        
         [reminder setObject:circle forKey:@"circle"];
         [toSave addObject:reminder];
     }
@@ -401,6 +407,11 @@
 //        controller.circleCell.userInteractionEnabled = NO;
         controller.invitedMembers = [[NSArray alloc] initWithArray:selectedUsers];
     }
+}
+
+- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+{
+    nil;
 }
 
 @end

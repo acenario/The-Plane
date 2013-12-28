@@ -25,17 +25,32 @@
                         withDescription:(NSString *)description
                                withDate:(NSDate *)date;
 
+- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller
+        didFinishAddingReminderInCircle:(Circles *)circle
+                              withUsers:(NSArray *)users
+                               withTask:(NSString *)task
+                        withDescription:(NSString *)description
+                               withDate:(NSDate *)date;
+
+
 @end
 
 @interface AddCircleReminderViewController : UITableViewController <ACRPickCircleViewControllerDelegate, PickMembersViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, ReminderDateViewControllerDelegate,CommonTasksViewControllerDelegate>
 
 #pragma mark - Public Properties
 @property (nonatomic, weak) id <AddCircleReminderViewControllerDelegate> delegate;
-@property (nonatomic, strong) Circles *circle;
+@property (nonatomic, strong) Circles *circle; // AR can use
 @property (nonatomic, strong) NSArray *circles;
 @property (nonatomic, strong) UserInfo *currentUser;
 @property (nonatomic, strong) NSArray *invitedMembers;
-@property (nonatomic, strong) NSArray *invitedUsernames;
+//@property (nonatomic, strong) NSArray *invitedUsernames;
+@property (nonatomic, strong) NSDate *reminderDate; //Add Reminders can use
+@property BOOL fromSegmentSwitch;
+
+@property (nonatomic, strong) NSString *retainedTask;
+@property (nonatomic, strong) NSString *retainedDescription;
+
+
 @property BOOL circleCheck;
 @property int unwinder; ///---- 1: Reminders  2: Social  3:Connect  4:Settings
 

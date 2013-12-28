@@ -12,13 +12,21 @@
 
 @interface AddReminderViewController ()
 
+@property (nonatomic, strong) Circles *retainedCircle;
+@property (nonatomic, strong) NSArray *retainedUsers;
+
 @end
 
 @implementation AddReminderViewController {
     NSString *nameOfUser;
     NSString *descriptionPlaceholderText;
+    
     NSDateFormatter *mainFormatter;
     NSDate *reminderDate;
+    
+    NSArray *batchFriends;
+    
+    ///Checks if text is less than or equal to 35 characters and isn't just spaces.
     BOOL textCheck;
     BOOL descCheck;
     BOOL friendCheck;
@@ -39,6 +47,17 @@
 {
     [super viewDidLoad];
     
+    mainFormatter = [[NSDateFormatter alloc] init];
+    [mainFormatter setDateStyle:NSDateFormatterShortStyle];
+    [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
+
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
+    [components setSecond:0];
+    
+    reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
+    self.dateDetail.text = [mainFormatter stringFromDate:reminderDate];
+    
     if (self.recipient) {
         friendCheck = YES;
         self.name.text = [NSString stringWithFormat:@"%@ %@", self.recipient.firstName, self.recipient.lastName];
@@ -52,6 +71,14 @@
         self.segmentUIView.frame = CGRectMake(0,0,0,0);
 //        receivedObjectID = self.recipient;
     } else {
+        if (self.templateReminder) {
+            self.taskTextField.text = self.templateReminder.title;
+            self.descriptionTextView.text = [self.templateReminder objectForKey:@"description"];
+            [self textViewDidChange:self.descriptionTextView];
+            
+//            self.segmentUIView.hidden = YES;
+//            self.segmentUIView.frame = CGRectMake(0,0,0,0);
+        }
         self.name.hidden = YES;
         self.username.hidden = YES;
         self.userImage.hidden = YES;
@@ -63,27 +90,26 @@
     
     [self configureViewController];
     
-	mainFormatter = [[NSDateFormatter alloc] init];
-    [mainFormatter setDateStyle:NSDateFormatterShortStyle];
-    [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
-    [components setSecond:0];
-    
-    reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
-    self.dateDetail.text = [mainFormatter stringFromDate:reminderDate];
-    descriptionPlaceholderText = @"Enter more information about the reminder...";
-    self.descriptionTextView.text = descriptionPlaceholderText;
-    self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    if (self.descriptionTextView.text.length == 0) {
+        descriptionPlaceholderText = @"Enter more information about the reminder...";
+        
+        self.descriptionTextView.text = descriptionPlaceholderText;
+        self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    }
     
     self.taskTextField.delegate = self;
     self.descriptionTextView.delegate = self;
     
-    self.limitLabel.hidden = YES;
-    textCheck = NO;
+    if (self.taskTextField.text.length == 0) {
+        
+        self.limitLabel.hidden = YES;
+        textCheck = NO;
+    } else {
+        [self textValidation:nil];
+    }
     descCheck = YES;
-
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
@@ -123,139 +149,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)done:(id)sender
-{
-    [self hideKeyboard];
-    PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
-    //[reminder setObject:[NSDate date] forKey:@"date"];
-    [reminder setObject:reminderDate forKey:@"date"];
-    [reminder setObject:self.taskTextField.text forKey:@"title"];
-    [reminder setObject:self.username.text forKey:@"user"];
-    [reminder setObject:self.currentUser forKey:@"fromFriend"];
-    [reminder setObject:self.recipient forKey:@"recipient"];
-    [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
-    
-    NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
-        [reminder setObject:self.descriptionTextView.text forKey:@"description"];
-    } else {
-        [reminder setObject:@"" forKey:@"description"];
-    }
-
-     
-    [reminder saveEventually:^(BOOL succeeded, NSError *error) {
-        [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
-        NSString *message = [NSString stringWithFormat:@"New Reminder: %@ from: %@", self.taskTextField.text, self.currentUser.user];
-        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-                              message, @"alert",
-                              @"n", @"r",
-                              @"alertSound.caf", @"sound",
-                              nil];
-//        NSDictionary *data = @{
-//                               @"r": @"n",
-//                               @"alertSound.caf": @"sound"
-//                               };
-        
-        PFQuery *pushQuery = [PFInstallation query];
-        [pushQuery whereKey:@"user" equalTo:self.recipient.user];
-        
-        PFPush *push = [[PFPush alloc] init];
-        [push setQuery:pushQuery];
-        [push setData:data];
-        //[push setMessage:message];
-        [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-            NSString *success = [NSString stringWithFormat:@"%@ has received the reminder", self.recipient.firstName];
-            [SVProgressHUD showSuccessWithStatus:success];
-            } else {
-                NSLog(@"%@", error);
-            }
-        }];
-       
-    }];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)cancel:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)textValidation:(id)sender {
-    self.limitLabel.hidden = NO;
-    NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    int limit = 35 - self.taskTextField.text.length;
-    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
-    if ((removedSpaces.length > 0) && (limit >= 0)) {
-        textCheck = YES;
-    } else {
-        textCheck = NO;
-        self.limitLabel.textColor = [UIColor redColor];
-    }
-    
-    if (limit >= 0) {
-        self.limitLabel.textColor = [UIColor lightGrayColor];
-    }
-    
-    [self configureDoneButton];
-}
-
-- (void)configureDoneButton
-{
-    if ((textCheck) && (friendCheck) && (descCheck)) {
-        self.doneBarItem.enabled = YES;
-    } else {
-        self.doneBarItem.enabled = NO;
-    }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-
--(void)friendsForReminders:(FriendsForRemindersViewController *)controller
-didFinishSelectingContactWithUsername:(NSString *)username
-                             withName:(NSString *)name
-                    withProfilePicture:(UIImage *)image
-                         withObjectId:(PFObject *)objectID
-                       selfUserObject:(UserInfo *)userObject
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-    self.name.text = name;
-    self.username.text = username;
-    self.userImage.image = image;
-//    receivedObjectID = objectID;
-    self.currentUser = userObject;
-    friendCheck = YES;
-    self.recipient = (UserInfo *)objectID;
-    self.name.hidden = NO;
-    self.userImage.hidden = NO;
-    self.userFrame.hidden = NO;
-    self.username.hidden = NO;
-    self.selectAFriendLabel.hidden = YES;
-    [self configureDoneButton];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
-            UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-            FriendsForRemindersViewController *controller = (FriendsForRemindersViewController *)nav.topViewController;
-            controller.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
-        ReminderDateViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
-        controller.displayDate = self.dateDetail.text;
-    } if ([segue.identifier isEqualToString:@"CircleReminder"]) {
-        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
-        controller.unwinder = self.unwinder;
-    }
-}
+#pragma mark - Table View Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -296,7 +190,7 @@ didFinishSelectingContactWithUsername:(NSString *)username
     
     UIImageView *bottomView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator2"]];
     bottomView.frame = CGRectMake(-1, -1, 302, 1);
-
+    
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
@@ -315,7 +209,7 @@ didFinishSelectingContactWithUsername:(NSString *)username
             
             [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [self.commonTasks setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-
+            
             
             
             [cell.contentView addSubview:imgView];
@@ -344,16 +238,199 @@ didFinishSelectingContactWithUsername:(NSString *)username
     
 }
 
+#pragma mark - Textfield/view Methods
 
-- (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    reminderDate = date;
-    self.dateDetail.text = [mainFormatter stringFromDate:date];
+    [textField resignFirstResponder];
+    return YES;
 }
 
-- (void)reminderViewControllerDidCancel:(ReminderDateViewController *)controller
+- (IBAction)textValidation:(id)sender {
+    self.limitLabel.hidden = NO;
+    NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    int limit = 35 - self.taskTextField.text.length;
+    self.limitLabel.text = [NSString stringWithFormat:@"%d", limit];
+    if ((removedSpaces.length > 0) && (limit >= 0)) {
+        textCheck = YES;
+    } else {
+        textCheck = NO;
+        self.limitLabel.textColor = [UIColor redColor];
+    }
+    
+    if (limit >= 0) {
+        self.limitLabel.textColor = [UIColor lightGrayColor];
+    }
+    
+    [self configureDoneButton];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int limit = 250 - self.descriptionTextView.text.length;
+    self.descLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((limit >= 0)) {
+        descCheck = YES;
+        self.descLabel.textColor = [UIColor lightGrayColor];
+    } else {
+        descCheck = NO;
+        self.descLabel.textColor = [UIColor redColor];
+    }
+    
+    [self configureDoneButton];
+}
+
+#pragma mark - Button Methods
+
+- (void)done:(id)sender
+{
+    [self hideKeyboard];
+    
+    if (!batchFriends.count) {
+        
+        PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
+        //[reminder setObject:[NSDate date] forKey:@"date"];
+        [reminder setObject:reminderDate forKey:@"date"];
+        [reminder setObject:self.taskTextField.text forKey:@"title"];
+        [reminder setObject:self.username.text forKey:@"user"];
+        [reminder setObject:self.currentUser forKey:@"fromFriend"];
+        [reminder setObject:self.recipient forKey:@"recipient"];
+        [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
+        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"archived"];
+        [reminder setObject:[NSNumber numberWithInt:0] forKey:@"popularity"];
+        [reminder setObject:[NSNumber numberWithInt:0] forKey:@"state"];
+        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"isChild"];
+        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"isParent"];
+
+        NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
+            [reminder setObject:self.descriptionTextView.text forKey:@"description"];
+        } else {
+            [reminder setObject:@"" forKey:@"description"];
+        }
+        
+        
+        [reminder saveEventually:^(BOOL succeeded, NSError *error) {
+            [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
+            
+            if (self.templateReminder) {
+                [self.templateReminder incrementKey:@"popularity"];
+                [self.templateReminder saveEventually];
+            }
+            
+            NSString *message = [NSString stringWithFormat:@"New Reminder: %@ from: %@", self.taskTextField.text, self.currentUser.user];
+            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  message, @"alert",
+                                  @"n", @"r",
+                                  @"alertSound.caf", @"sound",
+                                  nil];
+            //        NSDictionary *data = @{
+            //                               @"r": @"n",
+            //                               @"alertSound.caf": @"sound"
+            //                               };
+            
+            PFQuery *pushQuery = [PFInstallation query];
+            [pushQuery whereKey:@"user" equalTo:self.recipient.user];
+            
+            PFPush *push = [[PFPush alloc] init];
+            [push setQuery:pushQuery];
+            [push setData:data];
+            //[push setMessage:message];
+            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSString *success = [NSString stringWithFormat:@"%@ has received the reminder", self.recipient.firstName];
+                    [SVProgressHUD showSuccessWithStatus:success];
+                } else {
+                    NSLog(@"%@", error);
+                }
+            }];
+            
+        }];
+    } else {
+        
+        Reminders *parentReminder = [Reminders object];
+        
+        parentReminder.isParent = YES;
+        parentReminder.isChild = NO;
+        parentReminder.date = reminderDate;
+        parentReminder.title = self.taskTextField.text;
+        parentReminder.user = @"group";
+        parentReminder.fromFriend = self.currentUser;
+        parentReminder.recipient = self.recipient;
+        parentReminder.fromUser = [PFUser currentUser].username;
+        parentReminder.archived = NO;
+        parentReminder.popularity = 0;
+        parentReminder.state = 0;
+        parentReminder.amountOfChildren = batchFriends.count;
+        
+        
+        NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
+            parentReminder.description = self.descriptionTextView.text;
+        } else {
+            parentReminder.description = @"";
+        }
+        
+        [parentReminder saveEventually:^(BOOL succeeded, NSError *error) {
+            
+            if (self.templateReminder) {
+                [self.templateReminder incrementKey:@"popularity"];
+                [self.templateReminder saveEventually];
+            }
+            
+            NSMutableArray *remindersToSave = [[NSMutableArray alloc] initWithCapacity:batchFriends.count];
+            
+            for (UserInfo *friend in batchFriends) {
+                Reminders *childReminder = [Reminders object];
+                
+                childReminder.isParent = NO;
+                childReminder.isChild = YES;
+                childReminder.date = reminderDate;
+                childReminder.recipient = friend;
+                childReminder.user = friend.user;
+                childReminder.fromFriend = self.currentUser;
+                childReminder.fromUser = [PFUser currentUser].username;
+                childReminder.archived = NO;
+                childReminder.popularity = 0;
+                childReminder.title = self.taskTextField.text;
+                childReminder.state = 0;
+                
+                if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
+                    childReminder.description = self.descriptionTextView.text;
+                } else {
+                    childReminder.description = @"";
+                }
+                
+                childReminder.parent = parentReminder;
+                
+                [remindersToSave addObject:childReminder];
+            }
+            
+            [Reminders saveAllInBackground:remindersToSave block:^(BOOL succeeded, NSError *error) {
+                
+                [SVProgressHUD showSuccessWithStatus:@"Reminder Sent!"];
+            }];
+        }];
+        
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)cancel:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)configureDoneButton
+{
+    
+    if ((textCheck) && (friendCheck) && (descCheck)) {
+        self.doneBarItem.enabled = YES;
+    } else {
+        self.doneBarItem.enabled = NO;
+    }
 }
 
 -(IBAction)showCommon:(id)sender {
@@ -384,6 +461,74 @@ didFinishSelectingContactWithUsername:(NSString *)username
     
 }
 
+#pragma mark - Segue Preparation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        FriendsForRemindersViewController *controller = (FriendsForRemindersViewController *)nav.topViewController;
+        controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
+        ReminderDateViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        controller.displayDate = self.dateDetail.text;
+    } if ([segue.identifier isEqualToString:@"CircleReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
+        controller.delegate = self;
+        controller.invitedMembers = self.retainedUsers;
+        controller.circle = self.retainedCircle;
+        controller.reminderDate = reminderDate;
+        controller.fromSegmentSwitch = YES;
+        controller.retainedTask = self.taskTextField.text;
+        if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+            controller.retainedDescription = self.descriptionTextView.text;
+        }
+        
+        controller.unwinder = self.unwinder;
+    }
+}
+
+#pragma mark - Delegate Methods
+
+- (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
+{
+    reminderDate = date;
+    self.dateDetail.text = [mainFormatter stringFromDate:date];
+}
+
+- (void)reminderViewControllerDidCancel:(ReminderDateViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)addCircleReminderViewController:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+{
+    nil;
+}
+
+- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+{
+    self.retainedCircle = circle;
+    self.retainedUsers = users;
+    
+    
+    if (task.length > 0) {
+        
+        self.taskTextField.text = task;
+        [self textValidation:nil];
+    }
+    
+    if (![description isEqualToString:descriptionPlaceholderText]) {
+        self.descriptionTextView.text = description;
+        self.descriptionTextView.textColor = [UIColor blackColor];
+        self.descriptionTextView.userInteractionEnabled = YES;
+        
+        [self textViewDidChange:self.descriptionTextView];
+    }
+}
+
 - (void)commonTasksViewControllerDidFinishWithTask:(NSString *)task
 {
     self.taskTextField.text = task;
@@ -391,6 +536,58 @@ didFinishSelectingContactWithUsername:(NSString *)username
     textCheck = YES;
     [self configureDoneButton];
 }
+
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller friend:(UserInfo *)friend currentUser:(UserInfo *)currentUser
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.name.text = [NSString stringWithFormat:@"%@ %@", friend.firstName, friend.lastName];
+    self.username.text = friend.user;
+    
+    self.userImage.file = friend.profilePicture;
+    self.currentUser = currentUser;
+    
+    friendCheck = YES;
+    
+    self.recipient = friend;
+    
+    self.name.hidden = NO;
+    self.userImage.hidden = NO;
+    self.userFrame.hidden = NO;
+    self.username.hidden = NO;
+    
+    self.selectAFriendLabel.hidden = YES;
+    [self configureDoneButton];
+}
+
+- (void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingFriends:(NSArray *)friends currentUser:(UserInfo *)currentUser
+{
+    //ARJUN
+    ///FLAT FONT MAYBE NECESSARY
+    
+    UserInfo *group = [UserInfo objectWithoutDataWithObjectId:@"xB1e7MpbMQ"];
+    
+    self.recipient = group;
+    self.currentUser = currentUser;
+    
+    self.name.text = @"Group Reminder";
+    self.userImage.image = [UIImage imageNamed:@"defaultPic"];
+    self.username.text = [NSString stringWithFormat:@"Shared by %d friends", friends.count];
+    
+    batchFriends = [NSArray arrayWithArray:friends];
+    
+    friendCheck = YES;
+    
+    self.name.hidden = NO;
+    self.userImage.hidden = NO;
+    self.userFrame.hidden = NO;
+    self.username.hidden = NO;
+    self.selectAFriendLabel.hidden = YES;
+    
+    [self configureDoneButton];
+}
+
+#pragma mark - Other
 
 - (IBAction)segmentChanged:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 1) {
@@ -404,21 +601,6 @@ didFinishSelectingContactWithUsername:(NSString *)username
     [self.descriptionTextView resignFirstResponder];
 }
 
-- (void)textViewDidChange:(UITextView *)textView
-{
-    int limit = 250 - self.descriptionTextView.text.length;
-    self.descLabel.text = [NSString stringWithFormat:@"%d characters left", limit];
-    if ((limit >= 0)) {
-        descCheck = YES;
-        self.descLabel.textColor = [UIColor lightGrayColor];
-    } else {
-        descCheck = NO;
-        self.descLabel.textColor = [UIColor redColor];
-    }
-    
-    [self configureDoneButton];
-}
-
 - (void)receiveAddNotification:(NSNotification *) notification
 {
     if ([[notification name] isEqualToString:@"mpCenterTabbarItemTapped"]) {
@@ -426,5 +608,6 @@ didFinishSelectingContactWithUsername:(NSString *)username
         
     }
 }
+
 
 @end

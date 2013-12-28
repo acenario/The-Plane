@@ -187,6 +187,7 @@
     
     friendQuery = [UserInfo query];
     [friendQuery whereKey:@"user" hasPrefix:newTermNoSpaces];
+    [friendQuery whereKey:@"hidden" equalTo:[NSNumber numberWithBool:NO]];
     
     if (searchResults.count == 0) {
         friendQuery.cachePolicy = kPFCachePolicyNetworkOnly;

@@ -7,17 +7,21 @@
 //
 
 #import <Parse/Parse.h>
-#import "UserInfo.h"
+#import "SubclassHeader.h"
 
 @class FriendsForRemindersViewController;
 
 @protocol FriendsForRemindersDelegate <NSObject>
 
--(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller friend:(UserInfo *)friend currentUser:(UserInfo *)currentUser;
+
+-(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingFriends:(NSArray *)friends currentUser:(UserInfo *)currentUser;
+
+/*-(void)friendsForReminders:(FriendsForRemindersViewController *)controller didFinishSelectingContactWithUsername:(NSString *)username
     withName:(NSString *)name
     withProfilePicture:(UIImage *)image
     withObjectId:(PFObject *)objectID
-    selfUserObject:(UserInfo *)userObject;
+    selfUserObject:(UserInfo *)userObject; */
 
 @end
 
@@ -25,6 +29,10 @@
 
 @property (nonatomic, strong) id <FriendsForRemindersDelegate> delegate;
 - (IBAction)cancel:(id)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+- (IBAction)done:(id)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *toolbarLabel;
+- (IBAction)toolbarLabelSwitch:(id)sender;
 
 
 @end

@@ -17,7 +17,6 @@
     NSString *nameOfUser;
     NSString *descriptionPlaceholderText;
     NSDateFormatter *mainFormatter;
-    NSDate *reminderDate;
     BOOL textCheck;
     BOOL descCheck;
     PFQuery *currentUserQuery;
@@ -37,7 +36,7 @@
     [super viewDidAppear:YES];
     
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
+/*    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(cancelR)
 //                                                 name:@"remindersUnwindNotification"
 //                                               object:nil];
@@ -55,21 +54,35 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(cancelSe)
 //                                                 name:@"settingsUnwindNotification"
-//                                               object:nil];
+                                               object:nil];
+*/
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
-    if (self.circle != nil) {
+    if (self.fromSegmentSwitch) {
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
+        self.circleCheck = YES;
+        
+        isFromCircles = NO;
+        currentUserQuery = [UserInfo query];
+        [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+        currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
+        [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            self.currentUser = (UserInfo *)object;
+        }];
+
+        
+    } else if (self.circle != nil) {
         self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.text = @"Select members...";
         isFromCircles = YES;
         self.segmentView.hidden = YES;
         self.segmentView.frame = CGRectMake(0,0,0,0);
         self.view.autoresizesSubviews = NO;
+    
     } else {
         self.memberCountDisplay.hidden = YES;
         self.circleName.text = @"Pick a group...";
@@ -93,27 +106,46 @@
     NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
     [components setSecond:0];
     
-    reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
-    self.dateTextLabel.text = [mainFormatter stringFromDate:reminderDate];
+    if (!self.reminderDate) {
+        self.reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
+    }
+    self.dateTextLabel.text = [mainFormatter stringFromDate:self.reminderDate];
     
-    descriptionPlaceholderText = @"Enter more information about the reminder...";
-    self.descriptionTextView.text = descriptionPlaceholderText;
-    self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    if (!self.retainedDescription) {
+        
+        descriptionPlaceholderText = @"Enter more information about the reminder...";
+        self.descriptionTextView.text = descriptionPlaceholderText;
+        self.descriptionTextView.textColor = [UIColor lightGrayColor];
+        
+    } else {
+        self.descriptionTextView.userInteractionEnabled = YES;
+        self.descriptionTextView.text = self.retainedDescription;
+        [self textViewDidChange:self.descriptionTextView];
+    }
+    
+    if (self.retainedTask.length == 0) {
+        
+        self.limitLabel.hidden = YES;
+        textCheck = NO;
+    } else {
+        self.taskTextField.text = self.retainedTask;
+        [self validateText:nil];
+    }
     
     self.taskTextField.delegate = self;
     self.descriptionTextView.delegate = self;
     
-    
-    self.limitLabel.hidden = YES;
-    textCheck = NO;
     descCheck = YES;
     
     if (!(self.invitedMembers)) {
         self.circleCheck = NO;
     } else {
         self.circleName.text = self.circle.displayName;
+        if (!self.fromSegmentSwitch) {
+            
         self.memberCountDisplay.hidden = NO;
         self.circleCell.userInteractionEnabled = NO;
+        }
         self.circleCell.accessoryType = UITableViewCellAccessoryNone;
         self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
     }
@@ -123,7 +155,7 @@
     gestureRecognizer.cancelsTouchesInView = NO;
 }
 
--(void)configureViewController {
+- (void)configureViewController {
     UIImageView *av = [[UIImageView alloc] init];
     av.backgroundColor = [UIColor clearColor];
     av.opaque = NO;
@@ -288,7 +320,7 @@
 
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
 {
-    reminderDate = date;
+    self.reminderDate = date;
     self.dateTextLabel.text = [mainFormatter stringFromDate:date];
     [self.tableView reloadData];
 }
@@ -303,7 +335,7 @@
 - (void)pickMembersViewController:(PickMembersViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames withCircle:(Circles *)circle
 {
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
-    self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
+//    self. = [[NSArray alloc] initWithArray:usernames];
     self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
     self.circleCheck = YES;
     
@@ -316,7 +348,7 @@
 - (void)acrPickCircleViewController:(ACRPickCircleViewController *)controller didFinishPickingMembers:(NSArray *)members withUsernames:(NSArray *)usernames withCircle:(Circles *)circle
 {
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
-    self.invitedUsernames = [[NSArray alloc] initWithArray:usernames];
+//    self. = [[NSArray alloc] initWithArray:usernames];
     self.circle = circle;
     self.circleName.text = circle.displayName;
     self.memberCountDisplay.hidden = NO;
@@ -379,14 +411,14 @@
                                              withUsers:self.invitedMembers
                                               withTask:self.taskTextField.text
                                        withDescription:self.descriptionTextView.text
-                                              withDate:reminderDate
+                                              withDate:self.reminderDate
          ];
     } else {
         [self didFinishAddingReminderInCircle:self.circle
                                     withUsers:self.invitedMembers
                                      withTask:self.taskTextField.text
                               withDescription:self.descriptionTextView.text
-                                     withDate:reminderDate
+                                     withDate:self.reminderDate
          ];
     }
 }
@@ -431,7 +463,13 @@
 
 - (IBAction)segmentChange:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:^{
+            [self.delegate addCircleReminderViewControllerSwitchSegment:self didFinishAddingReminderInCircle:self.circle
+                                      withUsers:self.invitedMembers
+                                       withTask:self.taskTextField.text
+                                withDescription:self.descriptionTextView.text
+                                       withDate:self.reminderDate];
+        }];
     }
 }
 
@@ -455,6 +493,12 @@
         reminder.recipient = user;
         reminder.title = task;
         reminder.user = user.user;
+        reminder.archived = NO;
+        reminder.popularity = 0;
+        reminder.isChild = NO;
+        reminder.isParent = NO;
+        reminder.state = 0;
+
         [reminder setObject:circle forKey:@"circle"];
         [toSave addObject:reminder];
     }

@@ -800,6 +800,12 @@
             [reminder setSocialPost:self.socialPost];
             [reminder setTitle:self.socialPost.reminderTask];
             
+            reminder.isChild = NO;
+            reminder.isParent = NO;
+            reminder.state = 0;
+            reminder.archived = NO;
+            reminder.popularity = 0;
+            
             [self.socialPost setIsClaimed:YES];
             [self.socialPost addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];
             [self.socialPost addObject:currentUserObject.user forKey:@"claimerUsernames"];
@@ -898,6 +904,12 @@
                 [reminder setDescription:self.socialPost.reminderDescription];
                 [reminder setSocialPost:self.socialPost];
                 [reminder setTitle:self.socialPost.reminderTask];
+                
+                reminder.isChild = NO;
+                reminder.isParent = NO;
+                reminder.state = 0;
+                reminder.archived = NO;
+                reminder.popularity = 0;
                 
                 [post setIsClaimed:YES];
                 [post addObject:[UserInfo objectWithoutDataWithObjectId:currentUserObject.objectId] forKey:@"claimers"];

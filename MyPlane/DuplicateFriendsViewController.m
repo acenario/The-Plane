@@ -56,16 +56,12 @@
     self.peopleWhoNeedToBeFixed = [[NSMutableArray alloc] initWithCapacity:10];
     
     NSMutableArray *friends = [[NSMutableArray alloc] initWithCapacity:10];
-//    NSLog(@"%d", self.objects.count);
     for (UserInfo *user in self.objects) {
         [friends removeAllObjects];
         for (UserInfo *friend in user.friends) {
-//            NSLog(@"user: %@ friend: %@", user.user, friend.user);
             if (![friends containsObject:friend.user]) {
                 [friends addObject:friend.user];
-//                NSLog(@"user: %@ non-duplicate-friend: %@", user.user, friend.user);
             } else {
-//                NSLog(@"user to be fixed: %@", user.user);
                 [self.peopleWhoNeedToBeFixed addObject:user];
                 self.fixButton.enabled = YES;
                 break;
@@ -78,7 +74,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    NSLog(@"%d", self.peopleWhoNeedToBeFixed.count);
     return self.peopleWhoNeedToBeFixed.count;
 }
 
@@ -93,7 +88,6 @@
     PFImageView *imageView = (PFImageView *)[cell viewWithTag:11];
     
     username.text = user.user;
-//    count.text = [NSString stringWithFormat:@"%@ duplicate friends", ];
     count.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
     
     imageView.file = user.profilePicture;

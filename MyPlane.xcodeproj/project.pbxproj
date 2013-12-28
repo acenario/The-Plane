@@ -18,6 +18,8 @@
 		AE7692A317D10A5A004D3129 /* AttachReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7692A217D10A5A004D3129 /* AttachReminderViewController.m */; };
 		AE7692A617D306D1004D3129 /* EditSocialPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */; };
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
+		AE903A85186E7FF600FA4EE3 /* ChildrenRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE903A84186E7FF600FA4EE3 /* ChildrenRemindersViewController.m */; };
+		AE903A89186F5BA900FA4EE3 /* FixNullValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE903A88186F5BA900FA4EE3 /* FixNullValuesViewController.m */; };
 		AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64217D3992E007F3532 /* EditReminderViewController.m */; };
 		AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */; };
 		AEAAE65217D40A0B007F3532 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAAE65117D40A0A007F3532 /* 1.png */; };
@@ -29,6 +31,9 @@
 		AEAE4FDE17C9CE4200EF4FC7 /* BlockedMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */; };
 		AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */; };
 		AEB55224181E16630064EB1C /* DuplicateFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */; };
+		AEC16089186CAB54000CBC0B /* ArchivedRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC16088186CAB54000CBC0B /* ArchivedRemindersViewController.m */; };
+		AEC1608B186CB3EE000CBC0B /* ReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */; };
+		AEC1608E186CB65B000CBC0B /* ReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC1608D186CB65B000CBC0B /* ReminderCell.m */; };
 		AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A2D17A1ED42002055ED /* SocialPosts.m */; };
 		AED62A3117A1ED59002055ED /* Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3017A1ED59002055ED /* Comments.m */; };
 		AED62A3417A1ED65002055ED /* Circles.m in Sources */ = {isa = PBXBuildFile; fileRef = AED62A3317A1ED65002055ED /* Circles.m */; };
@@ -286,6 +291,10 @@
 		AE7692A517D306D1004D3129 /* EditSocialPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditSocialPostViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE89177C17AF115E00DD2DC0 /* Requests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Requests.h; sourceTree = "<group>"; };
 		AE89177D17AF115E00DD2DC0 /* Requests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Requests.m; sourceTree = "<group>"; };
+		AE903A83186E7FF600FA4EE3 /* ChildrenRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildrenRemindersViewController.h; sourceTree = "<group>"; };
+		AE903A84186E7FF600FA4EE3 /* ChildrenRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildrenRemindersViewController.m; sourceTree = "<group>"; };
+		AE903A87186F5BA900FA4EE3 /* FixNullValuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixNullValuesViewController.h; sourceTree = "<group>"; };
+		AE903A88186F5BA900FA4EE3 /* FixNullValuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixNullValuesViewController.m; sourceTree = "<group>"; };
 		AEAAE64117D3992E007F3532 /* EditReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditReminderViewController.h; sourceTree = "<group>"; };
 		AEAAE64217D3992E007F3532 /* EditReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditReminderViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
@@ -304,6 +313,11 @@
 		AEB24DC3178CD4B200C7711D /* FriendsForRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FriendsForRemindersViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuplicateFriendsViewController.h; sourceTree = "<group>"; };
 		AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuplicateFriendsViewController.m; sourceTree = "<group>"; };
+		AEC16087186CAB54000CBC0B /* ArchivedRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchivedRemindersViewController.h; sourceTree = "<group>"; };
+		AEC16088186CAB54000CBC0B /* ArchivedRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchivedRemindersViewController.m; sourceTree = "<group>"; };
+		AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderCell.xib; sourceTree = "<group>"; };
+		AEC1608C186CB65B000CBC0B /* ReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderCell.h; sourceTree = "<group>"; };
+		AEC1608D186CB65B000CBC0B /* ReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderCell.m; sourceTree = "<group>"; };
 		AED62A2C17A1ED42002055ED /* SocialPosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialPosts.h; sourceTree = "<group>"; };
 		AED62A2D17A1ED42002055ED /* SocialPosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialPosts.m; sourceTree = "<group>"; };
 		AED62A2F17A1ED59002055ED /* Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comments.h; sourceTree = "<group>"; };
@@ -787,6 +801,19 @@
 			name = AttachReminder;
 			sourceTree = "<group>";
 		};
+		AE903A86186E8CE100FA4EE3 /* Admin panel */ = {
+			isa = PBXGroup;
+			children = (
+				AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */,
+				AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */,
+				AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */,
+				AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */,
+				AE903A87186F5BA900FA4EE3 /* FixNullValuesViewController.h */,
+				AE903A88186F5BA900FA4EE3 /* FixNullValuesViewController.m */,
+			);
+			name = "Admin panel";
+			sourceTree = "<group>";
+		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,10 +846,7 @@
 				DCE1FE63178910D60012478B /* FirstViewController.m */,
 				AEAAE65F17D5CE78007F3532 /* ShareMailViewController.h */,
 				AEAAE66017D5CE78007F3532 /* ShareMailViewController.m */,
-				AEB55222181E16630064EB1C /* DuplicateFriendsViewController.h */,
-				AEB55223181E16630064EB1C /* DuplicateFriendsViewController.m */,
-				AEDF62441801BDE50034496F /* FlaggedUsersViewController.h */,
-				AEDF62451801BDE50034496F /* FlaggedUsersViewController.m */,
+				AE903A86186E8CE100FA4EE3 /* Admin panel */,
 				AEAE4FDC17C9CE4000EF4FC7 /* BlockedMembersViewController.h */,
 				AEAE4FDD17C9CE4100EF4FC7 /* BlockedMembersViewController.m */,
 				DC38B1F41793562400304619 /* firstTimeSettingsViewController.h */,
@@ -879,6 +903,9 @@
 				AE017AC717BEF179005E2C45 /* CommonTasks.h */,
 				AE017AC817BEF179005E2C45 /* CommonTasks.m */,
 				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
+				AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */,
+				AEC1608C186CB65B000CBC0B /* ReminderCell.h */,
+				AEC1608D186CB65B000CBC0B /* ReminderCell.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -916,6 +943,10 @@
 				DC2FE9F717939C1E009EACD0 /* ReminderDisclosureViewController.m */,
 				DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */,
 				DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */,
+				AE903A83186E7FF600FA4EE3 /* ChildrenRemindersViewController.h */,
+				AE903A84186E7FF600FA4EE3 /* ChildrenRemindersViewController.m */,
+				AEC16087186CAB54000CBC0B /* ArchivedRemindersViewController.h */,
+				AEC16088186CAB54000CBC0B /* ArchivedRemindersViewController.m */,
 				AEF4584B17A31B2100AFF8D6 /* AddReminders */,
 			);
 			name = RemindersVCDelegation;
@@ -1421,6 +1452,7 @@
 				DC73AF0617C55FFD0049AF50 /* separator2.png in Resources */,
 				DC73AF0717C55FFD0049AF50 /* separator2@2x.png in Resources */,
 				DC4F2A4A17CC058000ED30BB /* 09-chat-2.png in Resources */,
+				AEC1608B186CB3EE000CBC0B /* ReminderCell.xib in Resources */,
 				DC4F2A4B17CC058000ED30BB /* 09-chat-2@2x.png in Resources */,
 				DC4F2A4E17CC082B00ED30BB /* favrMockup.png in Resources */,
 				DC4F2A4F17CC082B00ED30BB /* favrMockup@2x.png in Resources */,
@@ -1523,6 +1555,7 @@
 				DCF891F1178A348E00A89F6E /* DeprecatedFriendsViewController.m in Sources */,
 				AE46DEA6178B73390080CB0A /* AddFriendViewController.m in Sources */,
 				AE46DEAC178B81A70080CB0A /* AddReminderViewController.m in Sources */,
+				AEC16089186CAB54000CBC0B /* ArchivedRemindersViewController.m in Sources */,
 				AEB24DC4178CD4B200C7711D /* FriendsForRemindersViewController.m in Sources */,
 				DC935CDA178F013800C316A3 /* UserInfo.m in Sources */,
 				DCDA42B7179048BA00E14D50 /* FUIAlertView.m in Sources */,
@@ -1532,6 +1565,7 @@
 				DCDA42BB179048BA00E14D50 /* FUISegmentedControl.m in Sources */,
 				DCDA42BC179048BA00E14D50 /* FUISwitch.m in Sources */,
 				DCDA42BD179048BA00E14D50 /* UIBarButtonItem+FlatUI.m in Sources */,
+				AEC1608E186CB65B000CBC0B /* ReminderCell.m in Sources */,
 				DCDA42BE179048BA00E14D50 /* UIColor+FlatUI.m in Sources */,
 				DCDA42BF179048BA00E14D50 /* UIFont+FlatUI.m in Sources */,
 				DCDA42C0179048BA00E14D50 /* UIImage+FlatUI.m in Sources */,
@@ -1556,6 +1590,8 @@
 				DCD4AE58179AA74100F6C3FA /* SVProgressHUD.m in Sources */,
 				DCECC6C0179DB26D00D084D0 /* ProfileQueryViewController.m in Sources */,
 				DCECC6C3179F07E600D084D0 /* ProfileEditViewController.m in Sources */,
+				AE903A89186F5BA900FA4EE3 /* FixNullValuesViewController.m in Sources */,
+				AE903A85186E7FF600FA4EE3 /* ChildrenRemindersViewController.m in Sources */,
 				AED62A2E17A1ED42002055ED /* SocialPosts.m in Sources */,
 				AED62A3117A1ED59002055ED /* Comments.m in Sources */,
 				AED62A3417A1ED65002055ED /* Circles.m in Sources */,

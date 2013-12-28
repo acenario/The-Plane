@@ -126,6 +126,7 @@
     [query whereKey:@"user" notEqualTo:[PFUser currentUser].username];
     [query whereKey:@"user" notContainedIn:self.circle.memberUsernames];
     [query whereKey:@"user" notContainedIn:self.circle.pendingMembers];
+    [query whereKey:@"hidden" equalTo:[NSNumber numberWithBool:NO]];
     
     if (searchResults.count == 0) {
         query.cachePolicy = kPFCachePolicyNetworkOnly;

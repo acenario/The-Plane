@@ -240,8 +240,147 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Query Methods
+
+- (PFQuery *)queryForTable {
+    
+    
+    //PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
+    //[photosFromCurrentUserQuery whereKeyExists:@"user"];
+    
+    //NSString *username = [PFUser currentUser].username;
+    
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
+    
+    CurrentUser *sharedManager = [CurrentUser sharedManager];
+    //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
+    
+    if([PFUser currentUser]) {
+        //Checks if logged in
+        
+        [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+        [query whereKey:@"fromUser" notContainedIn:sharedManager.currentUser.blockedUsernames];
+        [query whereKey:@"archived" equalTo:[NSNumber numberWithBool:NO]]; //Searches for non-archived reminders (archive = false)
+        [query whereKey:@"isParent" equalTo:[NSNumber numberWithBool:NO]];
+    }
+    
+    [query includeKey:@"fromFriend"];
+    [query includeKey:@"recipient"];
+    [query includeKey:@"comments"];
+    [query includeKey:@"socialPost"];
+    [query includeKey:@"circle"];
+    [query includeKey:@"parent"];
+    [query includeKey:@"parent.fromFriend"];
+    [query includeKey:@"parent.recipient"];
+    
+    [query orderByAscending:@"date"];
+    
+    if([PFUser currentUser]) {
+        if (self.objects.count == 0) {
+            query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        }
+    }
+    
+    [KGStatusBar dismiss];
+    
+    return query;
+}
+
+/*-(void)getUserInfo {
+//    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
+//    [query includeKey:@"friends"];
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        meObject = object;
+//        NSString *username = [object objectForKey:@"user"];
+//        tempUsername = username;
+//    }];
+//
+//    if (self.objects.count == 0) {
+//        query.cachePolicy = kPFCachePolicyNetworkElseCache;
+//    }
+//
+//}
+*/
+
 #pragma mark - Table View Methods
 
+///@param Are mirrors real if our eyes aren't real?
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+    static NSString *identifier = @"Cell";
+    PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        
+    }
+    /*
+     *No need for now to archive or delete old reminders
+     CurrentUser *sharedManager = [CurrentUser sharedManager];
+     PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
+     
+     
+     int grace = sharedManager.currentUser.gracePeriod;
+     
+     NSDate *currentDate = [NSDate date];
+     NSComparisonResult result;
+     
+     result = [currentDate compare:[[object objectForKey:@"date"] dateByAddingTimeInterval:grace]];
+     
+     if (result == NSOrderedDescending) {
+     [self checkDateforCell:cell withReminder:reminder];
+     
+     }*/
+    
+    if ([object objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) {
+        PFObject *parent = [object objectForKey:@"parent"];
+        object = parent;
+        NSLog(@"children were swapped %@", object);
+    }
+    
+    PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
+    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
+    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
+    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1003];
+    
+    
+    reminderText.text = [object objectForKey:@"title"];
+    detailText.text = [object objectForKey:@"fromUser"];
+    dateLabel.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
+    
+    
+    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
+    
+    picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
+    
+    [picImage loadInBackground];
+    
+    /*
+     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
+     
+     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+     dispatch_async(queue, ^{
+     for (PFObject *object in results) {
+     PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
+     UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
+     
+     dispatch_async(dispatch_get_main_queue(), ^{
+     
+     picImage.image = fromUserImage;
+     
+     });
+     }
+     
+     });
+     */
+    
+    return cell;
+}
+
+///@return Herobrine
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
@@ -288,72 +427,15 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
-    static NSString *identifier = @"Cell";
-    PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-        
-    }
-    CurrentUser *sharedManager = [CurrentUser sharedManager];
-    PFObject *reminder = [self.objects objectAtIndex:indexPath.row];
-    int grace = sharedManager.currentUser.gracePeriod;
-    
-    NSDate *currentDate = [NSDate date];
-    NSComparisonResult result;
-    
-    result = [currentDate compare:[[object objectForKey:@"date"] dateByAddingTimeInterval:grace]];
-    
-    if (result == NSOrderedDescending) {
-        [self checkDateforCell:cell withReminder:reminder];
-        
-    }
-    
-    PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
-    UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
-    UILabel *detailText = (UILabel *)[cell viewWithTag:1002];
-    UILabel *dateLabel = (UILabel *)[cell viewWithTag:1003];
-    
-    
-    reminderText.text = [object objectForKey:@"title"];
-    detailText.text = [object objectForKey:@"fromUser"];
-    dateLabel.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
-    
-    
-    PFObject *fromFriend = [object objectForKey:@"fromFriend"];
-    
-    picImage.file = (PFFile *)[fromFriend objectForKey:@"profilePicture"]; // remote image
-    
-    [picImage loadInBackground];
-    
-    /*
-     NSMutableArray *results = [[NSMutableArray alloc]initWithObjects:fromFriend, nil];
-     
-     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-     dispatch_async(queue, ^{
-     for (PFObject *object in results) {
-     PFFile *theImage = (PFFile *)[object objectForKey:@"profilePicture"];
-     UIImage *fromUserImage = [[UIImage alloc] initWithData:theImage.getData];
-     
-     dispatch_async(dispatch_get_main_queue(), ^{
-     
-     picImage.image = fromUserImage;
-     
-     });
-     }
-     
-     });
-     */
-    
-    
-    
-    return cell;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
+    if ([selectedReminderObject objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) {
+        selectedReminderObject = [selectedReminderObject objectForKey:@"parent"];
+    }
+    
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
 //    [self performSegueWithIdentifier:@"Tutorial" sender:nil];
 }
@@ -378,15 +460,22 @@
     //
     //    NSString *myObjectID = [dict objectForKey:@"objectID"];
     
+    //IMPLEMENT ARCHIVE SUPPORT FOR CHILDREN
+    Reminders *reminderToArchive = [self.objects objectAtIndex:indexPath.row];
+    NSString *deleteName = [reminderToArchive objectForKey:@"fromUser"];
+    NSString *tempName = [reminderToArchive objectForKey:@"user"];
     
+    /*
     Reminders *deleteReminder = [self.objects objectAtIndex:indexPath.row];
     NSString *deleteName = [deleteReminder objectForKey:@"fromUser"];
     NSString *tempName = [deleteReminder objectForKey:@"user"];
+    
     NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
     
     for (Comments *comment in deleteReminder.comments) {
         [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
     }
+     
     
     SocialPosts *post;
     if ((deleteReminder.socialPost)) {
@@ -398,12 +487,15 @@
         [post removeObject:deleteReminder.user forKey:@"claimerUsernames"];
         [post removeObject:[UserInfo objectWithoutDataWithObjectId:deleteReminder.recipient.objectId] forKey:@"claimers"];
     }
+    
+    //ARJUN
+    //DENYING SHOULD ARCHIVE NOT DELETE
 
     [deleteReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
-                [post saveInBackground];
-            }];
+       //     [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
+       //         [post saveInBackground];
+       //     }];
             NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
             [self loadObjects];
             [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
@@ -437,72 +529,66 @@
                 }
                 }];
             }
-            
+     
         }
     }];
+  */
     
-    
-    
-    
-}
-
-#pragma mark - Query Methods
-
-- (PFQuery *)queryForTable {
-    
-    
-    //PFQuery *photosFromCurrentUserQuery = [PFQuery queryWithClassName:@"UserInfo"];
-    //[photosFromCurrentUserQuery whereKeyExists:@"user"];
-    
-    //NSString *username = [PFUser currentUser].username;
-    
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND date >= %@",username,currentDate];
-    
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
-    
-    CurrentUser *sharedManager = [CurrentUser sharedManager];
-    //[query whereKey:@"date" greaterThanOrEqualTo:currentDate];
-    if([PFUser currentUser]) {
-        [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-        [query whereKey:@"fromUser" notContainedIn:sharedManager.currentUser.blockedUsernames];
-    }
-    
-    [query includeKey:@"fromFriend"];
-    [query includeKey:@"recipient"];
-    [query includeKey:@"comments"];
-    [query includeKey:@"socialPost"];
-    [query includeKey:@"circle"];
-    
-    [query orderByAscending:@"date"];
-    
-    if([PFUser currentUser]) {
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    SocialPosts *post;
+    if ((reminderToArchive.socialPost)) {
+        post = (SocialPosts *)reminderToArchive.socialPost;
+        if (post.claimerUsernames.count == 1) {
+            [post setIsClaimed:NO];
         }
+        [post removeObject:[Reminders objectWithoutDataWithObjectId:reminderToArchive.objectId] forKey:@"reminder"];
+        [post removeObject:reminderToArchive.user forKey:@"claimerUsernames"];
+        [post removeObject:[UserInfo objectWithoutDataWithObjectId:reminderToArchive.recipient.objectId] forKey:@"claimers"];
     }
     
-    [KGStatusBar dismiss];
+    reminderToArchive.archived = YES;
+    reminderToArchive.state = -1;
     
-    return query;
-}
+    [reminderToArchive saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            if (reminderToArchive.socialPost) {
+                [post saveInBackground];
+            }
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self loadObjects];
+            [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [SVProgressHUD showSuccessWithStatus:@"Denied and Archived Reminder!"];
+            
+            if (![deleteName isEqualToString:[PFUser currentUser].username]) {
+                NSString *message = [NSString stringWithFormat:@"%@ has denied your reminder", tempName];
+                NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      message, @"alert",
+                                      @"d", @"r",
+                                      @"alertSound.caf", @"sound",
+                                      nil];
+                
+                PFQuery *pushQuery = [PFInstallation query];
+                [pushQuery whereKey:@"user" equalTo:deleteName];
+                
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery];
+                //[push setMessage:message];
+                [push setData:data];
+                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        NSString *message = [NSString stringWithFormat:@"%@ has been notified", deleteName];
+                        [SVProgressHUD showSuccessWithStatus:message];
+                    } else {
+                        NSLog(@"%@", error);
+                    }
+                }];
+            }
+        
+            [self loadObjects];
+        }
+        
+    }];
 
-//-(void)getUserInfo {
-//    PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-//    [query whereKey:@"user" equalTo:[PFUser currentUser].username];
-//    [query includeKey:@"friends"];
-//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-//    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-//        meObject = object;
-//        NSString *username = [object objectForKey:@"user"];
-//        tempUsername = username;
-//    }];
-//    
-//    if (self.objects.count == 0) {
-//        query.cachePolicy = kPFCachePolicyNetworkElseCache;
-//    }
-//    
-//}
+}
 
 #pragma mark - Custom Methods
 
@@ -531,16 +617,22 @@
     } else {
         Reminders *receivedReminder = (Reminders *)reminder;
 
-            [SVProgressHUD showWithStatus:@"Cleanup..."];
+            [SVProgressHUD showWithStatus:@"Archiving..."];
         
+        /*
+         
         NSMutableArray *commentsToDelete = [[NSMutableArray alloc] init];
-        
-        if (receivedReminder.comments.count > 0) {
-        for (Comments *comment in [reminder objectForKey:@"comments"]) {
+         
+         *Reason: Comments are children of reminders. No need to individually archive.
+         
+         if (receivedReminder.comments.count > 0) {
+         for (Comments *comment in [reminder objectForKey:@"comments"]) {
             NSLog(@"comment: %@", comment);
             [commentsToDelete addObject:[Comments objectWithoutDataWithObjectId:comment.objectId]];
             }
-        }
+        } 
+         
+         */
         
         SocialPosts *post;
         if ((receivedReminder.socialPost)) {
@@ -554,11 +646,16 @@
         }
         
         
-        
-//        
 //        [reminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //            if (succeeded) {
 //                [Comments deleteAllInBackground:commentsToDelete];
+        
+        
+        /*
+         
+         *No longer need to delete reminders
+         
+         
         [receivedReminder deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [Comments deleteAllInBackground:commentsToDelete block:^(BOOL succeeded, NSError *error) {
@@ -568,6 +665,21 @@
                 [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
             } else {
                 NSLog(@"There was an error deleting an old reminder!: %@", error);
+                [SVProgressHUD dismiss];
+            }
+            
+        }];
+        
+        */
+        
+        receivedReminder.archived = YES;
+        //ARJUN
+        [receivedReminder saveEventually:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [SVProgressHUD dismiss];
+                [KGStatusBar showWithStatus:@"Please Reload Reminders!"];
+            } else {
+                NSLog(@"There was an error archiving an old reminder!: %@", error);
                 [SVProgressHUD dismiss];
             }
             
@@ -609,7 +721,8 @@
 }
 
 - (IBAction)addReminder:(id)sender {
-    [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+    [self performSegueWithIdentifier:@"ArchiveReminder" sender:nil];
+//    [self performSegueWithIdentifier:@"AddReminder" sender:nil];
 }
 
 
@@ -714,6 +827,8 @@
     [userObject setObject:[NSNumber numberWithInt:0] forKey:@"adminRank"];
     [userObject setObject:@"New" forKey:@"firstName"];
     [userObject setObject:@"User" forKey:@"lastName"];
+    userObject.hidden = NO;
+    
     [userObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self addSelfToFriends];
     }];

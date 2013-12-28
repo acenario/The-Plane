@@ -79,8 +79,11 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"Reminders"];
     [query whereKey:@"fromUser" equalTo:[PFUser currentUser].username];
+    [query whereKey:@"isChild" equalTo:[NSNumber numberWithBool:NO]];
+    
     [query includeKey:@"fromFriend"];
     [query includeKey:@"recipient"];
+    
     
     [query orderByDescending:@"date"];
     
@@ -106,7 +109,13 @@
     PFImageView *image = (PFImageView *)[cell viewWithTag:11];
     
     image.file = recipient.profilePicture;
-    name.text = [object objectForKey:@"user"];
+    
+    if ([object objectForKey:@"isParent"] != [NSNumber numberWithBool:YES]) {
+        name.text = [object objectForKey:@"user"];
+    } else {
+        name.text = [NSString stringWithFormat:@"Shared by %@", [object objectForKey:@"amountOfChildren"]];
+    }
+    
     title.text = [object objectForKey:@"title"];
     date.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
     [image loadInBackground];

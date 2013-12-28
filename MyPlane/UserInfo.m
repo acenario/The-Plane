@@ -28,5 +28,6 @@
 @dynamic adminRank;
 @dynamic fReason;
 @dynamic flagged;
+@dynamic hidden;
 
 @end
