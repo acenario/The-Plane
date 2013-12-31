@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -166,7 +166,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Archive" id="lWG-SG-cXd">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="MpN-em-s51">
+                        <barButtonItem key="rightBarButtonItem" id="MpN-em-s51">
                             <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" momentary="YES" id="gB8-wR-3jO">
                                 <rect key="frame" x="233" y="7" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3283,7 +3283,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5201" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4hq-tg-zeI">
-                                            <rect key="frame" x="85" y="2.9999999908849282" width="214" height="21"/>
+                                            <rect key="frame" x="85" y="3" width="214" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="214" id="2Ud-uO-pix"/>
                                                 <constraint firstAttribute="height" constant="21" id="ub9-fn-hDq"/>
@@ -6484,20 +6484,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="clu-AU-b0I"/>
-        <segue reference="d1z-oJ-MYo"/>
-        <segue reference="8sh-ab-kA6"/>
-        <segue reference="d9k-lF-JUn"/>
+        <segue reference="f0Z-th-Tir"/>
+        <segue reference="7p7-Gb-VJp"/>
         <segue reference="hes-Yo-V4N"/>
         <segue reference="PjU-TI-goZ"/>
-        <segue reference="yEb-j2-o0N"/>
-        <segue reference="OGa-b0-0On"/>
+        <segue reference="7cf-9Z-bI4"/>
+        <segue reference="6cG-gq-PK8"/>
+        <segue reference="6iM-6d-iGd"/>
+        <segue reference="bIX-eH-0BW"/>
         <segue reference="7tr-Dc-RT9"/>
         <segue reference="3g2-qP-dX9"/>
-        <segue reference="bIX-eH-0BW"/>
-        <segue reference="6cG-gq-PK8"/>
-        <segue reference="7cf-9Z-bI4"/>
-        <segue reference="6iM-6d-iGd"/>
-        <segue reference="7p7-Gb-VJp"/>
+        <segue reference="d1z-oJ-MYo"/>
+        <segue reference="clu-AU-b0I"/>
+        <segue reference="TfH-L7-1xZ"/>
+        <segue reference="yEb-j2-o0N"/>
+        <segue reference="OGa-b0-0On"/>
     </inferredMetricsTieBreakers>
 </document>
