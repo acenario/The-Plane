@@ -79,6 +79,12 @@
 		DC11C211179481270059FC27 /* 123-id-card.png in Resources */ = {isa = PBXBuildFile; fileRef = DC11C207179481270059FC27 /* 123-id-card.png */; };
 		DC11C212179481270059FC27 /* 123-id-card@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC11C208179481270059FC27 /* 123-id-card@2x.png */; };
 		DC166F70180A3564000FBF26 /* alertSound.caf in Resources */ = {isa = PBXBuildFile; fileRef = DC166F6F180A3564000FBF26 /* alertSound.caf */; };
+		DC29ED751872D25C00A789DC /* ReminderActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC29ED741872D25C00A789DC /* ReminderActionCell.xib */; };
+		DC29ED781872D37100A789DC /* ReminderActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC29ED771872D37100A789DC /* ReminderActionCell.m */; };
+		DC29ED7D18734A7400A789DC /* 23-circle-south.png in Resources */ = {isa = PBXBuildFile; fileRef = DC29ED7918734A7400A789DC /* 23-circle-south.png */; };
+		DC29ED7E18734A7400A789DC /* 23-circle-south@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC29ED7A18734A7400A789DC /* 23-circle-south@2x.png */; };
+		DC29ED7F18734A7400A789DC /* 27-circle-north.png in Resources */ = {isa = PBXBuildFile; fileRef = DC29ED7B18734A7400A789DC /* 27-circle-north.png */; };
+		DC29ED8018734A7400A789DC /* 27-circle-north@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC29ED7C18734A7400A789DC /* 27-circle-north@2x.png */; };
 		DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */; };
 		DC2FE9FB17939C1E009EACD0 /* ReminderDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F517939C1E009EACD0 /* ReminderDateViewController.m */; };
 		DC2FE9FC17939C1E009EACD0 /* ReminderDisclosureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2FE9F717939C1E009EACD0 /* ReminderDisclosureViewController.m */; };
@@ -379,6 +385,13 @@
 		DC11C207179481270059FC27 /* 123-id-card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "123-id-card.png"; sourceTree = "<group>"; };
 		DC11C208179481270059FC27 /* 123-id-card@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "123-id-card@2x.png"; sourceTree = "<group>"; };
 		DC166F6F180A3564000FBF26 /* alertSound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alertSound.caf; sourceTree = "<group>"; };
+		DC29ED741872D25C00A789DC /* ReminderActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderActionCell.xib; sourceTree = "<group>"; };
+		DC29ED761872D37100A789DC /* ReminderActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderActionCell.h; sourceTree = "<group>"; };
+		DC29ED771872D37100A789DC /* ReminderActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderActionCell.m; sourceTree = "<group>"; };
+		DC29ED7918734A7400A789DC /* 23-circle-south.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "23-circle-south.png"; sourceTree = "<group>"; };
+		DC29ED7A18734A7400A789DC /* 23-circle-south@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "23-circle-south@2x.png"; sourceTree = "<group>"; };
+		DC29ED7B18734A7400A789DC /* 27-circle-north.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "27-circle-north.png"; sourceTree = "<group>"; };
+		DC29ED7C18734A7400A789DC /* 27-circle-north@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "27-circle-north@2x.png"; sourceTree = "<group>"; };
 		DC2FE9F217939C1E009EACD0 /* MySentRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySentRemindersViewController.h; sourceTree = "<group>"; };
 		DC2FE9F317939C1E009EACD0 /* MySentRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MySentRemindersViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DC2FE9F417939C1E009EACD0 /* ReminderDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDateViewController.h; sourceTree = "<group>"; };
@@ -906,6 +919,9 @@
 				AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */,
 				AEC1608C186CB65B000CBC0B /* ReminderCell.h */,
 				AEC1608D186CB65B000CBC0B /* ReminderCell.m */,
+				DC29ED741872D25C00A789DC /* ReminderActionCell.xib */,
+				DC29ED761872D37100A789DC /* ReminderActionCell.h */,
+				DC29ED771872D37100A789DC /* ReminderActionCell.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -981,6 +997,10 @@
 		DC4B2A5617D5C3B900703EC2 /* mini-icons */ = {
 			isa = PBXGroup;
 			children = (
+				DC29ED7918734A7400A789DC /* 23-circle-south.png */,
+				DC29ED7A18734A7400A789DC /* 23-circle-south@2x.png */,
+				DC29ED7B18734A7400A789DC /* 27-circle-north.png */,
+				DC29ED7C18734A7400A789DC /* 27-circle-north@2x.png */,
 				DCE33DAF1803B0DE00B24688 /* MenuIcons */,
 				DC4B2A8117D6004A00703EC2 /* 70-paperclip.png */,
 				DC4B2A8217D6004A00703EC2 /* 70-paperclip@2x.png */,
@@ -1391,6 +1411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC29ED7F18734A7400A789DC /* 27-circle-north.png in Resources */,
 				DCE1FE52178910D60012478B /* InfoPlist.strings in Resources */,
 				DCE1FE5A178910D60012478B /* Default.png in Resources */,
 				DCE1FE5C178910D60012478B /* Default@2x.png in Resources */,
@@ -1403,6 +1424,7 @@
 				DCF891E6178A1E9000A89F6E /* tabBarSelectionIndicator.png in Resources */,
 				DCF891E7178A1E9000A89F6E /* tabBarSelectionIndicator@2x.png in Resources */,
 				DCF891ED178A20EF00A89F6E /* buttonAdd.png in Resources */,
+				DC29ED8018734A7400A789DC /* 27-circle-north@2x.png in Resources */,
 				DCF891EE178A20EF00A89F6E /* buttonAdd@2x.png in Resources */,
 				DCDA42CC17904BDC00E14D50 /* Lato-Bold.ttf in Resources */,
 				DCDA42CD17904BDC00E14D50 /* Lato-Regular.ttf in Resources */,
@@ -1446,6 +1468,7 @@
 				DCD415EC1795926B003F9E55 /* buttonAdd-FlatUI@2x-Selected.png in Resources */,
 				DCD4AE57179AA74100F6C3FA /* SVProgressHUD.bundle in Resources */,
 				DC73AEEB17BB4EAB0049AF50 /* UzysSMMenuItemView.xib in Resources */,
+				DC29ED7E18734A7400A789DC /* 23-circle-south@2x.png in Resources */,
 				DC73AEEF17BB4F500049AF50 /* a0@2x.png in Resources */,
 				DC73AEF017BB4F500049AF50 /* a1@2x.png in Resources */,
 				DC73AEF117BB4F500049AF50 /* a2@2x.png in Resources */,
@@ -1489,6 +1512,7 @@
 				DC4B2A7A17D5FDCE00703EC2 /* 68-paperclip@2x.png in Resources */,
 				DC4B2A7D17D5FEEC00703EC2 /* 69-display@2x.png in Resources */,
 				DC4B2A7E17D5FEEC00703EC2 /* 69-paperclip.png in Resources */,
+				DC29ED7D18734A7400A789DC /* 23-circle-south.png in Resources */,
 				DC4B2A8017D5FF5500703EC2 /* 69-paperclip@2x.png in Resources */,
 				DC4B2A8317D6004A00703EC2 /* 70-paperclip.png in Resources */,
 				DC4B2A8417D6004A00703EC2 /* 70-paperclip@2x.png in Resources */,
@@ -1520,6 +1544,7 @@
 				DCE33DFA1804F09C00B24688 /* blocked3.png in Resources */,
 				DCE33DFB1804F09C00B24688 /* blocked3@2x.png in Resources */,
 				DCE33E02180505E600B24688 /* createReminders3.png in Resources */,
+				DC29ED751872D25C00A789DC /* ReminderActionCell.xib in Resources */,
 				DCE33E03180505E600B24688 /* createReminders3@2x.png in Resources */,
 				DCE33E04180505E600B24688 /* kickUsers3.png in Resources */,
 				DCE33E05180505E600B24688 /* kickUsers3@2x.png in Resources */,
@@ -1580,6 +1605,7 @@
 				DCE3B08F17921DD500A73714 /* SettingsViewController.m in Sources */,
 				DCE3B09217921DF700A73714 /* EditSettingsViewController.m in Sources */,
 				DC38B1F01793195400304619 /* MyLoginViewController.m in Sources */,
+				DC29ED781872D37100A789DC /* ReminderActionCell.m in Sources */,
 				DC38B1F31793196400304619 /* MySignUpViewController.m in Sources */,
 				DC38B1F61793562400304619 /* firstTimeSettingsViewController.m in Sources */,
 				DC2FE9FA17939C1E009EACD0 /* MySentRemindersViewController.m in Sources */,

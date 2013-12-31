@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -14,11 +14,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="k4a-sY-YsS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="k4a-sY-YsS">
                                 <rect key="frame" x="0.0" y="86" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k4a-sY-YsS" id="6aU-XY-Afr">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="69"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-frame.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZdH-Vf-Tcd">
@@ -63,6 +63,10 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" tag="1050" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="23-circle-south.png" translatesAutoresizingMaskIntoConstraints="NO" id="3c2-jH-MfX">
+                                            <rect key="frame" x="301" y="50" width="14" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -3283,7 +3287,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5201" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4hq-tg-zeI">
-                                            <rect key="frame" x="85" y="3" width="214" height="21"/>
+                                            <rect key="frame" x="85" y="2.9999999908849282" width="214" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="214" id="2Ud-uO-pix"/>
                                                 <constraint firstAttribute="height" constant="21" id="ub9-fn-hDq"/>
@@ -6467,6 +6471,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="09-chat-2.png" width="24" height="22"/>
         <image name="112-group.png" width="32" height="21"/>
         <image name="123-id-card.png" width="24" height="17"/>
+        <image name="23-circle-south.png" width="28" height="28"/>
         <image name="58-todo.png" width="26" height="27"/>
         <image name="70-paperclip.png" width="7" height="13"/>
         <image name="Placeholder.png" width="60" height="60"/>
@@ -6484,7 +6489,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="f0Z-th-Tir"/>
         <segue reference="7p7-Gb-VJp"/>
         <segue reference="hes-Yo-V4N"/>
         <segue reference="PjU-TI-goZ"/>
@@ -6494,9 +6498,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <segue reference="bIX-eH-0BW"/>
         <segue reference="7tr-Dc-RT9"/>
         <segue reference="3g2-qP-dX9"/>
-        <segue reference="d1z-oJ-MYo"/>
         <segue reference="clu-AU-b0I"/>
-        <segue reference="TfH-L7-1xZ"/>
+        <segue reference="U7Z-W4-19C"/>
+        <segue reference="zNQ-I4-gIZ"/>
+        <segue reference="d1z-oJ-MYo"/>
         <segue reference="yEb-j2-o0N"/>
         <segue reference="OGa-b0-0On"/>
     </inferredMetricsTieBreakers>

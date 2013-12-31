@@ -13,11 +13,16 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KGStatusBar.h"
 #import "Reachability.h"
+#import "ReminderActionCell.h"
+
+static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 
 
 @interface RemindersViewController ()
 
 @property (nonatomic, strong) NSMutableDictionary *seenReminders;
+@property int selectedRowIndex;
+@property BOOL expanded;
 
 @end
 
@@ -79,6 +84,9 @@
     reachability = [Reachability reachabilityForInternetConnection];
     [reachability startNotifier];
     
+    UINib *cellNib = [UINib nibWithNibName:@"ReminderActionCell" bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:ReminderActionCellIdentifier];
+    
     /*BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
     if (firstTime) {
         [self performSegueWithIdentifier:@"firstTimeSettings" sender:nil];
@@ -108,6 +116,7 @@
     
 	// Do any additional setup after loading the view.
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -325,8 +334,37 @@
 
 #pragma mark - Table View Methods
 
-///@param Are mirrors real if our eyes aren't real?
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.expanded == YES) {
+        return self.objects.count + 1;
+    } else {
+        return self.objects.count;
+    }
+    
+}
+
+
+///@throws Are mirrors real if our eyes aren't real?
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    PFObject *object;
+    
+    if (self.expanded) {
+        if (indexPath.row == self.selectedRowIndex + 1) {
+            ReminderActionCell *cell = (ReminderActionCell *)[tableView dequeueReusableCellWithIdentifier:ReminderActionCellIdentifier];
+            return cell;
+        } else if (indexPath.row > self.selectedRowIndex + 1) {
+          object = [self.objects objectAtIndex:indexPath.row+1];
+        } else {
+            //less than or equal to self.selectedRowIndex
+          object = [self.objects objectAtIndex:indexPath.row];
+        }
+    } else {
+        object = [self.objects objectAtIndex:indexPath.row];
+    }
+    
     static NSString *identifier = @"Cell";
     PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -350,7 +388,14 @@
      [self checkDateforCell:cell withReminder:reminder];
      
      }*/
-    
+
+    if (self.expanded && indexPath.row == self.selectedRowIndex) {
+        UIImageView *expandArrow = (UIImageView *)[cell viewWithTag:1050];
+        expandArrow.image = [UIImage imageNamed:@"27-circle-north"];
+    } else {
+        UIImageView *expandArrow = (UIImageView *)[cell viewWithTag:1050];
+        expandArrow.image = [UIImage imageNamed:@"23-circle-south"];
+    }
     
 //    NSLog(@"UNCOMMENT THIS TO SEE REMINDER LOADED (BEFORE CHILD SWAP): %@", object);
     if (([object objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) && ([object objectForKey:@"isShared"] == [NSNumber numberWithBool:YES])) {
@@ -403,7 +448,23 @@
      */
     
     return cell;
+    
 }
+
+/*
+- (PFObject *)objectAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.doneLoading == YES) {
+        if (indexPath.row > (self.objects.count + 1)) {
+            return nil;
+        } else {
+            return [super objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section]];
+        }
+    }
+    
+    return nil;
+}
+ */
 
 ///@return Herobrine
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -454,9 +515,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    nil;
+    if (!self.expanded) {
+        //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self expandSelectedRowAtIndexPath:indexPath];
+        
+    } else {
+        
+        if (indexPath.row == self.selectedRowIndex) {
+            //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+            [self collapseSelectedRowAtIndexPath:indexPath];
+        } else if (indexPath.row == self.selectedRowIndex + 1) {
+            //[tableView deselectRowAtIndexPath:indexPath animated:NO];
+            //nil;
+        } else {
+            //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+            [self expandSelectedRowAtIndexPath:indexPath];
+        }
+    }
     
+    
+
+    /*
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
+    
+    
+    
     if (([selectedReminderObject objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) && ([selectedReminderObject objectForKey:@"isShared"] == [NSNumber numberWithBool:YES])) {
         if ([selectedReminderObject objectForKey:@"parent"]) {
             selectedReminderObject = [selectedReminderObject objectForKey:@"parent"];
@@ -465,6 +550,13 @@
     
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
 //    [self performSegueWithIdentifier:@"Tutorial" sender:nil];
+    */
+    
+}
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%d", indexPath.row);
+    
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -786,6 +878,30 @@
 - (IBAction)addReminder:(id)sender {
     [self performSegueWithIdentifier:@"ArchiveReminder" sender:nil];
 //    [self performSegueWithIdentifier:@"AddReminder" sender:nil];
+}
+
+-(void)expandSelectedRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.expanded = YES;
+    if (indexPath.row > self.selectedRowIndex) {
+        self.selectedRowIndex = indexPath.row - 1;
+    } else {
+        self.selectedRowIndex = indexPath.row;
+    }
+    self.selectedRowIndex = indexPath.row;
+    [self.tableView reloadData];
+    NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+1 inSection:indexPath.section];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+}
+
+
+
+-(void)collapseSelectedRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+1 inSection:indexPath.section];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    self.expanded = NO;
+    self.selectedRowIndex = indexPath.row;
+    [self.tableView reloadData];
 }
 
 
