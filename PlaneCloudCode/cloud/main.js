@@ -13,8 +13,13 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                       var fromUserName = request.object.get('fromUser');
                       var forUserName = request.object.get('user');
                       var reminderDate = request.object.get('date');
+                      var isParent = request.object.get('isParent');
                       
+                      
+                      if (isParent == false || isParent == null) {
                       var userQuery = new Parse.Query(Parse.Installation);
+                      
+                      
                       userQuery.equalTo('user', forUserName);
                       
                       Parse.Push.send({
@@ -37,4 +42,7 @@ Parse.Cloud.afterSave("Reminders", function(request) {
                                       throw "Got an error " + error.code + " : " + error.message;
                                       }
                                       });
-                      });
+                                      
+                    }
+                                      
+});

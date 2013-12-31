@@ -7,13 +7,15 @@
 //
 
 #import <Parse/Parse.h>
+#import "Circles.h"
+#import "UserInfo.h"
 
 @interface Requests : PFObject <PFSubclassing>
 + (NSString *)parseClassName;
 
-@property (retain) PFObject *circle;
-@property (retain) PFObject *sender;
-@property (retain) PFObject *receiver;
+@property (retain) Circles *circle;
+@property (retain) UserInfo *sender;
+@property (retain) UserInfo *receiver;
 @property (retain) NSString *senderUsername;
 @property (retain) NSString *receiverUsername;
 

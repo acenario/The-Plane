@@ -7,14 +7,17 @@
 //
 
 #import <Parse/Parse.h>
+#import "Reminders.h"
+#import "UserInfo.h"
+#import "SocialPosts.h"
 
 @interface Comments : PFObject <PFSubclassing>
 + (NSString *)parseClassName;
 
 @property (retain) NSString *text;
-@property (retain) PFObject *reminder;
-@property (retain) PFObject *user;
-@property (retain) PFObject *post;
+@property (retain) Reminders *reminder;
+@property (retain) UserInfo *user;
+@property (retain) SocialPosts *post;
 
 
 @end

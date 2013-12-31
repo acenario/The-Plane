@@ -30,7 +30,9 @@
                               withUsers:(NSArray *)users
                                withTask:(NSString *)task
                         withDescription:(NSString *)description
-                               withDate:(NSDate *)date;
+                               withDate:(NSDate *)date
+                              withQuery:(PFQuery *)query
+                        withCurrentUser:(UserInfo *)user;
 
 
 @end
@@ -50,6 +52,7 @@
 @property (nonatomic, strong) NSString *retainedTask;
 @property (nonatomic, strong) NSString *retainedDescription;
 
+@property (nonatomic, strong) PFQuery *retainedQuery;
 
 @property BOOL circleCheck;
 @property int unwinder; ///---- 1: Reminders  2: Social  3:Connect  4:Settings

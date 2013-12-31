@@ -7,12 +7,17 @@
 //
 
 #import "ChildrenRemindersViewController.h"
+#import "ReminderCell.h"
+
+static NSString *const ReminderCellIdentifier = @"ReminderTemplateCell";
 
 @interface ChildrenRemindersViewController ()
 
 @end
 
-@implementation ChildrenRemindersViewController
+@implementation ChildrenRemindersViewController {
+    NSDateFormatter *mainFormatter;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,7 +31,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    UINib *cellNib = [UINib nibWithNibName:@"ReminderCell" bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:ReminderCellIdentifier];
+    
+    self.navigationController.title = [NSString stringWithFormat:@"%d Reminders", self.parent.children.count];
+    
+    mainFormatter = [[NSDateFormatter alloc] init];
+    [mainFormatter setDateStyle:NSDateFormatterShortStyle];
+    [mainFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -42,24 +56,24 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return self.parent.children.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    ReminderCell *cell = (ReminderCell *)[tableView dequeueReusableCellWithIdentifier:ReminderCellIdentifier];
     
-    // Configure the cell...
+    Reminders *reminder = [self.parent.children objectAtIndex:indexPath.row];
+    
+    cell.taskLabel.text = reminder.title;
+    cell.dateLabel.text = [mainFormatter stringFromDate:reminder.date];
+    cell.usernameLabel.text = reminder.user;
+    
+    cell.userImage.file = reminder.recipient.profilePicture;
+    [cell.userImage loadInBackground];
     
     return cell;
 }
@@ -103,16 +117,18 @@
 }
 */
 
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [SVProgressHUD showErrorWithStatus:@"Set up disclosure"];
 }
 
- */
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+}
+
+
 
 @end

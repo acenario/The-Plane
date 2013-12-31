@@ -7,6 +7,8 @@
 //
 
 #import <Parse/Parse.h>
+#import "Circles.h"
+#import "UserInfo.h"
 
 @interface SocialPosts : PFObject <PFSubclassing>
 + (NSString *)parseClassName;
@@ -18,8 +20,8 @@
 @property (retain) NSString *reminderDescription;
 @property (retain) NSDate *reminderDate;
 @property BOOL isClaimed;
-@property (retain) PFObject *circle;
-@property (retain) PFObject *user;
+@property (retain) Circles *circle;
+@property (retain) UserInfo *user;
 @property (retain) NSArray *comments;
 @property (retain) NSArray *claimers;
 @property (retain) NSArray *claimerUsernames;

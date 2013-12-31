@@ -355,39 +355,87 @@
 {
     NSMutableArray *toSave = [[NSMutableArray alloc] init];
     
-    for (UserInfo *user in users) {
-        Reminders *reminder = [Reminders object];
-        reminder.date = date;
-        if (![description isEqualToString:@"Enter more information about the reminder..."]) {
-            [reminder setObject:description forKey:@"description"];
-        } else {
-            [reminder setObject:@"No description available." forKey:@"description"];
-        }
-        reminder.fromFriend = self.currentUser;
-        reminder.fromUser = self.currentUser.user;
-        reminder.recipient = user;
-        reminder.title = task;
-        reminder.user = user.user;
-        reminder.archived = NO;
-        reminder.popularity = 0;
-        reminder.isChild = NO;
-        reminder.isParent = NO;
-        reminder.state = 0;
-        
-        [reminder setObject:circle forKey:@"circle"];
-        [toSave addObject:reminder];
+    Reminders *parentReminder = [Reminders object];
+    
+    parentReminder.fromFriend = self.currentUser;
+    parentReminder.fromUser = self.currentUser.user;
+    
+    //From ACR
+    parentReminder.date = date;
+    
+    NSString *removedSpaces = [description stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if (!([description isEqualToString:@"Enter more information about the reminder..."]) && (removedSpaces.length > 0)) {
+        [parentReminder setObject:description forKey:@"description"];
+    } else {
+        [parentReminder setObject:@"" forKey:@"description"];
     }
     
-    [SVProgressHUD showWithStatus:@"Sending Reminders..."];
-    [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
-        for (Reminders *reminder in toSave) {
-            PFRelation *relation = [self.circle relationforKey:@"reminders"];
-            //            NSLog(@"%@", reminder);
-            [relation addObject:reminder];
+    parentReminder.recipient = [UserInfo objectWithoutDataWithObjectId:@"LcB5IA82Rc"];
+    parentReminder.title = task;
+    
+    parentReminder.fromFriend = self.currentUser;
+    parentReminder.fromUser = self.currentUser.user;
+    
+    parentReminder.user = @"Multiple people";
+    parentReminder.archived = NO;
+    parentReminder.popularity = 0;
+    parentReminder.isChild = NO;
+    parentReminder.isParent = YES;
+    parentReminder.state = 0;
+    parentReminder.isShared = NO;
+    parentReminder.amountOfChildren = users.count;
+    
+    [parentReminder setObject:circle forKey:@"circle"];
+    
+    [parentReminder saveEventually:^(BOOL succeeded, NSError *error) {
+        
+        [SVProgressHUD showWithStatus:@"Sending Reminders..."];
+        if (succeeded) {
+            
+            for (UserInfo *user in users) {
+                Reminders *reminder = [Reminders object];
+                
+                reminder.fromFriend = self.currentUser;
+                reminder.fromUser = self.currentUser.user;
+                
+                //From ACR
+                reminder.date = date;
+                
+                NSString *removedSpaces = [description stringByReplacingOccurrencesOfString:@" " withString:@""];
+                
+                if (!([description isEqualToString:@"Enter more information about the reminder..."]) && (removedSpaces.length > 0)) {
+                    [reminder setObject:description forKey:@"description"];
+                } else {
+                    [reminder setObject:@"" forKey:@"description"];
+                }
+                reminder.recipient = user;
+                reminder.title = task;
+                reminder.user = user.user;
+                reminder.archived = NO;
+                reminder.popularity = 0;
+                reminder.isChild = YES;
+                reminder.isParent = NO;
+                reminder.state = 0;
+                reminder.amountOfChildren = 0;
+                reminder.isShared = NO;
+                reminder.parent = parentReminder;
+                
+                [reminder setObject:circle forKey:@"circle"];
+                [toSave addObject:reminder];
+            }
         }
-        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
+        
+        [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
+            for (Reminders *reminder in toSave) {
+                PFRelation *relation = [self.circle relationforKey:@"reminders"];
+                //            NSLog(@"%@", reminder);
+                [relation addObject:reminder];
+            }
+            [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
+                }];
             }];
         }];
     }];
@@ -409,7 +457,7 @@
     }
 }
 
-- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date withQuery:(PFQuery *)query withCurrentUser:(UserInfo *)user
 {
     nil;
 }

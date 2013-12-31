@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) Circles *retainedCircle;
 @property (nonatomic, strong) NSArray *retainedUsers;
+@property (nonatomic, strong) PFQuery *retainedQuery;
 
 @end
 
@@ -288,26 +289,32 @@
     
     if (!batchFriends.count) {
         
-        PFObject *reminder = [PFObject objectWithClassName:@"Reminders"];
-        //[reminder setObject:[NSDate date] forKey:@"date"];
-        [reminder setObject:reminderDate forKey:@"date"];
-        [reminder setObject:self.taskTextField.text forKey:@"title"];
-        [reminder setObject:self.username.text forKey:@"user"];
-        [reminder setObject:self.currentUser forKey:@"fromFriend"];
-        [reminder setObject:self.recipient forKey:@"recipient"];
-        [reminder setObject:[PFUser currentUser].username forKey:@"fromUser"];
-        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"archived"];
-        [reminder setObject:[NSNumber numberWithInt:0] forKey:@"popularity"];
-        [reminder setObject:[NSNumber numberWithInt:0] forKey:@"state"];
-        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"isChild"];
-        [reminder setObject:[NSNumber numberWithBool:NO] forKey:@"isParent"];
+        Reminders *reminder = [Reminders object];
+        //[reminder. = [NSDate date]  date"];
+        reminder.date = reminderDate;
+        
+        reminder.title = self.taskTextField.text;
+        reminder.user = self.username.text;
+        reminder.fromUser = [PFUser currentUser].username;
+        
+        reminder.fromFriend = self.currentUser;
+        reminder.recipient = self.recipient;
+        
+        reminder.popularity = 0;
+        reminder.state = 0;
+        reminder.amountOfChildren = 0;
+        
+        reminder.archived = NO;
+        reminder.isChild = NO;
+        reminder.isParent = NO;
+        reminder.isShared = NO;
 
         NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
-            [reminder setObject:self.descriptionTextView.text forKey:@"description"];
+            reminder.description = self.descriptionTextView.text;
         } else {
-            [reminder setObject:@"" forKey:@"description"];
+            reminder.description = @"";
         }
         
         
@@ -363,6 +370,7 @@
         parentReminder.popularity = 0;
         parentReminder.state = 0;
         parentReminder.amountOfChildren = batchFriends.count;
+        parentReminder.isShared = YES;
         
         
         NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -396,6 +404,8 @@
                 childReminder.popularity = 0;
                 childReminder.title = self.taskTextField.text;
                 childReminder.state = 0;
+                childReminder.amountOfChildren = 0;
+                childReminder.isShared = YES;
                 
                 if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
                     childReminder.description = self.descriptionTextView.text;
@@ -461,35 +471,6 @@
     
 }
 
-#pragma mark - Segue Preparation
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
-        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-        FriendsForRemindersViewController *controller = (FriendsForRemindersViewController *)nav.topViewController;
-        controller.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
-        ReminderDateViewController *controller = [segue destinationViewController];
-        controller.delegate = self;
-        controller.displayDate = self.dateDetail.text;
-    } if ([segue.identifier isEqualToString:@"CircleReminder"]) {
-        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
-        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
-        controller.delegate = self;
-        controller.invitedMembers = self.retainedUsers;
-        controller.circle = self.retainedCircle;
-        controller.reminderDate = reminderDate;
-        controller.fromSegmentSwitch = YES;
-        controller.retainedTask = self.taskTextField.text;
-        if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
-            controller.retainedDescription = self.descriptionTextView.text;
-        }
-        
-        controller.unwinder = self.unwinder;
-    }
-}
-
 #pragma mark - Delegate Methods
 
 - (void)reminderDateViewController:(ReminderDateViewController *)controller didFinishSelectingDate:(NSDate *)date
@@ -508,11 +489,14 @@
     nil;
 }
 
-- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
+- (void)addCircleReminderViewControllerSwitchSegment:(AddCircleReminderViewController *)controller didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date withQuery:(PFQuery *)query withCurrentUser:(UserInfo *)user
 {
     self.retainedCircle = circle;
     self.retainedUsers = users;
-    
+    self.retainedQuery = query;
+    if (!self.currentUser) {
+        self.currentUser = user;
+    }
     
     if (task.length > 0) {
         
@@ -609,5 +593,37 @@
     }
 }
 
+#pragma mark - Segue Preparation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"FriendsForReminders"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        FriendsForRemindersViewController *controller = (FriendsForRemindersViewController *)nav.topViewController;
+        controller.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"ReminderDate"]) {
+        ReminderDateViewController *controller = [segue destinationViewController];
+        controller.delegate = self;
+        controller.displayDate = self.dateDetail.text;
+    } if ([segue.identifier isEqualToString:@"CircleReminder"]) {
+        UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
+        AddCircleReminderViewController *controller = (AddCircleReminderViewController *)nav.topViewController;
+        controller.delegate = self;
+        controller.invitedMembers = self.retainedUsers;
+        controller.circle = self.retainedCircle;
+        controller.reminderDate = reminderDate;
+        controller.retainedQuery = self.retainedQuery;
+        controller.fromSegmentSwitch = YES;
+        controller.currentUser = self.currentUser;
+        
+        
+        controller.retainedTask = self.taskTextField.text;
+        if (![self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
+            controller.retainedDescription = self.descriptionTextView.text;
+        }
+        
+        controller.unwinder = self.unwinder;
+    }
+}
 
 @end

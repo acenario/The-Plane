@@ -17,6 +17,8 @@
 
 @interface RemindersViewController ()
 
+@property (nonatomic, strong) NSMutableDictionary *seenReminders;
+
 @end
 
 
@@ -61,6 +63,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.seenReminders = [NSMutableDictionary dictionary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveAddNotification:)
@@ -145,10 +149,16 @@
 //             } else {
 //             [self loadObjects];
 //             }
-            [self loadObjects];
+            //ARJUN ELSE IF WHAT?
+//            [self loadObjects];
         }
  
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleSeen)
+                                                 name:@"handleseen"
+                                               object:nil];
 }
 
 - (void)reachabilityChanged:(NSNotification*)notification
@@ -167,6 +177,12 @@
         [self loadObjects];
     }
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [self handleSeen];
 }
 
 - (void)firstTimePresentTutorial:(firstTimeSettingsViewController *)controller {
@@ -335,10 +351,19 @@
      
      }*/
     
-    if ([object objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) {
-        PFObject *parent = [object objectForKey:@"parent"];
-        object = parent;
-        NSLog(@"children were swapped %@", object);
+    
+//    NSLog(@"UNCOMMENT THIS TO SEE REMINDER LOADED (BEFORE CHILD SWAP): %@", object);
+    if (([object objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) && ([object objectForKey:@"isShared"] == [NSNumber numberWithBool:YES])) {
+        if ([object objectForKey:@"parent"]) {
+            PFObject *parent = [object objectForKey:@"parent"];
+            object = parent;
+        }
+//        NSLog(@"children were swapped %@", [object objectForKey:@"user"]);
+    }
+    
+    if ([[object objectForKey:@"state"] isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        [object setObject:[NSNumber numberWithInt:1] forKey:@"state"];
+        [self.seenReminders setObject:object forKey:[object objectId]];
     }
     
     PFImageView *picImage = (PFImageView *)[cell viewWithTag:1000];
@@ -432,8 +457,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
-    if ([selectedReminderObject objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) {
-        selectedReminderObject = [selectedReminderObject objectForKey:@"parent"];
+    if (([selectedReminderObject objectForKey:@"isChild"] == [NSNumber numberWithBool:YES]) && ([selectedReminderObject objectForKey:@"isShared"] == [NSNumber numberWithBool:YES])) {
+        if ([selectedReminderObject objectForKey:@"parent"]) {
+            selectedReminderObject = [selectedReminderObject objectForKey:@"parent"];
+        }
     }
     
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
@@ -588,6 +615,40 @@
         
     }];
 
+}
+
+#pragma mark - Seen / Acknowledged System
+
+-(void)handleSeen {
+    NSMutableArray *remindersToSave = [[NSMutableArray alloc] init];
+    
+    //    NSLog(@"%@", self.seenReminders.allValues);
+    
+    for (Reminders *reminder in self.seenReminders.allValues) {
+        [remindersToSave addObject:reminder];
+    }
+    
+    [Reminders saveAllInBackground:remindersToSave block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"REMINdER SAVeD");
+        } else {
+            NSLog(@"%@", error);
+        }
+    }];
+}
+
+- (void)handleAccept:(Reminders *)reminder {
+    reminder.state = 2;
+    [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"%@ ACCEPTED", [Reminders objectWithoutDataWithObjectId:reminder.objectId]);
+    }];
+}
+
+- (void)handleCompletion:(Reminders *)reminder {
+    reminder.state = 3;
+    [reminder saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"%@ Completed", [Reminders objectWithoutDataWithObjectId:reminder.objectId]);
+    }];
 }
 
 #pragma mark - Custom Methods

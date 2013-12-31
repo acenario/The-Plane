@@ -804,6 +804,8 @@
             reminder.isParent = NO;
             reminder.state = 0;
             reminder.archived = NO;
+            reminder.isShared = NO;
+            reminder.amountOfChildren = 0;
             reminder.popularity = 0;
             
             [self.socialPost setIsClaimed:YES];
@@ -909,6 +911,8 @@
                 reminder.isParent = NO;
                 reminder.state = 0;
                 reminder.archived = NO;
+                reminder.isShared = NO;
+                reminder.amountOfChildren = 0;
                 reminder.popularity = 0;
                 
                 [post setIsClaimed:YES];

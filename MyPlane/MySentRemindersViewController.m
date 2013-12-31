@@ -83,8 +83,9 @@
     
     [query includeKey:@"fromFriend"];
     [query includeKey:@"recipient"];
-    
-    
+    [query includeKey:@"parent"];
+    [query includeKey:@"children"];
+
     [query orderByDescending:@"date"];
     
     
@@ -102,7 +103,12 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-    UserInfo *recipient = (UserInfo *)[object objectForKey:@"recipient"];
+    Reminders *reminder = (Reminders *)object;
+    
+//    NSLog(@"UNCOMMENT THIS TO SEE REMINDER LOADED: %@", reminder);
+    
+    UserInfo *recipient = (UserInfo *)reminder.recipient;
+    
     UILabel *title = (UILabel *)[cell viewWithTag:1];
     UILabel *name = (UILabel *)[cell viewWithTag:2];
     UILabel *date = (UILabel *)[cell viewWithTag:3];
@@ -110,17 +116,21 @@
     
     image.file = recipient.profilePicture;
     
-    if ([object objectForKey:@"isParent"] != [NSNumber numberWithBool:YES]) {
-        name.text = [object objectForKey:@"user"];
+    if (!reminder.isParent) {
+        name.text = reminder.user;
+    } else if (reminder.isShared) {
+        name.text = [NSString stringWithFormat:@"Shared by %d", reminder.amountOfChildren];
+    } else if (!reminder.isShared) {
+        name.text = @"Mass Reminder";
     } else {
-        name.text = [NSString stringWithFormat:@"Shared by %@", [object objectForKey:@"amountOfChildren"]];
+        name.text = reminder.user;
     }
     
-    title.text = [object objectForKey:@"title"];
-    date.text = [dateFormatter stringFromDate:[object objectForKey:@"date"]];
+    title.text = reminder.title;
+    date.text = [dateFormatter stringFromDate:reminder.date];
     [image loadInBackground];
     
-    
+    NSLog(@"REMINDER STATE: %d", reminder.state);
     
     /*UIImageView *picImage = (UIImageView *)[cell viewWithTag:1000];
      UILabel *reminderText = (UILabel *)[cell viewWithTag:1001];
@@ -203,6 +213,11 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedReminderObject = [self.objects objectAtIndex:indexPath.row];
+    
+    if (([selectedReminderObject objectForKey:@"isParent"] == [NSNumber numberWithBool:YES]) && ([selectedReminderObject objectForKey:@"isShared"] == [NSNumber numberWithBool:NO])) {
+        NSLog(@"SEGUE THIS SHIZ");
+    }
+    
     [self performSegueWithIdentifier:@"ReminderDisclosure" sender:selectedReminderObject];
 }
 

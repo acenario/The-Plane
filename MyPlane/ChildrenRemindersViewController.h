@@ -12,5 +12,6 @@
 @interface ChildrenRemindersViewController : UITableViewController
 
 @property (nonatomic, strong) Reminders *parent;
+@property (nonatomic, strong) NSArray *children;
 
 @end

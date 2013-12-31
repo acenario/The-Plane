@@ -80,7 +80,11 @@
     
     Circles *circle = (Circles *)[self.objects objectAtIndex:indexPath.row];
     cell.textLabel.text = circle.displayName;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Member(s)", circle.members.count];
+    if (circle.members.count != 1) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Member(s)", circle.members.count];
+    } else {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Member", circle.members.count];
+    }
     
     return cell;
 }

@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "UserInfo.h"
 
 @interface CommonTasks : PFObject <PFSubclassing>
 + (NSString *)parseClassName;
@@ -14,6 +15,6 @@
 @property (retain) NSString *text;
 @property (retain) NSString *username;
 @property (retain) NSDate *lastUsed;
-@property (retain) PFObject *user;
+@property (retain) UserInfo *user;
 
 @end

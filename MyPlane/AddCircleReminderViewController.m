@@ -16,7 +16,13 @@
     BOOL isFromCircles;
     NSString *nameOfUser;
     NSString *descriptionPlaceholderText;
+    
+    /**
+     *Really need to streamline this
+     *@return Sets the format to Short-Short and current time with seconds = 0
+     */
     NSDateFormatter *mainFormatter;
+    
     BOOL textCheck;
     BOOL descCheck;
     PFQuery *currentUserQuery;
@@ -35,8 +41,8 @@
 {
     [super viewDidAppear:YES];
     
-    
-/*    [[NSNotificationCenter defaultCenter] addObserver:self
+/*
+//    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(cancelR)
 //                                                 name:@"remindersUnwindNotification"
 //                                               object:nil];
@@ -56,47 +62,55 @@
 //                                                 name:@"settingsUnwindNotification"
                                                object:nil];
 */
+
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //-----------------Checking if its a regular mass reminder, a swap from a segment, and from the circles tab-----------------\\
+    
+    ///Swapping segments, regular mass reminders
     if (self.fromSegmentSwitch) {
-        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
+        
+        if (self.invitedMembers.count != 1) {
+            self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+        } else {
+            self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member", self.invitedMembers.count];
+        }
+        
         self.circleCheck = YES;
         
         isFromCircles = NO;
-        currentUserQuery = [UserInfo query];
-        [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-        currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
-        [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            self.currentUser = (UserInfo *)object;
-        }];
-
         
+    ///From the circles tab, with and without preselected members
     } else if (self.circle != nil) {
+        
         self.circleName.text = self.circle.displayName;
         self.memberCountDisplay.text = @"Select members...";
+        
         isFromCircles = YES;
+        
         self.segmentView.hidden = YES;
         self.segmentView.frame = CGRectMake(0,0,0,0);
         self.view.autoresizesSubviews = NO;
     
+    ///Regular mass reminder
     } else {
+        
         self.memberCountDisplay.hidden = YES;
         self.circleName.text = @"Pick a group...";
         isFromCircles = NO;
-        currentUserQuery = [UserInfo query];
-        [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
-        currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
-        [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            self.currentUser = (UserInfo *)object;
-        }];
+        
     }
     
-    [self.segmentedControl setSelectedSegmentIndex:1];
     [self configureViewController];
+    
+    
+    //-----------------Date formatter-----------------\\
+    ///ABHIJAY
+    ///... Really need to streamline this
     
     mainFormatter = [[NSDateFormatter alloc] init];
     [mainFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -106,31 +120,52 @@
     NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
     [components setSecond:0];
     
-    if (!self.reminderDate) {
+    //-----------------Handing Dates, Tasks, and Descriptions when swapping segments-----------------\\
+    
+    //Really is just another way of checking fromSegmentSwitch
+    if (!self.reminderDate)
+    {
         self.reminderDate = [[calendar dateFromComponents:components] dateByAddingTimeInterval:300];
     }
     self.dateTextLabel.text = [mainFormatter stringFromDate:self.reminderDate];
     
-    if (!self.retainedDescription) {
-        
-        descriptionPlaceholderText = @"Enter more information about the reminder...";
-        self.descriptionTextView.text = descriptionPlaceholderText;
-        self.descriptionTextView.textColor = [UIColor lightGrayColor];
-        
-    } else {
-        self.descriptionTextView.userInteractionEnabled = YES;
-        self.descriptionTextView.text = self.retainedDescription;
-        [self textViewDidChange:self.descriptionTextView];
-    }
-    
+    //Checks if the task we kept from switching segments has any text, used for limit label.
     if (self.retainedTask.length == 0) {
-        
         self.limitLabel.hidden = YES;
         textCheck = NO;
     } else {
         self.taskTextField.text = self.retainedTask;
         [self validateText:nil];
     }
+    
+    // Has to do with the faulty way I hand placeholder text
+    if (!self.retainedDescription) {
+        descriptionPlaceholderText = @"Enter more information about the reminder...";
+        self.descriptionTextView.text = descriptionPlaceholderText;
+        self.descriptionTextView.textColor = [UIColor lightGrayColor];
+    } else {
+        self.descriptionTextView.userInteractionEnabled = YES;
+        self.descriptionTextView.text = self.retainedDescription;
+        [self textViewDidChange:self.descriptionTextView];
+    }
+    
+    //-----------------------------------Current user Query-----------------------------------\\
+    
+    currentUserQuery = self.retainedQuery;
+    
+    if (!currentUserQuery) {
+        currentUserQuery = [UserInfo query];
+        [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+        currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
+        [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            self.currentUser = (UserInfo *)object;
+        }];
+    }
+    
+    //----------------------------------------------------------------------------------------\\
+
+    
+    //-----------------Final details-----------------\\
     
     self.taskTextField.delegate = self;
     self.descriptionTextView.delegate = self;
@@ -142,17 +177,23 @@
     } else {
         self.circleName.text = self.circle.displayName;
         if (!self.fromSegmentSwitch) {
-            
-        self.memberCountDisplay.hidden = NO;
-        self.circleCell.userInteractionEnabled = NO;
+            self.memberCountDisplay.hidden = NO;
+            self.circleCell.userInteractionEnabled = NO;
         }
         self.circleCell.accessoryType = UITableViewCellAccessoryNone;
-        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
+        
+        if (self.invitedMembers.count != 1) {
+            self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+        } else {
+            self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member", self.invitedMembers.count];
+        }
     }
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
+    
+    [self configureDoneButton];
 }
 
 - (void)configureViewController {
@@ -175,6 +216,9 @@
     self.segmentedControl.deselectedColor = [UIColor colorFromHexCode:@"FF9773"];
     self.segmentedControl.dividerColor = [UIColor colorFromHexCode:@"FF7140"];
     self.segmentedControl.cornerRadius = 15.0;
+    
+    ///The segment isn't actually the same from Add Reminder, so we set this selected segment to 1
+    [self.segmentedControl setSelectedSegmentIndex:1];
 
 }
 
@@ -288,6 +332,21 @@
 
 #pragma mark - Text Field Methods
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int limit = 250 - self.descriptionTextView.text.length;
+    self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
+    if ((limit >= 0)) {
+        descCheck = YES;
+        self.descLimit.textColor = [UIColor lightGrayColor];
+    } else {
+        descCheck = NO;
+        self.descLimit.textColor = [UIColor redColor];
+    }
+    
+    [self configureDoneButton];
+}
+
 - (IBAction)validateText:(id)sender {
     self.limitLabel.hidden = NO;
     NSString *removedSpaces = [self.taskTextField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -336,7 +395,13 @@
 {
     self.invitedMembers = [[NSArray alloc] initWithArray:members];
 //    self. = [[NSArray alloc] initWithArray:usernames];
-    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
+    
+    if (self.invitedMembers.count != 1) {
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    } else {
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member", self.invitedMembers.count];
+    }
+    
     self.circleCheck = YES;
     
     [self configureDoneButton];
@@ -352,7 +417,13 @@
     self.circle = circle;
     self.circleName.text = circle.displayName;
     self.memberCountDisplay.hidden = NO;
-    self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member(s)", self.invitedMembers.count];
+    
+    if (self.invitedMembers.count != 1) {
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d members", self.invitedMembers.count];
+    } else {
+        self.memberCountDisplay.text = [NSString stringWithFormat:@"%d member", self.invitedMembers.count];
+    }
+    
     self.circleCheck = YES;
     
     [self configureDoneButton];
@@ -454,6 +525,8 @@
 
 - (void)configureDoneButton
 {
+    NSLog(@"t %hhd f %hhd d %hhd", textCheck, self.circleCheck, descCheck);
+
     if ((textCheck) && (self.circleCheck) && (descCheck)) {
         self.doneButton.enabled = YES;
     } else {
@@ -464,56 +537,123 @@
 - (IBAction)segmentChange:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         [self dismissViewControllerAnimated:NO completion:^{
-            [self.delegate addCircleReminderViewControllerSwitchSegment:self didFinishAddingReminderInCircle:self.circle
-                                      withUsers:self.invitedMembers
-                                       withTask:self.taskTextField.text
-                                withDescription:self.descriptionTextView.text
-                                       withDate:self.reminderDate];
+            [self.delegate
+             addCircleReminderViewControllerSwitchSegment:self
+             didFinishAddingReminderInCircle:self.circle
+
+             withUsers:self.invitedMembers
+             withTask:self.taskTextField.text
+             withDescription:self.descriptionTextView.text
+             withDate:self.reminderDate
+             withQuery:currentUserQuery
+             withCurrentUser:self.currentUser];
         }];
     }
 }
 
 - (void)didFinishAddingReminderInCircle:(Circles *)circle withUsers:(NSArray *)users withTask:(NSString *)task withDescription:(NSString *)description withDate:(NSDate *)date
 {
+    /*-----------------------------------Current user Query-----------------------------------\\
+    
+    currentUserQuery = [UserInfo query];
+    [currentUserQuery whereKey:@"user" equalTo:[PFUser currentUser].username];
+    currentUserQuery.cachePolicy = kPFCachePolicyNetworkElseCache;
+    [currentUserQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        self.currentUser = (UserInfo *)object;
+    }];
+    //----------------------------------------------------------------------------------------\\*/
+    
     NSMutableArray *toSave = [[NSMutableArray alloc] init];
     
-    for (UserInfo *user in users) {
-        Reminders *reminder = [Reminders object];
-        reminder.date = date;
-        
-        NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-        if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
-            [reminder setObject:self.descriptionTextView.text forKey:@"description"];
-        } else {
-            [reminder setObject:@"" forKey:@"description"];
-        }
-        reminder.fromFriend = self.currentUser;
-        reminder.fromUser = self.currentUser.user;
-        reminder.recipient = user;
-        reminder.title = task;
-        reminder.user = user.user;
-        reminder.archived = NO;
-        reminder.popularity = 0;
-        reminder.isChild = NO;
-        reminder.isParent = NO;
-        reminder.state = 0;
-
-        [reminder setObject:circle forKey:@"circle"];
-        [toSave addObject:reminder];
+    Reminders *parentReminder = [Reminders object];
+    // Dates 1 (4)
+    parentReminder.date = date;
+    
+    // Booleans 4
+    parentReminder.archived = NO;
+    parentReminder.isChild = NO;
+    parentReminder.isParent = YES;
+    parentReminder.isShared = NO;
+    
+    // Pointers 2 (4)
+    parentReminder.fromFriend = self.currentUser;
+    parentReminder.recipient = [UserInfo objectWithoutDataWithObjectId:@"LcB5IA82Rc"];
+    
+    // Arrays 0 (2)
+    
+    // Strings 4
+    NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
+        [parentReminder setObject:self.descriptionTextView.text forKey:@"description"];
+    } else {
+        [parentReminder setObject:@"" forKey:@"description"];
     }
     
-    [SVProgressHUD showWithStatus:@"Sending Reminders..."];
-    [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
-        for (Reminders *reminder in toSave) {
-            PFRelation *relation = [circle relationforKey:@"reminders"];
-            [relation addObject:reminder];
+    parentReminder.title = task;
+    parentReminder.fromUser = self.currentUser.user;
+    parentReminder.user = @"Multiple people";
+    
+    // Integers 3
+
+    parentReminder.popularity = 0;
+    parentReminder.state = 0;
+    parentReminder.amountOfChildren = users.count;
+    
+    //
+    
+    [parentReminder setObject:circle forKey:@"circle"];
+    
+    [parentReminder saveEventually:^(BOOL succeeded, NSError *error) {
+        [SVProgressHUD showWithStatus:@"Sending Reminders..."];
+        if (succeeded) {
+            
+            for (UserInfo *user in users) {
+                Reminders *reminder = [Reminders object];
+                
+                reminder.fromFriend = self.currentUser;
+                reminder.fromUser = self.currentUser.user;
+                
+                //From ACR
+                reminder.date = date;
+                
+                NSString *removedSpaces = [self.descriptionTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+                
+                if (!([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) && (removedSpaces.length > 0)) {
+                    [reminder setObject:self.descriptionTextView.text forKey:@"description"];
+                } else {
+                    [reminder setObject:@"" forKey:@"description"];
+                }
+                reminder.recipient = user;
+                reminder.title = task;
+                reminder.user = user.user;
+                reminder.archived = NO;
+                reminder.isChild = YES;
+                reminder.isParent = NO;
+                reminder.isShared = NO;
+                reminder.popularity = 0;
+                reminder.state = 0;
+                reminder.amountOfChildren = 0;
+                reminder.parent = parentReminder;
+                
+                [reminder setObject:circle forKey:@"circle"];
+                [toSave addObject:reminder];
+            }
+            
+            [Reminders saveAllInBackground:toSave block:^(BOOL succeeded, NSError *error) {
+                for (Reminders *reminder in toSave) {
+                    
+                    PFRelation *relation = [circle relationforKey:@"reminders"];
+                    [relation addObject:reminder];
+                }
+                
+                [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
+                    wait((int *)1);
+                    [self cancel:nil];
+                }];
+            }];
         }
-        [self.circle saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Reminder Sent to %d Members of %@", toSave.count, circle.displayName]];
-            wait((int *)1);
-            [self cancel:nil];
-        }];
     }];
 }
 
@@ -565,21 +705,8 @@
     textCheck = YES;
     self.limitLabel.text = [NSString stringWithFormat:@"%d", 35 - task.length];
     [self hideKeyboard];
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    int limit = 250 - self.descriptionTextView.text.length;
-    self.descLimit.text = [NSString stringWithFormat:@"%d characters left", limit];
-    if ((limit >= 0)) {
-        descCheck = YES;
-        self.descLimit.textColor = [UIColor lightGrayColor];
-    } else {
-        descCheck = NO;
-        self.descLimit.textColor = [UIColor redColor];
-    }
-    
     [self configureDoneButton];
 }
+
 
 @end
