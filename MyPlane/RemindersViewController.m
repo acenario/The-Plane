@@ -150,7 +150,7 @@
 //             [self loadObjects];
 //             }
             //ARJUN ELSE IF WHAT?
-//            [self loadObjects];
+            [self loadObjects];
         }
  
     }
@@ -627,14 +627,16 @@
     for (Reminders *reminder in self.seenReminders.allValues) {
         [remindersToSave addObject:reminder];
     }
-    
-    [Reminders saveAllInBackground:remindersToSave block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"REMINdER SAVeD");
-        } else {
-            NSLog(@"%@", error);
+    if (remindersToSave.count > 0) {
+        [Reminders saveAllInBackground:remindersToSave block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"REMINdER SAVeD");
+            } else {
+                NSLog(@"%@", error);
+            }
+            
+        }];
         }
-    }];
 }
 
 - (void)handleAccept:(Reminders *)reminder {

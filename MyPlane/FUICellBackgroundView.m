@@ -79,6 +79,7 @@
 	minY -= 1;
 
 	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    //ARJUN
 	CGContextSetStrokeColorWithColor(c, [[UIColor grayColor] CGColor]);
 	CGContextSetLineWidth(c, lineWidth);
 	CGContextSetAllowsAntialiasing(c, YES);
