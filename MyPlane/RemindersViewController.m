@@ -17,6 +17,7 @@
 
 static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 
+static const int EXPAND_CONSTANT = 1;
 
 @interface RemindersViewController ()
 
@@ -337,7 +338,7 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.expanded == YES) {
-        return self.objects.count + 1;
+        return self.objects.count + EXPAND_CONSTANT;
     } else {
         return self.objects.count;
     }
@@ -348,20 +349,32 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 ///@throws Are mirrors real if our eyes aren't real?
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
     PFObject *object;
-    
+//    
+//    NSLog(@"INDEX PATH: %d", indexPath.row);
+//    NSLog(@"SELECTED PATH: %d", self.selectedRowIndex);
     if (self.expanded) {
-        if (indexPath.row == self.selectedRowIndex + 1) {
+        
+        if (indexPath.row == self.selectedRowIndex + EXPAND_CONSTANT) {
+//            NSLog(@"cellForRow: Action Cell");
+
             ReminderActionCell *cell = (ReminderActionCell *)[tableView dequeueReusableCellWithIdentifier:ReminderActionCellIdentifier];
             return cell;
-        } else if (indexPath.row > self.selectedRowIndex + 1) {
-          object = [self.objects objectAtIndex:indexPath.row+1];
+            
+        } else if (indexPath.row > self.selectedRowIndex + EXPAND_CONSTANT) {
+//            NSLog(@"cellForRow: is greater than action cell");
+
+          object = [self.objects objectAtIndex:indexPath.row - EXPAND_CONSTANT];
         } else {
+//            NSLog(@"cellForRow: Is Less than action cell");
+
             //less than or equal to self.selectedRowIndex
           object = [self.objects objectAtIndex:indexPath.row];
         }
+        
     } else {
+        
+//        NSLog(@"cellForRow: Isn't Expanded");
         object = [self.objects objectAtIndex:indexPath.row];
     }
     
@@ -515,23 +528,39 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    nil;
+    
     if (!self.expanded) {
-        //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        NSLog(@"didSelect: Isn't Expanded");
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        self.selectedRowIndex = indexPath.row;
         [self expandSelectedRowAtIndexPath:indexPath];
         
     } else {
         
         if (indexPath.row == self.selectedRowIndex) {
-            //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//            NSLog(@"didSelect: is the expanded cell");
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [self collapseSelectedRowAtIndexPath:indexPath];
-        } else if (indexPath.row == self.selectedRowIndex + 1) {
-            //[tableView deselectRowAtIndexPath:indexPath animated:NO];
-            //nil;
+            
+        } else if (indexPath.row == self.selectedRowIndex + EXPAND_CONSTANT) {
+//            NSLog(@"didSelect: is action cell");
+            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            nil;
+            
+        } else if (indexPath.row > self.selectedRowIndex + EXPAND_CONSTANT) {
+//            NSLog(@"didSelect: is greater than action cell");
+            NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row - EXPAND_CONSTANT inSection:indexPath.section];
+//            self.selectedRowIndex = path.row;
+            [self expandSelectedRowAtIndexPath:path];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+            
         } else {
-            //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//            NSLog(@"didSelect: is less than expanded cell");
+//            self.selectedRowIndex = indexPath.row;
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [self expandSelectedRowAtIndexPath:indexPath];
+            
         }
     }
     
@@ -555,7 +584,7 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%d", indexPath.row);
+//    NSLog(@"%d", indexPath.row);
     
 }
 
@@ -722,7 +751,7 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
     if (remindersToSave.count > 0) {
         [Reminders saveAllInBackground:remindersToSave block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                NSLog(@"REMINdER SAVeD");
+//                NSLog(@"REMINdER SAVeD");
             } else {
                 NSLog(@"%@", error);
             }
@@ -881,27 +910,56 @@ static NSString *const ReminderActionCellIdentifier = @"ReminderActionCell";
 }
 
 -(void)expandSelectedRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"expandSelectedRowAtIndexPath: SELECTED ROW INDEX BEFORE: %d", self.selectedRowIndex);
+    
+    if (self.expanded) {
+        NSIndexPath *collapsePath = [NSIndexPath indexPathForRow:self.selectedRowIndex inSection:indexPath.section];
+        [self collapseSelectedRowAtIndexPath:collapsePath];
+//        NSLog(@"IS EXPANDED = YES");
+    }
+    
+    self.selectedRowIndex = indexPath.row;
+    
     self.expanded = YES;
-    if (indexPath.row > self.selectedRowIndex) {
-        self.selectedRowIndex = indexPath.row - 1;
+    
+/*
+    
+    if ((self.selectedRowIndex) && (indexPath.row > self.selectedRowIndex)) {
+        
+    } else {
+        
+    }
+   
+    
+    if ((indexPath.row > self.selectedRowIndex) && (self.selectedRowIndex)) {
+        NSLog(@"test");
+        self.selectedRowIndex = indexPath.row - EXPAND_CONSTANT;
     } else {
         self.selectedRowIndex = indexPath.row;
     }
-    self.selectedRowIndex = indexPath.row;
-    [self.tableView reloadData];
-    NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+1 inSection:indexPath.section];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    NSLog(@"AFTER: %d", self.selectedRowIndex);
+ */
+    NSIndexPath *insertPath = [NSIndexPath indexPathForRow:self.selectedRowIndex + EXPAND_CONSTANT inSection:indexPath.section];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:insertPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //[self.tableView reloadData];
+    //[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
 
 
 
 -(void)collapseSelectedRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+1 inSection:indexPath.section];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+EXPAND_CONSTANT inSection:indexPath.section];
+    //[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    if (indexPath.row == self.selectedRowIndex) {
+        indexPath = [NSIndexPath indexPathForRow:self.selectedRowIndex+EXPAND_CONSTANT inSection:indexPath.section];
+    }
     self.expanded = NO;
-    self.selectedRowIndex = indexPath.row;
-    [self.tableView reloadData];
+//    self.selectedRowIndex = indexPath.row;
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    //[self.tableView reloadData];
 }
 
 
