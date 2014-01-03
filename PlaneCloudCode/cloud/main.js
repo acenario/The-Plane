@@ -67,3 +67,28 @@ Parse.Cloud.afterSave("Reminders", function(request) {
 	
 
 });
+
+
+Parse.Cloud.job("schedulingFuture", function(status) {
+	// Set up to modify user data
+	Parse.Cloud.useMasterKey();
+	// Query for all users
+	var reminder = Parse.Object.extend("Reminders");
+	var query = new Parse.Query(reminder);
+	query.equalTo("archived", true);
+	query.each(function(rem) {
+		//Get Date
+		//var tdo = rem.object.get('date');
+		//status.message("" + tdo);
+		//Check date
+		//TO-DO
+		rem.set("archived", false);
+		return rem.save();
+	}).then(function() {
+		// Set the job's success status
+		//status.success("Successfully ran future scheduling job.");
+	}, function() {
+		// Set the job's error status
+		//status.error("Uh oh, something went wrong.");
+	});
+});
