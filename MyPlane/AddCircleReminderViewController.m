@@ -247,10 +247,10 @@
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
             self.descriptionTextView.textColor = [UIColor blackColor];
+            [self.descriptionTextView becomeFirstResponder];
         }
         
         self.descriptionTextView.userInteractionEnabled = YES;
-        [self.descriptionTextView becomeFirstResponder];
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
