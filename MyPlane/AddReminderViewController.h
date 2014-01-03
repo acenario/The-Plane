@@ -52,10 +52,11 @@
 @property (nonatomic, strong) UserInfo *recipient;
 @property (nonatomic, strong) UserInfo *currentUser;
 
-@property int unwinder; ///---- 1: Reminders  2: Social  3:Connect  4:Settings
+///---- 1: Reminders  2: Social  3:Connect  4:Settings
+@property int unwinder; 
 
+/// A template reminder from the Archive or Sent
 @property (nonatomic, strong) Reminders *templateReminder;
-// *archivedReminder is a template reminder from the Archive or Sent
 
 - (IBAction)segmentChanged:(id)sender;
 

@@ -21,6 +21,8 @@
 		AE89177E17AF115E00DD2DC0 /* Requests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE89177D17AF115E00DD2DC0 /* Requests.m */; };
 		AE903A85186E7FF600FA4EE3 /* ChildrenRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE903A84186E7FF600FA4EE3 /* ChildrenRemindersViewController.m */; };
 		AE903A89186F5BA900FA4EE3 /* FixNullValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE903A88186F5BA900FA4EE3 /* FixNullValuesViewController.m */; };
+		AE9CD8CE1874FD010049C5EE /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9CD8CC1874FD010049C5EE /* 11-clock.png */; };
+		AE9CD8CF1874FD010049C5EE /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9CD8CD1874FD010049C5EE /* 11-clock@2x.png */; };
 		AEAAE64317D3992E007F3532 /* EditReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64217D3992E007F3532 /* EditReminderViewController.m */; };
 		AEAAE64617D3CD9C007F3532 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAAE64517D3CD9C007F3532 /* TutorialViewController.m */; };
 		AEAAE65217D40A0B007F3532 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAAE65117D40A0A007F3532 /* 1.png */; };
@@ -301,6 +303,8 @@
 		AE903A84186E7FF600FA4EE3 /* ChildrenRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildrenRemindersViewController.m; sourceTree = "<group>"; };
 		AE903A87186F5BA900FA4EE3 /* FixNullValuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixNullValuesViewController.h; sourceTree = "<group>"; };
 		AE903A88186F5BA900FA4EE3 /* FixNullValuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixNullValuesViewController.m; sourceTree = "<group>"; };
+		AE9CD8CC1874FD010049C5EE /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
+		AE9CD8CD1874FD010049C5EE /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
 		AEAAE64117D3992E007F3532 /* EditReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditReminderViewController.h; sourceTree = "<group>"; };
 		AEAAE64217D3992E007F3532 /* EditReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditReminderViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AEAAE64417D3CD9C007F3532 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
@@ -827,6 +831,19 @@
 			name = "Admin panel";
 			sourceTree = "<group>";
 		};
+		AE9CD8C61874D0DD0049C5EE /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */,
+				AEC1608C186CB65B000CBC0B /* ReminderCell.h */,
+				AEC1608D186CB65B000CBC0B /* ReminderCell.m */,
+				DC29ED741872D25C00A789DC /* ReminderActionCell.xib */,
+				DC29ED761872D37100A789DC /* ReminderActionCell.h */,
+				DC29ED771872D37100A789DC /* ReminderActionCell.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		AEB24DC5178CD5E100C7711D /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +914,8 @@
 		AED62A2B17A1ECA4002055ED /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				AE9CD8C61874D0DD0049C5EE /* Custom Cells */,
+				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
 				DC4F2A4517CBDCDE00ED30BB /* Reachability.h */,
 				DC4F2A4617CBDCDF00ED30BB /* Reachability.m */,
 				DC4F2A3F17CA56FF00ED30BB /* CurrentUser.h */,
@@ -915,13 +934,6 @@
 				AE89177D17AF115E00DD2DC0 /* Requests.m */,
 				AE017AC717BEF179005E2C45 /* CommonTasks.h */,
 				AE017AC817BEF179005E2C45 /* CommonTasks.m */,
-				AE017ACA17BEF288005E2C45 /* SubclassHeader.h */,
-				AEC1608A186CB3EE000CBC0B /* ReminderCell.xib */,
-				AEC1608C186CB65B000CBC0B /* ReminderCell.h */,
-				AEC1608D186CB65B000CBC0B /* ReminderCell.m */,
-				DC29ED741872D25C00A789DC /* ReminderActionCell.xib */,
-				DC29ED761872D37100A789DC /* ReminderActionCell.h */,
-				DC29ED771872D37100A789DC /* ReminderActionCell.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -997,6 +1009,8 @@
 		DC4B2A5617D5C3B900703EC2 /* mini-icons */ = {
 			isa = PBXGroup;
 			children = (
+				AE9CD8CC1874FD010049C5EE /* 11-clock.png */,
+				AE9CD8CD1874FD010049C5EE /* 11-clock@2x.png */,
 				DC29ED7918734A7400A789DC /* 23-circle-south.png */,
 				DC29ED7A18734A7400A789DC /* 23-circle-south@2x.png */,
 				DC29ED7B18734A7400A789DC /* 27-circle-north.png */,
@@ -1496,9 +1510,11 @@
 				DC4B2A6817D5C3BA00703EC2 /* 06-magnify@2x.png in Resources */,
 				DC4B2A6917D5C3BA00703EC2 /* 11-x.png in Resources */,
 				DC4B2A6A17D5C3BA00703EC2 /* 11-x@2x.png in Resources */,
+				AE9CD8CF1874FD010049C5EE /* 11-clock@2x.png in Resources */,
 				DC4B2A6B17D5C3BA00703EC2 /* 179-notepad.png in Resources */,
 				DC4B2A6C17D5C3BA00703EC2 /* 179-notepad@2x.png in Resources */,
 				DC4B2A6D17D5C3BA00703EC2 /* 187-pencil.png in Resources */,
+				AE9CD8CE1874FD010049C5EE /* 11-clock.png in Resources */,
 				DC4B2A6E17D5C3BA00703EC2 /* 187-pencil@2x.png in Resources */,
 				DC4B2A6F17D5C3BA00703EC2 /* 20-no.png in Resources */,
 				DC4B2A7017D5C3BA00703EC2 /* 20-no@2x.png in Resources */,
@@ -1752,6 +1768,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Himanshu Bhatnagar (QAT49SH6MC)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Downloads\"",
@@ -1772,6 +1789,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Himanshu Bhatnagar (JCU6ZGKU5S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Himanshu Bhatnagar (JCU6ZGKU5S)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Downloads\"",
