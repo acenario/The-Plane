@@ -80,6 +80,7 @@
 //            self.segmentUIView.hidden = YES;
 //            self.segmentUIView.frame = CGRectMake(0,0,0,0);
         }
+        
         self.name.hidden = YES;
         self.username.hidden = YES;
         self.userImage.hidden = YES;
@@ -109,6 +110,7 @@
     } else {
         [self textValidation:nil];
     }
+        
     descCheck = YES;
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
@@ -161,9 +163,9 @@
         if ([self.descriptionTextView.text isEqualToString:descriptionPlaceholderText]) {
             self.descriptionTextView.text = @"";
             self.descriptionTextView.textColor = [UIColor blackColor];
+            [self.descriptionTextView becomeFirstResponder];
         }
         self.descriptionTextView.userInteractionEnabled = YES;
-        [self.descriptionTextView becomeFirstResponder];
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
